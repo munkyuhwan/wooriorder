@@ -14,7 +14,6 @@ import { SideMenuItemTouchable } from '../common/sideMenuItem'
 
 const SideMenu = () =>{
 
-
     return(
         <>
             <SideMenuWrapper>
@@ -27,7 +26,6 @@ const SideMenu = () =>{
                     <SideMenuItemTouchable categoryId={"cat3"}  categoryName={"카테고리03"} onItemPress={()=>{console.log("on side menu item press!");}} />
                     <SideMenuItemTouchable categoryId={"cat4"}  categoryName={"카테고리04"} onItemPress={()=>{console.log("on side menu item press!");}} />
                 </SideMenuItemWrapper>
-
             </SideMenuWrapper>
         </>
     )
