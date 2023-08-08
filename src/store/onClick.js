@@ -4,21 +4,21 @@ import { createSlice } from '@reduxjs/toolkit'
 const slice = createSlice({
     name: 'onClick',
     initialState: {
-        item: "",
+        mainItem: "",
     },
     reducers: {
-        onClick: (state, action) => {
-            state.item = action.payload;
+        onMainClick: (state, action) => {
+            state.mainItem = action.payload;
         }
     },
 });
 export default slice.reducer
 
 // Action
-const { onClick } = slice.actions
-export const clickItem = (item) => async dispatch => {
+const { onMainClick } = slice.actions
+export const clickMainItem = (item) => async dispatch => {
     try {
-        dispatch(onClick(item));
+        dispatch(onMainClick(item));
     } catch (e) {
         return console.error(e.message);
     }

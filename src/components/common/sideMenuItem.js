@@ -4,13 +4,13 @@ import { SideMenuItem, SideMenuItemOn, SideMenuText } from '../../styles/main/si
 import { Text, Animated, TouchableWithoutFeedback, Easing } from 'react-native'
 import { RADIUS, RADIUS_DOUBLE } from '../../styles/values'
 import { useDispatch, useSelector } from 'react-redux'
-import { clickItem } from '../../store/onClick'
+import { clickMainItem } from '../../store/onClick'
 
 export const SideMenuItemTouchable = (props) =>{
 
     // state
     const dispatch = useDispatch();
-    const {item} = useSelector((state)=>state.onClick);
+    const {mainItem} = useSelector((state)=>state.onClick);
 
     // animation set
     const [animation, setAnimation] = useState(new Animated.Value(0))
@@ -38,7 +38,7 @@ export const SideMenuItemTouchable = (props) =>{
     }
 
     const onSelectHandleAnimation = () => {
-        dispatch(clickItem(props.categoryId))
+        dispatch(clickMainItem(props.categoryId))
         Animated.parallel([
             Animated.timing(animation, {
                 toValue:1,
@@ -85,10 +85,10 @@ export const SideMenuItemTouchable = (props) =>{
     
 
     useEffect(()=>{
-        if(props.categoryId != item) {
+        if(props.categoryId != mainItem) {
             onDeSelectHandleAnimation();
         }
-    },[item])
+    },[mainItem])
     return (
         <TouchableWithoutFeedback onPress={()=>{ onSelectHandleAnimation(); props.onItemPress(); }}>
             <Animated.View style={[{  ...animatedStyle,...boxStyle},{borderBottomRightRadius:radiusAnimation,borderTopRightRadius:radiusAnimation}]} >
