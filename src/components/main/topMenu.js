@@ -1,12 +1,5 @@
 import React, { useState } from 'react'
 import { 
-    Image,
-    StyleSheet,
-    View, 
-    Text, 
-    TouchableOpacity, 
-    TextInput, 
-    Dimensions, 
     SafeAreaView,
     TouchableWithoutFeedback
 } from 'react-native'
@@ -16,9 +9,9 @@ import { SideMenuItemTouchable } from '../common/sideMenuItem'
 import { TopMenuItemTouchable } from '../common/topMenuItem'
 import { CategoryScrollView, CategoryWrapper, IconWrapper, TableName, TableNameBig, TableNameSmall, TopMenuWrapper, TouchIcon } from '../../styles/main/topMenuStyle'
 import CartView from '../../styles/main/cartView'
+import TopButton from '../common/topButton'
 
 const TopMenu = () =>{
-
 
     return(
         <>
@@ -39,13 +32,8 @@ const TopMenu = () =>{
                     <TableNameBig>테이블명</TableNameBig>
                 </TableName>
                 <IconWrapper>
-                    <TouchableWithoutFeedback onPress={()=>{console.log("on icon clicked");}}>
-                        <TouchIcon source={require("../../../assets/icons/orderlist_grey.png")} />
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback>
-                        <TouchIcon source={require("../../../assets/icons/cart_grey.png")} />
-                    </TouchableWithoutFeedback>
-
+                    <TopButton onPress={()=>{console.log("on icon clicked");}}  lr={"left"} onSource={require("../../../assets/icons/orderlist_trans.png")} offSource={require("../../../assets/icons/orderlist_grey.png")} />
+                    <TopButton onPress={()=>{console.log("on icon clicked");}}  lr={"right"} onSource={require("../../../assets/icons/cart_trans.png")} offSource={require("../../../assets/icons/cart_grey.png")} />
                 </IconWrapper>
             </TopMenuWrapper>
         </>

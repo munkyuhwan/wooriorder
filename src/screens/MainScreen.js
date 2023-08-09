@@ -24,7 +24,7 @@ const MainScreen = () =>{
             <MainWrapper>
                 <TopMenu/>
                 <View style={{backgroundColor:mainTheme, width:'100%', height:'100%'}} />
-                <CartView/>
+
             </MainWrapper>
         </WholeWrapper>
         </>

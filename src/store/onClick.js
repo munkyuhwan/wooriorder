@@ -6,6 +6,7 @@ const slice = createSlice({
     initialState: {
         mainItemIndex: 0,
         topItemIndex:0,
+        isIconOn:false,
     },
     reducers: {
         onMainClick: (state, action) => {
@@ -14,12 +15,15 @@ const slice = createSlice({
         onTopClick:  (state, action) => {
             state.topItemIndex = action.payload;
         },
+        onIconClick: (state, action) =>{
+            state.isIconOn = action.payload;
+        }
     },
 });
 export default slice.reducer
 
 // Action
-const { onMainClick, onTopClick } = slice.actions
+const { onMainClick, onTopClick, onIconClick } = slice.actions
 export const clickMainItem = (index) => async dispatch => {
     try {
         dispatch(onMainClick(index));
@@ -33,6 +37,13 @@ export const clickTopItem = (index) => async dispatch => {
     try {
         console.log("click top item: ",index)
         dispatch(onTopClick(index));
+    } catch (e) {
+        return console.error(e.message);
+    }
+}
+export const clickIcon = (onOff) =>async dispatch=>{
+    try {
+        dispatch(onIconClick(onOff));
     } catch (e) {
         return console.error(e.message);
     }
