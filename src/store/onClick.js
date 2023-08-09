@@ -6,7 +6,7 @@ const slice = createSlice({
     initialState: {
         mainItemIndex: 0,
         topItemIndex:0,
-        isIconOn:false,
+        isIconOn:true,
     },
     reducers: {
         onMainClick: (state, action) => {
@@ -35,7 +35,6 @@ export const clickMainItem = (index) => async dispatch => {
 }
 export const clickTopItem = (index) => async dispatch => {
     try {
-        console.log("click top item: ",index)
         dispatch(onTopClick(index));
     } catch (e) {
         return console.error(e.message);

@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import { HeaderLogo, HeaderWrapper } from '../../styles/header/header'
 import { LogoTop, LogoWrapper, SideMenuItem, SideMenuItemWrapper, SideMenuWrapper } from '../../styles/main/sideMenuStyle'
-import { SideMenuItemTouchable } from '../common/sideMenuItem'
+import { SideMenuItemTouchable } from '../menuComponents/sideMenuItem'
 
 const SideMenu = () =>{
 
