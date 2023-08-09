@@ -8,8 +8,8 @@ export const TopMenuWrapper = styled.View`
     height: 80px;
     display: flex;
     justifyContent: flex-start;
+    paddingLeft:30px;
     zIndex:99999;
-
 `
 export const CategoryWrapper = styled.View` 
     flexDirection:row;
@@ -47,7 +47,7 @@ export const TableName = styled.View`
     borderBottomLeftRadius:${RADIUS};
     zIndex:99999;
     flexDirection:column;
-    marginLeft:10px;
+    marginLeft:4px;
 `
 // talbe name smallTitle
 export const TableNameSmall = styled.Text`

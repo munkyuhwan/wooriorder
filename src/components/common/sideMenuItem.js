@@ -11,7 +11,7 @@ export const SideMenuItemTouchable = (props) =>{
 
     // state
     const dispatch = useDispatch();
-    const {mainItem} = useSelector((state)=>state.onClick);
+    const {mainItemIndex} = useSelector((state)=>state.onClick);
 
     // animation set
     const [animation, setAnimation] = useState(new Animated.Value(0))
@@ -38,10 +38,8 @@ export const SideMenuItemTouchable = (props) =>{
         marginTop:5,
     }
 
-    const onSelectHandleAnimation = () => {
-        dispatch(clickMainItem(props.categoryId))
-        dispatch(clickTopItem("subCat1"))
-
+    const onSelectHandleAnimation = (index) => {
+        dispatch(clickMainItem(index))
         Animated.parallel([
             Animated.timing(animation, {
                 toValue:1,
@@ -88,12 +86,14 @@ export const SideMenuItemTouchable = (props) =>{
     
 
     useEffect(()=>{
-        if(props.categoryId != mainItem) {
+        if(props.index != mainItemIndex) {
             onDeSelectHandleAnimation();
+        }else {
+            dispatch(clickMainItem(mainItemIndex))
         }
-    },[mainItem])
+    },[mainItemIndex])
     return (
-        <TouchableWithoutFeedback onPress={()=>{ onSelectHandleAnimation(); props.onItemPress(); }}>
+        <TouchableWithoutFeedback onPress={()=>{ onSelectHandleAnimation(props.index); props.onItemPress(); }}>
             <Animated.View style={[{  ...animatedStyle,...boxStyle},{borderBottomRightRadius:radiusAnimation,borderTopRightRadius:radiusAnimation}]} >
                 <SideMenuText>{props.categoryName}</SideMenuText>
             </Animated.View>

@@ -21,10 +21,10 @@ const SideMenu = () =>{
                     <LogoTop source={require("../../../assets/icons/logo.png")}  />
                 </LogoWrapper>
                 <SideMenuItemWrapper>
-                    <SideMenuItemTouchable categoryId={"cat1"} categoryName={"카테고리01"} onItemPress={()=>{console.log("on side menu item press!");}} />
-                    <SideMenuItemTouchable categoryId={"cat2"}  categoryName={"카테고리02"} onItemPress={()=>{console.log("on side menu item press!");}} />
-                    <SideMenuItemTouchable categoryId={"cat3"}  categoryName={"카테고리03"} onItemPress={()=>{console.log("on side menu item press!");}} />
-                    <SideMenuItemTouchable categoryId={"cat4"}  categoryName={"카테고리04"} onItemPress={()=>{console.log("on side menu item press!");}} />
+                    <SideMenuItemTouchable index={0} categoryId={"cat1"} categoryName={"카테고리01"} onItemPress={()=>{console.log("on side menu item press!");}} />
+                    <SideMenuItemTouchable index={1}  categoryId={"cat2"}  categoryName={"카테고리02"} onItemPress={()=>{console.log("on side menu item press!");}} />
+                    <SideMenuItemTouchable index={2}  categoryId={"cat3"}  categoryName={"카테고리03"} onItemPress={()=>{console.log("on side menu item press!");}} />
+                    <SideMenuItemTouchable index={3}  categoryId={"cat4"}  categoryName={"카테고리04"} onItemPress={()=>{console.log("on side menu item press!");}} />
                 </SideMenuItemWrapper>
             </SideMenuWrapper>
         </>

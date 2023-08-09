@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 
 import { Text, Animated, TouchableWithoutFeedback, Easing } from 'react-native'
 import { RADIUS, RADIUS_DOUBLE } from '../../styles/values'
@@ -6,12 +6,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { clickMainItem, clickTopItem } from '../../store/onClick'
 import { TopMenuText } from '../../styles/main/topMenuStyle'
 import { colorBrown, tabBaseColor } from '../../../assets/colors/color'
+import { useFocusEffect } from '@react-navigation/native'
 
 export const TopMenuItemTouchable = (props) =>{
 
     // state
     const dispatch = useDispatch();
-    const {topItem} = useSelector((state)=>state.onClick);
+    const {topItemIndex} = useSelector((state)=>state.onClick);
 
     // animation set
     const [animation, setAnimation] = useState(new Animated.Value(0))
@@ -41,8 +42,8 @@ export const TopMenuItemTouchable = (props) =>{
         
      }
 
-    const onSelectHandleAnimation = () => {
-        dispatch(clickTopItem(props.categoryId))
+    const onSelectHandleAnimation = (index) => {
+        dispatch(clickTopItem(index))
         Animated.parallel([
             Animated.timing(animation, {
                 toValue:1,
@@ -69,17 +70,18 @@ export const TopMenuItemTouchable = (props) =>{
                 useNativeDriver:true,
             }),
         ]).start();   
-    }
+    } 
     
-
     useEffect(()=>{
-        console.log("topItem: ",topItem);
-        if(props.categoryId != topItem) {
+        if(props.index != topItemIndex) {
             onDeSelectHandleAnimation();
+        }else {
+            onSelectHandleAnimation(topItemIndex);
         }
-    },[topItem])
+    },[topItemIndex])
+     
     return (
-        <TouchableWithoutFeedback onPress={()=>{ onSelectHandleAnimation(); props.onItemPress(); }}>
+        <TouchableWithoutFeedback onPress={()=>{ onSelectHandleAnimation(props.index); props.onItemPress(); }}>
             <Animated.View style={[{  ...animatedStyle,...boxStyle}]} >
                 <TopMenuText>{props.categoryName}</TopMenuText>
             </Animated.View>

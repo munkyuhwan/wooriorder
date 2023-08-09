@@ -26,11 +26,11 @@ const TopMenu = () =>{
                 <SafeAreaView>
                     <CategoryScrollView horizontal showsHorizontalScrollIndicator={false} >
                         <CategoryWrapper>
-                            <TopMenuItemTouchable categoryId={"subCat1"} categoryName={"2차 카테고리01"} onItemPress={()=>{console.log("on side menu item press!");}} />
-                            <TopMenuItemTouchable categoryId={"subCat2"} categoryName={"2차 카테고리02"} onItemPress={()=>{console.log("on side menu item press!");}} />
-                            <TopMenuItemTouchable categoryId={"subCat3"} categoryName={"2차 카테고리03"} onItemPress={()=>{console.log("on side menu item press!");}} />
-                            <TopMenuItemTouchable categoryId={"subCat4"} categoryName={"2차 카테고리04"} onItemPress={()=>{console.log("on side menu item press!");}} />
-                            <TopMenuItemTouchable categoryId={"subCat5"} categoryName={"2차 카테고리05"} onItemPress={()=>{console.log("on side menu item press!");}} />    
+                            <TopMenuItemTouchable index={0} categoryId={"subCat1"} categoryName={"2차 카테고리01"} onItemPress={()=>{console.log("on side menu item press!");}} />
+                            <TopMenuItemTouchable index={1} categoryId={"subCat2"} categoryName={"2차 카테고리02"} onItemPress={()=>{console.log("on side menu item press!");}} />
+                            <TopMenuItemTouchable index={2} categoryId={"subCat3"} categoryName={"2차 카테고리03"} onItemPress={()=>{console.log("on side menu item press!");}} />
+                            <TopMenuItemTouchable index={3} categoryId={"subCat4"} categoryName={"2차 카테고리04"} onItemPress={()=>{console.log("on side menu item press!");}} />
+                            <TopMenuItemTouchable index={4} categoryId={"subCat5"} categoryName={"2차 카테고리05"} onItemPress={()=>{console.log("on side menu item press!");}} />    
                         </CategoryWrapper>
                     </CategoryScrollView>
                 </SafeAreaView>

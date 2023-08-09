@@ -4,15 +4,15 @@ import { createSlice } from '@reduxjs/toolkit'
 const slice = createSlice({
     name: 'onClick',
     initialState: {
-        mainItem: "",
-        topItem:"",
+        mainItemIndex: 0,
+        topItemIndex:0,
     },
     reducers: {
         onMainClick: (state, action) => {
-            state.mainItem = action.payload;
+            state.mainItemIndex = action.payload;
         },
         onTopClick:  (state, action) => {
-            state.topItem = action.payload;
+            state.topItemIndex = action.payload;
         },
     },
 });
@@ -20,16 +20,19 @@ export default slice.reducer
 
 // Action
 const { onMainClick, onTopClick } = slice.actions
-export const clickMainItem = (item) => async dispatch => {
+export const clickMainItem = (index) => async dispatch => {
     try {
-        dispatch(onMainClick(item));
+        dispatch(onMainClick(index));
+        dispatch(onTopClick(0));
+
     } catch (e) {
         return console.error(e.message);
     }
 }
-export const clickTopItem = (item) => async dispatch => {
+export const clickTopItem = (index) => async dispatch => {
     try {
-        dispatch(onTopClick(item));
+        console.log("click top item: ",index)
+        dispatch(onTopClick(index));
     } catch (e) {
         return console.error(e.message);
     }
