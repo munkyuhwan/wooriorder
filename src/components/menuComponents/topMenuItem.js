@@ -80,7 +80,7 @@ export const TopMenuItemTouchable = (props) =>{
     },[topItemIndex])
       */
     return (
-        <TouchableWithoutFeedback onPress={()=>{ onSelectHandleAnimation(topItemIndex); /* dispatch(clickTopItem(props.index)); */ props.onItemPress(); }}>
+        <TouchableWithoutFeedback onPress={()=>{ /* onSelectHandleAnimation(topItemIndex); */ dispatch(clickTopItem(props.index));  props.onItemPress(); }}>
             <Animated.View style={[{  ...animatedStyle,...boxStyle}]} >
                 <TopMenuText>{props.categoryName}</TopMenuText>
             </Animated.View>

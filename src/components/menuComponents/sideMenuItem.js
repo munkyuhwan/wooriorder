@@ -8,12 +8,11 @@ import { clickMainItem, clickTopItem } from '../../store/onClick'
 import { tabBaseColor, colorRed } from '../../../assets/colors/color'
 
 export const SideMenuItemTouchable = (props) =>{
-    
+        console.log("item loaded ",props.index);
     // state
     const dispatch = useDispatch();
     const {mainItemIndex, mainSelectedItemIndex} = useSelector((state)=>state.onClick);
 
-    const selectedItem=props.selectedItem, setSelectedItem=props.setSelectedItem;
 
     // animation set
     const animation = useRef(new Animated.Value(0)).current;
@@ -41,7 +40,7 @@ export const SideMenuItemTouchable = (props) =>{
     }
 
     const onSelectHandleAnimation = async (index) => {
-        console.log("onSelect : ",props.index )
+        //console.log("onSelect : ",props.index )
         Animated.parallel([
             Animated.timing(animation, {
                 toValue:1,
@@ -66,7 +65,7 @@ export const SideMenuItemTouchable = (props) =>{
 
     }
     const onDeSelectHandleAnimation = async () => {
-        console.log("deselect : ",props.index )
+        //console.log("deselect : ",props.index )
         Animated.parallel([
             Animated.timing(animation, {
                 toValue:0,
@@ -98,10 +97,10 @@ export const SideMenuItemTouchable = (props) =>{
         }
     },[selectedItem])
   */
- 
+ /* 
     useEffect(()=>{
         const animateStart = async () => {
-            console.log("mainSelectedItemIndex: ",mainSelectedItemIndex,", mainItemIndex: ",mainItemIndex);
+            //console.log("mainSelectedItemIndex: ",mainSelectedItemIndex,", mainItemIndex: ",mainItemIndex);
             if(props.index == mainItemIndex) {
                 onSelectHandleAnimation(mainItemIndex);
             }else {
@@ -111,8 +110,8 @@ export const SideMenuItemTouchable = (props) =>{
 
         }
         animateStart();
-        console.log("end================="); 
-    },[mainItemIndex])
+        //console.log("end================="); 
+    },[mainItemIndex]) */
       
     return (
         <TouchableWithoutFeedback onPress={()=>{  /* onSelectHandleAnimation(props.index);  */ console.log("start=================");  dispatch(clickMainItem(props.index));  props.onItemPress(); }}>
