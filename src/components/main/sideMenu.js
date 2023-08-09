@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { 
     Image,
     StyleSheet,
@@ -13,6 +14,8 @@ import { LogoTop, LogoWrapper, SideMenuItem, SideMenuItemWrapper, SideMenuWrappe
 import { SideMenuItemTouchable } from '../menuComponents/sideMenuItem'
 
 const SideMenu = () =>{
+    
+    const [selectedItem, setSelectedItem] = useState(0);
 
     return(
         <>
@@ -21,10 +24,10 @@ const SideMenu = () =>{
                     <LogoTop source={require("../../../assets/icons/logo.png")}  />
                 </LogoWrapper>
                 <SideMenuItemWrapper>
-                    <SideMenuItemTouchable index={0} categoryId={"cat1"} categoryName={"카테고리01"} onItemPress={()=>{console.log("on side menu item press!");}} />
-                    <SideMenuItemTouchable index={1}  categoryId={"cat2"}  categoryName={"카테고리02"} onItemPress={()=>{console.log("on side menu item press!");}} />
-                    <SideMenuItemTouchable index={2}  categoryId={"cat3"}  categoryName={"카테고리03"} onItemPress={()=>{console.log("on side menu item press!");}} />
-                    <SideMenuItemTouchable index={3}  categoryId={"cat4"}  categoryName={"카테고리04"} onItemPress={()=>{console.log("on side menu item press!");}} />
+                    <SideMenuItemTouchable index={0} selectedItem={selectedItem} setSelectedItem={setSelectedItem} categoryId={"cat1"} categoryName={"카테고리01"} onItemPress={()=>{ }} />
+                    <SideMenuItemTouchable index={1} selectedItem={selectedItem} setSelectedItem={setSelectedItem} categoryId={"cat2"}  categoryName={"카테고리02"} onItemPress={()=>{ }} />
+                    <SideMenuItemTouchable index={2} selectedItem={selectedItem} setSelectedItem={setSelectedItem} categoryId={"cat3"}  categoryName={"카테고리03"} onItemPress={()=>{ }} />
+                    <SideMenuItemTouchable index={3} selectedItem={selectedItem} setSelectedItem={setSelectedItem} categoryId={"cat4"}  categoryName={"카테고리04"} onItemPress={()=>{ }} />
                 </SideMenuItemWrapper>
             </SideMenuWrapper>
         </>

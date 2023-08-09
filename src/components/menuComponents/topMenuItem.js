@@ -43,7 +43,6 @@ export const TopMenuItemTouchable = (props) =>{
      }
 
     const onSelectHandleAnimation = (index) => {
-        dispatch(clickTopItem(index))
         Animated.parallel([
             Animated.timing(animation, {
                 toValue:1,
@@ -71,7 +70,7 @@ export const TopMenuItemTouchable = (props) =>{
             }),
         ]).start();   
     } 
-    
+    /* 
     useEffect(()=>{
         if(props.index != topItemIndex) {
             onDeSelectHandleAnimation();
@@ -79,9 +78,9 @@ export const TopMenuItemTouchable = (props) =>{
             onSelectHandleAnimation(topItemIndex);
         }
     },[topItemIndex])
-     
+      */
     return (
-        <TouchableWithoutFeedback onPress={()=>{ onSelectHandleAnimation(props.index); props.onItemPress(); }}>
+        <TouchableWithoutFeedback onPress={()=>{ onSelectHandleAnimation(topItemIndex); /* dispatch(clickTopItem(props.index)); */ props.onItemPress(); }}>
             <Animated.View style={[{  ...animatedStyle,...boxStyle}]} >
                 <TopMenuText>{props.categoryName}</TopMenuText>
             </Animated.View>

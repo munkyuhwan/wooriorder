@@ -8,15 +8,17 @@ import { clickMainItem, clickTopItem } from '../../store/onClick'
 import { tabBaseColor, colorRed } from '../../../assets/colors/color'
 
 export const SideMenuItemTouchable = (props) =>{
-
+    
     // state
     const dispatch = useDispatch();
-    const {mainItemIndex} = useSelector((state)=>state.onClick);
+    const {mainItemIndex, mainSelectedItemIndex} = useSelector((state)=>state.onClick);
+
+    const selectedItem=props.selectedItem, setSelectedItem=props.setSelectedItem;
 
     // animation set
-    const [animation, setAnimation] = useState(new Animated.Value(0))
-    const [widthAnimation, setWidthAnimation] = useState(new Animated.Value(0))
-    const [radiusAnimation, setRadiusAnimation] = useState(new Animated.Value(0))
+    const animation = useRef(new Animated.Value(0)).current;
+    const widthAnimation = useRef(new Animated.Value(0)).current;
+    const radiusAnimation = useRef(new Animated.Value(0)).current;
     
 
     // width interpolation
@@ -38,8 +40,8 @@ export const SideMenuItemTouchable = (props) =>{
         marginTop:5,
     }
 
-    const onSelectHandleAnimation = (index) => {
-        dispatch(clickMainItem(index))
+    const onSelectHandleAnimation = async (index) => {
+        console.log("onSelect : ",props.index )
         Animated.parallel([
             Animated.timing(animation, {
                 toValue:1,
@@ -60,8 +62,11 @@ export const SideMenuItemTouchable = (props) =>{
                 }
             )
         ]).start();   
+        
+
     }
-    const onDeSelectHandleAnimation = () => {
+    const onDeSelectHandleAnimation = async () => {
+        console.log("deselect : ",props.index )
         Animated.parallel([
             Animated.timing(animation, {
                 toValue:0,
@@ -83,17 +88,34 @@ export const SideMenuItemTouchable = (props) =>{
             )
         ]).start();   
     }
-    
-
+  /*   
     useEffect(()=>{
-        if(props.index != mainItemIndex) {
-            onDeSelectHandleAnimation();
+        if(props.index == selectedItem) {
+            onSelectHandleAnimation(selectedItem);
         }else {
-            dispatch(clickMainItem(mainItemIndex))
+            onDeSelectHandleAnimation();
+            //dispatch(clickMainItem(mainItemIndex))
         }
+    },[selectedItem])
+  */
+ 
+    useEffect(()=>{
+        const animateStart = async () => {
+            console.log("mainSelectedItemIndex: ",mainSelectedItemIndex,", mainItemIndex: ",mainItemIndex);
+            if(props.index == mainItemIndex) {
+                onSelectHandleAnimation(mainItemIndex);
+            }else {
+                onDeSelectHandleAnimation();
+                //dispatch(clickMainItem(mainItemIndex))
+            }
+
+        }
+        animateStart();
+        console.log("end================="); 
     },[mainItemIndex])
+      
     return (
-        <TouchableWithoutFeedback onPress={()=>{ onSelectHandleAnimation(props.index); props.onItemPress(); }}>
+        <TouchableWithoutFeedback onPress={()=>{  /* onSelectHandleAnimation(props.index);  */ console.log("start=================");  dispatch(clickMainItem(props.index));  props.onItemPress(); }}>
             <Animated.View style={[{  ...animatedStyle,...boxStyle},{borderBottomRightRadius:radiusAnimation,borderTopRightRadius:radiusAnimation}]} >
                 <SideMenuText>{props.categoryName}</SideMenuText>
             </Animated.View>

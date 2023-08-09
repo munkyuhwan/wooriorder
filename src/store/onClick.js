@@ -5,7 +5,9 @@ const slice = createSlice({
     name: 'onClick',
     initialState: {
         mainItemIndex: 0,
+        mainSelectedItemIndex:0,
         topItemIndex:0,
+        topSelectedItemIndex:0,
         isIconOn:true,
     },
     reducers: {
