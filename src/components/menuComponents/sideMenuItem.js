@@ -97,7 +97,7 @@ export const SideMenuItemTouchable = (props) =>{
         }
     },[selectedItem])
   */
- /* 
+ 
     useEffect(()=>{
         const animateStart = async () => {
             //console.log("mainSelectedItemIndex: ",mainSelectedItemIndex,", mainItemIndex: ",mainItemIndex);
@@ -111,7 +111,7 @@ export const SideMenuItemTouchable = (props) =>{
         }
         animateStart();
         //console.log("end================="); 
-    },[mainItemIndex]) */
+    },[mainItemIndex])
       
     return (
         <TouchableWithoutFeedback onPress={()=>{  /* onSelectHandleAnimation(props.index);  */ console.log("start=================");  dispatch(clickMainItem(props.index));  props.onItemPress(); }}>
