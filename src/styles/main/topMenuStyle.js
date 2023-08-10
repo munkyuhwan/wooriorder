@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled, {css} from 'styled-components/native';
 import { RADIUS, RADIUS_DOUBLE } from '../values';
-import { colorRed, textColorWhite } from '../../../assets/colors/color';
+import { colorRed, tabBaseColor, textColorWhite } from '../../../assets/colors/color';
 
 export const TopMenuWrapper = styled.View`
     flexDirection:row;
@@ -23,7 +23,17 @@ export const CategoryScrollView = styled.ScrollView`
     flowDirection:column;
 
 `
-/// 사이드 메뉴 텍스트스타일
+export const CategoryDefault = styled.View`
+    backgroundColor: ${tabBaseColor};
+    width:142px;
+    height:52px;
+    marginRight:7;
+    justifyContent: flex-end;
+    marginTop:33;
+    borderTopLeftRadius:${RADIUS_DOUBLE};
+    borderTopRightRadius:${RADIUS_DOUBLE};
+`
+/// 탑 메뉴 텍스트스타일
 export const TopMenuText = styled.Text`
     flex:1;
     textAlign:center;

@@ -6,24 +6,33 @@ import {
 import { HeaderLogo, HeaderWrapper } from '../../styles/header/header'
 import { LogoTop, LogoWrapper, SideMenuItem, SideMenuItemWrapper, SideMenuWrapper } from '../../styles/main/sideMenuStyle'
 import { SideMenuItemTouchable } from '../common/sideMenuItem'
-import { TopMenuItemTouchable } from '../menuComponents/topMenuItem'
+import { TopMenuItemTouchable, TopMenuItemTouchableOff } from '../menuComponents/topMenuItem'
 import { CategoryScrollView, CategoryWrapper, IconWrapper, TableName, TableNameBig, TableNameSmall, TopMenuWrapper, TouchIcon } from '../../styles/main/topMenuStyle'
  import TopButton from '../menuComponents/topButton'
 
 const TopMenu = () =>{
-
+    const test = [0,1,2,3,4,5,6,7,8,9];
+    const [topSelection, setTopSelection] = useState(0);
     return(
         <>
             <TopMenuWrapper>
                 <SafeAreaView>
                     <CategoryScrollView horizontal showsHorizontalScrollIndicator={false} >
                         <CategoryWrapper>
-                            <TopMenuItemTouchable index={0} categoryId={"subCat1"} categoryName={"2차 카테고리01"} onItemPress={()=>{console.log("on side menu item press!");}} />
-                            <TopMenuItemTouchable index={1} categoryId={"subCat2"} categoryName={"2차 카테고리02"} onItemPress={()=>{console.log("on side menu item press!");}} />
-                            <TopMenuItemTouchable index={2} categoryId={"subCat3"} categoryName={"2차 카테고리03"} onItemPress={()=>{console.log("on side menu item press!");}} />
-                            <TopMenuItemTouchable index={3} categoryId={"subCat4"} categoryName={"2차 카테고리04"} onItemPress={()=>{console.log("on side menu item press!");}} />
-                            <TopMenuItemTouchable index={4} categoryId={"subCat5"} categoryName={"2차 카테고리05"} onItemPress={()=>{console.log("on side menu item press!");}} />    
-                        </CategoryWrapper>
+                            {
+                                 test.map((index)=>{  
+                                    if(index==topSelection) {
+                                        return (
+                                            <TopMenuItemTouchable selection={topSelection} setSelection={setTopSelection} index={index} categoryId={"subCat1"} categoryName={"2차 카테고리01"} onItemPress={()=>{}} />
+                                            ) 
+                                    }else {
+                                        return (
+                                            <TopMenuItemTouchableOff selection={topSelection} setSelection={setTopSelection} index={index} categoryId={"subCat1"} categoryName={"2차 카테고리01"} onItemPress={()=>{}} />
+                                        )
+                                    }
+                                })
+                            }
+                       </CategoryWrapper>
                     </CategoryScrollView>
                 </SafeAreaView>
                 <TableName>
