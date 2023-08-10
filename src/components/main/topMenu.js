@@ -40,7 +40,7 @@ const TopMenu = () =>{
                     <TableNameBig>테이블명</TableNameBig>
                 </TableName>
                 <IconWrapper>
-                    <TopButton onPress={()=>{console.log("on icon clicked");}} isSlideMenu={false} lr={"left"} onSource={require("../../../assets/icons/orderlist_trans.png")} offSource={require("../../../assets/icons/orderlist_grey.png")} />
+                    <TopButton onPress={()=>{console.log("on icon clicked  aaa");}} isSlideMenu={false} lr={"left"} onSource={require("../../../assets/icons/orderlist_trans.png")} offSource={require("../../../assets/icons/orderlist_grey.png")} />
                     <TopButton onPress={()=>{console.log("on icon clicked");}} isSlideMenu={true} lr={"right"} onSource={require("../../../assets/icons/cart_trans.png")} offSource={require("../../../assets/icons/cart_grey.png")} />
                 </IconWrapper>
             </TopMenuWrapper>

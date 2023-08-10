@@ -8,7 +8,7 @@ const slice = createSlice({
         mainSelectedItemIndex:0,
         topItemIndex:0,
         topSelectedItemIndex:0,
-        isIconOn:true,
+        isIconOn:false,
     },
     reducers: {
         onMainClick: (state, action) => {

@@ -23,8 +23,8 @@ const CartView = () =>{
     })
     const boxStyle = {
         transform: [{translateX:slideInterpolate},],
-      };
-
+    };
+    
     useEffect(()=>{
         Animated.parallel([
             Animated.timing(slideAnimation,{
@@ -35,7 +35,7 @@ const CartView = () =>{
         ]).start();
     },[isIconOn])
  
-
+  
     return(
         <>  
             <CartViewWrapper style={[{...boxStyle}]} >
