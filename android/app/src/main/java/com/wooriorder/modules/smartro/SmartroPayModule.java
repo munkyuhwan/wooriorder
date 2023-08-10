@@ -36,7 +36,7 @@ public class SmartroPayModule extends ReactContextBaseJavaModule {
         System.out.println(("onServiceConnected onServiceConnected"));
         mSmartroVCatInterface = SmartroVCatInterface.Stub.asInterface(service);
 
-        String jsonString = "요청 JSON 예시 {\n" +
+        String jsonString = "{\n" +
                 "\"service\":\"setting\", \"device\":\"dongle\", \"device-comm\":[\n" +
                 "\"com\", \n" +
                 "\"auto-detection\"],\n" +
@@ -46,7 +46,7 @@ public class SmartroPayModule extends ReactContextBaseJavaModule {
                 "\"printer-comm1\":[ \"com\",\n" +
                 "\"ftdi2\",\n" +
                 "\"9600\",\n" +
-                "\"33301\" ← 원격 연결 PORT\n" +
+                "\"33301\"\n" +
                 "], \"printer-comm3\":[\n" +
                 "\"com\", \"prolific1\","+"\"9600\",\n" +
                 "\"33302\" ]\n" +

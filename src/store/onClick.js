@@ -29,7 +29,7 @@ const { onMainClick, onTopClick, onIconClick } = slice.actions
 export const clickMainItem = (index) => async dispatch => {
     try {
         dispatch(onMainClick(index));
-        dispatch(onTopClick(0));
+        //dispatch(onTopClick(0));
 
     } catch (e) {
         return console.error(e.message);

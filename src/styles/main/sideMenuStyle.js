@@ -36,6 +36,12 @@ export const SideMenuItemWrapper = styled.View`
     width:180px;
 `
 // 사에드 메뉴 아이템 터쳐블
+export const SideMenuItemOff = styled.View`
+    backgroundColor:#404040;
+    width:190px;
+    marginLeft:-10;
+    marginTop:5;
+`
 export const SideMenuItem = styled.View`
     backgroundColor:#404040;
     width:190px;

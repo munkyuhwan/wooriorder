@@ -70,7 +70,7 @@ export const TopMenuItemTouchable = (props) =>{
             }),
         ]).start();   
     } 
-    /* 
+    
     useEffect(()=>{
         if(props.index != topItemIndex) {
             onDeSelectHandleAnimation();
@@ -78,7 +78,7 @@ export const TopMenuItemTouchable = (props) =>{
             onSelectHandleAnimation(topItemIndex);
         }
     },[topItemIndex])
-      */
+    
     return (
         <TouchableWithoutFeedback onPress={()=>{ /* onSelectHandleAnimation(topItemIndex); */ dispatch(clickTopItem(props.index));  props.onItemPress(); }}>
             <Animated.View style={[{  ...animatedStyle,...boxStyle}]} >

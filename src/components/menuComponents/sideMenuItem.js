@@ -1,37 +1,48 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 
-import { SideMenuItem, SideMenuItemOn, SideMenuText } from '../../styles/main/sideMenuStyle'
+import { SideMenuItem, SideMenuItemOff, SideMenuItemOn, SideMenuItemWrapper, SideMenuText } from '../../styles/main/sideMenuStyle'
 import { Text, Animated, TouchableWithoutFeedback, Easing } from 'react-native'
 import { RADIUS, RADIUS_DOUBLE } from '../../styles/values'
 import { useDispatch, useSelector } from 'react-redux'
-import { clickMainItem, clickTopItem } from '../../store/onClick'
+import { clickMainItem } from '../../store/onClick'
 import { tabBaseColor, colorRed } from '../../../assets/colors/color'
+import { useFocusEffect } from '@react-navigation/native'
 
 export const SideMenuItemTouchable = (props) =>{
-        console.log("item loaded ",props.index);
+
     // state
     const dispatch = useDispatch();
-    const {mainItemIndex, mainSelectedItemIndex} = useSelector((state)=>state.onClick);
-
+    const {mainItemIndex} = useSelector((state)=>state.onClick);
 
     // animation set
-    const animation = useRef(new Animated.Value(0)).current;
-    const widthAnimation = useRef(new Animated.Value(0)).current;
-    const radiusAnimation = useRef(new Animated.Value(0)).current;
-    
+    const animation = useRef(new Animated.Value(0,{useNativeDriver:true})).current;
+    const widthAnimation = useRef(new Animated.Value(0,{useNativeDriver:true})).current;
+    const radiusAnimation = useRef(new Animated.Value(0,{useNativeDriver:true})).current;
 
+    //const [animation, setAnimation ]= useState(new Animated.Value(0,{useNativeDriver:true}));
+    //const [widthAnimation, setWidthAnimation] = useState(new Animated.Value(0,{useNativeDriver:true}));
+    //const [radiusAnimation, setRadiusAnimation] = useState(new Animated.Value(0,{useNativeDriver:true}));
+
+    state={
+        animation:animation,
+        widthAnimation:widthAnimation,
+        radiusAnimation:radiusAnimation
+    }
+
+
+ 
     // width interpolation
     const inputRange = [0, 1];
     const outputRange = [0, 10]
     const animatedWidth = widthAnimation.interpolate({inputRange, outputRange});
     const boxStyle = {
         transform: [{translateX:animatedWidth},],
-      };
+    };
     // color interpolation
     const boxInterpolation =  animation.interpolate({
         inputRange: [0, 1],
         outputRange:[tabBaseColor , colorRed]
-      })
+    })
     const animatedStyle = {
         backgroundColor: boxInterpolation,
         width:190,
@@ -39,8 +50,7 @@ export const SideMenuItemTouchable = (props) =>{
         marginTop:5,
     }
 
-    const onSelectHandleAnimation = async (index) => {
-        //console.log("onSelect : ",props.index )
+    const onSelectHandleAnimation = async () => {
         Animated.parallel([
             Animated.timing(animation, {
                 toValue:1,
@@ -49,27 +59,97 @@ export const SideMenuItemTouchable = (props) =>{
             }),
             Animated.timing(widthAnimation, {
                 toValue: 1,
-                duration: 100,
+                duration: 200,
                 useNativeDriver:true,
             }),
-            Animated.timing(
-                radiusAnimation,
-                {
-                    toValue: 9,
-                    duration: 100,
-                    useNativeDriver:true,
-                }
-            )
-        ]).start();   
-        
+            Animated.timing(radiusAnimation,{
+                toValue: 9,
+                duration: 100,
+                useNativeDriver:true,
+            })
+        ]).start(()=>{
+            props.onItemPress();
+            dispatch(clickMainItem(props.index)); 
+            //props.setSelection(props.index);
+        });   
+    }
+   
 
+   /* 
+    useFocusEffect(useCallback(()=>{
+        console.log("selection: ",props.selection);
+        if(props.selection!=props.index ) {
+            onDeSelectHandleAnimation();
+        }
+    },[props.selection]))
+     */
+    /* 
+    useEffect(()=>{
+        console.log("after change : ",mainItemIndex )
+        const animateStart = async () => {
+            if(props.index == mainItemIndex) {
+                //onSelectHandleAnimation();
+            }else {
+                onDeSelectHandleAnimation();
+            }
+        }
+        animateStart(); 
+    },[mainItemIndex])
+     */
+    const handleOnPress = () =>{
+        onSelectHandleAnimation();
+    }
+    if(props.index == props.selection) onSelectHandleAnimation();
+    return (
+        <TouchableWithoutFeedback onPress={()=>{handleOnPress();}}>
+            <Animated.View style={[{  ...animatedStyle,...boxStyle},{borderBottomRightRadius:radiusAnimation,borderTopRightRadius:radiusAnimation}]} >
+                <SideMenuText>{props.categoryName}</SideMenuText>
+            </Animated.View>
+        </TouchableWithoutFeedback>
+    )
+}
+
+export const SideMenuItemTouchableOff = (props) =>{
+
+    // state
+    const dispatch = useDispatch();
+    const {mainItemIndex} = useSelector((state)=>state.onClick);
+
+    // animation set
+    const animation = useRef(new Animated.Value(1,{useNativeDriver:true})).current;
+    const widthAnimation = useRef(new Animated.Value(1,{useNativeDriver:true})).current;
+    const radiusAnimation = useRef(new Animated.Value(1,{useNativeDriver:true})).current;
+
+    state={
+        animation:animation,
+        widthAnimation:widthAnimation,
+        radiusAnimation:radiusAnimation
+    }
+
+    // width interpolation
+    const inputRange = [0, 1];
+    const outputRange = [0, 10]
+    const animatedWidth = widthAnimation.interpolate({inputRange, outputRange});
+    const boxStyle = {
+        transform: [{translateX:animatedWidth},],
+    };
+    // color interpolation
+    const boxInterpolation =  animation.interpolate({
+        inputRange: [0, 1],
+        outputRange:[colorRed, tabBaseColor ]
+    })
+    const animatedStyle = {
+        backgroundColor: boxInterpolation,
+        width:180,
+        marginLeft:-10,
+        marginTop:5,
     }
     const onDeSelectHandleAnimation = async () => {
         //console.log("deselect : ",props.index )
         Animated.parallel([
             Animated.timing(animation, {
                 toValue:0,
-                duration: 200,
+                duration: 100,
                 useNativeDriver:true,
             }),
             Animated.timing(widthAnimation, {
@@ -85,41 +165,38 @@ export const SideMenuItemTouchable = (props) =>{
                     easing: Easing.linear
                 }
             )
-        ]).start();   
+        ]).start(()=>{
+            //dispatch(clickMainItem(props.index)); 
+         });   
     }
-  /*   
-    useEffect(()=>{
-        if(props.index == selectedItem) {
-            onSelectHandleAnimation(selectedItem);
-        }else {
-            onDeSelectHandleAnimation();
-            //dispatch(clickMainItem(mainItemIndex))
-        }
-    },[selectedItem])
-  */
- 
-    useEffect(()=>{
-        const animateStart = async () => {
-            //console.log("mainSelectedItemIndex: ",mainSelectedItemIndex,", mainItemIndex: ",mainItemIndex);
-            if(props.index == mainItemIndex) {
-                onSelectHandleAnimation(mainItemIndex);
-            }else {
-                onDeSelectHandleAnimation();
-                //dispatch(clickMainItem(mainItemIndex))
+    
+    const handleOnPress = () =>{
+        //onSelectHandleAnimation();
+            props.onItemPress();
+            props.setSelection(props.index);
+            //onDeSelectHandleAnimation()
+            async () =>{
+                dispatch(clickMainItem(props.index)); 
             }
-
-        }
-        animateStart();
-        //console.log("end================="); 
-    },[mainItemIndex])
-      
+    }
+/* 
     return (
-        <TouchableWithoutFeedback onPress={()=>{  /* onSelectHandleAnimation(props.index);  */ console.log("start=================");  dispatch(clickMainItem(props.index));  props.onItemPress(); }}>
-            <Animated.View style={[{  ...animatedStyle,...boxStyle},{borderBottomRightRadius:radiusAnimation,borderTopRightRadius:radiusAnimation}]} >
+        <TouchableWithoutFeedback onPress={()=>{handleOnPress();}}>
+            <Animated.View style={[{  ...animatedStyle,...boxStyle}]} >
                 <SideMenuText>{props.categoryName}</SideMenuText>
             </Animated.View>
         </TouchableWithoutFeedback>
-
     )
- 
-}
+     */
+
+    return (
+        <TouchableWithoutFeedback onPress={()=>{handleOnPress();}}>
+            <SideMenuItemWrapper>
+                <SideMenuItemOff>
+                    <SideMenuText>{props.categoryName}</SideMenuText>
+                </SideMenuItemOff>
+            </SideMenuItemWrapper>
+        </TouchableWithoutFeedback>
+    )
+    
+} 
