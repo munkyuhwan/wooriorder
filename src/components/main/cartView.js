@@ -5,7 +5,7 @@ import {
     TouchableWithoutFeedback
 } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux';
-import { ArrowImage, CartFlatList, CartScrollView, CartViewWrapper, Handle, OrderWrapper } from '../../styles/main/cartStyle';
+import { ArrowImage, CartFlatList, CartScrollView, CartViewWrapper, Handle, OrderWrapper, PayAmtNumber, PayAmtTitle, PayAmtUnit, PayAmtWrapper, PayBtn, PayIcon, PayTitle, PayWrapper } from '../../styles/main/cartStyle';
 import { clickIcon } from '../../store/onClick';
 import CartListItem from '../cartComponents/cartListItem';
 import { startSmartroPay } from '../../utils/smartro';
@@ -59,9 +59,26 @@ const CartView = () =>{
                 >
                 </CartFlatList>
                 <OrderWrapper>
+                    <PayWrapper>
+                        <PayAmtWrapper isBordered={true}>
+                            <PayAmtTitle>주문수량</PayAmtTitle>
+                            <PayAmtNumber>3</PayAmtNumber>
+                            <PayAmtUnit> 개</PayAmtUnit>
+                        </PayAmtWrapper>
+                    </PayWrapper>
+                    <PayWrapper>
+                        <PayAmtWrapper >
+                            <PayAmtTitle>주문금액</PayAmtTitle>
+                            <PayAmtNumber>3,000</PayAmtNumber>
+                            <PayAmtUnit> 원</PayAmtUnit>
+                        </PayAmtWrapper>
+                    </PayWrapper>
                     <TouchableWithoutFeedback onPress={()=>{startSmartroPay();}} >
-                        <Text style={{fontSize:40 }} >주문하기</Text>
-                    </TouchableWithoutFeedback>
+                        <PayBtn>
+                            <PayTitle>주문하기</PayTitle>
+                            <PayIcon source={require("../../../assets/icons/order.png")} />
+                        </PayBtn>
+                     </TouchableWithoutFeedback>
                 </OrderWrapper>
             </CartViewWrapper>  
         </>

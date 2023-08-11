@@ -18,11 +18,6 @@ export const CartViewWrapper = styled(Animated.View)`
 export const CartFlatList = styled.FlatList`
     backgroundColor:${colorWhite};
 `
-export const OrderWrapper = styled.View`
-    backgroundColor:${colorRed};
-    width:100%;
-    height:173px;
-`
 export const Handle = styled.View`
     backgroundColor:${colorWhite};
     height:81px;
@@ -150,4 +145,67 @@ export const CartItemCancelBtn = styled.Image`
     width:25px;
     height:25px;
     resizeMode:contain;
+`
+// 주문하기
+export const OrderWrapper = styled.View`
+    backgroundColor:${colorRed};
+    width:100%;
+    height:173px;
+    paddingRight:23px;
+    paddingLeft:23px;
+    paddingBottom:23px;
+    paddingTop:20px;
+`
+
+export const PayWrapper = styled.View`
+
+`
+export const PayAmtWrapper = styled.View`
+    flexDirection:row;
+    paddingBottom:7px;
+    paddingTop:7px;
+    ${(props)=>{
+        if(props.isBordered) {
+            return (
+                "borderBottomWidth:1px;"+
+                `borderColor:${colorGrey}`
+            )
+        }
+    }}
+`
+export const PayAmtTitle = styled.Text`
+    flex:1;
+    fontSize:15px;
+    color:${colorWhite}
+`
+export const PayAmtNumber = styled.Text`
+    fontSize:15px;
+    color:${colorWhite};
+    weeight:bold;
+`
+export const PayAmtUnit = styled.Text`
+    fontSize:15px;
+    color:${colorWhite};
+`
+export const PayBtn = styled.View`
+    width:100%;
+    height:60px;
+    backgroundColor:${mainTheme};
+    flexDirection:row;
+    textAlign:center;
+    justifyContent:center;
+    borderRadius:${RADIUS};
+    marginTop:10px;
+`
+export const PayTitle = styled.Text`
+    color:${colorWhite};
+    fontSize:19px;
+    marginTop:auto;
+    marginBottom:auto;
+    marginRight:7px;
+`
+export const PayIcon = styled.Image`
+    marginTop:auto;
+    marginBottom:auto;
+    marginLeft:7px;
 `
