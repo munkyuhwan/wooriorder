@@ -208,4 +208,6 @@ export const PayIcon = styled.Image`
     marginTop:auto;
     marginBottom:auto;
     marginLeft:7px;
+    width:20px;
+    resizeMode:contain;
 `

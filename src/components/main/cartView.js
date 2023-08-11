@@ -9,8 +9,11 @@ import { ArrowImage, CartFlatList, CartScrollView, CartViewWrapper, Handle, Orde
 import { clickIcon } from '../../store/onClick';
 import CartListItem from '../cartComponents/cartListItem';
 import { startSmartroPay } from '../../utils/smartro';
+import { LANGUAGE } from '../../resources/strings';
 
 const CartView = () =>{
+    const {language} = useSelector(state=>state.languageSelect);
+    console.log("language: ",language)
 
     const dispatch = useDispatch();
     const {isIconOn} = useSelector(state=>state.onClick);
@@ -61,21 +64,21 @@ const CartView = () =>{
                 <OrderWrapper>
                     <PayWrapper>
                         <PayAmtWrapper isBordered={true}>
-                            <PayAmtTitle>주문수량</PayAmtTitle>
+                            <PayAmtTitle>{LANGUAGE[language].cartView.orderAmt}</PayAmtTitle>
                             <PayAmtNumber>3</PayAmtNumber>
-                            <PayAmtUnit> 개</PayAmtUnit>
+                            <PayAmtUnit> {LANGUAGE[language].cartView.orderAmtUnit}</PayAmtUnit>
                         </PayAmtWrapper>
                     </PayWrapper>
                     <PayWrapper>
                         <PayAmtWrapper >
-                            <PayAmtTitle>주문금액</PayAmtTitle>
+                            <PayAmtTitle>{LANGUAGE[language].cartView.totalAmt}</PayAmtTitle>
                             <PayAmtNumber>3,000</PayAmtNumber>
-                            <PayAmtUnit> 원</PayAmtUnit>
+                            <PayAmtUnit> {LANGUAGE[language].cartView.totalAmtUnit}</PayAmtUnit>
                         </PayAmtWrapper>
                     </PayWrapper>
                     <TouchableWithoutFeedback onPress={()=>{startSmartroPay();}} >
                         <PayBtn>
-                            <PayTitle>주문하기</PayTitle>
+                            <PayTitle>{LANGUAGE[language].cartView.makeOrder}</PayTitle>
                             <PayIcon source={require("../../../assets/icons/order.png")} />
                         </PayBtn>
                      </TouchableWithoutFeedback>
