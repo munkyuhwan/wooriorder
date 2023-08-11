@@ -144,7 +144,10 @@ export const CartItemAmtText = styled.Text`
 export const CartItemCancelWrapper = styled.View`
     width:100%;
     height:100%;
+    flex:1;
 `
-export const CartItemCancelBtn = styled(TouchableWithoutFeedback)`
-
+export const CartItemCancelBtn = styled.Image`
+    width:25px;
+    height:25px;
+    resizeMode:contain;
 `

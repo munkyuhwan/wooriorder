@@ -56,7 +56,6 @@ const CartView = () =>{
                             <CartListItem {...item} />
                         )
                     }}
-
                 >
                 </CartFlatList>
                 <OrderWrapper>

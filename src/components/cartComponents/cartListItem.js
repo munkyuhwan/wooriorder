@@ -3,12 +3,13 @@ import {
     Animated,
     TouchableWithoutFeedback
 } from 'react-native'
-import { CartItemAmtController, CartItemAmtControllerImage, CartItemAmtControllerText, CartItemAmtText, CartItemAmtWrapper, CartItemCancelWrapper, CartItemImage, CartItemImageTogoWrapper, CartItemPrice, CartItemTitle, CartItemTitlePriceWrapper, CartItemTogoBtn, CartItemTogoIcon, CartItemTogoText, CartItemTogoWrapper, CartItemWrapper } from '../../styles/main/cartStyle';
+import { CartItemAmtController, CartItemAmtControllerImage, CartItemAmtControllerText, CartItemAmtText, CartItemAmtWrapper, CartItemCancelBtn, CartItemCancelWrapper, CartItemImage, CartItemImageTogoWrapper, CartItemPrice, CartItemTitle, CartItemTitlePriceWrapper, CartItemTogoBtn, CartItemTogoIcon, CartItemTogoText, CartItemTogoWrapper, CartItemWrapper } from '../../styles/main/cartStyle';
 
 const CartListItem = (props) => {
     
     const calculateAmt = (operator, amt) =>{
-
+        // plus, minus, cancel
+        
     }
 
     return(
@@ -39,9 +40,12 @@ const CartListItem = (props) => {
                         </TouchableWithoutFeedback>
                     </CartItemAmtWrapper>
                 </CartItemTitlePriceWrapper>
-                <CartItemCancelWrapper>
+                <TouchableWithoutFeedback onPress={()=>{calculateAmt("cancel",0)}}>
+                    <CartItemCancelWrapper>
+                        <CartItemCancelBtn source={require("../../../assets/icons/close_grey.png")} />
+                    </CartItemCancelWrapper>
+                </TouchableWithoutFeedback>
 
-                </CartItemCancelWrapper>
             </CartItemWrapper>
         </>
     )
