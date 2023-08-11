@@ -126,19 +126,19 @@ export const CartItemAmtController = styled.View`
     marginTop:auto;
     marginBottom:auto;
     flexDirection:row;
-`
-export const CartItemAmtControllerText = styled.Text`
-    fontSize:45px;
-    fontWeight:normal;
-    lineHeight:40px;
     textAlign:center;
 `
-    
- 
+export const CartItemAmtControllerImage = styled.Image`
+    width:25px;
+    height:25px;
+    flex:1;
+ `
 export const CartItemAmtText = styled.Text`
     fontSize:14px;
     fontWeight:bold;
-
+    flex:1;
+    textAlign:center;
+    lineHeight:28px;
 `
 // 취소 버튼
 export const CartItemCancelWrapper = styled.View`
