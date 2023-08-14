@@ -21,24 +21,7 @@ export default function Navigation() {
                     name='main'
                     component={MainScreen}
                     options={{title:"Main Screen"}}
-                 />
-                {/* 
-                <Stack.Screen
-                    name='AddTodo'
-                    component={AddTodo}
-                    options={{ title: 'AddTodo' }}
                 />
-                <Stack.Screen
-                    name='EditTodo'
-                    component={EditTodo}
-                    options={{ title: 'EditTodo' }}
-                />
-                <Stack.Screen
-                    name='ViewTodos'
-                    component={ViewTodos}
-                    options={{ title: 'ViewTodos' }}
-                />
- */}
         </Stack.Navigator>
     </NavigationContainer>)
 }

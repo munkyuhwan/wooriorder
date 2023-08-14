@@ -8,6 +8,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
+import com.wooriorder.modules.screenController.KeepAwakePackage;
 import com.wooriorder.modules.smartro.SmartroPayPackage;
 import com.wooriorder.modules.toast.ToastPackage;
 
@@ -30,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
             packages.add(new ToastPackage());
             packages.add(new SmartroPayPackage());
+            packages.add(new KeepAwakePackage());
             // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
           return packages;

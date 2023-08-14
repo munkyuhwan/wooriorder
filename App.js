@@ -23,12 +23,16 @@ import {
 import store from './src/store'
 import { Provider } from 'react-redux'
 import Navigation from './src/navigation'
+ 
 
 StatusBar.setHidden(true);
 
 const App =() =>{
+    const {ScreenController} = NativeModules;
+    ScreenController.keepAwake();
+    ScreenController.setBrightness(0.2);
     return (
-        <Provider store={store}>
+        <Provider store={store} >
             <Navigation />
         </Provider>
       )
