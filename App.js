@@ -28,9 +28,6 @@ import Navigation from './src/navigation'
 StatusBar.setHidden(true);
 
 const App =() =>{
-    const {ScreenController} = NativeModules;
-    ScreenController.keepAwake();
-    ScreenController.setBrightness(0.2);
     return (
         <Provider store={store} >
             <Navigation />

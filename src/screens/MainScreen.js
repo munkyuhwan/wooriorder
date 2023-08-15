@@ -1,26 +1,36 @@
 import React, { useState } from 'react'
-import { 
-    StyleSheet,
-    View, 
-    Text, 
-    TouchableOpacity, 
-    TextInput, 
-    Dimensions 
-} from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import { addEditDeleteTodo } from '../store/todos'
-import Header from '../components/common/headerComponent'
+import {View, NativeModules} from 'react-native'
 import SideMenu from '../components/main/sideMenu'
 import TopMenu from '../components/main/topMenu'
 import { MainWrapper, WholeWrapper } from '../styles/main/mainStyle'
 import { mainTheme } from '../../assets/colors/color'
 import CartView from '../components/main/cartView'
+import { SCREEN_TIMEOUT } from '../resources/numberValues'
 
 const MainScreen = () =>{
 
+    const {ScreenController} = NativeModules;
+
+    let timeoutSet = null
+    setBrightness(0.2)
+
+    function setBrightness (brightness) {
+        ScreenController.keepAwake();
+        ScreenController.setBrightness(brightness);    
+    }
+
+    function screenTimeOut(){
+        if(timeoutSet!=null){clearInterval(timeoutSet);}
+        timeoutSet =  setInterval(()=>{
+            setBrightness(0.2)
+            clearInterval(timeoutSet);
+        },SCREEN_TIMEOUT)
+    }
+
+
     return(
         <>
-            <WholeWrapper>
+            <WholeWrapper onTouchStart={()=>{console.log("ontouchstart!!!!"); setBrightness(0.7); screenTimeOut(); }} >
                 <SideMenu/>
                 <MainWrapper>
                     <TopMenu/>
