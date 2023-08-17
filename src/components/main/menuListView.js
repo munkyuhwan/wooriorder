@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Animated,FlatList,Text,TouchableWithoutFeedback } from 'react-native'
+import { Animated,FlatList,Text,TouchableWithoutFeedback, View } from 'react-native'
 import { MenuListWrapper } from '../../styles/main/menuListStyle';
 import MenuItem from '../mainComponents/menuItem';
 
@@ -10,8 +10,8 @@ const MenuListView = () => {
         <>
             <MenuListWrapper>
                 <FlatList
-                    columnWrapperStyle={{justifyContent:'space-between', paddingBottom:34}}
-                    style={{height:'100%', backgroundColor:'blue'}}
+                    columnWrapperStyle={{gap:12}}
+                    style={{height:'100%'}}
                     data={[{},{},{},{},{},{},{},{},{},{},{},{},{},{}]}
                     renderItem={(item)=>{return(<MenuItem item={item} /> );}}
                     numColumns={3}
