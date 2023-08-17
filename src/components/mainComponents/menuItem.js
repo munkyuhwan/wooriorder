@@ -9,7 +9,7 @@ const MenuItem = ({item}) => {
     //<MenuItemImage />
     const imgUrl = item.item.imgUrl;
     const itemName = item.item.itemName;
-    const itemPrice= item.item.itemName;
+    const itemPrice= item.item.itemPrice;
     const itemPk = item.item.itemPk;
 
 
