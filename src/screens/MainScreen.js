@@ -13,7 +13,7 @@ const MainScreen = () =>{
     const {ScreenController} = NativeModules;
 
     let timeoutSet = null
-    setBrightness(0.2)
+    setBrightness(0.7)
 
     function setBrightness (brightness) {
         ScreenController.keepAwake();
@@ -31,7 +31,7 @@ const MainScreen = () =>{
 
     return(
         <>
-            <WholeWrapper onTouchStart={()=>{console.log("ontouchstart!!!!"); setBrightness(0.7); screenTimeOut(); }} >
+            <WholeWrapper onTouchStart={()=>{/*  setBrightness(0.7); screenTimeOut();  */}} >
                 <SideMenu/>
                 <MainWrapper>
                     <TopMenu/>

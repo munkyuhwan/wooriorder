@@ -9,14 +9,15 @@ const MenuListView = () => {
     return(
         <>
             <MenuListWrapper>
-            <FlatList
-                style={{height:'100%', backgroundColor:'blue'}}
-                data={[{},{},{},{},{},{},{},{}]}
-                renderItem={(item)=>{return(<MenuItem item={item} /> );}}
-                numColumns={3}
-                keyExtractor={(item,index)=>index}
-            />
-                
+                <FlatList
+                    columnWrapperStyle={{justifyContent:'space-between', paddingBottom:34}}
+                    style={{height:'100%', backgroundColor:'blue'}}
+                    data={[{},{},{},{},{},{},{},{},{},{},{},{},{},{}]}
+                    renderItem={(item)=>{return(<MenuItem item={item} /> );}}
+                    numColumns={3}
+                    keyExtractor={(item,index)=>index}
+                />
+                    
             </MenuListWrapper>
         </>
     );

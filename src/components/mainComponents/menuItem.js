@@ -8,8 +8,7 @@ const MenuItem = (props) => {
     return(
         <>
             <MenuItemWrapper>
-                <Text>items {props.item.index}</Text>
-               <MenuItemImage />
+               <MenuItemImage source={{uri:"https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg"}} />
             </MenuItemWrapper>
         </>
     );
