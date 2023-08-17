@@ -2,14 +2,22 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Animated,FlatList,Text,TouchableWithoutFeedback } from 'react-native'
 import { MenuItemBottomWRapper, MenuItemButton, MenuItemButtonInnerWrapper, MenuItemButtonWrapper, MenuItemHotness, MenuItemHotnessWrapper, MenuItemImage, MenuItemImageWrapper, MenuItemInfoWRapper, MenuItemName, MenuItemPrice, MenuItemTopWrapper, MenuItemWrapper } from '../../styles/main/menuListStyle';
+import FastImage from 'react-native-fast-image';
+import { RADIUS, RADIUS_DOUBLE } from '../../styles/values';
 
-const MenuItem = (props) => {
-    console.log(props)
+const MenuItem = ({item}) => {
+    //<MenuItemImage />
+    const imgUrl = item.item.imgUrl;
+    const itemName = item.item.itemName;
+    const itemPrice= item.item.itemName;
+    const itemPk = item.item.itemPk;
+
+
     return(
         <>
             <MenuItemWrapper>
                 <MenuItemTopWrapper>
-                    <MenuItemImage source={{uri:"https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg"}} />
+                    <FastImage style={{width:'100%',height:183,resizeMode:"background",borderRadius:RADIUS_DOUBLE}} source={{uri:imgUrl}}/>
                     <MenuItemImageWrapper>
                         <MenuItemHotnessWrapper>
                             <MenuItemHotness source={require('../../../assets/icons/new.png')} />
@@ -26,8 +34,8 @@ const MenuItem = (props) => {
                     </MenuItemImageWrapper>
                 </MenuItemTopWrapper>
                 <MenuItemBottomWRapper>
-                    <MenuItemName>testtest</MenuItemName>
-                    <MenuItemPrice>2000304원</MenuItemPrice>
+                    <MenuItemName>{itemName}</MenuItemName>
+                    <MenuItemPrice>{itemPrice}원</MenuItemPrice>
                 </MenuItemBottomWRapper>
             </MenuItemWrapper>
         </>
