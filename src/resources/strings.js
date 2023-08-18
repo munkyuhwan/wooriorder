@@ -6,7 +6,12 @@ export const LANGUAGE = {
             totalAmt:"주문금액",
             totalAmtUnit:'원',
             makeOrder:"주문하기",
-
+        },
+        detailView:{
+            toMenu:'메뉴로 이동',
+            addToCart:'주문 담기',
+            selectOpt:'옵션 선택',
+            recommendMenu:'함께먹기 좋은 메뉴',
         }
     },
     japanese:{

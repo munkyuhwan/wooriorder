@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Button, NativeModule, NativeModules, TouchableOpacity } from 'react-native';
+import { Button, LogBox, NativeModule, NativeModules, TouchableOpacity } from 'react-native';
 import {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -26,7 +26,8 @@ import Navigation from './src/navigation'
  
 
 StatusBar.setHidden(true);
-
+console.disableYellowBox = true;
+LogBox.ignoreAllLogs();
 const App =() =>{
     return (
         <Provider store={store} >

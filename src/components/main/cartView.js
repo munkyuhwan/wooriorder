@@ -13,7 +13,6 @@ import { LANGUAGE } from '../../resources/strings';
 
 const CartView = () =>{
     const {language} = useSelector(state=>state.languageSelect);
-    console.log("language: ",language)
 
     const dispatch = useDispatch();
     const {isIconOn} = useSelector(state=>state.onClick);

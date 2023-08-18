@@ -7,9 +7,12 @@ import { mainTheme } from '../../assets/colors/color'
 import CartView from '../components/main/cartView'
 import { SCREEN_TIMEOUT } from '../resources/numberValues'
 import MenuListView from '../components/main/menuListView'
-import ItemDetail from '../components/mainComponents/itemDetail'
+import ItemDetail from '../components/detailComponents/itemDetail'
+import { useSelector } from 'react-redux'
 
 const MainScreen = () =>{
+    const {language} = useSelector(state=>state.languageSelect);
+    const {menuDetailIndex} = useSelector(state=>state.menuDetail);
 
     const {ScreenController} = NativeModules;
 
@@ -28,15 +31,16 @@ const MainScreen = () =>{
             clearInterval(timeoutSet);
         },SCREEN_TIMEOUT)
     }
-
-
+console.log("menuDetailIndex:",menuDetailIndex)
     return(
         <>
             <WholeWrapper onTouchStart={()=>{/*  setBrightness(0.7); screenTimeOut();  */}} >
                 <SideMenu/>
                 <MainWrapper>
                     <TopMenu/>
-                    <ItemDetail/>  
+                    {(menuDetailIndex!=null) &&
+                        <ItemDetail language={language}/>  
+                    }
                     <MenuListView/>
                     <CartView/>
                 </MainWrapper>

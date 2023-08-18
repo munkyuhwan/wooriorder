@@ -19,7 +19,7 @@ const MenuListView = () => {
                     columnWrapperStyle={{gap:12}}
                     style={{height:'100%'}}
                     data={menu}
-                    renderItem={(item)=>{return(<MenuItem item={item} /> );}}
+                    renderItem={({item, index})=>{return(<MenuItem item={item} index={index} /> );}}
                     numColumns={3}
                     keyExtractor={(item,index)=>index}
                 />

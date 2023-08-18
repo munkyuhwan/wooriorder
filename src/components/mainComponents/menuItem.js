@@ -6,13 +6,13 @@ import FastImage from 'react-native-fast-image';
 import { RADIUS, RADIUS_DOUBLE } from '../../styles/values';
 import { onMenuDetailView } from '../../store/menuDetail';
 
-const MenuItem = ({item}) => {
+const MenuItem = ({item,index}) => {
     //<MenuItemImage />
     const dispatch = useDispatch();
-    const imgUrl = item.item.imgUrl;
-    const itemName = item.item.itemName;
-    const itemPrice= item.item.itemPrice;
-    const itemPk = item.item.itemPk;
+    const imgUrl = item.imgUrl;
+    const itemName = item.itemName;
+    const itemPrice= item.itemPrice;
+    const itemPk = item.itemPk;
 
 
     return(
@@ -26,7 +26,7 @@ const MenuItem = ({item}) => {
                             <MenuItemHotness source={require('../../../assets/icons/best.png')} />
                         </MenuItemHotnessWrapper>
                         <MenuItemButtonWrapper>
-                            <TouchableWithoutFeedback onPress={()=>{ dispatch(onMenuDetailView(item.index)) }} >
+                            <TouchableWithoutFeedback onPress={()=>{ dispatch(onMenuDetailView(index)) }} >
                                 <MenuItemButtonInnerWrapper justifyContent={"flex-start"} >
                                     <MenuItemButton source={require('../../../assets/icons/more.png')}/>
                                 </MenuItemButtonInnerWrapper>

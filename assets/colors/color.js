@@ -1,4 +1,5 @@
 export const mainTheme = '#000000';
+export const colorBlack = '#000000';
 export const tabBaseColor = '#404040';
 export const colorRed = "#ed3810"; 
 export const colorWhite = "#ffffff"; 
