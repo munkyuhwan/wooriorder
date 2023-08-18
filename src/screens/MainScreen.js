@@ -7,6 +7,7 @@ import { mainTheme } from '../../assets/colors/color'
 import CartView from '../components/main/cartView'
 import { SCREEN_TIMEOUT } from '../resources/numberValues'
 import MenuListView from '../components/main/menuListView'
+import ItemDetail from '../components/mainComponents/itemDetail'
 
 const MainScreen = () =>{
 
@@ -35,7 +36,7 @@ const MainScreen = () =>{
                 <SideMenu/>
                 <MainWrapper>
                     <TopMenu/>
-                    {/* <View style={{backgroundColor:mainTheme, width:'100%', height:'100%'}} /> */}
+                    <ItemDetail/>  
                     <MenuListView/>
                     <CartView/>
                 </MainWrapper>

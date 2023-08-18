@@ -9,6 +9,8 @@ const MenuListView = () => {
     const {menu} = useSelector((state)=>state.mainMenu);
 
     //console.log("menus:",menu)
+    //
+
 
     return(
         <>
@@ -21,7 +23,6 @@ const MenuListView = () => {
                     numColumns={3}
                     keyExtractor={(item,index)=>index}
                 />
-                    
             </MenuListWrapper>
         </>
     );

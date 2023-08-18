@@ -4,9 +4,11 @@ import { Animated,FlatList,Text,TouchableWithoutFeedback } from 'react-native'
 import { MenuItemBottomWRapper, MenuItemButton, MenuItemButtonInnerWrapper, MenuItemButtonWrapper, MenuItemHotness, MenuItemHotnessWrapper, MenuItemImage, MenuItemImageWrapper, MenuItemInfoWRapper, MenuItemName, MenuItemPrice, MenuItemTopWrapper, MenuItemWrapper } from '../../styles/main/menuListStyle';
 import FastImage from 'react-native-fast-image';
 import { RADIUS, RADIUS_DOUBLE } from '../../styles/values';
+import { onMenuDetailView } from '../../store/menuDetail';
 
 const MenuItem = ({item}) => {
     //<MenuItemImage />
+    const dispatch = useDispatch();
     const imgUrl = item.item.imgUrl;
     const itemName = item.item.itemName;
     const itemPrice= item.item.itemPrice;
@@ -24,9 +26,11 @@ const MenuItem = ({item}) => {
                             <MenuItemHotness source={require('../../../assets/icons/best.png')} />
                         </MenuItemHotnessWrapper>
                         <MenuItemButtonWrapper>
-                            <MenuItemButtonInnerWrapper justifyContent={"flex-start"} >
-                                <MenuItemButton source={require('../../../assets/icons/more.png')}/>
-                            </MenuItemButtonInnerWrapper>
+                            <TouchableWithoutFeedback onPress={()=>{ dispatch(onMenuDetailView(item.index)) }} >
+                                <MenuItemButtonInnerWrapper justifyContent={"flex-start"} >
+                                    <MenuItemButton source={require('../../../assets/icons/more.png')}/>
+                                </MenuItemButtonInnerWrapper>
+                            </TouchableWithoutFeedback>
                             <MenuItemButtonInnerWrapper justifyContent={"flex-end"}>
                                 <MenuItemButton source={require('../../../assets/icons/add.png')}/>
                             </MenuItemButtonInnerWrapper>
