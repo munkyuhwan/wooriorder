@@ -15,80 +15,96 @@ const slice = createSlice({
                     {
                         pk:1,
                         name:"면추가",
-                        price:1000
+                        price:1000,
+                        imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295671-exdfr.jpg",
                     },
                     {
                         pk:2,
                         name:"햄추가",
-                        price:1100
+                        price:1100,
+                        imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295706-sceie.jpg",
                     },
                     {
                         pk:3,
                         name:"당면추가",
-                        price:1300
+                        price:1300,
+                        imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295706-sceie.jpg",
                     },
                     {
                         pk:4,
                         name:"육슈 추가",
-                        price:1400
+                        price:1400,
+                        imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295671-exdfr.jpg",
                     }, 
                     {
                         pk:5,
                         name:"면추가",
-                        price:1000
+                        price:1000,
+                        imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295706-sceie.jpg",
                     },
                     {
                         pk:6,
                         name:"햄추가",
-                        price:1100
+                        price:1100,
+                        imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295671-exdfr.jpg",
                     },
                     {
                         pk:7,
                         name:"당면추가",
-                        price:1300
+                        price:1300,
+                        imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295706-sceie.jpg",
                     },
                     {
                         pk:8,
                         name:"육슈 추가",
-                        price:1400
+                        price:1400,
+                        imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295671-exdfr.jpg",
                     }, 
                     {
                         pk:9,
                         name:"면추가",
-                        price:1000
+                        price:1000,
+                        imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295706-sceie.jpg",
                     },
                     {
                         pk:10,
                         name:"햄추가",
-                        price:1100
+                        price:1100,
+                        imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295671-exdfr.jpg",
                     },
                     {
                         pk:11,
                         name:"당면추가",
-                        price:1300
+                        price:1300,
+                        imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg",
                     },
                     {
                         pk:12,
                         name:"육슈 추가",
-                        price:1400
+                        price:1400,
+                        imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295671-exdfr.jpg",
                     },
                 ],
                 recommendMenu:[
                     {
                         name:"떡볶이",
-                        price:1000
+                        price:1000,
+                        imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295706-sceie.jpg",
                     },
                     {
                         name:"순대",
-                        price:1100
+                        price:1100,
+                        imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg",
                     },
                     {
                         name:"튀김",
-                        price:1300
+                        price:1300,
+                        imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295706-sceie.jpg",
                     },
                     {
                         name:"김밥",
-                        price:1400
+                        price:1400,
+                        imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg",
                     },
                 ]
             },
@@ -359,19 +375,23 @@ const slice = createSlice({
                 options:[
                     {
                         name:"면추가",
-                        price:1000
+                        price:1000,
+                        imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295671-exdfr.jpg",
                     },
                     {
                         name:"햄추가",
-                        price:1100
+                        price:1100,
+                        imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295671-exdfr.jpg",
                     },
                     {
                         name:"당면추가",
-                        price:1300
+                        price:1300,
+                        imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295671-exdfr.jpg",
                     },
                     {
                         name:"육슈 추가",
-                        price:1400
+                        price:1400,
+                        imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295671-exdfr.jpg",
                     },
                 ],
                 recommendMenu:[

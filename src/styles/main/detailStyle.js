@@ -7,7 +7,7 @@ export const DetailWrapper=styled.View`
     width:100%;
     height:100%;
     paddingRight:64px;
-    paddingBottom:38px;
+    paddingBottom:23px;
     backgroundColor:${mainTheme};
 `
 export const DetailWhiteWrapper = styled.View`
@@ -135,8 +135,58 @@ export const OptItemInfoChecked = styled.Image`
     position:absolute;
     right:8px;
     bottom:8px;
+    display:${(props)=>{props.isChecked?"block":"none"} };
 `
 export const OptItemDim = styled.View`
+    position:absolute;
+    width:100%;
+    height:100%;
+    borderRadius:${RADIUS_SMALL};
+    backgroundColor:rgba(0,0,0,0.2);
+`
+// 추천선택 아이템
+export const RecommendItemWrapper= styled.View`
+
+`
+export const RecommendItemImageWrapper = styled.View`
+    width:95px;
+    height:60px;
+    borderRadius:${RADIUS_SMALL};
+    marginRight:9px;
+`
+export const RecommendItemImage = styled.Image`
+    width:100%;
+    height:100%;
+    borderRadius:${RADIUS_SMALL};
+`
+export const RecommendItemInfoWrapper = styled.View`
+    width:100%;
+    flexDirection:column;
+    paddingTop:10px;
+    paddingRight:12px;
+    justifyContents:center;
+`
+export const RecommendItemInfoTitle = styled.Text`
+    fontSize:12px;
+    color:${colorBlack};
+    fontWeight:bold;
+    textAlign:center;
+`
+export const RecommendItemInfoPrice = styled.Text`
+    fontSize:12px;
+    color:${colorRed};
+    textAlign:center;
+`
+export const RecommendItemInfoChecked = styled.Image`
+    width:18px;
+    height:18px;
+    resizeMode:contain;
+    position:absolute;
+    right:8px;
+    bottom:8px;
+    display:${(props)=>{props.isChecked?"block":"none"} };
+`
+export const RecommendItemDim = styled.View`
     position:absolute;
     width:100%;
     height:100%;

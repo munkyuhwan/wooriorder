@@ -14,12 +14,12 @@ const OptItem = (props)=>{
     const onOptionSelect = ()=>{
 
     }
-
+    console.log(optionData?.imgUrl)
     return(
         <>
             <TouchableWithoutFeedback>
                 <OptItemWrapper>
-                    <OptItemImage  source={{uri:`${menuData?.imgUrl}`}}/>
+                    <OptItemImage  source={{uri:`${optionData?.imgUrl}`}}/>
                     <OptItemDim/>
                     <OptItemInfoWrapper>
                         <OptItemInfoTitle>{optionData?.name}</OptItemInfoTitle>

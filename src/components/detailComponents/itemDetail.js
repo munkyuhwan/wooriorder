@@ -8,6 +8,7 @@ import { LANGUAGE } from '../../resources/strings';
 import OptItem from './optItem';
 import CommonIndicator from '../common/waitIndicator';
 import WaitIndicator from '../common/waitIndicator';
+import RecommendItem from './recommendItem';
 
 const ItemDetail = (props) => {
     const dispatch = useDispatch();
@@ -68,10 +69,7 @@ const ItemDetail = (props) => {
     return(
         <>
             <Animated.View  style={[{...PopStyle.animatedPop, ...boxWidthStyle } ]} >
-                
-
                     <DetailWrapper>
-                       
                             <DetailWhiteWrapper>
                                 {menuDetailIndex==null &&
                                     <>
@@ -109,13 +107,16 @@ const ItemDetail = (props) => {
                                                 );
                                             })}
                                         </OptList>
-
                                     </OptListWrapper>
                                     <OptListWrapper>
                                         <OptTitleText>{LANGUAGE[language].detailView.recommendMenu}</OptTitleText>
-                                        <OptList
-                                        
-                                        />
+                                        <OptList horizontal showsHorizontalScrollIndicator={false} >
+                                            {recommendMenu.map((el)=>{
+                                                return(
+                                                    <RecommendItem recommendData={el} menuData={menu[menuDetailIndex]}/>    
+                                                );
+                                            })}
+                                        </OptList>
                                     </OptListWrapper>
                                 </OptRecommendWrapper>
                                 {/* 하단 버튼*/}
