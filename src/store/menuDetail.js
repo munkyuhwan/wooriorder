@@ -18,7 +18,6 @@ export default slice.reducer
 // Action
 const {  menuDetailIndexSelect } = slice.actions
 export const onMenuDetailView = (index) => async dispatch =>{
-    console.log("selected index: ",index)
     try {
         dispatch(menuDetailIndexSelect(index));
     } catch (e) {

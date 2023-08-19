@@ -14,7 +14,6 @@ const OptItem = (props)=>{
     const onOptionSelect = ()=>{
 
     }
-    console.log(optionData?.imgUrl)
     return(
         <>
             <TouchableWithoutFeedback>

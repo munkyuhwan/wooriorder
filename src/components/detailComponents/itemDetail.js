@@ -54,7 +54,7 @@ const ItemDetail = (props) => {
             duration: 300,
             useNativeDriver:true,
         }).start(()=>{
-            console.log("open vertical end");    
+
         }) 
     }
     
@@ -70,71 +70,69 @@ const ItemDetail = (props) => {
         <>
             <Animated.View  style={[{...PopStyle.animatedPop, ...boxWidthStyle } ]} >
                     <DetailWrapper>
-                            <DetailWhiteWrapper>
-                                {menuDetailIndex==null &&
-                                    <>
-                                        <WaitIndicator/>
-                                    </>
-                                }
-                                {menuDetailIndex!=null &&
-                                <>
-                                {/* 상단 제품 정보*/}
-                                <DetailInfoWrapper>
-                                    <DetailItemInfoImage source={{uri:`${menu[menuDetailIndex]?.imgUrl}`}}/>
-                                    <DetailItemInfoWrapper>
-                                        <DetailItemInfoTitleWrapper>
-                                            <DetailItemInfoTitle>{menu[menuDetailIndex]?.itemName}</DetailItemInfoTitle>
-                                            <DetailItemInfoTitleEtc source={require("../../../assets/icons/new.png")}/>
-                                            <DetailItemInfoTitleEtc source={require("../../../assets/icons/best.png")}/>
-                                        </DetailItemInfoTitleWrapper>
-                                        <DetailItemInfoSource>{menu[menuDetailIndex]?.itemAddtion}</DetailItemInfoSource>
-                                        <DetailPriceMoreWrapper>
-                                            <DetailItemInfoPriceWrapper>
-                                                <DetailItemInfoPrice isBold={true} >23,000</DetailItemInfoPrice><DetailItemInfoPrice isBold={false}> 원</DetailItemInfoPrice>
-                                            </DetailItemInfoPriceWrapper>
-                                            <DetailItemInfoMore>이거 안먹으면 후회한다. 꼭 므그라</DetailItemInfoMore>
-                                        </DetailPriceMoreWrapper>
-                                    </DetailItemInfoWrapper>
-                                </DetailInfoWrapper>
-                                {/* 중간 옵션&추천메뉴*/}
-                                <OptRecommendWrapper>
-                                    <OptListWrapper>
-                                        <OptTitleText>{LANGUAGE[language].detailView.selectOpt}</OptTitleText>
-                                        <OptList horizontal showsHorizontalScrollIndicator={false} >
-                                            {optionSelect.map((el)=>{
-                                                return(
-                                                    <OptItem optionData={el} menuData={menu[menuDetailIndex]}/>    
-                                                );
-                                            })}
-                                        </OptList>
-                                    </OptListWrapper>
-                                    <OptListWrapper>
-                                        <OptTitleText>{LANGUAGE[language].detailView.recommendMenu}</OptTitleText>
-                                        <OptList horizontal showsHorizontalScrollIndicator={false} >
-                                            {recommendMenu.map((el)=>{
-                                                return(
-                                                    <RecommendItem recommendData={el} menuData={menu[menuDetailIndex]}/>    
-                                                );
-                                            })}
-                                        </OptList>
-                                    </OptListWrapper>
-                                </OptRecommendWrapper>
-                                {/* 하단 버튼*/}
-                                <BottomButtonWrapper>
-                                    <TouchableWithoutFeedback onPress={()=>{dispatch(onMenuDetailView(null))}}>
-                                        <BottomButton backgroundColor={colorRed} >
-                                            <BottomButtonText>{LANGUAGE[language].detailView.toMenu}</BottomButtonText>
-                                            <BottomButtonIcon source={require("../../../assets/icons/folk_nife.png")} />
-                                        </BottomButton>
-                                    </TouchableWithoutFeedback>
-                                    <BottomButton backgroundColor={colorBlack} >
-                                        <BottomButtonText>{LANGUAGE[language].detailView.addToCart}</BottomButtonText>
-                                        <BottomButtonIcon source={require("../../../assets/icons/cart_select.png")} />
+                        <DetailWhiteWrapper>
+                            {menuDetailIndex==null &&
+                                <WaitIndicator/>
+                            }
+                            {menuDetailIndex!=null &&
+                            <>
+                            {/* 상단 제품 정보*/}
+                            <DetailInfoWrapper>
+                                <DetailItemInfoImage source={{uri:`${menu[menuDetailIndex]?.imgUrl}`}}/>
+                                <DetailItemInfoWrapper>
+                                    <DetailItemInfoTitleWrapper>
+                                        <DetailItemInfoTitle>{menu[menuDetailIndex]?.itemName}</DetailItemInfoTitle>
+                                        <DetailItemInfoTitleEtc source={require("../../../assets/icons/new.png")}/>
+                                        <DetailItemInfoTitleEtc source={require("../../../assets/icons/best.png")}/>
+                                    </DetailItemInfoTitleWrapper>
+                                    <DetailItemInfoSource>{menu[menuDetailIndex]?.itemAddtion}</DetailItemInfoSource>
+                                    <DetailPriceMoreWrapper>
+                                        <DetailItemInfoPriceWrapper>
+                                            <DetailItemInfoPrice isBold={true} >23,000</DetailItemInfoPrice><DetailItemInfoPrice isBold={false}> 원</DetailItemInfoPrice>
+                                        </DetailItemInfoPriceWrapper>
+                                        <DetailItemInfoMore>이거 안먹으면 후회한다. 꼭 므그라</DetailItemInfoMore>
+                                    </DetailPriceMoreWrapper>
+                                </DetailItemInfoWrapper>
+                            </DetailInfoWrapper>
+                            {/* 중간 옵션&추천메뉴*/}
+                            <OptRecommendWrapper>
+                                <OptListWrapper>
+                                    <OptTitleText>{LANGUAGE[language].detailView.selectOpt}</OptTitleText>
+                                    <OptList horizontal showsHorizontalScrollIndicator={false} >
+                                        {optionSelect.map((el)=>{
+                                            return(
+                                                <OptItem optionData={el} menuData={menu[menuDetailIndex]}/>    
+                                            );
+                                        })}
+                                    </OptList>
+                                </OptListWrapper>
+                                <OptListWrapper>
+                                    <OptTitleText>{LANGUAGE[language].detailView.recommendMenu}</OptTitleText>
+                                    <OptList horizontal showsHorizontalScrollIndicator={false} >
+                                        {recommendMenu.map((el)=>{
+                                            return(
+                                                <RecommendItem recommendData={el} menuData={menu[menuDetailIndex]}/>    
+                                            );
+                                        })}
+                                    </OptList>
+                                </OptListWrapper>
+                            </OptRecommendWrapper>
+                            {/* 하단 버튼*/}
+                            <BottomButtonWrapper>
+                                <TouchableWithoutFeedback onPress={()=>{dispatch(onMenuDetailView(null))}}>
+                                    <BottomButton backgroundColor={colorRed} >
+                                        <BottomButtonText>{LANGUAGE[language].detailView.toMenu}</BottomButtonText>
+                                        <BottomButtonIcon source={require("../../../assets/icons/folk_nife.png")} />
                                     </BottomButton>
-                                </BottomButtonWrapper>
-                                </>
-                                }
-                            </DetailWhiteWrapper>
+                                </TouchableWithoutFeedback>
+                                <BottomButton backgroundColor={colorBlack} >
+                                    <BottomButtonText>{LANGUAGE[language].detailView.addToCart}</BottomButtonText>
+                                    <BottomButtonIcon source={require("../../../assets/icons/cart_select.png")} />
+                                </BottomButton>
+                            </BottomButtonWrapper>
+                            </>
+                            }
+                        </DetailWhiteWrapper>
                 </DetailWrapper>
             </Animated.View>
         </>
