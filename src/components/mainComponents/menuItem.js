@@ -7,13 +7,12 @@ import { RADIUS, RADIUS_DOUBLE } from '../../styles/values';
 import { onMenuDetailView } from '../../store/menuDetail';
 
 const MenuItem = ({item,index}) => {
-    //<MenuItemImage />
+    //<MenuItemImage />    
     const dispatch = useDispatch();
     const imgUrl = item.imgUrl;
     const itemName = item.itemName;
     const itemPrice= item.itemPrice;
     const itemPk = item.itemPk;
-
 
     return(
         <>

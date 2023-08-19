@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled, {css} from 'styled-components/native';
-import { colorBlack, colorRed, colorWhite, mainTheme } from '../../../assets/colors/color';
-import { RADIUS } from '../values';
+import { colorBlack, colorRed, colorWhite, colorYellow, mainTheme } from '../../../assets/colors/color';
+import { RADIUS, RADIUS_SMALL } from '../values';
 
 export const DetailWrapper=styled.View`
     width:100%;
@@ -82,7 +82,6 @@ export const DetailItemInfoMore = styled.Text`
 // 옵션 & 추천메뉴
 export const OptRecommendWrapper = styled.View`
     flex:1;
-    backgroundColor:blue;
     flexDirection:column;
 `
 export const OptListWrapper = styled.View`
@@ -92,10 +91,57 @@ export const OptTitleText = styled.Text`
     fontSize:17px;   
     color:${colorBlack};
     fontWeight:bold;
+    paddingTop:29px;
+    paddingBottom:12px;
 `
-export const OptList = styled.FlatList`
+export const OptList = styled.ScrollView`
     width:100%;
-    backgroundColor:red;
+`
+// 옵션선택 아이템
+export const OptItemWrapper= styled.View`
+    width:95px;
+    height:60px;
+    borderRadius:${RADIUS_SMALL};
+    marginRight:9px;
+`
+export const OptItemImage = styled.Image`
+    width:100%;
+    height:100%;
+    borderRadius:${RADIUS_SMALL};
+`
+export const OptItemInfoWrapper = styled.View`
+    width:100%;
+    height:100%;
+    position:absolute;
+    flexDirection:column;
+    paddingTop:10px;
+    paddingRight:12px;
+    paddingBottop:10px;
+    paddingLeft:12px;
+`
+export const OptItemInfoTitle = styled.Text`
+    fontSize:12px;
+    color:${colorWhite};
+    fontWeight:bold;
+`
+export const OptItemInfoPrice = styled.Text`
+    fontSize:12px;
+    color:${colorYellow};
+`
+export const OptItemInfoChecked = styled.Image`
+    width:18px;
+    height:18px;
+    resizeMode:contain;
+    position:absolute;
+    right:8px;
+    bottom:8px;
+`
+export const OptItemDim = styled.View`
+    position:absolute;
+    width:100%;
+    height:100%;
+    borderRadius:${RADIUS_SMALL};
+    backgroundColor:rgba(0,0,0,0.2);
 `
 // 하단 버튼
 export const BottomButtonWrapper = styled.View`

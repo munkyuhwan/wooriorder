@@ -9,12 +9,17 @@ import { SideMenuItemTouchable } from '../common/sideMenuItem'
 import { TopMenuItemTouchable, TopMenuItemTouchableOff } from '../menuComponents/topMenuItem'
 import { CategoryScrollView, CategoryWrapper, IconWrapper, TableName, TableNameBig, TableNameSmall, TopMenuWrapper, TouchIcon } from '../../styles/main/topMenuStyle'
  import TopButton from '../menuComponents/topButton'
+import { useSelector } from 'react-redux'
+import ItemDetail from '../detailComponents/itemDetail'
 
 const TopMenu = () =>{
     const test = [0,1,2,3,4,5,6,7,8,9];
     const [topSelection, setTopSelection] = useState(0);
+    const {language} = useSelector(state=>state.languageSelect);
+
     return(
         <>
+            <ItemDetail language={language}/>  
             <TopMenuWrapper>
                 <SafeAreaView>
                     <CategoryScrollView horizontal showsHorizontalScrollIndicator={false} >

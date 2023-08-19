@@ -11,8 +11,6 @@ import ItemDetail from '../components/detailComponents/itemDetail'
 import { useSelector } from 'react-redux'
 
 const MainScreen = () =>{
-    const {language} = useSelector(state=>state.languageSelect);
-    const {menuDetailIndex} = useSelector(state=>state.menuDetail);
 
     const {ScreenController} = NativeModules;
 
@@ -31,16 +29,13 @@ const MainScreen = () =>{
             clearInterval(timeoutSet);
         },SCREEN_TIMEOUT)
     }
-console.log("menuDetailIndex:",menuDetailIndex)
+
     return(
         <>
             <WholeWrapper onTouchStart={()=>{/*  setBrightness(0.7); screenTimeOut();  */}} >
                 <SideMenu/>
                 <MainWrapper>
                     <TopMenu/>
-                    {(menuDetailIndex!=null) &&
-                        <ItemDetail language={language}/>  
-                    }
                     <MenuListView/>
                     <CartView/>
                 </MainWrapper>
