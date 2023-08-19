@@ -15,11 +15,9 @@ import ItemDetail from '../detailComponents/itemDetail'
 const TopMenu = () =>{
     const test = [0,1,2,3,4,5,6,7,8,9];
     const [topSelection, setTopSelection] = useState(0);
-    const {language} = useSelector(state=>state.languageSelect);
 
     return(
         <>
-            <ItemDetail language={language}/>  
             <TopMenuWrapper>
                 <SafeAreaView>
                     <CategoryScrollView horizontal showsHorizontalScrollIndicator={false} >
