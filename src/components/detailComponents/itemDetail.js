@@ -15,6 +15,7 @@ const ItemDetail = (props) => {
     const {menuDetailIndex} = useSelector(state=>state.menuDetail);
     const {menu} = useSelector((state)=>state.mainMenu);
     const language = props.language;
+    const [detailZIndex, setDetailZIndex] = useState(0);
 
     const optionSelect = menu[menuDetailIndex]?.options;
     const recommendMenu = menu[menuDetailIndex]?.recommendMenu;
@@ -54,12 +55,15 @@ const ItemDetail = (props) => {
             duration: 300,
             useNativeDriver:true,
         }).start(()=>{
-
+            if(menuDetailIndex== null) {
+                setDetailZIndex(0)
+            }
         }) 
     }
     
     useEffect(()=>{
         if(menuDetailIndex!= null) {
+            setDetailZIndex(999)
             onSelectHandleAnimation(1);
         }else {
             onSelectHandleAnimation(0);
@@ -68,7 +72,7 @@ const ItemDetail = (props) => {
 
     return(
         <>
-            <Animated.View  style={[{...PopStyle.animatedPop, ...boxWidthStyle } ]} >
+            <Animated.View  style={[{...PopStyle.animatedPop, ...boxWidthStyle,...{zIndex:detailZIndex} } ]} >
                     <DetailWrapper>
                         <DetailWhiteWrapper>
                             {menuDetailIndex==null &&
@@ -142,7 +146,6 @@ const ItemDetail = (props) => {
 const PopStyle = StyleSheet.create({
     animatedPop:{
         position:'absolute', 
-        zIndex:99, 
         width:'100%',
         height:'100%',
         paddingTop:108,

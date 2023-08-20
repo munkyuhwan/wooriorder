@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Animated,FlatList,Text,TouchableWithoutFeedback } from 'react-native'
-import { MenuItemBottomWRapper, MenuItemButton, MenuItemButtonInnerWrapper, MenuItemButtonWrapper, MenuItemHotness, MenuItemHotnessWrapper, MenuItemImage, MenuItemImageWrapper, MenuItemInfoWRapper, MenuItemName, MenuItemPrice, MenuItemTopWrapper, MenuItemWrapper } from '../../styles/main/menuListStyle';
+import { MenuItemBottomWRapper, MenuItemButton, MenuItemButtonInnerWrapper, MenuItemButtonInnerWrapperLeft, MenuItemButtonInnerWrapperRight, MenuItemButtonWrapper, MenuItemHotness, MenuItemHotnessWrapper, MenuItemImage, MenuItemImageWrapper, MenuItemInfoWRapper, MenuItemName, MenuItemPrice, MenuItemTopWrapper, MenuItemWrapper } from '../../styles/main/menuListStyle';
 import FastImage from 'react-native-fast-image';
 import { RADIUS, RADIUS_DOUBLE } from '../../styles/values';
 import { onMenuDetailView } from '../../store/menuDetail';
@@ -26,13 +26,15 @@ const MenuItem = ({item,index}) => {
                         </MenuItemHotnessWrapper>
                         <MenuItemButtonWrapper>
                             <TouchableWithoutFeedback onPress={()=>{ dispatch(onMenuDetailView(index)) }} >
-                                <MenuItemButtonInnerWrapper justifyContent={"flex-start"} >
+                                <MenuItemButtonInnerWrapperRight>
                                     <MenuItemButton source={require('../../../assets/icons/more.png')}/>
-                                </MenuItemButtonInnerWrapper>
+                                </MenuItemButtonInnerWrapperRight>
                             </TouchableWithoutFeedback>
-                            <MenuItemButtonInnerWrapper justifyContent={"flex-end"}>
-                                <MenuItemButton source={require('../../../assets/icons/add.png')}/>
-                            </MenuItemButtonInnerWrapper>
+                            <TouchableWithoutFeedback onPress={()=>{}} >
+                                <MenuItemButtonInnerWrapperLeft>
+                                    <MenuItemButton source={require('../../../assets/icons/add.png')}/>
+                                </MenuItemButtonInnerWrapperLeft>
+                            </TouchableWithoutFeedback>
                         </MenuItemButtonWrapper>
                     </MenuItemImageWrapper>
                 </MenuItemTopWrapper>

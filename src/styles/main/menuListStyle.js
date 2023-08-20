@@ -38,11 +38,17 @@ export const MenuItemImage = styled.Image`
 export const MenuItemButtonWrapper = styled.View`
     flexDirection:row;
 `
-export const MenuItemButtonInnerWrapper = styled.View`
+export const MenuItemButtonInnerWrapperRight = styled.View`
     width:100%;
     flex:1;
     flexDirection: row;
-    justifyContent: ${(props)=>{props.justifyContent}};
+    justifyContent: flex-start;
+`
+export const MenuItemButtonInnerWrapperLeft = styled.View`
+    width:100%;
+    flex:1;
+    flexDirection: row;
+    justifyContent:flex-end;
 `
 export const MenuItemButton = styled.Image`
     width:36px;

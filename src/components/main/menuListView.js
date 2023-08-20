@@ -9,8 +9,6 @@ import ItemDetail from '../detailComponents/itemDetail';
 const MenuListView = () => {
     const {menu} = useSelector((state)=>state.mainMenu);
     const {language} = useSelector(state=>state.languageSelect);
-    const {menuDetailIndex} = useSelector(state=>state.menuDetail);
-
 
     return(
         <>
@@ -24,9 +22,7 @@ const MenuListView = () => {
                     keyExtractor={(item,index)=>index}
                 />
             </MenuListWrapper>
-            {menuDetailIndex!=null &&
-                <ItemDetail language={language}/>  
-            }
+            <ItemDetail language={language}/>  
         </>
     );
 }
