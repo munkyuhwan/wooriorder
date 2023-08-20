@@ -9,6 +9,7 @@ import { SCREEN_TIMEOUT } from '../resources/numberValues'
 import MenuListView from '../components/main/menuListView'
 import ItemDetail from '../components/detailComponents/itemDetail'
 import { useSelector } from 'react-redux'
+import PopUp from '../components/common/popup'
 
 const MainScreen = () =>{
 

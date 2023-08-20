@@ -16,7 +16,9 @@ import { LogoTop, LogoWrapper, SideBottomButton, SideBottomIcon, SideBottomText,
 import { SideMenuItemTouchable, SideMenuItemTouchableOff } from '../menuComponents/sideMenuItem'
 import _ from "lodash";
 import { colorRed, colorWhite } from '../../../assets/colors/color'
+import { setPopupVisibility } from '../../store/popup'
 const SideMenu = () =>{
+    const dispatch = useDispatch();
     const test = [0,1,2,3,4,5,6,7,8,9];
     const [currentSelection, setCurrentSelection] = useState(0);
     return(
@@ -44,10 +46,12 @@ const SideMenu = () =>{
                 </SideMenuScrollView>
                 <SideBottomWrapper>
                     <TouchableWithoutFeedback>
-                        <SideBottomButton borderColor={colorWhite} >
-                            <SideBottomText>언어선택</SideBottomText>
-                            <SideBottomIcon source={require("../../../assets/icons/korean.png")}  />
-                        </SideBottomButton>
+                        <TouchableWithoutFeedback onPress={()=>{ console.log("language select"); dispatch(setPopupVisibility(true));}} >
+                            <SideBottomButton borderColor={colorWhite} >
+                                <SideBottomText>언어선택</SideBottomText>
+                                <SideBottomIcon source={require("../../../assets/icons/korean.png")}  />
+                            </SideBottomButton>
+                        </TouchableWithoutFeedback>
                     </TouchableWithoutFeedback>
                     <TouchableWithoutFeedback>
                         <SideBottomButton bg={"red"} borderColor={colorRed} >
