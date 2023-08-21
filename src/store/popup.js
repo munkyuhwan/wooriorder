@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const slice = createSlice({
     name: 'popup',
     initialState: {
-        isPopupVisible: true,
+        isPopupVisible: false,
     },
     reducers: {
         setPopupVisible: (state, action) => {

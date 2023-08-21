@@ -32,7 +32,8 @@ public class SmartroPayModule extends ReactContextBaseJavaModule {
     }
     // smartro Interface
     private SmartroVCatInterface mSmartroVCatInterface = null; //This’s Interface-Constructor.
-    private ServiceConnection mServiceConnection = new ServiceConnection() { @Override
+    private ServiceConnection mServiceConnection = new ServiceConnection() {
+        @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             //The V-CAT Service has been succeed to connect with user-application.
             //Your application can take a service via “mSmartroVCatInterface” constructor.
@@ -56,7 +57,7 @@ public class SmartroPayModule extends ReactContextBaseJavaModule {
                     @Override
                     public IBinder asBinder() {
                         System.out.println("asBinder=======================");
-                        mContext.unbindService(mServiceConnection);
+                        getCurrentActivity().unbindService(mServiceConnection);
                         mSmartroVCatInterface=null;
                         return null;
                     }
@@ -79,15 +80,45 @@ public class SmartroPayModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void prepareSmartroPay () {
         System.out.println("prepareSmartroPay module!!!");
-        Intent intentTemp = new Intent(SERVER_ACTION);
-        intentTemp.setPackage(SERVER_PACKAGE);
+        //Intent intentTemp = new Intent(SERVER_ACTION);
+        //intentTemp.setPackage(SERVER_PACKAGE);
+        Intent intentTemp = new Intent("smartro.vcat.action");
+        intentTemp.setPackage("service.vcat.smartro.com.vcat"); //Putting user-application package name.
+        intentTemp.putExtra("package", mContext.getPackageName());
+        System.out.println("getPackageName: "+mContext.getPackageName());
 
         if(mContext.bindService(intentTemp, mServiceConnection, Context.BIND_AUTO_CREATE) == false)
         {
             Log.e("Smartro", "bindService Fail!!!");
+        }else {
+            Log.e("Smartro", "bindService success!!!");
+
         }
 
+         /*
+        try{
+            String    strRequestJSON = "";
+            //Inputting request to JSON “{ ... }”
+            //String strRequest = null;
+            String strRequest = "{\"service\":\"function\",\"external-manage\":\"get-signature\",\"service-result\":\"0800\",\"service-description\":\"서비스가 중단되었습니다.\"}";
 
+            mSmartroVCatInterface.executeService(strRequest, new SmartroVCatCallback.Stub() {
+                @Override
+                public void onServiceEvent(String strEventJSON) {
+                    System.out.println("onServiceEvent================");
+                    //This's Method for getting an event from V-CAT service.
+                }
+                @Override
+                public void onServiceResult(String strResultJSON) {
+                    System.out.println("onServiceResult================");
+                    //This's Method for getting the result from V-CAT service.
+                }
+            });
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+         */
 
         /*
         Intent intentTemp = new Intent("smartro.vcat.action");
@@ -106,7 +137,7 @@ public class SmartroPayModule extends ReactContextBaseJavaModule {
         mContext.bindService(intentTemp, mServiceConnection, Context.BIND_AUTO_CREATE);
 
         String strRequestJSON; //This's String for requesting a Service to V-CAT application.
-        try{
+        try{r
             strRequestJSON = "";
              //Inputting request to JSON “{ ... }”
             String strRequest = null;
