@@ -6,14 +6,12 @@ import {
 //slices
 import mainMenu from './menu'
 import menuDetail from './menuDetail'
-import languageSelect from './language'
 import popup from './popup'
 import { cagegoriesSlice } from './categories'
 import { languagesSlice } from './languages'
 
 const reducer = combineReducers({
     mainMenu,
-    languageSelect,
     menuDetail,
     popup,
 })
