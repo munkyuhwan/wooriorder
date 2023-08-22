@@ -7,12 +7,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { clickMainItem } from '../../store/onClick'
 import { tabBaseColor, colorRed } from '../../../assets/colors/color'
 import { useFocusEffect } from '@react-navigation/native'
+import { setSelectedMainCategory } from '../../store/categories'
 
 export const SideMenuItemTouchable = (props) =>{
-
+    console.log("item index: ",props.index);
     // state
     const dispatch = useDispatch();
-    const {mainItemIndex} = useSelector((state)=>state.onClick);
+
+    // state
+    const {selectedMainCategory} = useSelector((state)=>state.categories);
+
 
     // animation set
     const animation = useRef(new Animated.Value(0,{useNativeDriver:true})).current;
@@ -38,34 +42,43 @@ export const SideMenuItemTouchable = (props) =>{
         marginTop:5,
     }
 
-    const onSelectHandleAnimation = async () => {
+    const onSelectHandleAnimation = async (onOff) => {
         Animated.parallel([
             Animated.timing(animation, {
-                toValue:1,
+                toValue:onOff,
                 duration: 200,
                 useNativeDriver:true,
             }),
             Animated.timing(widthAnimation, {
-                toValue: 1,
+                toValue: onOff,
                 duration: 200,
                 useNativeDriver:true,
             }),
             Animated.timing(radiusAnimation,{
-                toValue: 9,
+                toValue: onOff==1?9:0,
                 duration: 100,
                 useNativeDriver:true,
             })
         ]).start(()=>{
             props.onItemPress();
-            dispatch(clickMainItem(props.index)); 
+            if(onOff==1) dispatch(setSelectedMainCategory(props.index))
+            //dispatch(clickMainItem(props.index)); 
             //props.setSelection(props.index);
         });   
     }
-   
+
     const handleOnPress = () =>{
-        onSelectHandleAnimation();
+        console.log(props.index,", ",selectedMainCategory)
+        //if(props.index == selectedMainCategory) {
+            console.log("select")
+            onSelectHandleAnimation(1);
+        //}else {
+        //   console.log("deselect")
+        //    onSelectHandleAnimation(0);
+       // }
     }
-    if(props.index == props.selection) onSelectHandleAnimation();
+    if(props.index == selectedMainCategory) onSelectHandleAnimation(1);
+
     return (
         <TouchableWithoutFeedback onPress={()=>{handleOnPress();}}>
             <Animated.View style={[{  ...animatedStyle,...boxStyle},{borderBottomRightRadius:radiusAnimation,borderTopRightRadius:radiusAnimation}]} >
@@ -82,10 +95,12 @@ export const SideMenuItemTouchableOff = (props) =>{
     const handleOnPress = () =>{
         //onSelectHandleAnimation();
             props.onItemPress();
-            props.setSelection(props.index);
+            //props.setSelection(props.index);
+            console.log("click ")
+            dispatch(setSelectedMainCategory(props.index))
             //onDeSelectHandleAnimation()
             async () =>{
-                dispatch(clickMainItem(props.index)); 
+                //dispatch(clickMainItem(props.index)); 
             }
     }
 

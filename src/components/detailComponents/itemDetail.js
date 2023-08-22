@@ -56,20 +56,18 @@ const ItemDetail = (props) => {
             toValue:popOpen,
             duration: 300,
             useNativeDriver:true,
-        }).start(()=>{
-            console.log("finish opening");
-            /* 
+        }).start(()=>{             
             if(!isDetailShow) {
                 setDetailZIndex(0)
             }
- */
+            /* 
             if(menuDetailIndex== null) {
                 setDetailZIndex(0)
             }
-             
+             */ 
         }) 
     }
-    
+    /*
     useEffect(()=>{
         if(menuDetailIndex!= null) {
             setDetailZIndex(999)
@@ -78,8 +76,8 @@ const ItemDetail = (props) => {
             onSelectHandleAnimation(0);
         }
     },[menuDetailIndex])
+    */
     
-     /* 
     useEffect(()=>{
         console.log("isdetailshow: ",isDetailShow)
         if(isDetailShow) {
@@ -89,21 +87,21 @@ const ItemDetail = (props) => {
             onSelectHandleAnimation(0);
         }
     },[isDetailShow])
-     */
+    
     return(
         <>
             <Animated.View  style={[{...PopStyle.animatedPop, ...boxWidthStyle,...{zIndex:detailZIndex} } ]} >
                     <DetailWrapper>
                         <DetailWhiteWrapper>
-                            {menuDetailIndex==null &&
+                            {!isDetailShow &&
                                 <WaitIndicator/>
                             }
-                            {menuDetailIndex!=null &&
+                            {isDetailShow &&
                             <>
                             {/* 상단 제품 정보*/}
-                            {menu[menuDetailIndex] &&
+                            {//menuDetailIndex &&
                                 <DetailInfoWrapper>
-                                    <DetailItemInfoImage source={{uri:`${menu[menuDetailIndex]?.imgUrl}`}}/>
+                                    <DetailItemInfoImage source={menu[menuDetailIndex]?.imgUrl?{uri:`${menu[menuDetailIndex]?.imgUrl}`}:require("../../../assets/icons/logo.png")}/>
                                     <DetailItemInfoWrapper>
                                         <DetailItemInfoTitleWrapper>
                                             <DetailItemInfoTitle>{menu[menuDetailIndex]?.itemName}</DetailItemInfoTitle>
@@ -121,17 +119,21 @@ const ItemDetail = (props) => {
                                 </DetailInfoWrapper>
                             }
                             {/* 중간 옵션&추천메뉴*/}
-                            {menu[menuDetailIndex] &&
+                            {//menuDetailIndex &&
                                 <OptRecommendWrapper>
                                     <OptListWrapper>
                                         <OptTitleText>{LANGUAGE[language].detailView.selectOpt}</OptTitleText>
                                         <OptList horizontal showsHorizontalScrollIndicator={false} >
                                             {optionSelect!=null &&
-                                            optionSelect.map((el,index)=>{
-                                                return(
-                                                    <OptItem key={"optItem_"+index} optionData={el} menuData={menu[menuDetailIndex]}/>    
-                                                );
-                                            })}
+                                                optionSelect.map((el,index)=>{
+                                                    return(
+                                                        <OptItem key={"optItem_"+index} optionData={el} menuData={menu[menuDetailIndex]}/>    
+                                                    );
+                                                })
+                                            }
+                                            {optionSelect==null &&
+                                                <OptItem key={"optItem_0"} optionData={{imgUrl:require("../../../assets/icons/logo.png"),name:"loading...",price:0}} menuData={menu[menuDetailIndex]}/>    
+                                            }
                                         </OptList>
                                     </OptListWrapper>
                                     <OptListWrapper>

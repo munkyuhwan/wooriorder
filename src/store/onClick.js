@@ -1,4 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+
+export const clickMainItemAsync = createAsyncThunk("onClick/clickMainItem", async() =>{
+    const mainCategories = [{},{},{},{},{},{},{},{},{},{},{},{},]
+    return mainCategories;
+})
 
 // Slice
 const slice = createSlice({
@@ -21,7 +26,22 @@ const slice = createSlice({
             state.isIconOn = action.payload;
         }
     },
+    extraReducers:(builder)=>{
+        builder.addCase(clickMainItem.pending,(state, action)=>{
+            console.log('get main categories pending...!!!');
+            state.mainItemIndex = action.payload;
+        })
+        builder.addCase(clickMainItem.fulfilled,(state, action)=>{
+            console.log('get main categories completed...!!!');
+            state.mainItemIndex = action.payload;
+        })
+        builder.addCase(clickMainItem.rejected,(state, action)=>{
+            console.log('get main categories failed...!!!');
+            state.mainItemIndex = action.payload;
+        })
+    }
 });
+
 export default slice.reducer
 
 // Action

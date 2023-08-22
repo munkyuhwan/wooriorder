@@ -37,6 +37,7 @@ export const DetailItemInfoImage = styled.Image`
     width:262px;
     height:166px;
     borderRadius:${RADIUS};
+    resizeMode:contain;
 `
 export const DetailItemInfoTitleWrapper = styled.View`
     flexDirection:row;

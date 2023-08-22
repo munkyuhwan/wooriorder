@@ -26,7 +26,7 @@ const MenuItem = ({item,index,setDetailShow}) => {
                             <MenuItemHotness source={require('../../../assets/icons/best.png')} />
                         </MenuItemHotnessWrapper>
                         <MenuItemButtonWrapper>
-                            <TouchableWithoutFeedback onPress={()=>{console.log('ㄷ더보기 터치'); setDetailShow(true); dispatch(onMenuDetailView(index)) }} >
+                            <TouchableWithoutFeedback onPress={()=>{console.log('ㄷ더보기 터치'); setDetailShow(true);  /* dispatch(onMenuDetailView(index)); */  }} >
                                 <MenuItemButtonInnerWrapperRight>
                                     <MenuItemButton source={require('../../../assets/icons/more.png')}/>
                                 </MenuItemButtonInnerWrapperRight>

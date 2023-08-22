@@ -17,10 +17,18 @@ import { SideMenuItemTouchable, SideMenuItemTouchableOff } from '../menuComponen
 import _ from "lodash";
 import { colorRed, colorWhite } from '../../../assets/colors/color'
 import { setPopupVisibility } from '../../store/popup'
+import { getMainCategories } from '../../store/categories'
 const SideMenu = () =>{
     const dispatch = useDispatch();
     const test = [0,1,2,3,4,5,6,7,8,9];
     const [currentSelection, setCurrentSelection] = useState(0);
+
+    const {mainCategories, selectedMainCategory} = useSelector((state)=>state.categories);
+    useEffect(()=>{
+        dispatch(getMainCategories());
+    },[])
+
+
     return(
         <>
             <SideMenuWrapper>
@@ -29,7 +37,21 @@ const SideMenu = () =>{
                 </LogoWrapper>
                 <SideMenuScrollView showsVerticalScrollIndicator={false} >
                     <SideMenuItemWrapper>
-                        {
+                        {mainCategories &&
+                        mainCategories?.map((el)=>{
+                            if(el.index==selectedMainCategory) {
+                                return (
+                                    <SideMenuItemTouchable key={"side_"+el.index} index={el.index} categoryId={"cat"+`${el.index}`} categoryName={el.name} onItemPress={()=>{  }} />
+                                ) 
+                            }else {
+                                return (
+                                    <SideMenuItemTouchableOff key={"side_"+el.index} index={el.index} categoryId={"cat"+`${el.index}`} categoryName={el.name} onItemPress={()=>{   }} />
+                                )
+                            }
+                        })
+
+                        }
+                        {/*
                             test.map((index)=>{  
                                 if(index==currentSelection) {
                                     return (
@@ -41,7 +63,7 @@ const SideMenu = () =>{
                                     )
                                 }
                             })
-                        }
+                        */}
                     </SideMenuItemWrapper>
                 </SideMenuScrollView>
                 <SideBottomWrapper>

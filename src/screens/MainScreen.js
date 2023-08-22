@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {View, NativeModules} from 'react-native'
 import SideMenu from '../components/main/sideMenu'
 import TopMenu from '../components/main/topMenu'
@@ -8,8 +8,8 @@ import CartView from '../components/main/cartView'
 import { SCREEN_TIMEOUT } from '../resources/numberValues'
 import MenuListView from '../components/main/menuListView'
 import ItemDetail from '../components/detailComponents/itemDetail'
-import { useSelector } from 'react-redux'
 import PopUp from '../components/common/popup'
+
 
 const MainScreen = () =>{
 
@@ -31,16 +31,19 @@ const MainScreen = () =>{
         },SCREEN_TIMEOUT)
     }
 
+
     return(
         <>
-            <WholeWrapper onTouchStart={()=>{/*  setBrightness(0.7); screenTimeOut();  */}} >
+            <WholeWrapper onTouchStart={()=>{ /* setBrightness(0.7); screenTimeOut(); */ }} >
                 <SideMenu/>
+                {/* 
                 <MainWrapper>
                     <TopMenu/>
                     <MenuListView/>
                     <CartView/>
                 </MainWrapper>
-            </WholeWrapper>
+                 */}
+            </WholeWrapper> 
         </>
     )
 }
