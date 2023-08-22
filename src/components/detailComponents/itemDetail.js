@@ -58,9 +58,15 @@ const ItemDetail = (props) => {
             useNativeDriver:true,
         }).start(()=>{
             console.log("finish opening");
+            /* 
+            if(!isDetailShow) {
+                setDetailZIndex(0)
+            }
+ */
             if(menuDetailIndex== null) {
                 setDetailZIndex(0)
             }
+             
         }) 
     }
     
@@ -72,8 +78,8 @@ const ItemDetail = (props) => {
             onSelectHandleAnimation(0);
         }
     },[menuDetailIndex])
-     
-    /* 
+    
+     /* 
     useEffect(()=>{
         console.log("isdetailshow: ",isDetailShow)
         if(isDetailShow) {
@@ -89,52 +95,59 @@ const ItemDetail = (props) => {
             <Animated.View  style={[{...PopStyle.animatedPop, ...boxWidthStyle,...{zIndex:detailZIndex} } ]} >
                     <DetailWrapper>
                         <DetailWhiteWrapper>
-                            {menuDetailIndex== null &&
+                            {menuDetailIndex==null &&
                                 <WaitIndicator/>
                             }
-                            {menuDetailIndex!= null &&
+                            {menuDetailIndex!=null &&
                             <>
                             {/* 상단 제품 정보*/}
-                            <DetailInfoWrapper>
-                                <DetailItemInfoImage source={{uri:`${menu[menuDetailIndex]?.imgUrl}`}}/>
-                                <DetailItemInfoWrapper>
-                                    <DetailItemInfoTitleWrapper>
-                                        <DetailItemInfoTitle>{menu[menuDetailIndex]?.itemName}</DetailItemInfoTitle>
-                                        <DetailItemInfoTitleEtc source={require("../../../assets/icons/new.png")}/>
-                                        <DetailItemInfoTitleEtc source={require("../../../assets/icons/best.png")}/>
-                                    </DetailItemInfoTitleWrapper>
-                                    <DetailItemInfoSource>{menu[menuDetailIndex]?.itemAddtion}</DetailItemInfoSource>
-                                    <DetailPriceMoreWrapper>
-                                        <DetailItemInfoPriceWrapper>
-                                            <DetailItemInfoPrice isBold={true} >23,000</DetailItemInfoPrice><DetailItemInfoPrice isBold={false}> 원</DetailItemInfoPrice>
-                                        </DetailItemInfoPriceWrapper>
-                                        <DetailItemInfoMore>이거 안먹으면 후회한다. 꼭 므그라</DetailItemInfoMore>
-                                    </DetailPriceMoreWrapper>
-                                </DetailItemInfoWrapper>
-                            </DetailInfoWrapper>
+                            {menu[menuDetailIndex] &&
+                                <DetailInfoWrapper>
+                                    <DetailItemInfoImage source={{uri:`${menu[menuDetailIndex]?.imgUrl}`}}/>
+                                    <DetailItemInfoWrapper>
+                                        <DetailItemInfoTitleWrapper>
+                                            <DetailItemInfoTitle>{menu[menuDetailIndex]?.itemName}</DetailItemInfoTitle>
+                                            <DetailItemInfoTitleEtc source={require("../../../assets/icons/new.png")}/>
+                                            <DetailItemInfoTitleEtc source={require("../../../assets/icons/best.png")}/>
+                                        </DetailItemInfoTitleWrapper>
+                                        <DetailItemInfoSource>{menu[menuDetailIndex]?.itemAddtion}</DetailItemInfoSource>
+                                        <DetailPriceMoreWrapper>
+                                            <DetailItemInfoPriceWrapper>
+                                                <DetailItemInfoPrice isBold={true} >23,000</DetailItemInfoPrice><DetailItemInfoPrice isBold={false}> 원</DetailItemInfoPrice>
+                                            </DetailItemInfoPriceWrapper>
+                                            <DetailItemInfoMore>이거 안먹으면 후회한다. 꼭 므그라</DetailItemInfoMore>
+                                        </DetailPriceMoreWrapper>
+                                    </DetailItemInfoWrapper>
+                                </DetailInfoWrapper>
+                            }
                             {/* 중간 옵션&추천메뉴*/}
-                            <OptRecommendWrapper>
-                                <OptListWrapper>
-                                    <OptTitleText>{LANGUAGE[language].detailView.selectOpt}</OptTitleText>
-                                    <OptList horizontal showsHorizontalScrollIndicator={false} >
-                                        {optionSelect.map((el,index)=>{
-                                            return(
-                                                <OptItem key={"optItem_"+index} optionData={el} menuData={menu[menuDetailIndex]}/>    
-                                            );
-                                        })}
-                                    </OptList>
-                                </OptListWrapper>
-                                <OptListWrapper>
-                                    <OptTitleText>{LANGUAGE[language].detailView.recommendMenu}</OptTitleText>
-                                    <OptList horizontal showsHorizontalScrollIndicator={false} >
-                                        {recommendMenu.map((el,index)=>{
-                                            return(
-                                                <RecommendItem key={"recoItem_"+index} recommendData={el} menuData={menu[menuDetailIndex]}/>    
-                                            );
-                                        })}
-                                    </OptList>
-                                </OptListWrapper>
-                            </OptRecommendWrapper>
+                            {menu[menuDetailIndex] &&
+                                <OptRecommendWrapper>
+                                    <OptListWrapper>
+                                        <OptTitleText>{LANGUAGE[language].detailView.selectOpt}</OptTitleText>
+                                        <OptList horizontal showsHorizontalScrollIndicator={false} >
+                                            {optionSelect!=null &&
+                                            optionSelect.map((el,index)=>{
+                                                return(
+                                                    <OptItem key={"optItem_"+index} optionData={el} menuData={menu[menuDetailIndex]}/>    
+                                                );
+                                            })}
+                                        </OptList>
+                                    </OptListWrapper>
+                                    <OptListWrapper>
+                                        <OptTitleText>{LANGUAGE[language].detailView.recommendMenu}</OptTitleText>
+                                        <OptList horizontal showsHorizontalScrollIndicator={false} >
+                                            {recommendMenu!=null&&
+                                            recommendMenu.map((el,index)=>{
+                                                return(
+                                                    <RecommendItem key={"recoItem_"+index} recommendData={el} menuData={menu[menuDetailIndex]}/>    
+                                                );
+                                            })
+                                            }
+                                        </OptList>
+                                    </OptListWrapper>
+                                </OptRecommendWrapper>
+                            }   
                             {/* 하단 버튼*/}
                             <BottomButtonWrapper>
                                 <TouchableWithoutFeedback onPress={()=>{props.setDetailShow(false); dispatch(onMenuDetailView(null))}}>
