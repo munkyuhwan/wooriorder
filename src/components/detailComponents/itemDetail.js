@@ -11,10 +11,11 @@ import WaitIndicator from '../common/waitIndicator';
 import RecommendItem from './recommendItem';
 
 const ItemDetail = (props) => {
+    const language = props.language;
+    const isDetailShow = props.isDetailShow;
     const dispatch = useDispatch();
     const {menuDetailIndex} = useSelector(state=>state.menuDetail);
     const {menu} = useSelector((state)=>state.mainMenu);
-    const language = props.language;
     const [detailZIndex, setDetailZIndex] = useState(0);
 
     const optionSelect = menu[menuDetailIndex]?.options;
@@ -50,11 +51,13 @@ const ItemDetail = (props) => {
         
    };
     const onSelectHandleAnimation = async (popOpen) => {
+        console.log("start opening");
         Animated.timing(widthAnimation, {
             toValue:popOpen,
             duration: 300,
             useNativeDriver:true,
         }).start(()=>{
+            console.log("finish opening");
             if(menuDetailIndex== null) {
                 setDetailZIndex(0)
             }
@@ -69,16 +72,27 @@ const ItemDetail = (props) => {
             onSelectHandleAnimation(0);
         }
     },[menuDetailIndex])
-
+     
+    /* 
+    useEffect(()=>{
+        console.log("isdetailshow: ",isDetailShow)
+        if(isDetailShow) {
+            setDetailZIndex(999)
+            onSelectHandleAnimation(1);
+        }else {
+            onSelectHandleAnimation(0);
+        }
+    },[isDetailShow])
+     */
     return(
         <>
             <Animated.View  style={[{...PopStyle.animatedPop, ...boxWidthStyle,...{zIndex:detailZIndex} } ]} >
                     <DetailWrapper>
                         <DetailWhiteWrapper>
-                            {menuDetailIndex==null &&
+                            {menuDetailIndex== null &&
                                 <WaitIndicator/>
                             }
-                            {menuDetailIndex!=null &&
+                            {menuDetailIndex!= null &&
                             <>
                             {/* 상단 제품 정보*/}
                             <DetailInfoWrapper>
@@ -103,9 +117,9 @@ const ItemDetail = (props) => {
                                 <OptListWrapper>
                                     <OptTitleText>{LANGUAGE[language].detailView.selectOpt}</OptTitleText>
                                     <OptList horizontal showsHorizontalScrollIndicator={false} >
-                                        {optionSelect.map((el)=>{
+                                        {optionSelect.map((el,index)=>{
                                             return(
-                                                <OptItem optionData={el} menuData={menu[menuDetailIndex]}/>    
+                                                <OptItem key={"optItem_"+index} optionData={el} menuData={menu[menuDetailIndex]}/>    
                                             );
                                         })}
                                     </OptList>
@@ -113,9 +127,9 @@ const ItemDetail = (props) => {
                                 <OptListWrapper>
                                     <OptTitleText>{LANGUAGE[language].detailView.recommendMenu}</OptTitleText>
                                     <OptList horizontal showsHorizontalScrollIndicator={false} >
-                                        {recommendMenu.map((el)=>{
+                                        {recommendMenu.map((el,index)=>{
                                             return(
-                                                <RecommendItem recommendData={el} menuData={menu[menuDetailIndex]}/>    
+                                                <RecommendItem key={"recoItem_"+index} recommendData={el} menuData={menu[menuDetailIndex]}/>    
                                             );
                                         })}
                                     </OptList>
@@ -123,7 +137,7 @@ const ItemDetail = (props) => {
                             </OptRecommendWrapper>
                             {/* 하단 버튼*/}
                             <BottomButtonWrapper>
-                                <TouchableWithoutFeedback onPress={()=>{dispatch(onMenuDetailView(null))}}>
+                                <TouchableWithoutFeedback onPress={()=>{props.setDetailShow(false); dispatch(onMenuDetailView(null))}}>
                                     <BottomButton backgroundColor={colorRed} >
                                         <BottomButtonText>{LANGUAGE[language].detailView.toMenu}</BottomButtonText>
                                         <BottomButtonIcon source={require("../../../assets/icons/folk_nife.png")} />

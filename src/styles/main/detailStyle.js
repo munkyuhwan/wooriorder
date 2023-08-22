@@ -135,7 +135,7 @@ export const OptItemInfoChecked = styled.Image`
     position:absolute;
     right:8px;
     bottom:8px;
-    display:${(props)=>{props.isChecked?"block":"none"} };
+    display:${(props)=>{props.isChecked?"flex":"none"} };
 `
 export const OptItemDim = styled.View`
     position:absolute;
@@ -184,7 +184,7 @@ export const RecommendItemInfoChecked = styled.Image`
     position:absolute;
     right:8px;
     bottom:8px;
-    display:${(props)=>{props.isChecked?"block":"none"} };
+    display:${(props)=>{props.isChecked?"flex":"none"} };
 `
 export const RecommendItemDim = styled.View`
     position:absolute;

@@ -26,11 +26,11 @@ const TopMenu = () =>{
                                  test.map((index)=>{  
                                     if(index==topSelection) {
                                         return (
-                                            <TopMenuItemTouchable selection={topSelection} setSelection={setTopSelection} index={index} categoryId={"subCat1"} categoryName={"2차 카테고리01"} onItemPress={()=>{}} />
+                                            <TopMenuItemTouchable  key={"top_"+index}  selection={topSelection} setSelection={setTopSelection} index={index} categoryId={"subCat1"} categoryName={"2차 카테고리01"} onItemPress={()=>{}} />
                                             ) 
                                     }else {
                                         return (
-                                            <TopMenuItemTouchableOff selection={topSelection} setSelection={setTopSelection} index={index} categoryId={"subCat1"} categoryName={"2차 카테고리01"} onItemPress={()=>{}} />
+                                            <TopMenuItemTouchableOff  key={"top_"+index}  selection={topSelection} setSelection={setTopSelection} index={index} categoryId={"subCat1"} categoryName={"2차 카테고리01"} onItemPress={()=>{}} />
                                         )
                                     }
                                 })

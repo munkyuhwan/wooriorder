@@ -9,7 +9,7 @@ import ItemDetail from '../detailComponents/itemDetail';
 const MenuListView = () => {
     const {menu} = useSelector((state)=>state.mainMenu);
     const {language} = useSelector(state=>state.languageSelect);
-
+    const [isDetailShow, setDetailShow] = useState(false);
     return(
         <>
             <MenuListWrapper>
@@ -17,12 +17,13 @@ const MenuListView = () => {
                     columnWrapperStyle={{gap:12}}
                     style={{height:'100%', zIndex: 99 }}
                     data={menu}
-                    renderItem={({item, index})=>{return(<MenuItem item={item} index={index} /> );}}
+                    renderItem={({item, index})=>{return(<MenuItem setDetailShow={setDetailShow} item={item} index={index} /> );}}
                     numColumns={3}
+                    key={({item, index})=>{return "_"+index}}
                     keyExtractor={(item,index)=>index}
                 />
             </MenuListWrapper>
-            <ItemDetail language={language}/>  
+            <ItemDetail isDetailShow={isDetailShow} setDetailShow={setDetailShow} language={language}/>  
         </>
     );
 }

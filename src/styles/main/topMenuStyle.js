@@ -27,11 +27,11 @@ export const CategoryDefault = styled.View`
     backgroundColor: ${tabBaseColor};
     width:142px;
     height:52px;
-    marginRight:7;
+    marginRight:7px;
     justifyContent: flex-end;
-    marginTop:33;
-    borderTopLeftRadius:${RADIUS_DOUBLE};
-    borderTopRightRadius:${RADIUS_DOUBLE};
+    marginTop:33px;
+    borderTopLeftRadius:${RADIUS_DOUBLE}px;
+    borderTopRightRadius:${RADIUS_DOUBLE}px;
 `
 /// 탑 메뉴 텍스트스타일
 export const TopMenuText = styled.Text`

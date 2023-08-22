@@ -181,7 +181,7 @@ export const PayAmtTitle = styled.Text`
 export const PayAmtNumber = styled.Text`
     fontSize:15px;
     color:${colorWhite};
-    weeight:bold;
+    fontWeight:bold;
 `
 export const PayAmtUnit = styled.Text`
     fontSize:15px;

@@ -6,8 +6,9 @@ import FastImage from 'react-native-fast-image';
 import { RADIUS, RADIUS_DOUBLE } from '../../styles/values';
 import { onMenuDetailView } from '../../store/menuDetail';
 
-const MenuItem = ({item,index}) => {
+const MenuItem = ({item,index,setDetailShow}) => {
     //<MenuItemImage />    
+    
     const dispatch = useDispatch();
     const imgUrl = item.imgUrl;
     const itemName = item.itemName;
@@ -25,7 +26,7 @@ const MenuItem = ({item,index}) => {
                             <MenuItemHotness source={require('../../../assets/icons/best.png')} />
                         </MenuItemHotnessWrapper>
                         <MenuItemButtonWrapper>
-                            <TouchableWithoutFeedback onPress={()=>{ dispatch(onMenuDetailView(index)) }} >
+                            <TouchableWithoutFeedback onPress={()=>{console.log('ㄷ더보기 터치'); setDetailShow(true); dispatch(onMenuDetailView(index)) }} >
                                 <MenuItemButtonInnerWrapperRight>
                                     <MenuItemButton source={require('../../../assets/icons/more.png')}/>
                                 </MenuItemButtonInnerWrapperRight>

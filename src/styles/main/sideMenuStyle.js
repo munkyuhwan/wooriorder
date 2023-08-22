@@ -39,8 +39,8 @@ export const SideMenuItemWrapper = styled.View`
 export const SideMenuItemOff = styled.View`
     backgroundColor:#404040;
     width:190px;
-    marginLeft:-10;
-    marginTop:5;
+    marginLeft:-10px;
+    marginTop:5px;
 `
 export const SideMenuItem = styled.View`
     backgroundColor:#404040;

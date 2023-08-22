@@ -33,11 +33,11 @@ const SideMenu = () =>{
                             test.map((index)=>{  
                                 if(index==currentSelection) {
                                     return (
-                                        <SideMenuItemTouchable selection={currentSelection} setSelection={setCurrentSelection} index={index} categoryId={"cat"+`${index}`} categoryName={"카테고리"+`${index}`} onItemPress={()=>{  }} />
+                                        <SideMenuItemTouchable key={"side_"+index} selection={currentSelection} setSelection={setCurrentSelection} index={index} categoryId={"cat"+`${index}`} categoryName={"카테고리"+`${index}`} onItemPress={()=>{  }} />
                                     ) 
                                 }else {
                                     return (
-                                        <SideMenuItemTouchableOff selection={currentSelection} setSelection={setCurrentSelection} index={index} categoryId={"cat"+`${index}`} categoryName={"카테고리"+`${index}`} onItemPress={()=>{   }} />
+                                        <SideMenuItemTouchableOff key={"side_"+index}  selection={currentSelection} setSelection={setCurrentSelection} index={index} categoryId={"cat"+`${index}`} categoryName={"카테고리"+`${index}`} onItemPress={()=>{   }} />
                                     )
                                 }
                             })
