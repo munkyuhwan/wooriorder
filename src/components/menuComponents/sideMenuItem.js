@@ -10,7 +10,6 @@ import { useFocusEffect } from '@react-navigation/native'
 import { setSelectedMainCategory } from '../../store/categories'
 
 export const SideMenuItemTouchable = (props) =>{
-    console.log("item index: ",props.index);
     // state
     const dispatch = useDispatch();
 
@@ -62,20 +61,11 @@ export const SideMenuItemTouchable = (props) =>{
         ]).start(()=>{
             props.onItemPress();
             if(onOff==1) dispatch(setSelectedMainCategory(props.index))
-            //dispatch(clickMainItem(props.index)); 
-            //props.setSelection(props.index);
         });   
     }
 
     const handleOnPress = () =>{
-        console.log(props.index,", ",selectedMainCategory)
-        //if(props.index == selectedMainCategory) {
-            console.log("select")
-            onSelectHandleAnimation(1);
-        //}else {
-        //   console.log("deselect")
-        //    onSelectHandleAnimation(0);
-       // }
+        onSelectHandleAnimation(1);
     }
     if(props.index == selectedMainCategory) onSelectHandleAnimation(1);
 
@@ -95,13 +85,9 @@ export const SideMenuItemTouchableOff = (props) =>{
     const handleOnPress = () =>{
         //onSelectHandleAnimation();
             props.onItemPress();
-            //props.setSelection(props.index);
             console.log("click ")
             dispatch(setSelectedMainCategory(props.index))
-            //onDeSelectHandleAnimation()
-            async () =>{
-                //dispatch(clickMainItem(props.index)); 
-            }
+            
     }
 
     return (

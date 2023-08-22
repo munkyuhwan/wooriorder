@@ -7,12 +7,13 @@ import { clickMainItem, clickTopItem } from '../../store/onClick'
 import { CategoryDefault, TopMenuText } from '../../styles/main/topMenuStyle'
 import { colorBrown, tabBaseColor } from '../../../assets/colors/color'
 import { useFocusEffect } from '@react-navigation/native'
+import { setSelectedSubCategory } from '../../store/categories'
 
 export const TopMenuItemTouchable = (props) =>{
 
     // state
     const dispatch = useDispatch();
-    const {topItemIndex} = useSelector((state)=>state.onClick);
+    const {subCategories, selectedSubCategory} = useSelector((state)=>state.categories);
 
     // animation set
     const [animation, setAnimation] = useState(new Animated.Value(0))
@@ -41,27 +42,28 @@ export const TopMenuItemTouchable = (props) =>{
         
      }
 
-    const onSelectHandleAnimation = (index) => {
+    const onSelectHandleAnimation = (onOff) => {
         Animated.parallel([
             Animated.timing(animation, {
-                toValue:1,
+                toValue:onOff,
                 duration: 200,
                 useNativeDriver:true,
             }),
             Animated.timing(heightAnimation, {
-                toValue: 1,
+                toValue: onOff,
                 duration: 100,
                 useNativeDriver:true,
             }), 
         ]).start(()=>{
             props.onItemPress(); 
-            dispatch(clickTopItem(props.index));  
+            if(onOff==1) dispatch(setSelectedSubCategory(props.index))
+
         });   
     }
     const handleOnPress = () =>{
-        onSelectHandleAnimation();
+        onSelectHandleAnimation(1);
     }
-    if(props.index == props.selection) onSelectHandleAnimation();
+    if(props.index == selectedSubCategory) onSelectHandleAnimation(1);
     return (
         <TouchableWithoutFeedback onPress={()=>{handleOnPress(); }}>
             <Animated.View style={[{  ...animatedStyle,...boxStyle}]} >
@@ -79,10 +81,8 @@ export const TopMenuItemTouchableOff = (props) =>{
     const dispatch = useDispatch();  
     const handleOnPress = () =>{
         props.onItemPress();
-        props.setSelection(props.index);
-        async () =>{
-            dispatch(clickTopItem(props.index)); 
-        }
+        dispatch(setSelectedSubCategory(props.index));
+       
     }
     return (
         <TouchableWithoutFeedback onPress={()=>{ handleOnPress(); }}>

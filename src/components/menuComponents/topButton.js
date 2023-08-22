@@ -7,11 +7,12 @@ import {
 import { TouchIcon } from '../../styles/main/topMenuStyle'
 import { useDispatch, useSelector } from 'react-redux'
 import { clickIcon } from '../../store/onClick'
+import { setIconClick } from '../../store/categories'
 
 const TopButton = (props) => {
 
     const dispatch = useDispatch();
-    const {isIconOn} = useSelector(state=>state.onClick);
+    const {isIconOn} = useSelector((state)=>state.categories);
 
     const onImage = props.onSource;
     const offImage = props.offSource;
@@ -49,7 +50,7 @@ const TopButton = (props) => {
         ]).start();  
     }
     const onIconClicked = () =>{
-        dispatch(clickIcon(!isIconOn))
+        dispatch(setIconClick(!isIconOn))
     }
     useEffect(()=>{
         if(isIconOn==false) {

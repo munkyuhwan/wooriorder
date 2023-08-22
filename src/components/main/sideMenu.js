@@ -20,9 +20,6 @@ import { setPopupVisibility } from '../../store/popup'
 import { getMainCategories } from '../../store/categories'
 const SideMenu = () =>{
     const dispatch = useDispatch();
-    const test = [0,1,2,3,4,5,6,7,8,9];
-    const [currentSelection, setCurrentSelection] = useState(0);
-
     const {mainCategories, selectedMainCategory} = useSelector((state)=>state.categories);
     useEffect(()=>{
         dispatch(getMainCategories());
@@ -38,32 +35,18 @@ const SideMenu = () =>{
                 <SideMenuScrollView showsVerticalScrollIndicator={false} >
                     <SideMenuItemWrapper>
                         {mainCategories &&
-                        mainCategories?.map((el)=>{
-                            if(el.index==selectedMainCategory) {
-                                return (
-                                    <SideMenuItemTouchable key={"side_"+el.index} index={el.index} categoryId={"cat"+`${el.index}`} categoryName={el.name} onItemPress={()=>{  }} />
-                                ) 
-                            }else {
-                                return (
-                                    <SideMenuItemTouchableOff key={"side_"+el.index} index={el.index} categoryId={"cat"+`${el.index}`} categoryName={el.name} onItemPress={()=>{   }} />
-                                )
-                            }
-                        })
-
-                        }
-                        {/*
-                            test.map((index)=>{  
-                                if(index==currentSelection) {
+                            mainCategories?.map((el)=>{
+                                if(el.index==selectedMainCategory) {
                                     return (
-                                        <SideMenuItemTouchable key={"side_"+index} selection={currentSelection} setSelection={setCurrentSelection} index={index} categoryId={"cat"+`${index}`} categoryName={"카테고리"+`${index}`} onItemPress={()=>{  }} />
+                                        <SideMenuItemTouchable key={"side_"+el.index} index={el.index} categoryId={"cat"+`${el.index}`} categoryName={el.name} onItemPress={()=>{  }} />
                                     ) 
                                 }else {
                                     return (
-                                        <SideMenuItemTouchableOff key={"side_"+index}  selection={currentSelection} setSelection={setCurrentSelection} index={index} categoryId={"cat"+`${index}`} categoryName={"카테고리"+`${index}`} onItemPress={()=>{   }} />
+                                        <SideMenuItemTouchableOff key={"side_"+el.index} index={el.index} categoryId={"cat"+`${el.index}`} categoryName={el.name} onItemPress={()=>{   }} />
                                     )
                                 }
                             })
-                        */}
+                        }
                     </SideMenuItemWrapper>
                 </SideMenuScrollView>
                 <SideBottomWrapper>

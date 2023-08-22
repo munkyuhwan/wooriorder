@@ -36,13 +36,11 @@ const MainScreen = () =>{
         <>
             <WholeWrapper onTouchStart={()=>{ /* setBrightness(0.7); screenTimeOut(); */ }} >
                 <SideMenu/>
-                {/* 
                 <MainWrapper>
                     <TopMenu/>
-                    <MenuListView/>
+                    {/* <MenuListView/> */}
                     <CartView/>
                 </MainWrapper>
-                 */}
             </WholeWrapper> 
         </>
     )

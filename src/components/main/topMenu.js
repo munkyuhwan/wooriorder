@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { 
     SafeAreaView,
     TouchableWithoutFeedback
@@ -9,12 +9,16 @@ import { SideMenuItemTouchable } from '../common/sideMenuItem'
 import { TopMenuItemTouchable, TopMenuItemTouchableOff } from '../menuComponents/topMenuItem'
 import { CategoryScrollView, CategoryWrapper, IconWrapper, TableName, TableNameBig, TableNameSmall, TopMenuWrapper, TouchIcon } from '../../styles/main/topMenuStyle'
  import TopButton from '../menuComponents/topButton'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import ItemDetail from '../detailComponents/itemDetail'
+import { getSubCategories } from '../../store/categories'
 
 const TopMenu = () =>{
-    const test = [0,1,2,3,4,5,6,7,8,9];
-    const [topSelection, setTopSelection] = useState(0);
+    const dispatch = useDispatch();
+    const {subCategories, selectedSubCategory} = useSelector((state)=>state.categories);
+    useEffect(()=>{
+        dispatch(getSubCategories());
+    },[])
 
     return(
         <>
@@ -22,15 +26,15 @@ const TopMenu = () =>{
                 <SafeAreaView>
                     <CategoryScrollView horizontal showsHorizontalScrollIndicator={false} >
                         <CategoryWrapper>
-                            {
-                                 test.map((index)=>{  
-                                    if(index==topSelection) {
+                            {subCategories &&
+                                subCategories.map((el)=>{
+                                    if(el.index==selectedSubCategory) {
                                         return (
-                                            <TopMenuItemTouchable  key={"top_"+index}  selection={topSelection} setSelection={setTopSelection} index={index} categoryId={"subCat1"} categoryName={"2차 카테고리01"} onItemPress={()=>{}} />
+                                            <TopMenuItemTouchable  key={"top_"+el.index} index={el.index} categoryName={el.name} onItemPress={()=>{}} />
                                             ) 
                                     }else {
                                         return (
-                                            <TopMenuItemTouchableOff  key={"top_"+index}  selection={topSelection} setSelection={setTopSelection} index={index} categoryId={"subCat1"} categoryName={"2차 카테고리01"} onItemPress={()=>{}} />
+                                            <TopMenuItemTouchableOff  key={"top_"+el.index} index={el.index} categoryName={el.name} onItemPress={()=>{}} />
                                         )
                                     }
                                 })

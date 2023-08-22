@@ -6,16 +6,16 @@ import {
 } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux';
 import { ArrowImage, CartFlatList, CartScrollView, CartViewWrapper, Handle, OrderWrapper, PayAmtNumber, PayAmtTitle, PayAmtUnit, PayAmtWrapper, PayBtn, PayIcon, PayTitle, PayWrapper } from '../../styles/main/cartStyle';
-import { clickIcon } from '../../store/onClick';
 import CartListItem from '../cartComponents/cartListItem';
 import { startSmartroPay } from '../../utils/smartro';
 import { LANGUAGE } from '../../resources/strings';
+import { setIconClick } from '../../store/categories';
 
 const CartView = () =>{
-    const {language} = useSelector(state=>state.languageSelect);
+    const {language} = useSelector(state=>state.languages);
 
     const dispatch = useDispatch();
-    const {isIconOn} = useSelector(state=>state.onClick);
+    const {isIconOn} = useSelector((state)=>state.categories);
 
     const [slideAnimation, setSlideAnimation] = useState(new Animated.Value(0));
 
@@ -41,7 +41,7 @@ const CartView = () =>{
     return(
         <>  
             <CartViewWrapper style={[{...boxStyle}]} >
-                <TouchableWithoutFeedback onPress={()=>{dispatch(clickIcon(!isIconOn))}}>
+                <TouchableWithoutFeedback onPress={()=>{dispatch(setIconClick(!isIconOn))}}>
                     <Handle>
                         {isIconOn&&
                             <ArrowImage source={require("../../../assets/icons/close_arrow.png")} />
