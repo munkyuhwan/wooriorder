@@ -18,6 +18,7 @@ import _ from "lodash";
 import { colorRed, colorWhite } from '../../../assets/colors/color'
 import { setPopupVisibility } from '../../store/popup'
 import { getMainCategories } from '../../store/categories'
+import { getMenu } from '../../store/menu'
 const SideMenu = () =>{
     const dispatch = useDispatch();
     const {mainCategories, selectedMainCategory} = useSelector((state)=>state.categories);
@@ -38,11 +39,11 @@ const SideMenu = () =>{
                             mainCategories?.map((el)=>{
                                 if(el.index==selectedMainCategory) {
                                     return (
-                                        <SideMenuItemTouchable key={"side_"+el.index} item={el} onItemPress={()=>{  }} />
+                                        <SideMenuItemTouchable key={"side_"+el.index} item={el} onItemPress={()=>{}} />
                                     ) 
                                 }else {
                                     return (
-                                        <SideMenuItemTouchableOff key={"side_"+el.index} item={el} onItemPress={()=>{   }} />
+                                        <SideMenuItemTouchableOff key={"side_"+el.index} item={el} onItemPress={()=>{ dispatch(getMenu());  }} />
                                     )
                                 }
                             })

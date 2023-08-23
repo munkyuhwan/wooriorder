@@ -2,25 +2,23 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { BottomButton, BottomButtonIcon, BottomButtonText, BottomButtonWrapper, ButtonWrapper, DetailInfoWrapper, DetailItemInfoImage, DetailItemInfoMore, DetailItemInfoPrice, DetailItemInfoPriceWrapper, DetailItemInfoSource, DetailItemInfoTitle, DetailItemInfoTitleEtc, DetailItemInfoTitleWrapper, DetailItemInfoWrapper, DetailPriceMoreWrapper, DetailWhiteWrapper, DetailWrapper, OptList, OptListWrapper, OptRecommendWrapper, OptTitleText } from '../../styles/main/detailStyle';
 import { ActivityIndicator, Animated, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
-import { onMenuDetailView } from '../../store/menuDetail';
 import { colorBlack, colorRed } from '../../../assets/colors/color';
 import { LANGUAGE } from '../../resources/strings';
 import OptItem from './optItem';
 import CommonIndicator from '../common/waitIndicator';
 import WaitIndicator from '../common/waitIndicator';
 import RecommendItem from './recommendItem';
-import { setMenuDetail } from '../../store/menuDetail';
+import { setMenuDetail, getSingleMenu } from '../../store/menuDetail';
 
 const ItemDetail = (props) => {
     const language = props.language;
     const isDetailShow = props.isDetailShow;
     const dispatch = useDispatch();
-    const {menuDetailIndex} = useSelector(state=>state.menuDetail);
-    const {menu} = useSelector((state)=>state.menu);
+    const {menuDetailIndex, menuDetail} = useSelector((state)=>state.menuDetail);
     const [detailZIndex, setDetailZIndex] = useState(0);
 
-    const optionSelect = menu[menuDetailIndex]?.options;
-    const recommendMenu = menu[menuDetailIndex]?.recommendMenu;
+    const optionSelect = menuDetail?.options;
+    const recommendMenu = menuDetail?.recommendMenu;
     // animation set
     const [widthAnimation, setWidthAnimation] = useState(new Animated.Value(0));
     // width interpolation
@@ -50,7 +48,7 @@ const ItemDetail = (props) => {
             {scaleY:animatedHeightScale}, 
             {translateY:animatedHeightTranslate}], 
         
-   };
+    };
     const onSelectHandleAnimation = async (popOpen) => {
         console.log("start opening");
         Animated.timing(widthAnimation, {
@@ -61,54 +59,47 @@ const ItemDetail = (props) => {
             if(!isDetailShow) {
                 setDetailZIndex(0)
             }
-            /* 
-            if(menuDetailIndex== null) {
-                setDetailZIndex(0)
-            }
-             */ 
         }) 
     }
     
     useEffect(()=>{
         if(menuDetailIndex!= null) {
-            setDetailZIndex(999)
-            onSelectHandleAnimation(1);
+            dispatch(getSingleMenu(menuDetailIndex))
+            //setDetailZIndex(999)
+            //onSelectHandleAnimation(1);
         }else {
             onSelectHandleAnimation(0);
         }
     },[menuDetailIndex])
-    
-    /* 
+
     useEffect(()=>{
+        console.log("isDetailShow: ",isDetailShow)
         if(isDetailShow) {
             setDetailZIndex(999)
             onSelectHandleAnimation(1);
-        }else {
-            onSelectHandleAnimation(0);
         }
     },[isDetailShow])
-     */
+
     return(
         <>
             <Animated.View  style={[{...PopStyle.animatedPop, ...boxWidthStyle,...{zIndex:detailZIndex} } ]} >
                     <DetailWrapper>
                         <DetailWhiteWrapper>
-                            {!isDetailShow &&
+                            {menuDetailIndex==null &&
                                 <WaitIndicator/>
                             }
-                            {isDetailShow &&
+                            {menuDetailIndex!=null &&
                             <>
-                            {/* 상단 제품 정보*/}
-                            {//menuDetailIndex &&
+                            {menuDetailIndex!=null &&
                                 <DetailInfoWrapper>
-                                    <DetailItemInfoImage source={menu[menuDetailIndex]?.imgUrl?{uri:`${menu[menuDetailIndex]?.imgUrl}`}:require("../../../assets/icons/logo.png")}/>
+                                    <DetailItemInfoImage source={menuDetail?.imgUrl?{uri:`${menuDetail?.imgUrl}`}:require("../../../assets/icons/logo.png")}/>
                                     <DetailItemInfoWrapper>
                                         <DetailItemInfoTitleWrapper>
-                                            <DetailItemInfoTitle>{menu[menuDetailIndex]?.itemName}</DetailItemInfoTitle>
+                                            <DetailItemInfoTitle>{menuDetail?.itemName}</DetailItemInfoTitle>
                                             <DetailItemInfoTitleEtc source={require("../../../assets/icons/new.png")}/>
                                             <DetailItemInfoTitleEtc source={require("../../../assets/icons/best.png")}/>
                                         </DetailItemInfoTitleWrapper>
-                                        <DetailItemInfoSource>{menu[menuDetailIndex]?.itemAddtion}</DetailItemInfoSource>
+                                        <DetailItemInfoSource>{menuDetail?.itemAddtion}</DetailItemInfoSource>
                                         <DetailPriceMoreWrapper>
                                             <DetailItemInfoPriceWrapper>
                                                 <DetailItemInfoPrice isBold={true} >23,000</DetailItemInfoPrice><DetailItemInfoPrice isBold={false}> 원</DetailItemInfoPrice>
@@ -118,8 +109,7 @@ const ItemDetail = (props) => {
                                     </DetailItemInfoWrapper>
                                 </DetailInfoWrapper>
                             }
-                            {/* 중간 옵션&추천메뉴*/}
-                            {//menuDetailIndex &&
+                            {menuDetailIndex!=null &&
                                 <OptRecommendWrapper>
                                     <OptListWrapper>
                                         <OptTitleText>{LANGUAGE[language].detailView.selectOpt}</OptTitleText>
@@ -127,12 +117,12 @@ const ItemDetail = (props) => {
                                             {optionSelect!=null &&
                                                 optionSelect.map((el,index)=>{
                                                     return(
-                                                        <OptItem key={"optItem_"+index} optionData={el} menuData={menu[menuDetailIndex]}/>    
+                                                        <OptItem key={"optItem_"+index} optionData={el} menuData={menuDetail}/>    
                                                     );
                                                 })
                                             }
                                             {optionSelect==null &&
-                                                <OptItem key={"optItem_0"} optionData={{imgUrl:require("../../../assets/icons/logo.png"),name:"loading...",price:0}} menuData={menu[menuDetailIndex]}/>    
+                                                <OptItem key={"optItem_0"} optionData={{imgUrl:require("../../../assets/icons/logo.png"),name:"loading...",price:0}} menuData={menuDetail}/>    
                                             }
                                         </OptList>
                                     </OptListWrapper>
@@ -142,7 +132,7 @@ const ItemDetail = (props) => {
                                             {recommendMenu!=null&&
                                             recommendMenu.map((el,index)=>{
                                                 return(
-                                                    <RecommendItem key={"recoItem_"+index} recommendData={el} menuData={menu[menuDetailIndex]}/>    
+                                                    <RecommendItem key={"recoItem_"+index} recommendData={el} menuData={menuDetail}/>    
                                                 );
                                             })
                                             }
@@ -150,9 +140,8 @@ const ItemDetail = (props) => {
                                     </OptListWrapper>
                                 </OptRecommendWrapper>
                             }   
-                            {/* 하단 버튼*/}
                             <BottomButtonWrapper>
-                                <TouchableWithoutFeedback onPress={()=>{props.setDetailShow(false); dispatch(onMenuDetailView(null))}}>
+                                <TouchableWithoutFeedback onPress={()=>{props.setDetailShow(false); dispatch(setMenuDetail(null))}}>
                                     <BottomButton backgroundColor={colorRed} >
                                         <BottomButtonText>{LANGUAGE[language].detailView.toMenu}</BottomButtonText>
                                         <BottomButtonIcon source={require("../../../assets/icons/folk_nife.png")} />

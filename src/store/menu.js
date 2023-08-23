@@ -1,4 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { useSelector } from 'react-redux';
+export const initMenu = createAsyncThunk("menu/initMenu", async(category) =>{
+    return [];
+})
 
 export const getMenu = createAsyncThunk("menu/getMenu", async(category) =>{
     const categoryMenu = [
@@ -423,6 +427,9 @@ export const menuSlice = createSlice({
     extraReducers:(builder)=>{
         // 메인 카테고리 받기
         builder.addCase(getMenu.fulfilled,(state, action)=>{
+            state.menu = action.payload;
+        })
+        builder.addCase(initMenu.fulfilled,(state, action)=>{
             state.menu = action.payload;
         })
     }

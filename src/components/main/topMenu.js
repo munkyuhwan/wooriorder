@@ -34,7 +34,7 @@ const TopMenu = () =>{
                                             ) 
                                     }else {
                                         return (
-                                            <TopMenuItemTouchableOff  key={"top_"+el.index} index={el.index} categoryName={el.name} onItemPress={()=>{}} />
+                                            <TopMenuItemTouchableOff  key={"top_"+el.index} index={el.index} categoryName={el.name} onItemPress={()=>{dispatch(getMenu());}} />
                                         )
                                     }
                                 })
