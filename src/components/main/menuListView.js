@@ -32,7 +32,7 @@ const MenuListView = () => {
                     keyExtractor={(item,index)=>index}
                 />
             </MenuListWrapper>
-            {/* <ItemDetail isDetailShow={isDetailShow} setDetailShow={setDetailShow} language={language}/>  */} 
+            <ItemDetail isDetailShow={isDetailShow} setDetailShow={setDetailShow} language={language}/>
         </>
     );
 }

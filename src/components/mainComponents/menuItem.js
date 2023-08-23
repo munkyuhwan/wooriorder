@@ -4,7 +4,7 @@ import { Animated,FlatList,Text,TouchableWithoutFeedback } from 'react-native'
 import { MenuItemBottomWRapper, MenuItemButton, MenuItemButtonInnerWrapper, MenuItemButtonInnerWrapperLeft, MenuItemButtonInnerWrapperRight, MenuItemButtonWrapper, MenuItemHotness, MenuItemHotnessWrapper, MenuItemImage, MenuItemImageWrapper, MenuItemInfoWRapper, MenuItemName, MenuItemPrice, MenuItemTopWrapper, MenuItemWrapper } from '../../styles/main/menuListStyle';
 import FastImage from 'react-native-fast-image';
 import { RADIUS, RADIUS_DOUBLE } from '../../styles/values';
-import { onMenuDetailView } from '../../store/menuDetail';
+import { setMenuDetail } from '../../store/menuDetail';
 
 const MenuItem = ({item,index,setDetailShow}) => {
     //<MenuItemImage />    
@@ -25,7 +25,7 @@ const MenuItem = ({item,index,setDetailShow}) => {
                             <MenuItemHotness source={require('../../../assets/icons/best.png')} />
                         </MenuItemHotnessWrapper>
                         <MenuItemButtonWrapper>
-                            <TouchableWithoutFeedback onPress={()=>{console.log('ㄷ더보기 터치'); setDetailShow(true);  /* dispatch(onMenuDetailView(index)); */  }} >
+                            <TouchableWithoutFeedback onPress={()=>{console.log('ㄷ더보기 터치'); setDetailShow(true);  dispatch(setMenuDetail(index)); }} >
                                 <MenuItemButtonInnerWrapperRight>
                                     <MenuItemButton source={require('../../../assets/icons/more.png')}/>
                                 </MenuItemButtonInnerWrapperRight>

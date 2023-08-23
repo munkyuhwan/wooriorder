@@ -1,26 +1,20 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+
+export const setMenuDetail = createAsyncThunk("menuDetail/setMenuDetail", async(index) =>{
+    return index;
+})
 
 // Slice
-const slice = createSlice({
+export const menuDetailSlice = createSlice({
     name: 'menuDetail',
     initialState: {
-        menuDetailIndex:null,
-        
+        menuDetailIndex: null,
     },
-    reducers: {
-        menuDetailIndexSelect:(state, action) => {
+    extraReducers:(builder)=>{
+        // 메인 카테고리 받기
+        builder.addCase(setMenuDetail.fulfilled,(state, action)=>{
             state.menuDetailIndex = action.payload;
-        }
-    },
-});
-export default slice.reducer
-
-// Action
-const {  menuDetailIndexSelect } = slice.actions
-export const onMenuDetailView = (index) => async dispatch =>{
-    try {
-        dispatch(menuDetailIndexSelect(index));
-    } catch (e) {
-        return console.error(e.message);
+        })
     }
-}
+});
+

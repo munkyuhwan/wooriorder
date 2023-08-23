@@ -9,13 +9,14 @@ import OptItem from './optItem';
 import CommonIndicator from '../common/waitIndicator';
 import WaitIndicator from '../common/waitIndicator';
 import RecommendItem from './recommendItem';
+import { setMenuDetail } from '../../store/menuDetail';
 
 const ItemDetail = (props) => {
     const language = props.language;
     const isDetailShow = props.isDetailShow;
     const dispatch = useDispatch();
     const {menuDetailIndex} = useSelector(state=>state.menuDetail);
-    const {menu} = useSelector((state)=>state.mainMenu);
+    const {menu} = useSelector((state)=>state.menu);
     const [detailZIndex, setDetailZIndex] = useState(0);
 
     const optionSelect = menu[menuDetailIndex]?.options;
@@ -67,7 +68,7 @@ const ItemDetail = (props) => {
              */ 
         }) 
     }
-    /*
+    
     useEffect(()=>{
         if(menuDetailIndex!= null) {
             setDetailZIndex(999)
@@ -76,10 +77,9 @@ const ItemDetail = (props) => {
             onSelectHandleAnimation(0);
         }
     },[menuDetailIndex])
-    */
     
+    /* 
     useEffect(()=>{
-        console.log("isdetailshow: ",isDetailShow)
         if(isDetailShow) {
             setDetailZIndex(999)
             onSelectHandleAnimation(1);
@@ -87,7 +87,7 @@ const ItemDetail = (props) => {
             onSelectHandleAnimation(0);
         }
     },[isDetailShow])
-    
+     */
     return(
         <>
             <Animated.View  style={[{...PopStyle.animatedPop, ...boxWidthStyle,...{zIndex:detailZIndex} } ]} >
