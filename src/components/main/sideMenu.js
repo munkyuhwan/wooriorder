@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { 
-    Image,
-    StyleSheet,
-    View, 
-    Text, 
-    TouchableOpacity, 
-    TextInput, 
-    Dimensions, 
-    ScrollView,
     TouchableWithoutFeedback
 } from 'react-native'
 import { HeaderLogo, HeaderWrapper } from '../../styles/header/header'
