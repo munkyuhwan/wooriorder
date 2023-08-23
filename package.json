@@ -20,7 +20,7 @@
     "axios": "^1.4.0",
     "lodash": "^4.17.21",
     "react": "18.2.0",
-    "react-native": "0.72.3",
+    "react-native": "^0.72.4",
     "react-native-event-listeners": "^1.0.7",
     "react-native-fast-image": "^8.6.3",
     "react-native-gesture-handler": "^2.12.1",
