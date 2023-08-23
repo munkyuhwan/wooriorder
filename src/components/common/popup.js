@@ -3,11 +3,12 @@ import {View, NativeModules, Animated, TouchableWithoutFeedback, StyleSheet} fro
 import { useDispatch, useSelector } from 'react-redux'
 import { PopupCloseButton, PopupCloseButtonWrapper, PopupContentWrapper, PopupWrapper } from '../../styles/common/popup';
 import { setPopupVisibility } from '../../store/popup';
+import LanguageSelectPopup from '../popups/languageSelectPopup';
 
 const PopUp = (props) =>{
     
     const dispatch = useDispatch();
-    const {isPopupVisible} = useSelector(state=>state.popup);
+    const {isPopupVisible, innerView} = useSelector(state=>state.popup);
     const [popupZIndex, setPopupZIndex] = useState(0);
     const [size, setSize] = useState("0") 
     // animation set
@@ -54,7 +55,6 @@ const PopUp = (props) =>{
         }) 
     }
     useEffect(()=>{
-        console.log("popupZIndex: ", popupZIndex)
         if(isPopupVisible) {
             setPopupZIndex(999999);
             setSize('100%');
@@ -63,6 +63,10 @@ const PopUp = (props) =>{
             onSelectHandleAnimation(0);
         }
     },[isPopupVisible])
+
+    useEffect(()=>{
+        console.log("innerView: ",innerView)
+    },[innerView])
     
     return(
         <>
@@ -76,6 +80,9 @@ const PopUp = (props) =>{
                             <PopupCloseButton source={require('../../../assets/icons/close_red.png')}/>
                         </PopupCloseButtonWrapper>
                     </TouchableWithoutFeedback>
+                    {innerView=="LanguageSelectPopup"&&
+                        <LanguageSelectPopup/>
+                    }
                 </PopupContentWrapper>
             </Animated.View>
         </>

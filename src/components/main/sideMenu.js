@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { 
-    TouchableWithoutFeedback
-} from 'react-native'
+import { TouchableWithoutFeedback} from 'react-native'
 import { HeaderLogo, HeaderWrapper } from '../../styles/header/header'
 import { LogoTop, LogoWrapper, SideBottomButton, SideBottomIcon, SideBottomText, SideBottomWrapper, SideMenuItem, SideMenuItemWrapper, SideMenuScrollView, SideMenuWrapper } from '../../styles/main/sideMenuStyle'
 import { SideMenuItemTouchable, SideMenuItemTouchableOff } from '../menuComponents/sideMenuItem'
@@ -11,6 +9,7 @@ import { colorRed, colorWhite } from '../../../assets/colors/color'
 import { setPopupVisibility } from '../../store/popup'
 import { getMainCategories } from '../../store/categories'
 import { getMenu } from '../../store/menu'
+import LanguageSelectPopup from '../popups/languageSelectPopup'
 const SideMenu = () =>{
     const dispatch = useDispatch();
     const {mainCategories, selectedMainCategory} = useSelector((state)=>state.categories);
@@ -44,7 +43,7 @@ const SideMenu = () =>{
                 </SideMenuScrollView>
                 <SideBottomWrapper>
                     <TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={()=>{ dispatch(setPopupVisibility(true));}} >
+                        <TouchableWithoutFeedback onPress={()=>{ dispatch(setPopupVisibility({isOpen:true,popupType:"LanguageSelectPopup"}));}} >
                             <SideBottomButton borderColor={colorWhite} >
                                 <SideBottomText>언어선택</SideBottomText>
                                 <SideBottomIcon source={require("../../../assets/icons/korean.png")} />

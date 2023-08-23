@@ -1,18 +1,22 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-export const setPopupVisibility = createAsyncThunk("popup/setPopupVisibility", async(isOpen) =>{
-    return isOpen;
+export const setPopupVisibility = createAsyncThunk("popup/setPopupVisibility", async(popup) =>{
+    console.log("popupType: ",popup)
+    return popup;
 })
 // Slice
 export const popupsSlice = createSlice({
     name: 'popup',
     initialState: {
         isPopupVisible:false,
+        innerView:""
     },
     extraReducers:(builder)=>{
         // 메인 카테고리 받기
         builder.addCase(setPopupVisibility.fulfilled,(state, action)=>{
-            state.isPopupVisible = action.payload;
+            console.log("action.payload: ",action.payload)
+            state.isPopupVisible = action.payload.isOpen;
+            state.innerView = action.payload.popupType;
         })
     }
 });

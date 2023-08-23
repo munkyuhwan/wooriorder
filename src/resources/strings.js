@@ -12,6 +12,14 @@ export const LANGUAGE = {
             addToCart:'주문 담기',
             selectOpt:'옵션 선택',
             recommendMenu:'함께먹기 좋은 메뉴',
+        },
+        languageSelectView:{
+            title:"사용하시는 국가별 언어를 선택하여 주세요.",
+            subTitle:"Please select the language for your country.",
+            korea:'한국어',
+            japanese:'일본어',
+            chineses:'중국어',
+            english:'영어',
         }
     },
     japanese:{
