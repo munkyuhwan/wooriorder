@@ -12,7 +12,7 @@ import { setSelectedMainCategory } from '../../store/categories'
 export const SideMenuItemTouchable = (props) =>{
     // state
     const dispatch = useDispatch();
-
+    const itemProps = props?.item;
     // state
     const {selectedMainCategory} = useSelector((state)=>state.categories);
 
@@ -60,19 +60,21 @@ export const SideMenuItemTouchable = (props) =>{
             })
         ]).start(()=>{
             props.onItemPress();
-            if(onOff==1) dispatch(setSelectedMainCategory(props.index))
+            if(onOff==1) dispatch(setSelectedMainCategory(itemProps.index))
         });   
     }
 
     const handleOnPress = () =>{
         onSelectHandleAnimation(1);
     }
-    if(props.index == selectedMainCategory) onSelectHandleAnimation(1);
+    useEffect(()=>{
+        if(itemProps.index == selectedMainCategory) onSelectHandleAnimation(1);
+    },[])
 
     return (
         <TouchableWithoutFeedback onPress={()=>{handleOnPress();}}>
             <Animated.View style={[{  ...animatedStyle,...boxStyle},{borderBottomRightRadius:radiusAnimation,borderTopRightRadius:radiusAnimation}]} >
-                <SideMenuText>{props.categoryName}</SideMenuText>
+                <SideMenuText>{itemProps.name}</SideMenuText>
             </Animated.View>
         </TouchableWithoutFeedback>
     )
@@ -80,21 +82,20 @@ export const SideMenuItemTouchable = (props) =>{
 
 export const SideMenuItemTouchableOff = (props) =>{
 
+    const itemProps = props?.item;
     // state
     const dispatch = useDispatch();
     const handleOnPress = () =>{
         //onSelectHandleAnimation();
             props.onItemPress();
-            console.log("click ")
-            dispatch(setSelectedMainCategory(props.index))
-            
+            dispatch(setSelectedMainCategory(itemProps.index))            
     }
 
     return (
         <TouchableWithoutFeedback onPress={()=>{handleOnPress();}}>
             <SideMenuItemWrapper>
                 <SideMenuItemOff>
-                    <SideMenuText>{props.categoryName}</SideMenuText>
+                    <SideMenuText>{itemProps.name}</SideMenuText>
                 </SideMenuItemOff>
             </SideMenuItemWrapper>
         </TouchableWithoutFeedback>

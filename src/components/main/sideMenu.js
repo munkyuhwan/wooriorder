@@ -38,11 +38,11 @@ const SideMenu = () =>{
                             mainCategories?.map((el)=>{
                                 if(el.index==selectedMainCategory) {
                                     return (
-                                        <SideMenuItemTouchable key={"side_"+el.index} index={el.index} categoryId={"cat"+`${el.index}`} categoryName={el.name} onItemPress={()=>{  }} />
+                                        <SideMenuItemTouchable key={"side_"+el.index} item={el} onItemPress={()=>{  }} />
                                     ) 
                                 }else {
                                     return (
-                                        <SideMenuItemTouchableOff key={"side_"+el.index} index={el.index} categoryId={"cat"+`${el.index}`} categoryName={el.name} onItemPress={()=>{   }} />
+                                        <SideMenuItemTouchableOff key={"side_"+el.index} item={el} onItemPress={()=>{   }} />
                                     )
                                 }
                             })
@@ -51,10 +51,10 @@ const SideMenu = () =>{
                 </SideMenuScrollView>
                 <SideBottomWrapper>
                     <TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={()=>{ console.log("language select"); dispatch(setPopupVisibility(true));}} >
+                        <TouchableWithoutFeedback onPress={()=>{ dispatch(setPopupVisibility(true));}} >
                             <SideBottomButton borderColor={colorWhite} >
                                 <SideBottomText>언어선택</SideBottomText>
-                                <SideBottomIcon source={require("../../../assets/icons/korean.png")}  />
+                                <SideBottomIcon source={require("../../../assets/icons/korean.png")} />
                             </SideBottomButton>
                         </TouchableWithoutFeedback>
                     </TouchableWithoutFeedback>

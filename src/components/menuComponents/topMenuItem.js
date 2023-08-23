@@ -63,7 +63,9 @@ export const TopMenuItemTouchable = (props) =>{
     const handleOnPress = () =>{
         onSelectHandleAnimation(1);
     }
-    if(props.index == selectedSubCategory) onSelectHandleAnimation(1);
+    useEffect(()=>{
+        if(props.index == selectedSubCategory) onSelectHandleAnimation(1);
+    },[])
     return (
         <TouchableWithoutFeedback onPress={()=>{handleOnPress(); }}>
             <Animated.View style={[{  ...animatedStyle,...boxStyle}]} >

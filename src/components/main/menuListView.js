@@ -4,12 +4,21 @@ import { Animated,FlatList,Text,TouchableWithoutFeedback, View } from 'react-nat
 import { MenuListWrapper } from '../../styles/main/menuListStyle';
 import MenuItem from '../mainComponents/menuItem';
 import ItemDetail from '../detailComponents/itemDetail';
+import { getMenu } from '../../store/menu';
 
 
 const MenuListView = () => {
-    const {menu} = useSelector((state)=>state.mainMenu);
-    const {language} = useSelector(state=>state.languageSelect);
+    const dispatch = useDispatch();
+
+    const {menu} = useSelector((state)=>state.menu);
+    const {selectedMainCategory} = useSelector((state)=>state.categories);
+    const {selectedSubCategory} = useSelector((state)=>state.categories);
+
+    const {language} = useSelector(state=>state.languages);
     const [isDetailShow, setDetailShow] = useState(false);
+    useEffect(()=>{
+        dispatch(getMenu());
+    },[])
     return(
         <>
             <MenuListWrapper>
@@ -23,7 +32,7 @@ const MenuListView = () => {
                     keyExtractor={(item,index)=>index}
                 />
             </MenuListWrapper>
-            <ItemDetail isDetailShow={isDetailShow} setDetailShow={setDetailShow} language={language}/>  
+            {/* <ItemDetail isDetailShow={isDetailShow} setDetailShow={setDetailShow} language={language}/>  */} 
         </>
     );
 }
