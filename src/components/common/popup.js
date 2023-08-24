@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { PopupCloseButton, PopupCloseButtonWrapper, PopupContentWrapper, PopupWrapper } from 'styles/common/popup';
 import { setPopupVisibility } from '../../store/popup';
 import LanguageSelectPopup from '../popups/languageSelectPopup';
+import TogoPopup from '../popups/togoTimePopup';
 
 const PopUp = (props) =>{
     
@@ -64,10 +65,6 @@ const PopUp = (props) =>{
         }
     },[isPopupVisible])
 
-    useEffect(()=>{
-        console.log("innerView: ",innerView)
-    },[innerView])
-    
     return(
         <>
             <Animated.View  style={[{...PopStyle.animatedPop,...boxWidthStyle,...{zIndex:popupZIndex, width:size, height:size}} ]} >   
@@ -82,6 +79,9 @@ const PopUp = (props) =>{
                     </TouchableWithoutFeedback>
                     {innerView=="LanguageSelectPopup"&&
                         <LanguageSelectPopup/>
+                    }
+                    {innerView=="TogoPopup"&&
+                        <TogoPopup/>
                     }
                 </PopupContentWrapper>
             </Animated.View>

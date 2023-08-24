@@ -4,9 +4,11 @@ import {
     TouchableWithoutFeedback
 } from 'react-native'
 import { CartItemAmtController, CartItemAmtControllerImage, CartItemAmtControllerText, CartItemAmtText, CartItemAmtWrapper, CartItemCancelBtn, CartItemCancelWrapper, CartItemImage, CartItemImageTogoWrapper, CartItemPrice, CartItemTitle, CartItemTitlePriceWrapper, CartItemTogoBtn, CartItemTogoIcon, CartItemTogoText, CartItemTogoWrapper, CartItemWrapper } from '../../styles/main/cartStyle';
+import { setPopupVisibility } from '../../store/popup';
+import { useDispatch } from 'react-redux';
 
 const CartListItem = (props) => {
-    
+    const dispatch = useDispatch();
     const calculateAmt = (operator, amt) =>{
         // plus, minus, cancel
         
@@ -17,10 +19,12 @@ const CartListItem = (props) => {
             <CartItemWrapper>
                 <CartItemImageTogoWrapper>
                     <CartItemImage/>
-                    <CartItemTogoWrapper>
-                        <CartItemTogoText>test</CartItemTogoText>
-                        <CartItemTogoIcon source={require("assets/icons/togo.png")}  />
-                    </CartItemTogoWrapper>
+                    <TouchableWithoutFeedback onPress={()=>{dispatch(setPopupVisibility({isOpen:true,popupType:"TogoPopup"}));}} >
+                        <CartItemTogoWrapper>
+                            <CartItemTogoText>test</CartItemTogoText>
+                            <CartItemTogoIcon source={require("assets/icons/togo.png")}  />
+                        </CartItemTogoWrapper>
+                    </TouchableWithoutFeedback>
                 </CartItemImageTogoWrapper>
                 
                 <CartItemTitlePriceWrapper>

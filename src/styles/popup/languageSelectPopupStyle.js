@@ -10,21 +10,6 @@ export const LanguageSelectWrapper = styled.View`
     flexDirection:column;
 `;
 
-// 상단 타이틀
-export const LanguageSelectTitleWrapper = styled.View`
-    paddingTop:63px;
-`
-export const LanguageSelectTitleText = styled.Text`
-    textAlign:center;
-    fontSize:16px;
-    fontWeight:bold;
-    color:${colorBlack};
-`
-export const LanguageSelectSubtitleText = styled.Text`
-    textAlign:center;
-    fontSize:11px;
-    color:${colorBlack};
-`
 // 언어선택 
 export const LanguageWrapper = styled.View`
     width:100%;

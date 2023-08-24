@@ -5,6 +5,7 @@ import { LANGUAGE, LANGUAGE_LIST } from '../../resources/strings';
 import { LANGUAGE_KOREAN } from '../../resources/icons';
 import { TouchableWithoutFeedback } from 'react-native';
 import { setLanguage } from '../../store/languages';
+import { PopupSubtitleText, PopupTitleText, PopupTitleWrapper } from '../../styles/common/coreStyle';
 
 const LanguageSelectPopup = () => {
     const dispatch = useDispatch();
@@ -12,10 +13,10 @@ const LanguageSelectPopup = () => {
     return(
         <>
             <LanguageSelectWrapper>
-                <LanguageSelectTitleWrapper>
-                    <LanguageSelectTitleText>{LANGUAGE[language].languageSelectView.title}</LanguageSelectTitleText>
-                    <LanguageSelectSubtitleText>{LANGUAGE[language].languageSelectView.subTitle}</LanguageSelectSubtitleText>
-                </LanguageSelectTitleWrapper>
+                <PopupTitleWrapper>
+                    <PopupTitleText>{LANGUAGE[language].languageSelectView.title}</PopupTitleText>
+                    <PopupSubtitleText>{LANGUAGE[language].languageSelectView.subTitle}</PopupSubtitleText>
+                </PopupTitleWrapper>
                 <LanguageWrapper>
                     {
                         LANGUAGE_LIST.map(el => {
@@ -51,19 +52,6 @@ const LanguageSelectPopup = () => {
                             )
                         })
                     }
-                    
-
-{/* 
-                    <LanguageIconWrapper>
-                        <LanguageIconImage source={require("assets/icons/japanese.png")} />
-                    </LanguageIconWrapper>
-                    <LanguageIconWrapper>
-                        <LanguageIconImage source={require("assets/icons/chinese.png")} />
-                    </LanguageIconWrapper>
-                    <LanguageIconWrapper>
-                        <LanguageIconImage source={require("assets/icons/english.png")} />
-                    </LanguageIconWrapper>
-                     */}
                 </LanguageWrapper>
                 
             </LanguageSelectWrapper>

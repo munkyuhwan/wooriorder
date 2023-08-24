@@ -20,6 +20,15 @@ export const LANGUAGE = {
             title:"사용하시는 국가별 언어를 선택하여 주세요.",
             subTitle:"Please select the language for your country.",
             selectedLanguage:'한국어',
+        },
+        togoView:{
+            title:"원하시는 포장 완료 시간을 선택 해 주세요.",
+            confirmButtonnTitle:'확인',
+        },
+        popup:{
+            closeTitle:'닫기',
+            okTitle:"확인",
+            cancelTitle:"취소",
         }
     },
     japanese:{
