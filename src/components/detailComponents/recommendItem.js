@@ -15,7 +15,7 @@ const RecommendItem = (props) => {
                     <RecommendItemImageWrapper>
                         <RecommendItemImage  source={{uri:`${recommendData?.imgUrl}`}}/>
                         <RecommendItemDim/>
-                        <RecommendItemInfoChecked source={require("../../../assets/icons/check_red.png")}/>
+                        <RecommendItemInfoChecked source={require("../../assets/icons/check_red.png")}/>
                     </RecommendItemImageWrapper>
                     <RecommendItemInfoWrapper>
                         <RecommendItemInfoTitle>{recommendData?.name}</RecommendItemInfoTitle>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled, {css} from 'styled-components/native';
 import { RADIUS } from '../values';
-import { mainTheme } from '../../../assets/colors/color';
+import { mainTheme } from '../../assets/colors/color';
 
 // 전체화면
 export const WholeWrapper = styled.View`

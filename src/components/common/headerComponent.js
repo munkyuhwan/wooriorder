@@ -8,13 +8,13 @@ import {
     TextInput, 
     Dimensions 
 } from 'react-native'
-import { HeaderLogo, HeaderWrapper } from '../../styles/header/header'
+import { HeaderLogo, HeaderWrapper } from 'styles/header/header'
 
 const Header = () =>{
     return(
         <>
         <HeaderWrapper>
-            <HeaderLogo source={require("../../../assets/icons/logo.png")} />
+            <HeaderLogo source={require("assets/icons/logo.png")} />
 
         </HeaderWrapper>
         </>

@@ -44,10 +44,10 @@ const CartView = () =>{
                 <TouchableWithoutFeedback onPress={()=>{dispatch(setIconClick(!isIconOn))}}>
                     <Handle>
                         {isIconOn&&
-                            <ArrowImage source={require("../../../assets/icons/close_arrow.png")} />
+                            <ArrowImage source={require("assets/icons/close_arrow.png")} />
                         }
                         {!isIconOn&&
-                            <ArrowImage style={{transform:[{scaleX:-1}]}} source={require("../../../assets/icons/close_arrow.png")} />
+                            <ArrowImage style={{transform:[{scaleX:-1}]}} source={require("assets/icons/close_arrow.png")} />
                         }
                     </Handle>
                 </TouchableWithoutFeedback>
@@ -78,7 +78,7 @@ const CartView = () =>{
                     <TouchableWithoutFeedback onPress={()=>{startSmartroPay();}} >
                         <PayBtn>
                             <PayTitle>{LANGUAGE[language].cartView.makeOrder}</PayTitle>
-                            <PayIcon source={require("../../../assets/icons/order.png")} />
+                            <PayIcon source={require("assets/icons/order.png")} />
                         </PayBtn>
                      </TouchableWithoutFeedback>
                 </OrderWrapper>

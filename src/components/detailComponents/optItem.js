@@ -23,7 +23,7 @@ const OptItem = (props)=>{
                     <OptItemInfoWrapper>
                         <OptItemInfoTitle>{optionData?.name}</OptItemInfoTitle>
                         <OptItemInfoPrice>+{Number(optionData?.price).toLocaleString(undefined,{maximumFractionDigits:0})}</OptItemInfoPrice>
-                        <OptItemInfoChecked source={require("../../../assets/icons/check_red.png")}/>
+                        <OptItemInfoChecked source={require("../../assets/icons/check_red.png")}/>
                     </OptItemInfoWrapper>
                 </OptItemWrapper>
             </TouchableWithoutFeedback>

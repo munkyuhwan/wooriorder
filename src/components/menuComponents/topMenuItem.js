@@ -5,7 +5,7 @@ import { RADIUS, RADIUS_DOUBLE } from '../../styles/values'
 import { useDispatch, useSelector } from 'react-redux'
 import { clickMainItem, clickTopItem } from '../../store/onClick'
 import { CategoryDefault, TopMenuText } from '../../styles/main/topMenuStyle'
-import { colorBrown, tabBaseColor } from '../../../assets/colors/color'
+import { colorBrown, tabBaseColor } from '../../assets/colors/color'
 import { useFocusEffect } from '@react-navigation/native'
 import { setSelectedSubCategory } from '../../store/categories'
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled, {css} from 'styled-components/native';
-import { colorBlack, colorRed, colorWhite, colorYellow, mainTheme } from '../../../assets/colors/color';
+import { colorBlack, colorRed, colorWhite, colorYellow, mainTheme } from '../../assets/colors/color';
 import { RADIUS, RADIUS_SMALL } from '../values';
 
 export const DetailWrapper=styled.View`

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled, {css} from 'styled-components/native';
 import { RADIUS } from '../values';
-import { colorWhite } from '../../../assets/colors/color';
+import { colorWhite } from '../../assets/colors/color';
 
 export const MenuListWrapper = styled.View`
     width:100%;

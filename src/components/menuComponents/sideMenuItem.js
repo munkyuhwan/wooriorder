@@ -5,7 +5,7 @@ import { Text, Animated, TouchableWithoutFeedback, Easing } from 'react-native'
 import { RADIUS, RADIUS_DOUBLE } from '../../styles/values'
 import { useDispatch, useSelector } from 'react-redux'
 import { clickMainItem } from '../../store/onClick'
-import { tabBaseColor, colorRed } from '../../../assets/colors/color'
+import { tabBaseColor, colorRed } from '../../assets/colors/color'
 import { useFocusEffect } from '@react-navigation/native'
 import { setSelectedMainCategory } from '../../store/categories'
 

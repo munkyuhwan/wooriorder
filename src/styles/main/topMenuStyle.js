@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled, {css} from 'styled-components/native';
 import { RADIUS, RADIUS_DOUBLE } from '../values';
-import { colorRed, tabBaseColor, textColorWhite } from '../../../assets/colors/color';
+import { colorRed, tabBaseColor, textColorWhite } from '../../assets/colors/color';
 
 export const TopMenuWrapper = styled.View`
     flexDirection:row;

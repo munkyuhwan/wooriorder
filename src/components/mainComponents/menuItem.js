@@ -21,18 +21,18 @@ const MenuItem = ({item,index,setDetailShow}) => {
                     <FastImage style={{width:'100%',height:183,resizeMode:"background",borderRadius:RADIUS_DOUBLE}} source={{uri:imgUrl}}/>
                     <MenuItemImageWrapper>
                         <MenuItemHotnessWrapper>
-                            <MenuItemHotness source={require('../../../assets/icons/new.png')} />
-                            <MenuItemHotness source={require('../../../assets/icons/best.png')} />
+                            <MenuItemHotness source={require('../../assets/icons/new.png')} />
+                            <MenuItemHotness source={require('../../assets/icons/best.png')} />
                         </MenuItemHotnessWrapper>
                         <MenuItemButtonWrapper>
                             <TouchableWithoutFeedback onPress={()=>{setDetailShow(true);  dispatch(setMenuDetail(index)); }} >
                                 <MenuItemButtonInnerWrapperRight>
-                                    <MenuItemButton source={require('../../../assets/icons/more.png')}/>
+                                    <MenuItemButton source={require('../../assets/icons/more.png')}/>
                                 </MenuItemButtonInnerWrapperRight>
                             </TouchableWithoutFeedback>
                             <TouchableWithoutFeedback onPress={()=>{}} >
                                 <MenuItemButtonInnerWrapperLeft>
-                                    <MenuItemButton source={require('../../../assets/icons/add.png')}/>
+                                    <MenuItemButton source={require('../../assets/icons/add.png')}/>
                                 </MenuItemButtonInnerWrapperLeft>
                             </TouchableWithoutFeedback>
                         </MenuItemButtonWrapper>

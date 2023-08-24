@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled, {css} from 'styled-components/native';
 import { RADIUS, RADIUS_DOUBLE } from '../values';
 import { Animated, TouchableWithoutFeedback } from 'react-native';
-import { colorGrey, colorRed, colorWhite, mainTheme, textColorWhite } from '../../../assets/colors/color';
+import { colorGrey, colorRed, colorWhite, mainTheme, textColorWhite } from '../../assets/colors/color';
 
 export const CartViewWrapper = styled(Animated.View)`
     backgroundColor:#ffffff; 

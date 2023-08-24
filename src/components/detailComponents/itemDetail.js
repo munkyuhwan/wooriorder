@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { BottomButton, BottomButtonIcon, BottomButtonText, BottomButtonWrapper, ButtonWrapper, DetailInfoWrapper, DetailItemInfoImage, DetailItemInfoMore, DetailItemInfoPrice, DetailItemInfoPriceWrapper, DetailItemInfoSource, DetailItemInfoTitle, DetailItemInfoTitleEtc, DetailItemInfoTitleWrapper, DetailItemInfoWrapper, DetailPriceMoreWrapper, DetailWhiteWrapper, DetailWrapper, OptList, OptListWrapper, OptRecommendWrapper, OptTitleText } from '../../styles/main/detailStyle';
 import { ActivityIndicator, Animated, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
-import { colorBlack, colorRed } from '../../../assets/colors/color';
+import { colorBlack, colorRed } from '../../assets/colors/color';
 import { LANGUAGE } from '../../resources/strings';
 import OptItem from './optItem';
 import CommonIndicator from '../common/waitIndicator';
@@ -92,12 +92,12 @@ const ItemDetail = (props) => {
                             <>
                             {menuDetailIndex!=null &&
                                 <DetailInfoWrapper>
-                                    <DetailItemInfoImage source={menuDetail?.imgUrl?{uri:`${menuDetail?.imgUrl}`}:require("../../../assets/icons/logo.png")}/>
+                                    <DetailItemInfoImage source={menuDetail?.imgUrl?{uri:`${menuDetail?.imgUrl}`}:require("../../assets/icons/logo.png")}/>
                                     <DetailItemInfoWrapper>
                                         <DetailItemInfoTitleWrapper>
                                             <DetailItemInfoTitle>{menuDetail?.itemName}</DetailItemInfoTitle>
-                                            <DetailItemInfoTitleEtc source={require("../../../assets/icons/new.png")}/>
-                                            <DetailItemInfoTitleEtc source={require("../../../assets/icons/best.png")}/>
+                                            <DetailItemInfoTitleEtc source={require("../../assets/icons/new.png")}/>
+                                            <DetailItemInfoTitleEtc source={require("../../assets/icons/best.png")}/>
                                         </DetailItemInfoTitleWrapper>
                                         <DetailItemInfoSource>{menuDetail?.itemAddtion}</DetailItemInfoSource>
                                         <DetailPriceMoreWrapper>
@@ -122,7 +122,7 @@ const ItemDetail = (props) => {
                                                 })
                                             }
                                             {optionSelect==null &&
-                                                <OptItem key={"optItem_0"} optionData={{imgUrl:require("../../../assets/icons/logo.png"),name:"loading...",price:0}} menuData={menuDetail}/>    
+                                                <OptItem key={"optItem_0"} optionData={{imgUrl:require("../../assets/icons/logo.png"),name:"loading...",price:0}} menuData={menuDetail}/>    
                                             }
                                         </OptList>
                                     </OptListWrapper>
@@ -144,12 +144,12 @@ const ItemDetail = (props) => {
                                 <TouchableWithoutFeedback onPress={()=>{props.setDetailShow(false); dispatch(setMenuDetail(null))}}>
                                     <BottomButton backgroundColor={colorRed} >
                                         <BottomButtonText>{LANGUAGE[language].detailView.toMenu}</BottomButtonText>
-                                        <BottomButtonIcon source={require("../../../assets/icons/folk_nife.png")} />
+                                        <BottomButtonIcon source={require("../../assets/icons/folk_nife.png")} />
                                     </BottomButton>
                                 </TouchableWithoutFeedback>
                                 <BottomButton backgroundColor={colorBlack} >
                                     <BottomButtonText>{LANGUAGE[language].detailView.addToCart}</BottomButtonText>
-                                    <BottomButtonIcon source={require("../../../assets/icons/cart_select.png")} />
+                                    <BottomButtonIcon source={require("../../assets/icons/cart_select.png")} />
                                 </BottomButton>
                             </BottomButtonWrapper>
                             </>

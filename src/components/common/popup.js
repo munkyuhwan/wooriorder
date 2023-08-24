@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {View, NativeModules, Animated, TouchableWithoutFeedback, StyleSheet} from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { PopupCloseButton, PopupCloseButtonWrapper, PopupContentWrapper, PopupWrapper } from '../../styles/common/popup';
+import { PopupCloseButton, PopupCloseButtonWrapper, PopupContentWrapper, PopupWrapper } from 'styles/common/popup';
 import { setPopupVisibility } from '../../store/popup';
 import LanguageSelectPopup from '../popups/languageSelectPopup';
 
@@ -77,7 +77,7 @@ const PopUp = (props) =>{
                 <PopupContentWrapper>
                     <TouchableWithoutFeedback onPress={()=>{dispatch(setPopupVisibility(false));}}>
                         <PopupCloseButtonWrapper>
-                            <PopupCloseButton source={require('../../../assets/icons/close_red.png')}/>
+                            <PopupCloseButton source={require('assets/icons/close_red.png')}/>
                         </PopupCloseButtonWrapper>
                     </TouchableWithoutFeedback>
                     {innerView=="LanguageSelectPopup"&&

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Animated,FlatList,Text,TouchableWithoutFeedback, View } from 'react-native'
-import { MenuListWrapper } from '../../styles/main/menuListStyle';
+import { MenuListWrapper } from 'styles/main/menuListStyle';
 import MenuItem from '../mainComponents/menuItem';
 import ItemDetail from '../detailComponents/itemDetail';
 import { getMenu } from '../../store/menu';

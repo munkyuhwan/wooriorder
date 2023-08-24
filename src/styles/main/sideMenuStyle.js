@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled, {css} from 'styled-components/native';
 import { RADIUS } from '../values';
-import { colorRed, colorWhite, sideMenuColor } from '../../../assets/colors/color';
+import { colorRed, colorWhite, sideMenuColor } from '../../assets/colors/color';
 
 export const SideMenuWrapper = styled.View`
     height:100%;

@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { LanguageSelectSubtitleText, LanguageSelectTitleText, LanguageSelectTitleWrapper, LanguageSelectWrapper } from '../../styles/popup/languageSelectPopup';
-import { LANGUAGE } from '../../resources/strings';
+import { LanguageIconChecked, LanguageIconDim, LanguageIconImage, LanguageIconWrapper, LanguageSelectSubtitleText, LanguageSelectTitleText, LanguageSelectTitleWrapper, LanguageSelectWrapper, LanguageSelectedText, LanguageSelectedWrapper, LanguageWrapper } from '../../styles/popup/languageSelectPopupStyle';
+import { LANGUAGE, LANGUAGE_LIST } from '../../resources/strings';
+import { LANGUAGE_KOREAN } from '../../resources/icons';
+import { TouchableWithoutFeedback } from 'react-native';
+import { setLanguage } from '../../store/languages';
 
 const LanguageSelectPopup = () => {
+    const dispatch = useDispatch();
     const {language} = useSelector(state=>state.languages);
     return(
         <>
@@ -12,6 +16,56 @@ const LanguageSelectPopup = () => {
                     <LanguageSelectTitleText>{LANGUAGE[language].languageSelectView.title}</LanguageSelectTitleText>
                     <LanguageSelectSubtitleText>{LANGUAGE[language].languageSelectView.subTitle}</LanguageSelectSubtitleText>
                 </LanguageSelectTitleWrapper>
+                <LanguageWrapper>
+                    {
+                        LANGUAGE_LIST.map(el => {
+                            console.log(el)
+                            if(el=="korean") {
+
+                            }
+
+                            return (
+                                <TouchableWithoutFeedback key={el+"_language"} onPress={()=>{dispatch(setLanguage(el))}}>
+                                    <LanguageIconWrapper>
+                                        {el=="korean" &&
+                                            <LanguageIconImage source={require("assets/icons/korean.png")} />
+                                        }
+                                        {el=="japanese" &&
+                                            <LanguageIconImage source={require("assets/icons/japanese.png")} />
+                                        }
+                                        {el=="chinese" &&
+                                            <LanguageIconImage source={require("assets/icons/chinese.png")} />
+                                        }
+                                        {el=="english" &&
+                                            <LanguageIconImage source={require("assets/icons/english.png")} />
+                                        }
+                                        {el==language &&
+                                            <LanguageSelectedWrapper>
+                                                <LanguageIconDim/>
+                                                <LanguageIconChecked source={require("assets/icons/check_red.png")} />
+                                                <LanguageSelectedText>{LANGUAGE[language].languageSelectView.selectedLanguage}</LanguageSelectedText>
+                                            </LanguageSelectedWrapper>
+                                        }
+                                    </LanguageIconWrapper>
+                                </TouchableWithoutFeedback>
+                            )
+                        })
+                    }
+                    
+
+{/* 
+                    <LanguageIconWrapper>
+                        <LanguageIconImage source={require("assets/icons/japanese.png")} />
+                    </LanguageIconWrapper>
+                    <LanguageIconWrapper>
+                        <LanguageIconImage source={require("assets/icons/chinese.png")} />
+                    </LanguageIconWrapper>
+                    <LanguageIconWrapper>
+                        <LanguageIconImage source={require("assets/icons/english.png")} />
+                    </LanguageIconWrapper>
+                     */}
+                </LanguageWrapper>
+                
             </LanguageSelectWrapper>
         </>
     )

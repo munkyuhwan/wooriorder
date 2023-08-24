@@ -19,7 +19,7 @@ const CartListItem = (props) => {
                     <CartItemImage/>
                     <CartItemTogoWrapper>
                         <CartItemTogoText>test</CartItemTogoText>
-                        <CartItemTogoIcon source={require("../../../assets/icons/togo.png")}  />
+                        <CartItemTogoIcon source={require("assets/icons/togo.png")}  />
                     </CartItemTogoWrapper>
                 </CartItemImageTogoWrapper>
                 
@@ -29,20 +29,20 @@ const CartListItem = (props) => {
                     <CartItemAmtWrapper>
                         <TouchableWithoutFeedback  onPress={()=>{calculateAmt("minus",1)}} >
                             <CartItemAmtController>
-                                <CartItemAmtControllerImage source={require("../../../assets/icons/minusIcon.png")}  />
+                                <CartItemAmtControllerImage source={require("assets/icons/minusIcon.png")}  />
                             </CartItemAmtController>
                         </TouchableWithoutFeedback>
                         <CartItemAmtText>11</CartItemAmtText>
                         <TouchableWithoutFeedback  onPress={()=>{calculateAmt("plus",1)}} >
                             <CartItemAmtController>
-                                <CartItemAmtControllerImage  source={require("../../../assets/icons/plusIcon.png")} />
+                                <CartItemAmtControllerImage  source={require("assets/icons/plusIcon.png")} />
                             </CartItemAmtController>
                         </TouchableWithoutFeedback>
                     </CartItemAmtWrapper>
                 </CartItemTitlePriceWrapper>
                 <TouchableWithoutFeedback onPress={()=>{calculateAmt("cancel",0)}}>
                     <CartItemCancelWrapper>
-                        <CartItemCancelBtn source={require("../../../assets/icons/close_grey.png")} />
+                        <CartItemCancelBtn source={require("assets/icons/close_grey.png")} />
                     </CartItemCancelWrapper>
                 </TouchableWithoutFeedback>
 

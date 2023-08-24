@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled, {css} from 'styled-components/native';
-import { colorWhite } from '../../../assets/colors/color';
+import { colorWhite } from '../../assets/colors/color';
 import { RADIUS } from '../values';
 
 export const PopupWrapper = styled.View`
