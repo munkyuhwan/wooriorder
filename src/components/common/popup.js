@@ -21,8 +21,8 @@ const PopUp = (props) =>{
     const [widthAnimation, setWidthAnimation] = useState(new Animated.Value(0));
     // width interpolation
     const animatedWidthScale = widthAnimation.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0,1],
+        inputRange: [0, 1, 2],
+        outputRange: [0,1.3,1],
     });
     const animatedWidthTranslate = widthAnimation.interpolate({
         inputRange: [0, 1],
@@ -31,8 +31,8 @@ const PopUp = (props) =>{
     
     // height interpolation 
     const animatedHeightScale = widthAnimation.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0,1],
+        inputRange: [0, 1, 2],
+        outputRange: [0,1.3,1],
     });
     const animatedHeightTranslate = widthAnimation.interpolate({
         inputRange: [0, 1],
@@ -54,7 +54,6 @@ const PopUp = (props) =>{
             useNativeDriver:true,
         }).start(()=>{
             if(popOpen==0) {
-                console.log("닫기");
                 setPopupZIndex(0)
                 setSize('0');
             }
@@ -64,7 +63,7 @@ const PopUp = (props) =>{
         if(isPopupVisible) {
             setPopupZIndex(999999);
             setSize('100%');
-            onSelectHandleAnimation(1);
+            onSelectHandleAnimation(2);
         }else {
             onSelectHandleAnimation(0);
         }
@@ -90,7 +89,7 @@ const PopUp = (props) =>{
                     }
                    {(innerView=="TogoPopup") &&
                         <PopupBottomButtonWrapper>
-                            <TouchableWithoutFeedback onPress={()=>{ dispatch(setPopupVisibility(false)) }}>
+                            <TouchableWithoutFeedback onPress={()=>{ dispatch(setPopupVisibility({isPopupVisible:false})); }}>
                                 <PopupBottomButtonBlack>
                                     <PopupBottomButtonText>{LANGUAGE[language].popup.closeTitle}</PopupBottomButtonText>
                                 </PopupBottomButtonBlack>

@@ -4,8 +4,9 @@ import {
     TouchableWithoutFeedback
 } from 'react-native'
 import { CartItemAmtController, CartItemAmtControllerImage, CartItemAmtControllerText, CartItemAmtText, CartItemAmtWrapper, CartItemCancelBtn, CartItemCancelWrapper, CartItemImage, CartItemImageTogoWrapper, CartItemPrice, CartItemTitle, CartItemTitlePriceWrapper, CartItemTogoBtn, CartItemTogoIcon, CartItemTogoText, CartItemTogoWrapper, CartItemWrapper } from '../../styles/main/cartStyle';
-import { setPopupVisibility } from '../../store/popup';
+import { setPopupContent, setPopupVisibility } from '../../store/popup';
 import { useDispatch } from 'react-redux';
+import { openPopup } from '../../utils/common';
 
 const CartListItem = (props) => {
     const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const CartListItem = (props) => {
             <CartItemWrapper>
                 <CartItemImageTogoWrapper>
                     <CartItemImage/>
-                    <TouchableWithoutFeedback onPress={()=>{dispatch(setPopupVisibility({isPopupVisible:true,innerView:"TogoPopup"})); }} >
+                    <TouchableWithoutFeedback onPress={()=>{openPopup(dispatch,{innerView:"TogoPopup", isPopupVisible:true}); }} >
                         <CartItemTogoWrapper>
                             <CartItemTogoText>test</CartItemTogoText>
                             <CartItemTogoIcon source={require("assets/icons/togo.png")}  />
