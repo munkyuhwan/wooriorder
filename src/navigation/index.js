@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import MainScreen from '../screens/MainScreen'
 import Header from '../components/common/headerComponent'
 import PopUp from '../components/common/popup'
+import TransparentPopUp from '../components/common/transperntPopup'
 
 const Stack = createStackNavigator()
 
@@ -27,6 +28,7 @@ export default function Navigation() {
                 </Stack.Navigator>
             </NavigationContainer>
             <PopUp/>
+            <TransparentPopUp/>
         </>
     )
 }

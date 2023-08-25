@@ -10,7 +10,7 @@ import { setPopupContent, setPopupVisibility } from '../../store/popup'
 import { getMainCategories } from '../../store/categories'
 import { getMenu } from '../../store/menu'
 import LanguageSelectPopup from '../popups/languageSelectPopup'
-import { openPopup } from '../../utils/common'
+import { openPopup, openTransperentPopup } from '../../utils/common'
 const SideMenu = () =>{
     const dispatch = useDispatch();
     const {mainCategories, selectedMainCategory} = useSelector((state)=>state.categories);
@@ -51,7 +51,7 @@ const SideMenu = () =>{
                             </SideBottomButton>
                         </TouchableWithoutFeedback>
                     </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={()=>{openTransperentPopup(dispatch, {innerView:"LanguageSelectPopup", isPopupVisible:true});}} >
                         <SideBottomButton bg={"red"} borderColor={colorRed} >
                             <SideBottomText>직원호출</SideBottomText>
                             <SideBottomIcon source={require("../../assets/icons/bell_trans.png")}  />
