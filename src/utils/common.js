@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPopupContent, setPopupVisibility, setTransPopupVisibility } from '../store/popup';
+import { setPopupContent, setPopupVisibility, setTransPopupContent, setTransPopupVisibility } from '../store/popup';
 
 export function openPopup (dispatch, {innerView, isPopupVisible}) {
     if(isPopupVisible) {
@@ -13,6 +13,13 @@ export function openPopup (dispatch, {innerView, isPopupVisible}) {
 }
 export function openTransperentPopup (dispatch, {innerView, isPopupVisible}) {
     console.log(innerView, isPopupVisible);
+    if(isPopupVisible) {
+        dispatch(setTransPopupContent({innerView:innerView})); 
+        dispatch(setTransPopupVisibility({isPopupVisible:isPopupVisible}));    
+    }else {
+        dispatch(setTransPopupVisibility({isPopupVisible:isPopupVisible}));    
+        dispatch(setTransPopupContent({innerView:innerView})); 
+    }
     dispatch(setTransPopupVisibility({isPopupVisible:isPopupVisible}));    
 }
 

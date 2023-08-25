@@ -51,7 +51,7 @@ const SideMenu = () =>{
                             </SideBottomButton>
                         </TouchableWithoutFeedback>
                     </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={()=>{openTransperentPopup(dispatch, {innerView:"LanguageSelectPopup", isPopupVisible:true});}} >
+                    <TouchableWithoutFeedback onPress={()=>{openTransperentPopup(dispatch, {innerView:"CallServer", isPopupVisible:true});}} >
                         <SideBottomButton bg={"red"} borderColor={colorRed} >
                             <SideBottomText>직원호출</SideBottomText>
                             <SideBottomIcon source={require("../../assets/icons/bell_trans.png")}  />

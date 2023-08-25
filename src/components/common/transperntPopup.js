@@ -8,12 +8,14 @@ import TogoPopup from '../popups/togoTimePopup';
 import { PopupBottomButtonBlack, PopupBottomButtonText, PopupBottomButtonWrapper } from '../../styles/common/coreStyle';
 import { LANGUAGE } from '../../resources/strings';
 import { openTransperentPopup } from '../../utils/common';
+import { TransparentPopupWrapper } from '../../styles/common/popup';
+import CallServerPopup from '../popups/callServerPopup';
 
 const TransparentPopUp = (props) =>{
     
     const dispatch = useDispatch();
     const {language} = useSelector(state=>state.languages);
-    const {isTransPopupVisible, innerView} = useSelector(state=>state.popup);
+    const {isTransPopupVisible, innerTransView} = useSelector(state=>state.popup);
     const [popupZIndex, setPopupZIndex] = useState(0);
     const [size, setSize] = useState("0") 
     
@@ -78,7 +80,9 @@ const TransparentPopUp = (props) =>{
                 <TouchableWithoutFeedback onPress={()=>{openTransperentPopup(dispatch, {innerView:"", isPopupVisible:false});} }>
                     <PopupWrapper/>
                 </TouchableWithoutFeedback>
-                
+                    {innerTransView=="CallServer"&&
+                        <CallServerPopup/>
+                    }
             </Animated.View>
         </>
     )
