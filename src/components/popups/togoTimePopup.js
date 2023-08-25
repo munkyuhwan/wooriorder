@@ -19,14 +19,6 @@ const TogoPopup = () =>{
                 <TogoTimePickerWrapper>
                     <DatePicker mode={"time"} date={new Date()} androidVariant='nativeAndroid' is24hourSource="locale" onDateChange={(time)=>{console.log("time:",time)}} />
                 </TogoTimePickerWrapper>
-                <PopupBottomButtonWrapper>
-                    <TouchableWithoutFeedback onPress={()=>{dispatch(setPopupVisibility(false))}}>
-                        <PopupBottomButtonBlack>
-                            <PopupBottomButtonText>{LANGUAGE[language].popup.closeTitle}</PopupBottomButtonText>
-                        </PopupBottomButtonBlack>
-                    </TouchableWithoutFeedback>
-
-                </PopupBottomButtonWrapper>
             </TogoWrapper>
         </>
     )

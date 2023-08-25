@@ -5,7 +5,7 @@ import { colorBlack, colorWhite } from '../../assets/colors/color';
 // 전체
 export const LanguageSelectWrapper = styled.View`
     width:415px;
-    height:290px;
+    height:230px;
     paddingRight:17px;
     flexDirection:column;
 `;

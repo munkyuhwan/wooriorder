@@ -19,7 +19,7 @@ const CartListItem = (props) => {
             <CartItemWrapper>
                 <CartItemImageTogoWrapper>
                     <CartItemImage/>
-                    <TouchableWithoutFeedback onPress={()=>{dispatch(setPopupVisibility({isOpen:true,popupType:"TogoPopup"}));}} >
+                    <TouchableWithoutFeedback onPress={()=>{dispatch(setPopupVisibility({isPopupVisible:true,innerView:"TogoPopup"})); }} >
                         <CartItemTogoWrapper>
                             <CartItemTogoText>test</CartItemTogoText>
                             <CartItemTogoIcon source={require("assets/icons/togo.png")}  />

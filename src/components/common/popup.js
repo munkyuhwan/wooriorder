@@ -5,13 +5,18 @@ import { PopupCloseButton, PopupCloseButtonWrapper, PopupContentWrapper, PopupWr
 import { setPopupVisibility } from '../../store/popup';
 import LanguageSelectPopup from '../popups/languageSelectPopup';
 import TogoPopup from '../popups/togoTimePopup';
+import { PopupBottomButtonBlack, PopupBottomButtonText, PopupBottomButtonWrapper } from '../../styles/common/coreStyle';
+import { LANGUAGE } from '../../resources/strings';
 
 const PopUp = (props) =>{
     
     const dispatch = useDispatch();
+    const {language} = useSelector(state=>state.languages);
     const {isPopupVisible, innerView} = useSelector(state=>state.popup);
     const [popupZIndex, setPopupZIndex] = useState(0);
     const [size, setSize] = useState("0") 
+    
+
     // animation set
     const [widthAnimation, setWidthAnimation] = useState(new Animated.Value(0));
     // width interpolation
@@ -83,6 +88,16 @@ const PopUp = (props) =>{
                     {innerView=="TogoPopup"&&
                         <TogoPopup/>
                     }
+                   {(innerView=="TogoPopup") &&
+                        <PopupBottomButtonWrapper>
+                            <TouchableWithoutFeedback onPress={()=>{ dispatch(setPopupVisibility(false)) }}>
+                                <PopupBottomButtonBlack>
+                                    <PopupBottomButtonText>{LANGUAGE[language].popup.closeTitle}</PopupBottomButtonText>
+                                </PopupBottomButtonBlack>
+                            </TouchableWithoutFeedback>
+                        </PopupBottomButtonWrapper>
+                    }
+                    
                 </PopupContentWrapper>
             </Animated.View>
         </>

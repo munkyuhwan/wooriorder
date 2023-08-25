@@ -1,6 +1,7 @@
 import { 
     configureStore, 
     combineReducers,
+    getDefaultMiddleware,
 } from '@reduxjs/toolkit'
 
 //slices
@@ -17,7 +18,8 @@ const store = configureStore({
         menu:menuSlice.reducer,
         menuDetail:menuDetailSlice.reducer,
         popup:popupsSlice.reducer,
-    }
+    },
+    devTools:true
 })
 
 

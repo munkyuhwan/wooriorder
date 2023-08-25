@@ -4,7 +4,7 @@ import { colorBlack, colorWhite } from '../../assets/colors/color';
 
 export const TogoWrapper = styled.View`
     width:415px;
-    height:333px;
+    height:235px;
 `
 export const TogoTimePickerWrapper = styled.View`
     width:401px;

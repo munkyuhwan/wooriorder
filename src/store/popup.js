@@ -14,9 +14,9 @@ export const popupsSlice = createSlice({
     extraReducers:(builder)=>{
         // 메인 카테고리 받기
         builder.addCase(setPopupVisibility.fulfilled,(state, action)=>{
-            console.log("action.payload: ",action.payload)
-            state.isPopupVisible = action.payload.isOpen;
-            state.innerView = action.payload.popupType;
+            console.log("action.payload: ",action.payload.popupType)
+            state.isPopupVisible = action.payload.isPopupVisible;
+            state.innerView = action.payload.innerView;
         })
     }
 });

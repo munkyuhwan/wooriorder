@@ -43,7 +43,7 @@ const SideMenu = () =>{
                 </SideMenuScrollView>
                 <SideBottomWrapper>
                     <TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={()=>{ dispatch(setPopupVisibility({isOpen:true,popupType:"LanguageSelectPopup"}));}} >
+                        <TouchableWithoutFeedback onPress={()=>{ dispatch(setPopupVisibility({isPopupVisible:true,innerView:"LanguageSelectPopup"} ));}} >
                             <SideBottomButton borderColor={colorWhite} >
                                 <SideBottomText>언어선택</SideBottomText>
                                 <SideBottomIcon source={require("../../assets/icons/korean.png")} />

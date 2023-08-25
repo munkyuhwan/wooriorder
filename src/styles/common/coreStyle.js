@@ -4,7 +4,7 @@ import { RADIUS_SMALL } from '../values';
 
 // 상단 타이틀
 export const PopupTitleWrapper = styled.View`
-    paddingTop:63px;
+    paddingTop:20px;
 `
 export const PopupTitleText = styled.Text`
     textAlign:center;
@@ -22,8 +22,8 @@ export const PopupSubtitleText = styled.Text`
 export const PopupBottomButtonWrapper = styled.View`
     width:401px;
     paddingRight:7px;
-    position:absolute;
     bottom:20px;
+    display:${(props=>{props.isVisible==true?"flex":"none"})}
 `
 export const PopupBottomButtonBlack = styled.View`
     backgroundColor:${colorBlack};
