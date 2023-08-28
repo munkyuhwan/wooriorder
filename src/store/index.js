@@ -10,6 +10,7 @@ import { languagesSlice } from './languages'
 import { menuSlice } from './menu'
 import { menuDetailSlice } from './menuDetail'
 import { popupsSlice } from './popup'
+import { callServerSlice } from './callServer'
 
 const store = configureStore({
     reducer:{
@@ -18,6 +19,7 @@ const store = configureStore({
         menu:menuSlice.reducer,
         menuDetail:menuDetailSlice.reducer,
         popup:popupsSlice.reducer,
+        callServer:callServerSlice.reducer,
     },
     devTools:true
 })

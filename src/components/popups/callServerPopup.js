@@ -4,11 +4,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import { colorDarkGrey, colorGrey, colorRed, colorWhite } from '../../assets/colors/color';
 import { TransparentPopupBottomButtonIcon, TransparentPopupBottomButtonText, TransparentPopupBottomButtonWraper, TransparentPopupBottomInnerWrapper, TransparentPopupBottomWrapper, TransparentPopupTopWrapper, TransparentPopupWrapper, TransperentPopupMidWrapper, TransperentPopupTopSubTitle, TransperentPopupTopTitle } from '../../styles/common/popup';
 import { LANGUAGE } from '../../resources/strings';
+import SelectItemComponent from '../common/selectItemComponent';
+import { getCallServerItems } from '../../store/callServer';
 
 const CallServerPopup = () => {
     const dispatch = useDispatch();
     const {language} = useSelector(state=>state.languages);
-    console.log("LANGUAGE[language].serverPopup.callBtnText:",LANGUAGE[language].serverPopup.callBtnText)
+
+    const {callServerItems} = useSelector(state=>state.callServer);
+    const {isTransPopupVisible, innerTransView} = useSelector(state=>state.popup);
+
+    useEffect(()=>{
+        if(isTransPopupVisible==true && innerTransView=="CallServer") {
+            dispatch(getCallServerItems());
+        }
+    },[isTransPopupVisible, innerTransView])
+
     return(
         <TransparentPopupWrapper>
             <TransparentPopupTopWrapper>
@@ -16,6 +27,10 @@ const CallServerPopup = () => {
                 <TransperentPopupTopSubTitle>{LANGUAGE[language].serverPopup.text}</TransperentPopupTopSubTitle>
             </TransparentPopupTopWrapper>     
             <TransperentPopupMidWrapper>
+                <SelectItemComponent 
+                    data={callServerItems}
+                    numColumns={4}
+                />
             </TransperentPopupMidWrapper>   
             <TransparentPopupBottomWrapper>
                 <TransparentPopupBottomInnerWrapper>

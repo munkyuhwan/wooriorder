@@ -53,8 +53,10 @@ export const TransperentPopupTopSubTitle = styled.Text`
 `
 // 투명배경 팝업 중간 뷰
 export const TransperentPopupMidWrapper = styled.View`
-    backgroundColor:blue;
     flex:1;
+    width:100%;
+    justifyContents:center;
+    alignItems:center;
 `   
 // 하단 버튼 선택
 export const TransparentPopupBottomWrapper = styled.View`
