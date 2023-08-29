@@ -13,10 +13,7 @@ import OrderListItem from '../orderListComponents/orderListItem';
 const OrderListPopup = () =>{
     const dispatch = useDispatch();
     const {language} = useSelector(state=>state.languages);
-    const {orderList, grandTotal} = useSelector(state=>state.order);
-
-    console.log("orderList: ",orderList)
-    
+    const {orderList, grandTotal} = useSelector(state=>state.order);    
     return(
         <>
             <OrderListPopupWrapper>
