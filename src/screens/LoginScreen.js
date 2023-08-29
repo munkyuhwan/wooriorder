@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { KeyboardAvoidingView, Text } from 'react-native'
+import { KeyboardAvoidingView, Text, TouchableWithoutFeedback } from 'react-native'
 import { LoginActionInputID, LoginActionInputPW, LoginActionSubtitle, LoginActionTitle, LoginActionWrapper, LoginBtnIcon, LoginBtnText, LoginBtnWrapper, LoginLogo, LoginMainWrapper } from '../styles/login/loginStyle'
 
 
 const LoginScreen = () =>{
 
     const pwRef = useRef();
+    const idRef = useRef();
 
     return(
         <>
@@ -15,6 +16,8 @@ const LoginScreen = () =>{
                     <LoginActionTitle>로그인</LoginActionTitle>
                     <LoginActionSubtitle>login</LoginActionSubtitle>
                     <LoginActionInputID
+                        ref={idRef}
+                        placeholder="아이디 입력"
                         onSubmitEditing={()=>{
                             if(pwRef.current!=null) {
                                 pwRef.current.focus()
@@ -23,17 +26,19 @@ const LoginScreen = () =>{
                     />
                     <LoginActionInputPW 
                         ref={pwRef}
-                        autoFocus={true}
-                        placeholder="비밀번호"
+                        placeholder="비밀번호 입력"
                         onSubmitEditing={()=>{
                             console.log("submit editing");
                         }}
                         secureTextEntry={true}  
                     />
-                    <LoginBtnWrapper>
-                        <LoginBtnText>로그인하기</LoginBtnText>
-                        <LoginBtnIcon source={require("assets/icons/lock.png")} />
-                    </LoginBtnWrapper>
+                    <TouchableWithoutFeedback onPress={()=>{}} >
+                        <LoginBtnWrapper>
+                            <LoginBtnText>로그인하기</LoginBtnText>
+                            <LoginBtnIcon source={require("assets/icons/lock.png")} />
+                        </LoginBtnWrapper>
+                    </TouchableWithoutFeedback>
+
                 </LoginActionWrapper>
             </LoginMainWrapper>
 
