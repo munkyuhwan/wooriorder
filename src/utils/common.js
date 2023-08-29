@@ -18,8 +18,11 @@ export function openTransperentPopup (dispatch, {innerView, isPopupVisible}) {
         dispatch(setTransPopupVisibility({isPopupVisible:isPopupVisible}));    
     }else {
         dispatch(setTransPopupVisibility({isPopupVisible:isPopupVisible}));    
-        dispatch(setTransPopupContent({innerView:innerView})); 
-    }
+        const disapearTimeout = setInterval(()=>{
+            dispatch(setTransPopupContent({innerView:innerView})); 
+            clearInterval(disapearTimeout);
+        },500)
+    } 
     dispatch(setTransPopupVisibility({isPopupVisible:isPopupVisible}));    
 }
 

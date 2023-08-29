@@ -10,6 +10,7 @@ import { LANGUAGE } from '../../resources/strings';
 import { openTransperentPopup } from '../../utils/common';
 import { TransparentPopupWrapper } from '../../styles/common/popup';
 import CallServerPopup from '../popups/callServerPopup';
+import OrderListPopup from '../popups/orderListPopup';
 
 const TransparentPopUp = (props) =>{
     
@@ -82,6 +83,9 @@ const TransparentPopUp = (props) =>{
                 </TouchableWithoutFeedback>
                     {innerTransView=="CallServer"&&
                         <CallServerPopup/>
+                    }
+                     {(innerTransView=="OrderList") &&
+                        <OrderListPopup/>
                     }
             </Animated.View>
         </>

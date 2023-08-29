@@ -35,6 +35,17 @@ export const LANGUAGE = {
             text:"직원호출이 필요하신분은 아래 호출항목을 선택 후 직원호출하기 버튼을 눌러주시면\n담당자가 확인 후 빠른게 조치해드리겠습니다.",
             callBtnText:'직원 호출하기',
             closeBtnText:'닫기',
+        },
+        orderListPopup:{
+            orderListTitle:"주문내역",
+            orderListSubtitle:"주문하신 결제 내역입니다.",
+            tableColName:"메뉴명",
+            tableColAmt:'수량',
+            tableColPrice:"단가",
+            tableColTotal:'합계',
+            tableColGrandTotal:'총 합계',
+            orderListPay:'결제하기',
+            orderListCancel:'취소',
         }
     },
     japanese:{

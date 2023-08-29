@@ -7,6 +7,7 @@ import LanguageSelectPopup from '../popups/languageSelectPopup';
 import TogoPopup from '../popups/togoTimePopup';
 import { PopupBottomButtonBlack, PopupBottomButtonText, PopupBottomButtonWrapper } from '../../styles/common/coreStyle';
 import { LANGUAGE } from '../../resources/strings';
+import OrderListPopup from '../popups/orderListPopup';
 
 const PopUp = (props) =>{
     
@@ -87,7 +88,11 @@ const PopUp = (props) =>{
                     {innerView=="TogoPopup"&&
                         <TogoPopup/>
                     }
-                   {(innerView=="TogoPopup") &&
+                   
+                   {(innerView=="OrderList") &&
+                        <OrderListPopup/>
+                    }
+                    {(innerView=="TogoPopup" || innerView=="OrderList") &&
                         <PopupBottomButtonWrapper>
                             <TouchableWithoutFeedback onPress={()=>{ dispatch(setPopupVisibility({isPopupVisible:false})); }}>
                                 <PopupBottomButtonBlack>

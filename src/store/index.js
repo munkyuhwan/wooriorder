@@ -11,6 +11,7 @@ import { menuSlice } from './menu'
 import { menuDetailSlice } from './menuDetail'
 import { popupsSlice } from './popup'
 import { callServerSlice } from './callServer'
+import { orderSlice } from './order'
 
 const store = configureStore({
     reducer:{
@@ -20,6 +21,7 @@ const store = configureStore({
         menuDetail:menuDetailSlice.reducer,
         popup:popupsSlice.reducer,
         callServer:callServerSlice.reducer,
+        order:orderSlice.reducer,
     },
     devTools:true
 })
