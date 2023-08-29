@@ -18,7 +18,9 @@ const MenuItem = ({item,index,setDetailShow}) => {
         <>
             <MenuItemWrapper>
                 <MenuItemTopWrapper>
-                    <FastImage style={{width:'100%',height:183,resizeMode:"background",borderRadius:RADIUS_DOUBLE}} source={{uri:imgUrl}}/>
+                    <TouchableWithoutFeedback onPress={()=>{setDetailShow(true);  dispatch(setMenuDetail(index)); }} >
+                        <FastImage style={{width:'100%',height:183,resizeMode:"background",borderRadius:RADIUS_DOUBLE}} source={{uri:imgUrl}}/>
+                    </TouchableWithoutFeedback>
                     <MenuItemImageWrapper>
                         <MenuItemHotnessWrapper>
                             <MenuItemHotness source={require('../../assets/icons/new.png')} />
