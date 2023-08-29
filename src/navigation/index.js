@@ -6,6 +6,7 @@ import MainScreen from '../screens/MainScreen'
 import Header from '../components/common/headerComponent'
 import PopUp from '../components/common/popup'
 import TransparentPopUp from '../components/common/transperntPopup'
+import LoginScreen from '../screens/LoginScreen'
 
 const Stack = createStackNavigator()
 
@@ -14,7 +15,7 @@ export default function Navigation() {
         <>
             <NavigationContainer>
                 <Stack.Navigator
-                    initialRouteName='AddTodo'
+                    initialRouteName='login'
                     screenOptions={{
                         gestureEnabled: true,
                         headerShown: false,
@@ -25,6 +26,12 @@ export default function Navigation() {
                         component={MainScreen}
                         options={{title:"Main Screen"}}
                     />
+                    <Stack.Screen
+                        name='login'
+                        component={LoginScreen}
+                        options={{title:"Login screen"}}
+                    />
+
                 </Stack.Navigator>
             </NavigationContainer>
             <PopUp/>
