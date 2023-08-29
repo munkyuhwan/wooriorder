@@ -50,10 +50,9 @@ const ItemDetail = (props) => {
         
     };
     const onSelectHandleAnimation = async (popOpen) => {
-        console.log("start opening");
         Animated.timing(widthAnimation, {
             toValue:popOpen,
-            duration: 300,
+            duration: 150,
             useNativeDriver:true,
         }).start(()=>{             
             if(!isDetailShow) {

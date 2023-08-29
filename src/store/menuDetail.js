@@ -8,6 +8,9 @@ export const getSingleMenu = createAsyncThunk("menuDetail/getSingleMenu", async(
     const {menu} = getState().menu;
     return menu[index];
 });
+export const setMenuDetailInit = createAsyncThunk("menuDetail/setMenuDetailInit", async() =>{
+    return {menuDetailIndex: null,menuDetail:{}};
+});
 
 // Slice
 export const menuDetailSlice = createSlice({
@@ -26,6 +29,12 @@ export const menuDetailSlice = createSlice({
        builder.addCase(getSingleMenu.fulfilled,(state, action)=>{
            state.menuDetail = action.payload;
        })
+       // 메뉴 상세 초기화
+      builder.addCase(setMenuDetailInit.fulfilled,(state, action)=>{
+          state.menuDetailIndex = null;
+          state.menuDetail = {};
+
+      })
     }
 });
 
