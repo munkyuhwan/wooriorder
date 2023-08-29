@@ -64,7 +64,6 @@ const TransparentPopUp = (props) =>{
         }) 
     }
     useEffect(()=>{
-        console.log("open: ",isTransPopupVisible);
         if(isTransPopupVisible) {
             setPopupZIndex(999999);
             setSize('100%');

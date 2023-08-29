@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled, {css} from 'styled-components/native';
 import { colorBlack, colorGrey, colorRed, colorWhite } from '../../assets/colors/color';
-import { RADIUS_SMALL } from '../values';
+import { RADIUS, RADIUS_SMALL } from '../values';
 
 export const OrderListPopupWrapper = styled.View`
     width:90%;
@@ -12,6 +12,7 @@ export const OrderListPopupWrapper = styled.View`
     paddingLeft:50px;
     paddingRight:50px;
     paddingBottom:40px;
+    borderRadius:${RADIUS};
 `
 // 제목 뤠퍼
 export const OrdrListTopWrapper = styled.View`
