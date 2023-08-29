@@ -8,10 +8,10 @@ export const OrderListPopupWrapper = styled.View`
     height:90%;
     backgroundColor:${colorWhite};
     margin:auto;
-    paddingTop:40px;
+    paddingTop:25px;
     paddingLeft:50px;
     paddingRight:50px;
-    paddingBottom:40px;
+    paddingBottom:15px;
     borderRadius:${RADIUS};
 `
 // 제목 뤠퍼
