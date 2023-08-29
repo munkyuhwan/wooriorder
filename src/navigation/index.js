@@ -7,6 +7,7 @@ import Header from '../components/common/headerComponent'
 import PopUp from '../components/common/popup'
 import TransparentPopUp from '../components/common/transperntPopup'
 import LoginScreen from '../screens/LoginScreen'
+import ADScreen from '../screens/ADScreen'
 
 const Stack = createStackNavigator()
 
@@ -15,7 +16,7 @@ export default function Navigation() {
         <>
             <NavigationContainer>
                 <Stack.Navigator
-                    initialRouteName='login'
+                    initialRouteName='ad'
                     screenOptions={{
                         gestureEnabled: true,
                         headerShown: false,
@@ -29,6 +30,11 @@ export default function Navigation() {
                     <Stack.Screen
                         name='login'
                         component={LoginScreen}
+                        options={{title:"Login screen"}}
+                    />
+                    <Stack.Screen
+                        name='ad'
+                        component={ADScreen}
                         options={{title:"Login screen"}}
                     />
 

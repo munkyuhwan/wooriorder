@@ -1,12 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { KeyboardAvoidingView, Text, TouchableWithoutFeedback } from 'react-native'
 import { LoginActionInputID, LoginActionInputPW, LoginActionSubtitle, LoginActionTitle, LoginActionWrapper, LoginBtnIcon, LoginBtnText, LoginBtnWrapper, LoginLogo, LoginMainWrapper } from '../styles/login/loginStyle'
+import { useNavigation } from '@react-navigation/native';
 
 
 const LoginScreen = () =>{
 
     const pwRef = useRef();
     const idRef = useRef();
+
+    const navigation = useNavigation();
 
     return(
         <>
@@ -32,7 +35,7 @@ const LoginScreen = () =>{
                         }}
                         secureTextEntry={true}  
                     />
-                    <TouchableWithoutFeedback onPress={()=>{}} >
+                    <TouchableWithoutFeedback onPress={()=>{navigation.navigate("ad")}} >
                         <LoginBtnWrapper>
                             <LoginBtnText>로그인하기</LoginBtnText>
                             <LoginBtnIcon source={require("assets/icons/lock.png")} />
