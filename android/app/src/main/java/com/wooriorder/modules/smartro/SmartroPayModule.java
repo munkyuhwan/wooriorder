@@ -11,6 +11,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -31,135 +32,76 @@ public class SmartroPayModule extends ReactContextBaseJavaModule {
         mContext = context;
     }
     // smartro Interface
-    private SmartroVCatInterface mSmartroVCatInterface = null; //This’s Interface-Constructor.
-    private ServiceConnection mServiceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            //The V-CAT Service has been succeed to connect with user-application.
-            //Your application can take a service via “mSmartroVCatInterface” constructor.
-            System.out.println(("onServiceConnected onServiceConnected"));
-            mSmartroVCatInterface = SmartroVCatInterface.Stub.asInterface(service);
 
-            String jsonString = "{\"service\":\"function\",\"external-manage\":\"get-signature\",\"service-result\":\"0800\",\"service-description\":\"서비스가 중단되었습니다.\"}";
-            Log.e("com.wooriorder", "jsonString: "+jsonString);
-            try {
-                mSmartroVCatInterface.executeService(jsonString, new SmartroVCatCallback() {
-                    @Override
-                    public void onServiceEvent(String strEventJSON) throws RemoteException {
-                        System.out.println("onServiceEvent=======================");
-                    }
-
-                    @Override
-                    public void onServiceResult(String strResultJSON) throws RemoteException {
-                        System.out.println("onServiceResult=======================");
-
-                    }
-                    @Override
-                    public IBinder asBinder() {
-                        System.out.println("asBinder=======================");
-                        getCurrentActivity().unbindService(mServiceConnection);
-                        mSmartroVCatInterface=null;
-                        return null;
-                    }
-                });
-            } catch (RemoteException e) {
-                System.out.println("smartro execption============================================================");
-                throw new RuntimeException(e);
-            }
-        }
-        @Override
-        public void onServiceDisconnected(ComponentName name) { //The V-CAT Service has been disconnected.
-        }
-    };
     @NonNull
     @Override
     public String getName() {
         return "SmartroPay";
     }
-
+    SmartroVCatInterface mSmartroVCatInterface = null; //This’s Interface-Constructor.
+    ServiceConnection mServiceConnection = null;
     @ReactMethod
-    public void prepareSmartroPay () {
-        System.out.println("prepareSmartroPay module!!!");
+    public void prepareSmartroPay (String jsonString, Callback errorCallback, Callback successCallback) {
+        System.out.println("prepareSmartroPay module!!!: ");
+        System.out.println("jsonString: "+jsonString);
+
+        mServiceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                //The V-CAT Service has been succeed to connect with user-application.
+                //Your application can take a service via “mSmartroVCatInterface” constructor.
+                System.out.println(("onServiceConnected onServiceConnected"));
+                mSmartroVCatInterface = SmartroVCatInterface.Stub.asInterface(service);
+
+                //String jsonString = "{\"service\":\"function\",\"external-manage\":\"get-signature\",\"service-result\":\"0800\",\"service-description\":\"서비스가 중단되었습니다.\"}";
+                //String jsonString = "{\"service\":\"function\",\"device-manage\":\"get-info\"}";
+                //String jsonString = "{\"service\":\"setting\",\"device\":\"dongle\",\"device-comm\":[\"com\",\"ftdi1\",\"115200\"],\"additional-device\":\"virtualpad\"}";
+                //String jsonString = "\"device-manage\", \"get-info\"";
+
+                Log.e("com.wooriorder", "jsonString: "+jsonString);
+                try {
+                    mSmartroVCatInterface.executeService(jsonString, new SmartroVCatCallback.Stub() {
+                        @Override
+                        public void onServiceEvent(String strEventJSON) throws RemoteException {
+                            System.out.println("onServiceEvent: "+strEventJSON);
+                            //successCallback.invoke(strEventJSON);
+                        }
+
+                        @Override
+                        public void onServiceResult(String strResultJSON) throws RemoteException {
+                            System.out.println("onServiceResult: "+strResultJSON);
+                            successCallback.invoke(strResultJSON);
+                            getCurrentActivity().unbindService(mServiceConnection);
+                            mSmartroVCatInterface=null;
+                        }
+                    });
+
+                } catch (RemoteException e) {
+                    System.out.println("smartro execption============================================================");
+                    errorCallback.invoke("error pay");
+                    throw new RuntimeException(e);
+                }
+            }
+            @Override
+            public void onServiceDisconnected(ComponentName name) { //The V-CAT Service has been disconnected.
+            }
+        };
+
         //Intent intentTemp = new Intent(SERVER_ACTION);
         //intentTemp.setPackage(SERVER_PACKAGE);
         Intent intentTemp = new Intent("smartro.vcat.action");
         intentTemp.setPackage("service.vcat.smartro.com.vcat"); //Putting user-application package name.
-        intentTemp.putExtra("package", mContext.getPackageName());
-        System.out.println("getPackageName: "+mContext.getPackageName());
+        intentTemp.putExtra("package", getCurrentActivity().getPackageName());
+        System.out.println("getPackageName: "+getCurrentActivity().getPackageName());
 
-        if(mContext.bindService(intentTemp, mServiceConnection, Context.BIND_AUTO_CREATE) == false)
+
+
+        if(getCurrentActivity().bindService(intentTemp, mServiceConnection, Context.BIND_AUTO_CREATE) == false)
         {
             Log.e("Smartro", "bindService Fail!!!");
         }else {
             Log.e("Smartro", "bindService success!!!");
-
         }
-
-         /*
-        try{
-            String    strRequestJSON = "";
-            //Inputting request to JSON “{ ... }”
-            //String strRequest = null;
-            String strRequest = "{\"service\":\"function\",\"external-manage\":\"get-signature\",\"service-result\":\"0800\",\"service-description\":\"서비스가 중단되었습니다.\"}";
-
-            mSmartroVCatInterface.executeService(strRequest, new SmartroVCatCallback.Stub() {
-                @Override
-                public void onServiceEvent(String strEventJSON) {
-                    System.out.println("onServiceEvent================");
-                    //This's Method for getting an event from V-CAT service.
-                }
-                @Override
-                public void onServiceResult(String strResultJSON) {
-                    System.out.println("onServiceResult================");
-                    //This's Method for getting the result from V-CAT service.
-                }
-            });
-
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-         */
-
-        /*
-        Intent intentTemp = new Intent("smartro.vcat.action");
-        intentTemp.setPackage("service.vcat.smartro.com.vcat");
-        intentTemp.putExtra("package", mContext.getPackageName());
-        mContext.bindService(intentTemp, mServiceConnection, Context.BIND_AUTO_CREATE);
-        */
-        //{"service":"function","external-manage":"get-signature","service-result":"0300","service-description":"장치 또는 서버 응답 시간이 초과되었습니다."}
-
-/*
-        Intent intentTemp = new Intent("smartro.vcat.action");
-        intentTemp.setPackage("service.vcat.smartro.com.vcat"); //Putting user-application package name. i
-        intentTemp.putExtra("package", mContext.getPackageName());
-//To bind Interface-Constructor at Service
-
-        mContext.bindService(intentTemp, mServiceConnection, Context.BIND_AUTO_CREATE);
-
-        String strRequestJSON; //This's String for requesting a Service to V-CAT application.
-        try{r
-            strRequestJSON = "";
-             //Inputting request to JSON “{ ... }”
-            String strRequest = null;
-            mSmartroVCatInterface.executeService(strRequest, new SmartroVCatCallback.Stub() {
-                @Override
-                public void onServiceEvent(String strEventJSON) {
-                    System.out.println("onServiceEvent================");
-                    //This's Method for getting an event from V-CAT service.
-                }
-                @Override
-                public void onServiceResult(String strResultJSON) {
-                    System.out.println("onServiceResult================");
-                    //This's Method for getting the result from V-CAT service.
-                }
-            });
-
-        }catch (Exception e) {
-            e.printStackTrace();
-           }
-
-
- */
 
 
     }

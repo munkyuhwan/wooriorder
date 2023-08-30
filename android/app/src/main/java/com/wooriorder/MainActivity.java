@@ -53,8 +53,6 @@ public class MainActivity extends ReactActivity {
   }
   @Override
   public boolean dispatchTouchEvent(MotionEvent ev) {
-    System.out.println("change brightness dispatchTouchEventdispatchTouchEvent dispatchTouchEvent");
-    System.out.println("change brightness ev: "+ev.getAction());
     if(ev.getAction()==MotionEvent.ACTION_DOWN) {
       if (timeThread != null) timeThread.interrupt();
       if(handler!=null) handler.removeCallbacksAndMessages(null); handler= null;
@@ -90,7 +88,6 @@ public class MainActivity extends ReactActivity {
             handler.postDelayed(new Runnable() {
               @Override
               public void run() {
-                System.out.println("=========change brightness=============");
                 onScreenBrightnessChange(0.05F);
                 if(timeThread!=null) timeThread.interrupt();
                 timeThread=null;

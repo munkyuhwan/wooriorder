@@ -13,7 +13,7 @@ import { useNavigation } from '@react-navigation/native'
 
 const MainScreen = () =>{
     const navigation = useNavigation();
-
+    /* 
     let timeoutSet = null
     function screenTimeOut(){
         if(timeoutSet!=null){clearInterval(timeoutSet);}
@@ -21,12 +21,12 @@ const MainScreen = () =>{
             navigation.navigate('ad');
             clearInterval(timeoutSet);
         },SCREEN_TIMEOUT)
-    }
+    } */
 
 
     return(
         <>
-            <WholeWrapper onTouchStart={()=>{console.log("on touch screen");  screenTimeOut();  }} >
+            <WholeWrapper onTouchStart={()=>{console.log("on touch screen");  /* screenTimeOut();  */ }} >
                 <SideMenu/>
                 <MainWrapper>
                     <TopMenu/>

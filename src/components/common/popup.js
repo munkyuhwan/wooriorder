@@ -8,6 +8,7 @@ import TogoPopup from '../popups/togoTimePopup';
 import { PopupBottomButtonBlack, PopupBottomButtonText, PopupBottomButtonWrapper } from '../../styles/common/coreStyle';
 import { LANGUAGE } from '../../resources/strings';
 import OrderListPopup from '../popups/orderListPopup';
+import SettingPopup from '../popups/settingPopup';
 
 const PopUp = (props) =>{
     
@@ -89,7 +90,7 @@ const PopUp = (props) =>{
                         <TogoPopup/>
                     }
                    
-                   {(innerView=="OrderList") &&
+                    {(innerView=="OrderList") &&
                         <OrderListPopup/>
                     }
                     {(innerView=="TogoPopup" || innerView=="OrderList") &&
@@ -101,7 +102,9 @@ const PopUp = (props) =>{
                             </TouchableWithoutFeedback>
                         </PopupBottomButtonWrapper>
                     }
-                    
+                    {(innerView=="Setting") &&
+                        <SettingPopup/>
+                    }
                 </PopupContentWrapper>
             </Animated.View>
         </>
