@@ -1,1 +1,1 @@
-export const SCREEN_TIMEOUT = 20000;
+export const SCREEN_TIMEOUT = 240000;

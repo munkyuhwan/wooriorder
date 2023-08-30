@@ -8,13 +8,35 @@ import { SCREEN_TIMEOUT } from '../resources/numberValues'
 import MenuListView from '../components/main/menuListView'
 import ItemDetail from '../components/detailComponents/itemDetail'
 import PopUp from '../components/common/popup'
+import { useNavigation } from '@react-navigation/native'
 
 
 const MainScreen = () =>{
+    const navigation = useNavigation();
+    const {ScreenController} = NativeModules;
+
+    let timeoutSet = null
+    /* 
+    setBrightness(0.7)
+
+    function setBrightness (brightness) {
+        ScreenController.keepAwake();
+        ScreenController.setBrightness(brightness);    
+    }
+ */
+    function screenTimeOut(){
+        console.log("screen timout")
+        if(timeoutSet!=null){clearInterval(timeoutSet);}
+        timeoutSet =  setInterval(()=>{
+            navigation.navigate('ad');
+            clearInterval(timeoutSet);
+        },SCREEN_TIMEOUT)
+    }
+
 
     return(
         <>
-            <WholeWrapper>
+            <WholeWrapper onTouchStart={()=>{console.log("on touch screen");  screenTimeOut();  }} >
                 <SideMenu/>
                 <MainWrapper>
                     <TopMenu/>
