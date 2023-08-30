@@ -16,9 +16,8 @@ const MainScreen = () =>{
 
     let timeoutSet = null
     function screenTimeOut(){
-        console.log("screen timout")
         if(timeoutSet!=null){clearInterval(timeoutSet);}
-        timeoutSet =  setInterval(()=>{
+            timeoutSet = setInterval(()=>{
             navigation.navigate('ad');
             clearInterval(timeoutSet);
         },SCREEN_TIMEOUT)
