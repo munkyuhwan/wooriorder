@@ -20,3 +20,36 @@ export const startSmartroGetDeviceInfo = async () =>{
         ;
     })
 }
+
+export const startSmartroKeyTransfer = async () =>{
+    const {SmartroPay} = NativeModules;
+    const smartroData = "{\"service\":\"function\",\"cat-id\":\"1111111111\",\"business-no\":\"1234567890\",\"device-manage\":\"exchange-key\"}";
+    return await new Promise(function(resolve, reject){
+        SmartroPay.prepareSmartroPay(
+            smartroData,
+            (error)=>{
+                reject(error);
+            },
+            (msg)=>{
+                resolve(msg);
+            })
+        ;
+    })
+}
+
+export const startSmartroCheckIntegrity = async () =>{
+    const {SmartroPay} = NativeModules;
+    const smartroData = "{\"service\":\"function\",\"device-manage\":\"check-integrity\"}";
+    return await new Promise(function(resolve, reject){
+        SmartroPay.prepareSmartroPay(
+            smartroData,
+            (error)=>{
+                reject(error);
+            },
+            (msg)=>{
+                resolve(msg);
+            })
+        ;
+    })
+}
+
