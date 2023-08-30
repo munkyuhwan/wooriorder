@@ -6,88 +6,67 @@ import { useSelector } from 'react-redux';
 import { LANGUAGE } from '../resources/strings';
 import Video from "react-native-video";
 import SwipeRender from "react-native-swipe-render";
+import Swiper from 'react-native-swiper';
+import { useNavigation } from '@react-navigation/native';
 
 
 const ADScreen = () =>{
-
-    const pwRef = useRef();
-    const idRef = useRef();
+    const navigation = useNavigation();
     const {language} = useSelector(state=>state.languages);
-
-    //<SwiperImage source={{uri:"https://wooriorder.co.kr/order1/upload_file/banner/1690442221-fnjjn.mp4"}}/>
-    //<SwiperImage source={{uri:"https://wooriorder.co.kr/order1/upload_file/banner/1690442236-ehwgi.mp4"}}/>
-
+    const {adList} = useSelector(state=>state.ad);
+    // 영상 플레이, 스톱
+    const [videoIndex, setVideoIndex] = useState(0);
+    const swiperRef = useRef(); 
+    const onSwipe = (index) =>{
+        setVideoIndex(index)
+    }
     return(
         <>
             <ADWrapper>
-            
-            <SwiperScroll horizontal >
-            <SwiperImage
-                key={"SwipeRender-slide#"}
-                source={{ uri: "https://luehangs.site/pic-chat-app-images/pexels-photo-853168.jpeg" }}
-                style={{flex: 1}}
-                resizeMode="contain"
-            />
-                <Video 
-                    source={{uri:"https://wooriorder.co.kr/order1/upload_file/banner/1690442236-ehwgi.mp4"}} 
-                    paused={false}
-                    style={{width:'200px', height:'200px', backgroundColor:'red'}}
-                    resizeMode={"contain"} 
-                    repeat={true}
-                /> 
-                
-            </SwiperScroll>
-                
-            {/* <SwipeRender
-            data={[
-                { uri: "https://luehangs.site/pic-chat-app-images/pexels-photo-853168.jpeg" },
-                { uri: "https://luehangs.site/pic-chat-app-images/animals-avian-beach-760984.jpg" },
-                { uri: "https://luehangs.site/pic-chat-app-images/beautiful-beautiful-woman-beauty-9763.jpg" },
-                { uri: "https://luehangs.site/pic-chat-app-images/photo-755745.jpeg" },
-                { uri: "https://wooriorder.co.kr/order1/upload_file/banner/1690442249-iqthj.mp4" },
-                { uri: "https://wooriorder.co.kr/order1/upload_file/banner/1690442221-fnjjn.mp4" },
-                { uri: "https://wooriorder.co.kr/order1/upload_file/banner/1690442236-ehwgi.mp4" },
-            ]}
-            renderItem={({ item, index }) => {
-                if(item.uri.includes(".mp4")) {
-                    return(<>
-                        <Video 
-                            source={{uri:item.uri}} 
-                            paused={false}
-                            style={{width:'100%', height:'100%'}}
-                            resizeMode={"contain"} 
-                            repeat={true}
-                        /> 
-                    </>)
-                }else {
-                    return (
-                        <SwiperImage
-                            key={"SwipeRender-slide#" + index}
-                            source={{ uri: item.uri }}
-                            style={{flex: 1}}
-                            resizeMode="contain"
-                        />
-                    );
+            <Swiper  
+                ref={swiperRef}
+                showsButtons={false}
+                autoplay={true}
+                autoplayTimeout={10}
+                loop={true}
+                scrollEnabled={false}
+                activeDot={<></>}
+                dot={<></>}
+                onIndexChanged={(index)=>{ onSwipe(index); }}
+            >
+                {adList &&
+                    adList.map((el,index)=>{
+                        if(el.uri.includes(".mp4")) {
+                            return(
+                                <>
+                                    <SwiperVideo
+                                        key={el.index}
+                                        source={{uri: el.uri}} 
+                                        paused={videoIndex!=index}
+                                        repeat={true}
+                                    />
+                                </>
+                            )
+                        }else {
+                            return(
+                                <>
+                                    <SwiperImage
+                                        key={el.index}
+                                        source={{ uri: el.uri }}
+                                    />
+                                </>
+                            )
+                        }
+                        
+                    })
                 }
-            }}
-
-            // OPTIONAL PROP USAGE.
-            index={0} // default 0
-            loop={true} // default false
-            loadMinimal={true} // default false
-            loadMinimalSize={2}
-            autoplay={true} // default false
-            horizontal={true} // default true
-            enableAndroidViewPager={false} // default ScrollView
-            // TO ENABLE AndroidViewPager:
-            // react-native >= 0.60 - install @react-native-community/viewpager separately
-            // react-native < 0.60 - ready to go!
-        /> */}
-           
-                <ADOrderBtnWrapper>
-                    <ADOrderBtnText>{LANGUAGE[language].adSCreen.letsOrder}</ADOrderBtnText>
-                    <ADOrderBtnIcon source={require("assets/icons/folk_nife.png")} />
-                </ADOrderBtnWrapper>
+            </Swiper>
+                <TouchableWithoutFeedback onPress={()=>{navigation.navigate("main")}}>
+                    <ADOrderBtnWrapper>
+                        <ADOrderBtnText>{LANGUAGE[language].adSCreen.letsOrder}</ADOrderBtnText>
+                        <ADOrderBtnIcon source={require("assets/icons/folk_nife.png")} />
+                    </ADOrderBtnWrapper>
+                </TouchableWithoutFeedback>
             </ADWrapper>
         </>
     )
