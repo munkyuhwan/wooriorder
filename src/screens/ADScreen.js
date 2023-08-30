@@ -8,6 +8,7 @@ import Video from "react-native-video";
 import SwipeRender from "react-native-swipe-render";
 import Swiper from 'react-native-swiper';
 import { useNavigation } from '@react-navigation/native';
+import { TableName, TableNameBig, TableNameSmall } from '../styles/main/topMenuStyle';
 
 
 const ADScreen = () =>{
@@ -23,44 +24,51 @@ const ADScreen = () =>{
     return(
         <>
             <ADWrapper>
-            <Swiper  
-                ref={swiperRef}
-                showsButtons={false}
-                autoplay={true}
-                autoplayTimeout={10}
-                loop={true}
-                scrollEnabled={false}
-                activeDot={<></>}
-                dot={<></>}
-                onIndexChanged={(index)=>{ onSwipe(index); }}
-            >
-                {adList &&
-                    adList.map((el,index)=>{
-                        if(el.uri.includes(".mp4")) {
-                            return(
-                                <>
-                                    <SwiperVideo
-                                        key={el.index}
-                                        source={{uri: el.uri}} 
-                                        paused={videoIndex!=index}
-                                        repeat={true}
-                                    />
-                                </>
-                            )
-                        }else {
-                            return(
-                                <>
-                                    <SwiperImage
-                                        key={el.index}
-                                        source={{ uri: el.uri }}
-                                    />
-                                </>
-                            )
-                        }
-                        
-                    })
-                }
-            </Swiper>
+                <View style={{position:'absolute', right:158}}>
+                    <TableName>
+                        <TableNameSmall>TABLE 01</TableNameSmall>
+                        <TableNameBig>테이블명</TableNameBig>
+                    </TableName>
+                </View>
+                
+                <Swiper  
+                    ref={swiperRef}
+                    showsButtons={false}
+                    autoplay={true}
+                    autoplayTimeout={10}
+                    loop={true}
+                    scrollEnabled={false}
+                    activeDot={<></>}
+                    dot={<></>}
+                    onIndexChanged={(index)=>{ onSwipe(index); }}
+                >
+                    {adList &&
+                        adList.map((el,index)=>{
+                            if(el.uri.includes(".mp4")) {
+                                return(
+                                    <>
+                                        <SwiperVideo
+                                            key={el.index}
+                                            source={{uri: el.uri}} 
+                                            paused={videoIndex!=index}
+                                            repeat={true}
+                                        />
+                                    </>
+                                )
+                            }else {
+                                return(
+                                    <>
+                                        <SwiperImage
+                                            key={el.index}
+                                            source={{ uri: el.uri }}
+                                        />
+                                    </>
+                                )
+                            }
+                            
+                        })
+                    }
+                </Swiper>
                 <TouchableWithoutFeedback onPress={()=>{navigation.navigate("main")}}>
                     <ADOrderBtnWrapper>
                         <ADOrderBtnText>{LANGUAGE[language].adSCreen.letsOrder}</ADOrderBtnText>
