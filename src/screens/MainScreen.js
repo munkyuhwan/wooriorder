@@ -13,17 +13,8 @@ import { useNavigation } from '@react-navigation/native'
 
 const MainScreen = () =>{
     const navigation = useNavigation();
-    const {ScreenController} = NativeModules;
 
     let timeoutSet = null
-    /* 
-    setBrightness(0.7)
-
-    function setBrightness (brightness) {
-        ScreenController.keepAwake();
-        ScreenController.setBrightness(brightness);    
-    }
- */
     function screenTimeOut(){
         console.log("screen timout")
         if(timeoutSet!=null){clearInterval(timeoutSet);}
