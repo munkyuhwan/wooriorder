@@ -17,7 +17,6 @@ export const startSmartroGetDeviceInfo = async () =>{
             (msg)=>{
                 resolve(msg);
             })
-        ;
     })
 }
 
@@ -33,7 +32,6 @@ export const startSmartroKeyTransfer = async () =>{
             (msg)=>{
                 resolve(msg);
             })
-        ;
     })
 }
 
@@ -49,8 +47,7 @@ export const startSmartroCheckIntegrity = async () =>{
             (msg)=>{
                 resolve(msg);
             })
-        ;
-    })
+    });
 }
 
 export const startSmartroReadCardInfo = async () =>{
@@ -64,8 +61,7 @@ export const startSmartroReadCardInfo = async () =>{
             },
             (msg)=>{
                 resolve(msg);
-            })
-        ;
+            });
     })
 }
 
@@ -96,7 +92,23 @@ export const startSmartroSetDeviceDefaultSetting = async () =>{
             },
             (msg)=>{
                 resolve(msg);
-            })
-        ;
+            });
     })
 }
+
+//{"type":"credit","deal":"approval","surtax":"82","tip":"100","total-amount":"1004","cat-id":"1111111111","business-no":"1234567890","need-card-no":"y","member-type":"VAN","van-comm":"[eth, test]","pg-comm":"[eth, test]","security-comm":"[eth, test]"}
+export const startSmartroRequestPayment = async () =>{
+    const {SmartroPay} = NativeModules;
+    const smartroData = `{"type":"credit","deal":"approval","surtax":"82","tip":"100","total-amount":"1004","cat-id":"1111111111","business-no":"1234567890","need-card-no":"y","member-type":"VAN","van-comm":"[eth, test]","pg-comm":"[eth, test]","security-comm":"[eth, test]"}`;
+    return await new Promise(function(resolve, reject){
+        SmartroPay.prepareSmartroPay(
+            smartroData,
+            (error)=>{
+                reject(error);
+            },
+            (msg)=>{
+                resolve(msg);
+            });
+    })
+}
+

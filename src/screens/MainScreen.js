@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {View, NativeModules} from 'react-native'
+import {View, NativeModules, DeviceEventEmitter} from 'react-native'
 import SideMenu from '../components/main/sideMenu'
 import TopMenu from '../components/main/topMenu'
 import { MainWrapper, WholeWrapper } from '../styles/main/mainStyle'
@@ -22,7 +22,6 @@ const MainScreen = () =>{
             clearInterval(timeoutSet);
         },SCREEN_TIMEOUT)
     } */
-
 
     return(
         <>

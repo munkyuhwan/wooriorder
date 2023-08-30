@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { SettingButtonText, SettingButtonWrapper, SettingWrapper } from '../../styles/common/settingStyle';
-import { Alert, TouchableWithoutFeedback } from 'react-native';
-import { startSmartroCheckIntegrity, startSmartroGetDeviceInfo, startSmartroGetDeviceSetting, startSmartroKeyTransfer, startSmartroReadCardInfo, startSmartroSetDeviceDefaultSetting } from '../../utils/smartro';
+import { Alert, DeviceEventEmitter, TouchableWithoutFeedback } from 'react-native';
+import { startSmartroCheckIntegrity, startSmartroGetDeviceInfo, startSmartroGetDeviceSetting, startSmartroKeyTransfer, startSmartroReadCardInfo, startSmartroRequestPayment, startSmartroSetDeviceDefaultSetting } from '../../utils/smartro';
 
 const SettingPopup = () =>{
-    
+
     const getDeviceInfo = () =>{
         startSmartroGetDeviceInfo()
         .then((result)=>{
@@ -71,6 +71,16 @@ const SettingPopup = () =>{
             console.log("error: ",error)
         })
     }
+    const testPayment = () => {
+        startSmartroRequestPayment()
+        .then((result)=>{
+            const jsonResult=JSON.parse(result);
+            displayOnAlert("결제 결과",jsonResult);
+        })
+        .catch((error)=>{
+            console.log("error: ",error)
+        })
+    }
 
 
 
@@ -111,6 +121,9 @@ const SettingPopup = () =>{
                     </TouchableWithoutFeedback>
                     <TouchableWithoutFeedback onPress={()=>{getDeviceDefaultSetting();}} >
                         <SettingButtonText>장치 기본 설정</SettingButtonText>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={()=>{testPayment();}} >
+                        <SettingButtonText>테스트 결제</SettingButtonText>
                     </TouchableWithoutFeedback>
                 </SettingButtonWrapper>
             </SettingWrapper>

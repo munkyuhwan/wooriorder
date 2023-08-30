@@ -51,6 +51,9 @@ public class MainActivity extends ReactActivity {
                     | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     onScreenTouch();
   }
+
+
+
   @Override
   public boolean dispatchTouchEvent(MotionEvent ev) {
     if(ev.getAction()==MotionEvent.ACTION_DOWN) {

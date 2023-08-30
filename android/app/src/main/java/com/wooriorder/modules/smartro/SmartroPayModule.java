@@ -11,10 +11,14 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +31,17 @@ public class SmartroPayModule extends ReactContextBaseJavaModule {
     private static final String SERVER_PACKAGE = "service.vcat.smartro.com.vcat";
 
     private Context mContext = null;
+
+    private void sendEvent(ReactContext reactContext,
+                           String eventName,
+                           String strEventJSON
+                           ) {
+        WritableMap params = Arguments.createMap();
+        params.putString("event",strEventJSON);
+        reactContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(eventName, params);
+    }
     SmartroPayModule(ReactApplicationContext context) {
         super(context);
         mContext = context;
@@ -53,23 +68,19 @@ public class SmartroPayModule extends ReactContextBaseJavaModule {
                 System.out.println(("onServiceConnected onServiceConnected"));
                 mSmartroVCatInterface = SmartroVCatInterface.Stub.asInterface(service);
 
-                //String jsonString = "{\"service\":\"function\",\"external-manage\":\"get-signature\",\"service-result\":\"0800\",\"service-description\":\"서비스가 중단되었습니다.\"}";
-                //String jsonString = "{\"service\":\"function\",\"device-manage\":\"get-info\"}";
-                //String jsonString = "{\"service\":\"setting\",\"device\":\"dongle\",\"device-comm\":[\"com\",\"ftdi1\",\"115200\"],\"additional-device\":\"virtualpad\"}";
-                //String jsonString = "\"device-manage\", \"get-info\"";
-
-                Log.e("com.wooriorder", "jsonString: "+jsonString);
                 try {
                     mSmartroVCatInterface.executeService(jsonString, new SmartroVCatCallback.Stub() {
                         @Override
                         public void onServiceEvent(String strEventJSON) throws RemoteException {
                             System.out.println("onServiceEvent: "+strEventJSON);
-                            //successCallback.invoke(strEventJSON);
+                            sendEvent(getReactApplicationContext(), "onPending", strEventJSON);
+
                         }
 
                         @Override
                         public void onServiceResult(String strResultJSON) throws RemoteException {
                             System.out.println("onServiceResult: "+strResultJSON);
+                            sendEvent(getReactApplicationContext(), "onComplete", strResultJSON);
                             successCallback.invoke(strResultJSON);
                             getCurrentActivity().unbindService(mServiceConnection);
                             mSmartroVCatInterface=null;
@@ -93,8 +104,6 @@ public class SmartroPayModule extends ReactContextBaseJavaModule {
         intentTemp.setPackage("service.vcat.smartro.com.vcat"); //Putting user-application package name.
         intentTemp.putExtra("package", getCurrentActivity().getPackageName());
         System.out.println("getPackageName: "+getCurrentActivity().getPackageName());
-
-
 
         if(getCurrentActivity().bindService(intentTemp, mServiceConnection, Context.BIND_AUTO_CREATE) == false)
         {
