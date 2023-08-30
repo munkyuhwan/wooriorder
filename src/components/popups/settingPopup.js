@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { SettingButtonText, SettingButtonWrapper, SettingWrapper } from '../../styles/common/settingStyle';
 import { Alert, TouchableWithoutFeedback } from 'react-native';
-import { startSmartroCheckIntegrity, startSmartroGetDeviceInfo, startSmartroKeyTransfer } from '../../utils/smartro';
+import { startSmartroCheckIntegrity, startSmartroGetDeviceInfo, startSmartroGetDeviceSetting, startSmartroKeyTransfer, startSmartroReadCardInfo, startSmartroSetDeviceDefaultSetting } from '../../utils/smartro';
 
 const SettingPopup = () =>{
     
@@ -39,6 +39,41 @@ const SettingPopup = () =>{
         })
     }
 
+    const getCardInfo = () =>{
+        startSmartroReadCardInfo()
+        .then((result)=>{
+            const jsonResult=JSON.parse(result);
+            displayOnAlert("카드정보",jsonResult);
+        })
+        .catch((error)=>{
+            console.log("error: ",error)
+        })
+    }
+    
+    const getDeviceSetting = () =>{
+        startSmartroGetDeviceSetting()
+        .then((result)=>{
+            const jsonResult=JSON.parse(result);
+            displayOnAlert("장치 설정",jsonResult);
+        })
+        .catch((error)=>{
+            console.log("error: ",error)
+        })
+    }
+
+    const getDeviceDefaultSetting = () =>{
+        startSmartroSetDeviceDefaultSetting()
+        .then((result)=>{
+            const jsonResult=JSON.parse(result);
+            displayOnAlert("장치 설정",jsonResult);
+        })
+        .catch((error)=>{
+            console.log("error: ",error)
+        })
+    }
+
+
+
     const displayOnAlert = (title, jsonResult) => {
         const objKeys = Object.keys(jsonResult)
             var str = "";
@@ -67,6 +102,15 @@ const SettingPopup = () =>{
                     </TouchableWithoutFeedback>
                     <TouchableWithoutFeedback onPress={()=>{checkDeviceIntegrity();}}>
                         <SettingButtonText>장치 무결성 점검</SettingButtonText>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={()=>{getCardInfo();}} >
+                        <SettingButtonText>카드정보 가져오기</SettingButtonText>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={()=>{getDeviceSetting();}} >
+                        <SettingButtonText>장치 설정</SettingButtonText>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={()=>{getDeviceDefaultSetting();}} >
+                        <SettingButtonText>장치 기본 설정</SettingButtonText>
                     </TouchableWithoutFeedback>
                 </SettingButtonWrapper>
             </SettingWrapper>

@@ -53,3 +53,50 @@ export const startSmartroCheckIntegrity = async () =>{
     })
 }
 
+export const startSmartroReadCardInfo = async () =>{
+    const {SmartroPay} = NativeModules;
+    const smartroData = "{\"service\":\"function\",\"getting-data\":\"card-no-via-device\",\"type\":\"1\"}";
+    return await new Promise(function(resolve, reject){
+        SmartroPay.prepareSmartroPay(
+            smartroData,
+            (error)=>{
+                reject(error);
+            },
+            (msg)=>{
+                resolve(msg);
+            })
+        ;
+    })
+}
+
+export const startSmartroGetDeviceSetting = async () =>{
+    const {SmartroPay} = NativeModules;
+    const smartroData = "{\"service\":\"getting\"}";
+    return await new Promise(function(resolve, reject){
+        SmartroPay.prepareSmartroPay(
+            smartroData,
+            (error)=>{
+                reject(error);
+            },
+            (msg)=>{
+                resolve(msg);
+            })
+        ;
+    })
+}
+
+export const startSmartroSetDeviceDefaultSetting = async () =>{
+    const {SmartroPay} = NativeModules;
+    const smartroData = "{\"service\":\"setting\",\"device\":\"dongle\",\"device-comm\":[\"com\",\"ftdi1\",\"115200\"],\"additional-device\":\"virtualpad\"}";
+    return await new Promise(function(resolve, reject){
+        SmartroPay.prepareSmartroPay(
+            smartroData,
+            (error)=>{
+                reject(error);
+            },
+            (msg)=>{
+                resolve(msg);
+            })
+        ;
+    })
+}
