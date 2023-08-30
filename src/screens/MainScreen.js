@@ -12,28 +12,9 @@ import PopUp from '../components/common/popup'
 
 const MainScreen = () =>{
 
-    const {ScreenController} = NativeModules;
-
-    let timeoutSet = null
-    setBrightness(0.7)
-
-    function setBrightness (brightness) {
-        ScreenController.keepAwake();
-        ScreenController.setBrightness(brightness);    
-    }
-
-    function screenTimeOut(){
-        if(timeoutSet!=null){clearInterval(timeoutSet);}
-        timeoutSet =  setInterval(()=>{
-            setBrightness(0.2)
-            clearInterval(timeoutSet);
-        },SCREEN_TIMEOUT)
-    }
-
-
     return(
         <>
-            <WholeWrapper onTouchStart={()=>{ /* setBrightness(0.7); screenTimeOut(); */ }} >
+            <WholeWrapper>
                 <SideMenu/>
                 <MainWrapper>
                     <TopMenu/>
