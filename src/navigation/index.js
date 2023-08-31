@@ -12,34 +12,39 @@ import WaitIndicator from '../components/common/waitIndicator'
 import { DeviceEventEmitter, Text, View } from 'react-native'
 import PopupIndicator from '../components/common/popupIndicator'
 import { useDispatch, useSelector } from 'react-redux'
-import { getMainCategories } from '../store/categories'
+import { getMainCategories, getSubCategories, setSelectedMainCategory, setSelectedSubCategory } from '../store/categories'
 
 const Stack = createStackNavigator()
 
 export default function Navigation() {
 
     const dispatch = useDispatch();
-    const {mainCategories, selectedMainCategory} = useSelector((state)=>state.categories);
+    const {selectedMainCategory, subCategories, selectedSubCategory} = useSelector((state)=>state.categories);
 
     const [spinnerText, setSpinnerText] = React.useState("")
+
+    // 결제진행중 팝업
     DeviceEventEmitter.addListener("onPending",(ev)=>{
-        console.log("ev: ",ev.event )
         const pendingEvent = JSON.parse(ev.event)
         setSpinnerText(pendingEvent?.description)
     })
     DeviceEventEmitter.addListener("onComplete",(ev)=>{
-        console.log("onComplete ev: ",ev )
         setSpinnerText("")
-
     })
     // 메뉴 아이템 받아오기 
     useEffect(()=>{
         dispatch(getMainCategories());
     },[])
-    useEffect(()=>{
-        console.log("selectedMainCategory:" ,selectedMainCategory);
-    },[selectedMainCategory])
 
+    useEffect(()=>{
+        // 메잍카테고리 변경시 서브카테고라 받기
+        //dispatch(getSubCategories(selectedMainCategory));
+    },[selectedMainCategory])
+    
+    useEffect(()=>{
+        dispatch(setSelectedSubCategory(0));
+    },[subCategories])
+ 
 
     return (
         <>  

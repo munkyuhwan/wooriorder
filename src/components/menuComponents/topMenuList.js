@@ -3,6 +3,7 @@ import { Animated, TouchableWithoutFeedback } from 'react-native';
 import { TopMenuText } from '../../styles/main/topMenuStyle';
 import { colorBrown, tabBaseColor } from '../../assets/colors/color';
 import { RADIUS_DOUBLE } from '../../styles/values';
+import { useSelector } from 'react-redux';
 
 
 const TopMenuList = (props) => {
@@ -10,7 +11,7 @@ const TopMenuList = (props) => {
     const data = props.data;
     //console.log("data: ",data)
     
-    const [selectedIndex, setSelectedIndex] = useState(0);
+    const {selectedSubCategory} = useSelector((state)=>state.categories);
 
     const colorAnimationArray = [];;
     const heightAnimationArray=[];
@@ -58,13 +59,13 @@ const TopMenuList = (props) => {
     const onSelectHandleAnimation = (index) => {
         Animated.parallel([
             Animated.timing(colorAnimationArray[index], {
-                toValue:index==selectedIndex?1:0,
+                toValue:index==selectedSubCategory?1:0,
                 duration: 200,
                 useNativeDriver:true,
             }),
             Animated.timing(heightAnimationArray[index], {
-                toValue: index==selectedIndex?1:0,
-                duration: 100,
+                toValue: index==selectedSubCategory?1:0,
+                duration: 200,
                 useNativeDriver:true,
             }), 
         ]).start(()=>{
@@ -74,23 +75,21 @@ const TopMenuList = (props) => {
         });   
     } 
     const handleOnPress = (index) =>{
-        setSelectedIndex(index)
         props?.onSelectItem(index);
-
     }
     useEffect(()=>{
-        if(selectedIndex!=null) {
-            onSelectHandleAnimation(selectedIndex);
+        if(selectedSubCategory!=null) {
+            onSelectHandleAnimation(selectedSubCategory);
         }
-    },[selectedIndex])
-    onSelectHandleAnimation(0);
+    },[selectedSubCategory])
+    //onSelectHandleAnimation(0);
 
     return (
         <>
         {data.map((el, index)=>{
             return(
                 <>
-                    <TouchableWithoutFeedback onPress={()=>{ handleOnPress(index); }}>
+                    <TouchableWithoutFeedback key={"subcat_"+index} onPress={()=>{ handleOnPress(index); }}>
                         <Animated.View style={[{   ...animatedColorArray[index]},{...boxStyleArray[index]}]} >
                             <TopMenuText>{el.name}</TopMenuText>
                         </Animated.View>

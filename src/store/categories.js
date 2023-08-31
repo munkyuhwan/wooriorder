@@ -6,32 +6,42 @@ export const getMainCategories = createAsyncThunk("categories/getMainCategories"
         {index:1, name:"카테고리1"},
         {index:2, name:"카테고리2"},
         {index:3, name:"카테고리3"},
-        {index:4, name:"카테고리4"},
-        {index:5, name:"카테고리5"},
-        {index:6, name:"카테고리6"},
-        {index:7, name:"카테고리7"},
-        {index:8, name:"카테고리8"},
-        {index:9, name:"카테고리9"},
-        {index:10, name:"카테고리10"},
-        {index:11, name:"카테고리11"},]
+        {index:4, name:"카테고리4"},]
     return mainCategories;
 })
 export const setSelectedMainCategory = createAsyncThunk("categories/setSelectedMainCategory", async(index) =>{
     return index;
 })
-export const getSubCategories = createAsyncThunk("categories/getSubCategories", async() =>{
-    const subCategories = [
-        {index:0, name:"카테고리0"},
-        {index:1, name:"카테고리1"},
-        {index:2, name:"카테고리2"},
-        {index:3, name:"카테고리3"},
-        {index:4, name:"카테고리4"},
-        {index:5, name:"카테고리5"},
-        {index:6, name:"카테고리6"},
-        {index:7, name:"카테고리7"},
-        {index:8, name:"카테고리8"},
+export const getSubCategories = createAsyncThunk("categories/getSubCategories", async(index) =>{
+    const subCategories =
+    [
+        [
+            {index:0, name:"메0섭0"},
+            {index:1, name:"메0섭1"},
+            {index:2, name:"메0섭2"},
+        ],
+        [
+            {index:0, name:"메1섭0"},
+            {index:1, name:"메1섭1"},
+        ],
+        [
+            {index:0, name:"메2섭0"},
+            {index:1, name:"메2섭1"},
+            {index:2, name:"메2섭2"},
+            {index:3, name:"메2섭3"},
+        ],
+        [
+            {index:0, name:"메3섭0"},
+            {index:1, name:"메3섭1"},
+        ],
+        [
+            {index:0, name:"메4섭0"},
+            {index:1, name:"메4섭1"},
+            {index:2, name:"메4섭2"},
+            {index:3, name:"메4섭3"},
+        ],
     ]
-    return subCategories;
+    return subCategories[index];
 })
 export const setSelectedSubCategory = createAsyncThunk("categories/setSelectedSubCategory", async(index) =>{
     return index;

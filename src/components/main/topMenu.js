@@ -12,17 +12,18 @@ import { CategoryScrollView, CategoryWrapper, IconWrapper, TableName, TableNameB
  import TopButton from '../menuComponents/topButton'
 import { useDispatch, useSelector } from 'react-redux'
 import ItemDetail from '../detailComponents/itemDetail'
-import { getSubCategories } from '../../store/categories'
+import { getSubCategories, setSelectedSubCategory } from '../../store/categories'
 import { openPopup, openTransperentPopup } from '../../utils/common'
 import { colorWhite } from '../../assets/colors/color'
 import TopMenuList from '../menuComponents/topMenuList'
 
 const TopMenu = () =>{
     const dispatch = useDispatch();
-    const {subCategories, selectedSubCategory} = useSelector((state)=>state.categories);
-    useEffect(()=>{
-        dispatch(getSubCategories());
-    },[])
+    const {subCategories} = useSelector((state)=>state.categories);
+
+    const onSubcategorySelected = (index) =>{
+        dispatch(setSelectedSubCategory(index));
+    }
 
     return(
         <>
@@ -33,22 +34,9 @@ const TopMenu = () =>{
                             {subCategories.length>0 &&
                                 <TopMenuList
                                     data={subCategories}
-                                    onSelectItem={(index)=>{console.log("subcategory index:",index);}}
+                                    onSelectItem={(index)=>{onSubcategorySelected(index)}}
                                 />
                             }
-                            {/*subCategories &&
-                                subCategories.map((el)=>{
-                                    if(el.index==selectedSubCategory) {
-                                        return (
-                                            <TopMenuItemTouchable  key={"top_"+el.index} index={el.index} categoryName={el.name} onItemPress={()=>{}} />
-                                            ) 
-                                    }else {
-                                        return (
-                                            <TopMenuItemTouchableOff  key={"top_"+el.index} index={el.index} categoryName={el.name} onItemPress={()=>{dispatch(getMenu());}} />
-                                        )
-                                    }
-                                })
-                            */}
                        </CategoryWrapper>
                     </CategoryScrollView>
                 </SafeAreaView>

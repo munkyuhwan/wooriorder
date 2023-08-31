@@ -2,11 +2,12 @@ import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { Animated, TouchableWithoutFeedback } from 'react-native';
 import { colorRed, tabBaseColor } from '../../assets/colors/color';
 import { SideMenuItemOff, SideMenuItemWrapper, SideMenuText } from '../../styles/main/sideMenuStyle';
+import { useSelector } from 'react-redux';
 
 const LeftMenuList = (props) => {
 
     const data = props?.data;
-    const [selecttedIndex, setSelectedIndex] = useState(0);
+    const {selectedMainCategory} = useSelector((state)=>state.categories);
 
     const boxStyleArray = [];
     const animationArray = [];
@@ -50,20 +51,20 @@ const LeftMenuList = (props) => {
     }
   
     const onSelectHandleAnimation = async (index) => {
-
+        console.log("index: ",index,", selectedMainCategory: ",selectedMainCategory);
         Animated.parallel([
             Animated.timing(animationArray[index], {
-                toValue:index==selecttedIndex?1:0,
+                toValue:index==selectedMainCategory?1:0,
                 duration: 200,
                 useNativeDriver:true,
             }),
             Animated.timing(widthAnimationArray[index], {
-                toValue: index==selecttedIndex?1:0,
+                toValue: index==selectedMainCategory?1:0,
                 duration: 200,
                 useNativeDriver:true,
             }),
             Animated.timing(radiusAnimationArray[index],{
-                toValue: (index==selecttedIndex?1:0)==1?9:0,
+                toValue: (index==selectedMainCategory?1:0)==1?9:0,
                 duration: 150,
                 useNativeDriver:true,
             })
@@ -72,15 +73,15 @@ const LeftMenuList = (props) => {
     }
 
     const handleOnPress = (index) =>{
-        setSelectedIndex(index);
         props?.onSelectItem(index);
     }
     useEffect(()=>{
-        if(selecttedIndex!=null) {
-            onSelectHandleAnimation(selecttedIndex);
+        console.log("selectedMainCategory: ",selectedMainCategory);
+        if(selectedMainCategory!=null) {
+            onSelectHandleAnimation(selectedMainCategory);
         }
-    },[selecttedIndex])
-    onSelectHandleAnimation(0)
+    },[selectedMainCategory])
+    //onSelectHandleAnimation(0)
     return(
         <>
             {data?.map((item, index)=>{        

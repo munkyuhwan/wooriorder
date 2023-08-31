@@ -6,13 +6,16 @@ import _ from "lodash";
 import { colorRed, colorWhite } from '../../assets/colors/color'
 import { openPopup, openTransperentPopup } from '../../utils/common'
 import LeftMenuList from '../menuComponents/leftMenuList'
+import { setSelectedMainCategory } from '../../store/categories';
 const SideMenu = () =>{
     const dispatch = useDispatch();
-    const {mainCategories, selectedMainCategory} = useSelector((state)=>state.categories);
+    const {mainCategories} = useSelector((state)=>state.categories);
     
+    const onMainCategorySelect = (index) =>{
+        dispatch(setSelectedMainCategory(index));
+    }
 
     // 문제 없으면 /components/menuComponents/sideMenuItem.js 제거
-    
     return(
         <>
             <SideMenuWrapper>
@@ -21,10 +24,12 @@ const SideMenu = () =>{
                 </LogoWrapper>
                 <SideMenuScrollView showsVerticalScrollIndicator={false} >
                     <SideMenuItemWrapper>
-                        <LeftMenuList
-                            data={mainCategories}
-                            onSelectItem={(index)=>{ console.log("selected index: ",index); }}
-                        />
+                        {mainCategories &&
+                            <LeftMenuList
+                                data={mainCategories}
+                                onSelectItem={(index)=>{ onMainCategorySelect(index); }}
+                            />
+                        }
                     </SideMenuItemWrapper>
                 </SideMenuScrollView>
                 <SideBottomWrapper>

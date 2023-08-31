@@ -26,7 +26,7 @@ const MainScreen = () =>{
 
     return(
         <>
-            <WholeWrapper onTouchStart={()=>{console.log("on touch screen");  /* screenTimeOut();  */ }} >
+            <WholeWrapper onTouchStart={()=>{ /* screenTimeOut();  */ }} >
                 <SideMenu/>
                 <MainWrapper>
                     <TopMenu/>
