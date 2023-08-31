@@ -30,9 +30,12 @@ const TopMenu = () =>{
                 <SafeAreaView>
                     <CategoryScrollView horizontal showsHorizontalScrollIndicator={false} >
                         <CategoryWrapper>
-                            <TopMenuList
-                                data={subCategories}
-                            />
+                            {subCategories.length>0 &&
+                                <TopMenuList
+                                    data={subCategories}
+                                    onSelectItem={(index)=>{console.log("subcategory index:",index);}}
+                                />
+                            }
                             {/*subCategories &&
                                 subCategories.map((el)=>{
                                     if(el.index==selectedSubCategory) {

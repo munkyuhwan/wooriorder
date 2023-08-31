@@ -8,52 +8,56 @@ import { RADIUS_DOUBLE } from '../../styles/values';
 const TopMenuList = (props) => {
 
     const data = props.data;
-    console.log("data: ",data)
+    //console.log("data: ",data)
     
     const [selectedIndex, setSelectedIndex] = useState(0);
 
-    const animationArray = [];;
+    const colorAnimationArray = [];;
     const heightAnimationArray=[];
     const boxStyleArray = [];
+    const animatedColorArray = [];
     for(var i=0;i<data.length;i++) {
         // animation set
-        const animation = (new Animated.Value(0))
-        const heightAnimation = (new Animated.Value(0))
+        const colorAnimation = (new Animated.Value(0,{useNativeDriver:true}))
+        const heightAnimation = (new Animated.Value(0,{useNativeDriver:true}))
 
-        animationArray.push(animation);
+        colorAnimationArray.push(colorAnimation);
         heightAnimationArray.push(heightAnimation);
 
-        // width interpolation
-        const inputRange = [0, 1];
-        const outputRange = [0, -5]
-        const animatedheight = heightAnimationArray[i].interpolate({inputRange, outputRange});
+        // height interpolation
+        const animatedHeightInterpolate = heightAnimationArray[i].interpolate({
+            inputRange:[0, 1], 
+            outputRange:[0, -5]
+        });
        
         // color interpolation
-        const boxInterpolation =  animationArray[i].interpolate({
+        const animatedColorInterpolate =  colorAnimation.interpolate({
             inputRange: [0, 1],
             outputRange:[tabBaseColor, colorBrown]
         })
-        const animatedStyle = {
-            backgroundColor: boxInterpolation,
+
+        animatedColorArray.push({
+            backgroundColor: animatedColorInterpolate,
             width:142,
             height:52,
             marginRight:7,
             justifyContent: 'flex-end',
             marginTop:33,
-            borderTopLeftRadius:RADIUS_DOUBLE,borderTopRightRadius:RADIUS_DOUBLE
-        }
+        });
 
         const boxStyle = {
-            transform: [{translateY:animatedheight},],
-            ...animatedStyle
+            transform: [{translateY:animatedHeightInterpolate},],
+            backgroundColor: animatedColorInterpolate,
+            borderTopLeftRadius:RADIUS_DOUBLE,
+            borderTopRightRadius:RADIUS_DOUBLE,
         };
-        boxStyleArray.push(boxStyle)
+        boxStyleArray.push(boxStyle);
 
     }
 
     const onSelectHandleAnimation = (index) => {
         Animated.parallel([
-            Animated.timing(animationArray[index], {
+            Animated.timing(colorAnimationArray[index], {
                 toValue:index==selectedIndex?1:0,
                 duration: 200,
                 useNativeDriver:true,
@@ -71,17 +75,23 @@ const TopMenuList = (props) => {
     } 
     const handleOnPress = (index) =>{
         setSelectedIndex(index)
+        props?.onSelectItem(index);
+
     }
     useEffect(()=>{
-        onSelectHandleAnimation(selectedIndex);
-    },selectedIndex)
+        if(selectedIndex!=null) {
+            onSelectHandleAnimation(selectedIndex);
+        }
+    },[selectedIndex])
+    onSelectHandleAnimation(0);
+
     return (
         <>
         {data.map((el, index)=>{
             return(
                 <>
-                    <TouchableWithoutFeedback onPress={()=>{handleOnPress(index); }}>
-                        <Animated.View style={[{  ...animationArray[i],...boxStyleArray[index]}]} >
+                    <TouchableWithoutFeedback onPress={()=>{ handleOnPress(index); }}>
+                        <Animated.View style={[{   ...animatedColorArray[index]},{...boxStyleArray[index]}]} >
                             <TopMenuText>{el.name}</TopMenuText>
                         </Animated.View>
                     </TouchableWithoutFeedback>
