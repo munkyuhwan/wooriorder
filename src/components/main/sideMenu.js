@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { TouchableWithoutFeedback} from 'react-native'
-import { HeaderLogo, HeaderWrapper } from '../../styles/header/header'
 import { LogoTop, LogoWrapper, SideBottomButton, SideBottomIcon, SideBottomText, SideBottomWrapper, SideMenuItem, SideMenuItemWrapper, SideMenuScrollView, SideMenuWrapper } from '../../styles/main/sideMenuStyle'
-import { SideMenuItemTouchable, SideMenuItemTouchableOff } from '../menuComponents/sideMenuItem'
 import _ from "lodash";
 import { colorRed, colorWhite } from '../../assets/colors/color'
-import { setPopupContent, setPopupVisibility } from '../../store/popup'
-import { getMainCategories } from '../../store/categories'
-import { getMenu } from '../../store/menu'
-import LanguageSelectPopup from '../popups/languageSelectPopup'
 import { openPopup, openTransperentPopup } from '../../utils/common'
 import LeftMenuList from '../menuComponents/leftMenuList'
 const SideMenu = () =>{
