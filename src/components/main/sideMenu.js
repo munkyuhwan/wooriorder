@@ -11,12 +11,11 @@ import { getMainCategories } from '../../store/categories'
 import { getMenu } from '../../store/menu'
 import LanguageSelectPopup from '../popups/languageSelectPopup'
 import { openPopup, openTransperentPopup } from '../../utils/common'
+import LeftMenuList from '../menuComponents/leftMenuList'
 const SideMenu = () =>{
     const dispatch = useDispatch();
     const {mainCategories, selectedMainCategory} = useSelector((state)=>state.categories);
-    useEffect(()=>{
-        dispatch(getMainCategories());
-    },[])
+    
 
 
     return(
@@ -27,11 +26,15 @@ const SideMenu = () =>{
                 </LogoWrapper>
                 <SideMenuScrollView showsVerticalScrollIndicator={false} >
                     <SideMenuItemWrapper>
-                        {mainCategories &&
+                        <LeftMenuList
+                            data={mainCategories}
+                            onSelectItem={(index)=>{ console.log("selected index: ",index); }}
+                        />
+                        {/* mainCategories &&
                             mainCategories?.map((el)=>{
                                 if(el.index==selectedMainCategory) {
                                     return (
-                                        <SideMenuItemTouchable key={"side_"+el.index} item={el} onItemPress={()=>{}} />
+                                        <SideMenuItemTouchable key={"side_"+el.index} item={el} onItemPress={()=>{ }} />
                                     ) 
                                 }else {
                                     return (
@@ -39,7 +42,7 @@ const SideMenu = () =>{
                                     )
                                 }
                             })
-                        }
+                         */}
                     </SideMenuItemWrapper>
                 </SideMenuScrollView>
                 <SideBottomWrapper>

@@ -86,17 +86,17 @@ const SettingPopup = () =>{
 
     const displayOnAlert = (title, jsonResult) => {
         const objKeys = Object.keys(jsonResult)
-            var str = "";
-            for(var i=0; i<objKeys.length; i++) {
-                str += `${objKeys[i]}: ${jsonResult[objKeys[i]]}\n`;
-            }
-            Alert.alert(
-                title,
-                str,
-                [{
-                    text:'확인',
-                }]
-            )
+        var str = "";
+        for(var i=0; i<objKeys.length; i++) {
+            str += `${objKeys[i]}: ${jsonResult[objKeys[i]]}\n`;
+        }
+        Alert.alert(
+            title,
+            str,
+            [{
+                text:'확인',
+            }]
+        )
     }
 
 

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
@@ -11,10 +11,15 @@ import ADScreen from '../screens/ADScreen'
 import WaitIndicator from '../components/common/waitIndicator'
 import { DeviceEventEmitter, Text, View } from 'react-native'
 import PopupIndicator from '../components/common/popupIndicator'
+import { useDispatch, useSelector } from 'react-redux'
+import { getMainCategories } from '../store/categories'
 
 const Stack = createStackNavigator()
 
 export default function Navigation() {
+
+    const dispatch = useDispatch();
+    const {mainCategories, selectedMainCategory} = useSelector((state)=>state.categories);
 
     const [spinnerText, setSpinnerText] = React.useState("")
     DeviceEventEmitter.addListener("onPending",(ev)=>{
@@ -22,15 +27,22 @@ export default function Navigation() {
         const pendingEvent = JSON.parse(ev.event)
         setSpinnerText(pendingEvent?.description)
     })
-
     DeviceEventEmitter.addListener("onComplete",(ev)=>{
         console.log("onComplete ev: ",ev )
         setSpinnerText("")
 
     })
+    // 메뉴 아이템 받아오기 
+    useEffect(()=>{
+        dispatch(getMainCategories());
+    },[])
+    useEffect(()=>{
+        console.log("selectedMainCategory:" ,selectedMainCategory);
+    },[selectedMainCategory])
+
+
     return (
-        <>
-            
+        <>  
             <NavigationContainer>
                 <Stack.Navigator
                     initialRouteName='main'

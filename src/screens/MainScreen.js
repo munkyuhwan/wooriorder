@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native'
 
 const MainScreen = () =>{
     const navigation = useNavigation();
+    
     /* 
     let timeoutSet = null
     function screenTimeOut(){
