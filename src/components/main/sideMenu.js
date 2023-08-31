@@ -11,7 +11,8 @@ const SideMenu = () =>{
     const {mainCategories, selectedMainCategory} = useSelector((state)=>state.categories);
     
 
-
+    // 문제 없으면 /components/menuComponents/sideMenuItem.js 제거
+    
     return(
         <>
             <SideMenuWrapper>
