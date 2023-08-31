@@ -30,19 +30,6 @@ const SideMenu = () =>{
                             data={mainCategories}
                             onSelectItem={(index)=>{ console.log("selected index: ",index); }}
                         />
-                        {/* mainCategories &&
-                            mainCategories?.map((el)=>{
-                                if(el.index==selectedMainCategory) {
-                                    return (
-                                        <SideMenuItemTouchable key={"side_"+el.index} item={el} onItemPress={()=>{ }} />
-                                    ) 
-                                }else {
-                                    return (
-                                        <SideMenuItemTouchableOff key={"side_"+el.index} item={el} onItemPress={()=>{ dispatch(getMenu());  }} />
-                                    )
-                                }
-                            })
-                         */}
                     </SideMenuItemWrapper>
                 </SideMenuScrollView>
                 <SideBottomWrapper>
