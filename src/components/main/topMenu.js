@@ -15,6 +15,7 @@ import ItemDetail from '../detailComponents/itemDetail'
 import { getSubCategories } from '../../store/categories'
 import { openPopup, openTransperentPopup } from '../../utils/common'
 import { colorWhite } from '../../assets/colors/color'
+import TopMenuList from '../menuComponents/topMenuList'
 
 const TopMenu = () =>{
     const dispatch = useDispatch();
@@ -29,7 +30,10 @@ const TopMenu = () =>{
                 <SafeAreaView>
                     <CategoryScrollView horizontal showsHorizontalScrollIndicator={false} >
                         <CategoryWrapper>
-                            {subCategories &&
+                            <TopMenuList
+                                data={subCategories}
+                            />
+                            {/*subCategories &&
                                 subCategories.map((el)=>{
                                     if(el.index==selectedSubCategory) {
                                         return (
@@ -41,7 +45,7 @@ const TopMenu = () =>{
                                         )
                                     }
                                 })
-                            }
+                            */}
                        </CategoryWrapper>
                     </CategoryScrollView>
                 </SafeAreaView>

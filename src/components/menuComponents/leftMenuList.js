@@ -84,8 +84,6 @@ const LeftMenuList = (props) => {
     return(
         <>
             {data?.map((item, index)=>{        
-                console.log("rendering index: ",index);
-
                 return(
                     <TouchableWithoutFeedback key={"leftItem_"+index} onPress={()=>{{handleOnPress(index);} }}>
                         <Animated.View 
