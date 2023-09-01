@@ -7,7 +7,8 @@ import { useSelector } from 'react-redux';
 const LeftMenuList = (props) => {
 
     const data = props?.data;
-    const {selectedMainCategory} = useSelector((state)=>state.categories);
+    const initSelect = props?.initSelect;
+    const [selectIndex, setSelectedIndex] = useState(0);
 
     const boxStyleArray = [];
     const animationArray = [];
@@ -51,42 +52,48 @@ const LeftMenuList = (props) => {
     }
   
     const onSelectHandleAnimation = async (index) => {
-        console.log("index: ",index,", selectedMainCategory: ",selectedMainCategory);
+        console.log("index: ",index,", selectedMainCategory: ",selectIndex);
         Animated.parallel([
             Animated.timing(animationArray[index], {
-                toValue:index==selectedMainCategory?1:0,
+                toValue:index==selectIndex?1:0,
                 duration: 200,
                 useNativeDriver:true,
             }),
             Animated.timing(widthAnimationArray[index], {
-                toValue: index==selectedMainCategory?1:0,
+                toValue: index==selectIndex?1:0,
                 duration: 200,
                 useNativeDriver:true,
             }),
             Animated.timing(radiusAnimationArray[index],{
-                toValue: (index==selectedMainCategory?1:0)==1?9:0,
+                toValue: (index==selectIndex?1:0)==1?9:0,
                 duration: 150,
                 useNativeDriver:true,
             })
         ]).start(()=>{
+            props?.onSelectItem(index);
         });   
     }
 
     const handleOnPress = (index) =>{
         props?.onSelectItem(index);
+        setSelectedIndex(index);
     }
+    
     useEffect(()=>{
-        console.log("selectedMainCategory: ",selectedMainCategory);
-        if(selectedMainCategory!=null) {
-            onSelectHandleAnimation(selectedMainCategory);
+        if(selectIndex!=null) {
+            onSelectHandleAnimation(selectIndex);
         }
-    },[selectedMainCategory])
-    //onSelectHandleAnimation(0)
+    },[selectIndex])
+
+    useEffect(()=>{
+        setSelectedIndex(initSelect);
+    },[])
+    //onSelectHandleAnimation(0);
     return(
         <>
             {data?.map((item, index)=>{        
                 return(
-                    <TouchableWithoutFeedback key={"leftItem_"+index} onPress={()=>{{handleOnPress(index);} }}>
+                    <TouchableWithoutFeedback key={"leftItem_"+index} onPress={()=>{{setSelectedIndex(index); /* onSelectHandleAnimation(index); */ /* handleOnPress(index); */} }}>
                         <Animated.View 
                             style={[
                                 {...animatedStyleArray[index] },

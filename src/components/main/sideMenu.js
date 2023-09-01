@@ -28,6 +28,7 @@ const SideMenu = () =>{
                             <LeftMenuList
                                 data={mainCategories}
                                 onSelectItem={(index)=>{ onMainCategorySelect(index); }}
+                                initSelect={0}
                             />
                         }
                     </SideMenuItemWrapper>
