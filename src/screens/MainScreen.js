@@ -9,11 +9,13 @@ import MenuListView from '../components/main/menuListView'
 import ItemDetail from '../components/detailComponents/itemDetail'
 import PopUp from '../components/common/popup'
 import { useNavigation } from '@react-navigation/native'
+import { useSelector } from 'react-redux'
 
 
 const MainScreen = () =>{
-    const navigation = useNavigation();
-    
+    const navigation = useNavigation();    
+    const {selectedMainCategory, subCategories, selectedSubCategory, mainCategories} = useSelector((state)=>state.categories);
+
     /* 
     let timeoutSet = null
     function screenTimeOut(){
@@ -23,13 +25,16 @@ const MainScreen = () =>{
             clearInterval(timeoutSet);
         },SCREEN_TIMEOUT)
     } */
-
     return(
         <>
             <WholeWrapper onTouchStart={()=>{ /* screenTimeOut();  */ }} >
-                <SideMenu/>
+                {mainCategories &&
+                    <SideMenu/>
+                }
                 <MainWrapper>
-                    <TopMenu/>
+                    {subCategories&&
+                        <TopMenu/>
+                    }
                     <MenuListView/>
                     <CartView/>
                 </MainWrapper>

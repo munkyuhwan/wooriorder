@@ -35,17 +35,12 @@ export default function Navigation() {
     useEffect(()=>{
         dispatch(getMainCategories());
     },[])
-
-    useEffect(()=>{
-        // 메잍카테고리 변경시 서브카테고라 받기
-        //dispatch(getSubCategories(selectedMainCategory));
-    },[selectedMainCategory])
     
     useEffect(()=>{
         dispatch(setSelectedSubCategory(0));
     },[subCategories])
  
-
+    console.log("index render");
     return (
         <>  
             <NavigationContainer>

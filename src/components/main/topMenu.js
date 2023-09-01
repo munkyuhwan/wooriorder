@@ -22,9 +22,8 @@ const TopMenu = () =>{
     const {subCategories} = useSelector((state)=>state.categories);
 
     const onSubcategorySelected = (index) =>{
-        dispatch(setSelectedSubCategory(index));
+        //dispatch(setSelectedSubCategory(index));
     }
-
     return(
         <>
             <TopMenuWrapper>

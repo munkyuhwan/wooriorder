@@ -6,14 +6,24 @@ import _ from "lodash";
 import { colorRed, colorWhite } from '../../assets/colors/color'
 import { openPopup, openTransperentPopup } from '../../utils/common'
 import LeftMenuList from '../menuComponents/leftMenuList'
-import { setSelectedMainCategory } from '../../store/categories';
+import { getSubCategories, setSelectedMainCategory } from '../../store/categories';
 const SideMenu = () =>{
     const dispatch = useDispatch();
     const {mainCategories} = useSelector((state)=>state.categories);
     
-    const onMainCategorySelect = (index) =>{
-        dispatch(setSelectedMainCategory(index));
+    const onMainCategorySelect = async (index) =>{
+        await new Promise(function(resolve, reject){
+            resolve(index);
+        })        
+        .then((result)=>{
+            console.log("async done");
+            //dispatch(getSubCategories(index));
+            dispatch(setSelectedMainCategory(index));
+        })
     }
+    useEffect(()=>{
+        console.log("mainCategories changes");
+    },[mainCategories])
 
     // 문제 없으면 /components/menuComponents/sideMenuItem.js 제거
     return(

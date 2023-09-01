@@ -3,14 +3,14 @@ import { Animated, TouchableWithoutFeedback } from 'react-native';
 import { TopMenuText } from '../../styles/main/topMenuStyle';
 import { colorBrown, tabBaseColor } from '../../assets/colors/color';
 import { RADIUS_DOUBLE } from '../../styles/values';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedSubCategory } from '../../store/categories';
 
 
 const TopMenuList = (props) => {
-
+    const dispatch = useDispatch();
     const data = props.data;
     //console.log("data: ",data)
-    
     const {selectedSubCategory} = useSelector((state)=>state.categories);
 
     const colorAnimationArray = [];;
@@ -71,12 +71,10 @@ const TopMenuList = (props) => {
         ]).start(()=>{
             //props.onItemPress(); 
             //if(onOff==1) dispatch(setSelectedSubCategory(props.index))
-
+            //props?.onSelectItem(index);
         });   
     } 
-    const handleOnPress = (index) =>{
-        props?.onSelectItem(index);
-    }
+    
     useEffect(()=>{
         if(selectedSubCategory!=null) {
             onSelectHandleAnimation(selectedSubCategory);
@@ -89,9 +87,9 @@ const TopMenuList = (props) => {
         {data.map((el, index)=>{
             return(
                 <>
-                    <TouchableWithoutFeedback key={"subcat_"+index} onPress={()=>{ handleOnPress(index); }}>
-                        <Animated.View style={[{   ...animatedColorArray[index]},{...boxStyleArray[index]}]} >
-                            <TopMenuText>{el.name}</TopMenuText>
+                    <TouchableWithoutFeedback key={"subcat_"+index} onPress={()=>{ dispatch(setSelectedSubCategory(index)); /* setSelectedIndex(index); */ /* handleOnPress(index); */ }}>
+                        <Animated.View  style={[{   ...animatedColorArray[index]},{...boxStyleArray[index]}]} >
+                            <TopMenuText >{el.name}</TopMenuText>
                         </Animated.View>
                     </TouchableWithoutFeedback>
                 </>

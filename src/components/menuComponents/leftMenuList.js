@@ -2,13 +2,18 @@ import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { Animated, TouchableWithoutFeedback } from 'react-native';
 import { colorRed, tabBaseColor } from '../../assets/colors/color';
 import { SideMenuItemOff, SideMenuItemWrapper, SideMenuText } from '../../styles/main/sideMenuStyle';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedMainCategory } from '../../store/categories';
 
 const LeftMenuList = (props) => {
+
+    const dispatch = useDispatch();
 
     const data = props?.data;
     const initSelect = props?.initSelect;
     const [selectIndex, setSelectedIndex] = useState(0);
+    const {selectedMainCategory} = useSelector((state)=>state.categories);
+
 
     const boxStyleArray = [];
     const animationArray = [];
@@ -52,7 +57,6 @@ const LeftMenuList = (props) => {
     }
   
     const onSelectHandleAnimation = async (index) => {
-        console.log("index: ",index,", selectedMainCategory: ",selectIndex);
         Animated.parallel([
             Animated.timing(animationArray[index], {
                 toValue:index==selectIndex?1:0,
@@ -70,30 +74,30 @@ const LeftMenuList = (props) => {
                 useNativeDriver:true,
             })
         ]).start(()=>{
-            props?.onSelectItem(index);
         });   
     }
 
-    const handleOnPress = (index) =>{
-        props?.onSelectItem(index);
-        setSelectedIndex(index);
-    }
-    
     useEffect(()=>{
         if(selectIndex!=null) {
+            props?.onSelectItem(selectIndex);
             onSelectHandleAnimation(selectIndex);
         }
     },[selectIndex])
 
     useEffect(()=>{
-        setSelectedIndex(initSelect);
+        setSelectedIndex(initSelect); 
     },[])
+    /* 
+    useEffect(()=>{
+        onSelectHandleAnimation(selectedMainCategory)
+        //dispatch(setSelectedMainCategory(selectedMainCategory));
+    },[selectedMainCategory]) */
     //onSelectHandleAnimation(0);
     return(
         <>
             {data?.map((item, index)=>{        
                 return(
-                    <TouchableWithoutFeedback key={"leftItem_"+index} onPress={()=>{{setSelectedIndex(index); /* onSelectHandleAnimation(index); */ /* handleOnPress(index); */} }}>
+                    <TouchableWithoutFeedback key={"leftItem_"+index} onPress={()=>{{ setSelectedIndex(index);  /* dispatch(setSelectedMainCategory(index)); */ /* onSelectHandleAnimation(index); */ /* handleOnPress(index); */} }}>
                         <Animated.View 
                             style={[
                                 {...animatedStyleArray[index] },
