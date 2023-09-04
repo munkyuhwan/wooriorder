@@ -4,15 +4,13 @@ import { colorRed, tabBaseColor } from '../../assets/colors/color';
 import { SideMenuItemOff, SideMenuItemWrapper, SideMenuText } from '../../styles/main/sideMenuStyle';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedMainCategory } from '../../store/categories';
+import { useFocusEffect } from '@react-navigation/native';
 
 const LeftMenuList = (props) => {
-
     const dispatch = useDispatch();
-
     const data = props?.data;
     const initSelect = props?.initSelect;
     const [selectIndex, setSelectedIndex] = useState(0);
-    const {selectedMainCategory} = useSelector((state)=>state.categories);
 
 
     const boxStyleArray = [];
@@ -20,6 +18,8 @@ const LeftMenuList = (props) => {
     const widthAnimationArray=[];
     const radiusAnimationArray=[];
     const animatedStyleArray=[];
+
+
     for(i=0;i<data.length; i ++) {
         // deActivate animation
         // animation set
@@ -59,46 +59,49 @@ const LeftMenuList = (props) => {
     const onSelectHandleAnimation = async (index) => {
         Animated.parallel([
             Animated.timing(animationArray[index], {
-                toValue:index==selectIndex?1:0,
-                duration: 200,
+                toValue:animationArray[index]._value==0?1:0,
+                duration: 0,
                 useNativeDriver:true,
             }),
             Animated.timing(widthAnimationArray[index], {
-                toValue: index==selectIndex?1:0,
-                duration: 200,
+                toValue: widthAnimationArray[index]._value==0?1:0,
+                duration: 0,
                 useNativeDriver:true,
             }),
             Animated.timing(radiusAnimationArray[index],{
-                toValue: (index==selectIndex?1:0)==1?9:0,
-                duration: 150,
+                toValue: (radiusAnimationArray[index]._value==0?1:0)==1?9:0,
+                duration: 0,
                 useNativeDriver:true,
             })
-        ]).start(()=>{
+        ]).start((succes, fail)=>{
+            
         });   
     }
 
     useEffect(()=>{
         if(selectIndex!=null) {
             props?.onSelectItem(selectIndex);
-            onSelectHandleAnimation(selectIndex);
         }
     },[selectIndex])
 
     useEffect(()=>{
-        setSelectedIndex(initSelect); 
+        setSelectedIndex(initSelect);
+        dispatch(setSelectedMainCategory(0)); 
     },[])
-    /* 
-    useEffect(()=>{
-        onSelectHandleAnimation(selectedMainCategory)
-        //dispatch(setSelectedMainCategory(selectedMainCategory));
-    },[selectedMainCategory]) */
-    //onSelectHandleAnimation(0);
+    onSelectHandleAnimation(selectIndex);
+
+    const onPressAction = (index) =>{
+        dispatch(setSelectedMainCategory(index)); 
+        setSelectedIndex(index);
+    }
+
     return(
         <>
             {data?.map((item, index)=>{        
                 return(
-                    <TouchableWithoutFeedback key={"leftItem_"+index} onPress={()=>{{ setSelectedIndex(index);  /* dispatch(setSelectedMainCategory(index)); */ /* onSelectHandleAnimation(index); */ /* handleOnPress(index); */} }}>
+                    <TouchableWithoutFeedback key={"leftItem_"+index} onPress={()=>{{ onPressAction(index); }}}>
                         <Animated.View 
+                            key={"leftItemAni_"+index}
                             style={[
                                 {...animatedStyleArray[index] },
                                 {...boxStyleArray[index]}

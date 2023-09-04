@@ -21,8 +21,8 @@ const TopMenu = () =>{
     const dispatch = useDispatch();
     const {subCategories} = useSelector((state)=>state.categories);
 
-    const onSubcategorySelected = (index) =>{
-        //dispatch(setSelectedSubCategory(index));
+    if(subCategories.length <=0) {
+        return(<></>)
     }
     return(
         <>
@@ -33,7 +33,8 @@ const TopMenu = () =>{
                             {subCategories.length>0 &&
                                 <TopMenuList
                                     data={subCategories}
-                                    onSelectItem={(index)=>{onSubcategorySelected(index)}}
+                                    onSelectItem={(index)=>{/* onSubcategorySelected(index) */}}
+                                    initSelect={0}
                                 />
                             }
                        </CategoryWrapper>

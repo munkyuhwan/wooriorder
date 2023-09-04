@@ -9,9 +9,11 @@ export const getMainCategories = createAsyncThunk("categories/getMainCategories"
         {index:4, name:"카테고리4"},]
     return mainCategories;
 })
-export const setSelectedMainCategory = createAsyncThunk("categories/setSelectedMainCategory", async(index) =>{
+export const setSelectedMainCategory = createAsyncThunk("categories/setSelectedMainCategory", async(index,{getState,dispatch}) =>{
     return await new Promise(function(resolve, reject){
         resolve(index);
+
+
     })
 })
 export const getSubCategories = createAsyncThunk("categories/getSubCategories", async(index) =>{
@@ -76,7 +78,6 @@ export const cagegoriesSlice = createSlice({
         })
         // 메인 카테고리 선택
         builder.addCase(setSelectedMainCategory.fulfilled,(state, action)=>{
-            console.log(state.subCategories)
             state.subCategories = state.categoryData[action.payload].subCategories;
             state.selectedMainCategory = action.payload;
         })

@@ -10,8 +10,10 @@ import { setSelectedSubCategory } from '../../store/categories';
 const TopMenuList = (props) => {
     const dispatch = useDispatch();
     const data = props.data;
+    const initSelect = props.initSelect;
     //console.log("data: ",data)
-    const {selectedSubCategory} = useSelector((state)=>state.categories);
+    //const {selectedSubCategory} = useSelector((state)=>state.categories);
+    const [selectedIndex, setSelectedIndex] = useState(0);
 
     const colorAnimationArray = [];;
     const heightAnimationArray=[];
@@ -59,13 +61,13 @@ const TopMenuList = (props) => {
     const onSelectHandleAnimation = (index) => {
         Animated.parallel([
             Animated.timing(colorAnimationArray[index], {
-                toValue:index==selectedSubCategory?1:0,
-                duration: 200,
+                toValue:colorAnimationArray[index]._value==0?1:0,
+                duration: 0,
                 useNativeDriver:true,
             }),
             Animated.timing(heightAnimationArray[index], {
-                toValue: index==selectedSubCategory?1:0,
-                duration: 200,
+                toValue: heightAnimationArray[index]._value==0?1:0,
+                duration: 0,
                 useNativeDriver:true,
             }), 
         ]).start(()=>{
@@ -76,20 +78,30 @@ const TopMenuList = (props) => {
     } 
     
     useEffect(()=>{
-        if(selectedSubCategory!=null) {
-            onSelectHandleAnimation(selectedSubCategory);
+        if(selectedIndex!=null) {
+            //onSelectHandleAnimation(selectedSubCategory);
         }
-    },[selectedSubCategory])
-    //onSelectHandleAnimation(0);
+    },[selectedIndex])
+
+    useEffect(()=>{
+        setSelectedIndex(initSelect); 
+    },[])
+
+    onSelectHandleAnimation(selectedIndex);
+
+    const onPressAction = (index) =>{
+        dispatch(setSelectedSubCategory(index)); 
+        setSelectedIndex(index);
+    }
 
     return (
         <>
         {data.map((el, index)=>{
             return(
                 <>
-                    <TouchableWithoutFeedback key={"subcat_"+index} onPress={()=>{ dispatch(setSelectedSubCategory(index)); /* setSelectedIndex(index); */ /* handleOnPress(index); */ }}>
-                        <Animated.View  style={[{   ...animatedColorArray[index]},{...boxStyleArray[index]}]} >
-                            <TopMenuText >{el.name}</TopMenuText>
+                    <TouchableWithoutFeedback key={"subcat_"+index} onPress={()=>{onPressAction(index); /* dispatch(setSelectedSubCategory(index));  */}}>
+                        <Animated.View key={"subcatAni_"+index}  style={[{   ...animatedColorArray[index]},{...boxStyleArray[index]}]} >
+                            <TopMenuText key={"subcatText_"+index} >{el.name}</TopMenuText>
                         </Animated.View>
                     </TouchableWithoutFeedback>
                 </>

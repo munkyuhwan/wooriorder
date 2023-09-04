@@ -18,9 +18,6 @@ const Stack = createStackNavigator()
 
 export default function Navigation() {
 
-    const dispatch = useDispatch();
-    const {selectedMainCategory, subCategories, selectedSubCategory} = useSelector((state)=>state.categories);
-
     const [spinnerText, setSpinnerText] = React.useState("")
 
     // 결제진행중 팝업
@@ -31,14 +28,7 @@ export default function Navigation() {
     DeviceEventEmitter.addListener("onComplete",(ev)=>{
         setSpinnerText("")
     })
-    // 메뉴 아이템 받아오기 
-    useEffect(()=>{
-        dispatch(getMainCategories());
-    },[])
     
-    useEffect(()=>{
-        dispatch(setSelectedSubCategory(0));
-    },[subCategories])
  
     console.log("index render");
     return (
