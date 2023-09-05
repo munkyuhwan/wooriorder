@@ -47,10 +47,12 @@ const TopMenu = () =>{
                 <TouchableWithoutFeedback onPress={()=>{openPopup(dispatch,{innerView:"Setting", isPopupVisible:true}); }} >
                     <Text style={{color:colorWhite}} >설정</Text>
                 </TouchableWithoutFeedback>
+                {/* 
                 <IconWrapper>
-                    <TopButton onPress={()=>{console.log("on icon clicked  aaa");/* openPopup(dispatch,{innerView:"OrderList", isPopupVisible:true}); */  openTransperentPopup(dispatch, {innerView:"OrderList", isPopupVisible:true}); }} isSlideMenu={false} lr={"left"} onSource={require("../../assets/icons/orderlist_trans.png")} offSource={require("../../assets/icons/orderlist_grey.png")} />
-                    <TopButton onPress={()=>{console.log("on icon clicked");}} isSlideMenu={true} lr={"right"} onSource={require("../../assets/icons/cart_trans.png")} offSource={require("../../assets/icons/cart_grey.png")} />
-                </IconWrapper>
+                    <TopButton onPress={()=>{openTransperentPopup(dispatch, {innerView:"OrderList", isPopupVisible:true}); }} isSlideMenu={false} lr={"left"} onSource={require("../../assets/icons/orderlist_trans.png")} offSource={require("../../assets/icons/orderlist_grey.png")} />
+                    <TopButton onPress={()=>{}} isSlideMenu={true} lr={"right"} onSource={require("../../assets/icons/cart_trans.png")} offSource={require("../../assets/icons/cart_grey.png")} />
+                </IconWrapper> 
+                */}
             </TopMenuWrapper>
         </>
     )

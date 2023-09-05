@@ -12,7 +12,7 @@ const MenuListView = () => {
     const dispatch = useDispatch();
 
     const {menu} = useSelector((state)=>state.menu);
-    const {isIconOn} = useSelector((state)=>state.categories);
+    const {isOn} = useSelector((state)=>state.cartView);
     const [numColumns, setNumColumns] = useState(3);
 
     const {language} = useSelector(state=>state.languages);
@@ -21,12 +21,12 @@ const MenuListView = () => {
         dispatch(getMenu());
     },[])
     useEffect(()=>{
-        if(isIconOn) {
+        if(isOn) {
             setNumColumns(2);
         }else {
             setNumColumns(3);
         }
-    },[isIconOn])
+    },[isOn])
    
     return(
         <>

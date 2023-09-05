@@ -83,14 +83,17 @@ export const TableNameBig = styled.Text`
 
 // iconWRapper
 export const IconWrapper = styled.View`
-    flex:1;
     flexDirection:row;
-    justifyContent:center;
+    justifyContent:flex-end;
+    height:80px;
+    marginBottom:14px;
+    paddingRight:20px;
     display:flex;
     alignItems:center;
-    paddingTop:33px;
     zIndex:99999;
-
+    position:absolute;
+    right:0;
+    top:18px;
 `
 export const TouchIcon = styled.Image`
     resizeMode:contain;

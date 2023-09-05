@@ -49,9 +49,6 @@ export const setSelectedSubCategory = createAsyncThunk("categories/setSelectedSu
     return await new Promise(function(resolve, reject){
         resolve(index);
     })})
-export const setIconClick = createAsyncThunk("categories/setIconClick", async(isOn) =>{
-    return isOn;
-})
 // Slice
 export const cagegoriesSlice = createSlice({
     name: 'categories',
@@ -67,7 +64,6 @@ export const cagegoriesSlice = createSlice({
         selectedMainCategory:0,
         subCategories:[],
         selectedSubCategory:0,
-        isIconOn:false,
     },
     extraReducers:(builder)=>{
         // 메인 카테고리 받기
@@ -86,10 +82,6 @@ export const cagegoriesSlice = createSlice({
         // 서브 카테고리 선택
         builder.addCase(setSelectedSubCategory.fulfilled,(state, action)=>{
             state.selectedSubCategory = action.payload;
-        })
-        // 아이콘 변경
-        builder.addCase(setIconClick.fulfilled,(state, action)=>{
-            state.isIconOn = action.payload;
         })
     }
 });

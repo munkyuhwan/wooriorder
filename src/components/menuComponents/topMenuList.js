@@ -60,7 +60,7 @@ const TopMenuList = (props) => {
     }
 
     const onSelectHandleAnimation = async (index) => {
-        new Promise(function(resolve, reject){
+        await new Promise(function(resolve, reject){
             Animated.parallel([
                 Animated.timing(colorAnimationArray[index], {
                     toValue:colorAnimationArray[index]._value==0?1:0,
@@ -73,10 +73,8 @@ const TopMenuList = (props) => {
                     useNativeDriver:true,
                 }), 
             ]).start(()=>{
-                //props.onItemPress(); 
-                //if(onOff==1) dispatch(setSelectedSubCategory(props.index))
-                //props?.onSelectItem(index);
             });   
+            
         })
         
     } 
@@ -98,6 +96,8 @@ const TopMenuList = (props) => {
         onSelectHandleAnimation(selectedSubCategory);
     },[selectedSubCategory])
 
+    console.log("top render");
+    onSelectHandleAnimation(selectedIndex);
 
     const onPressAction = (index) =>{
         dispatch(setSelectedSubCategory(index)); 
