@@ -1,8 +1,18 @@
 import { NativeModules } from 'react-native'
 
-export const startSmartroPay = (callback) =>{
+export const startSmartroPay = async (callback) =>{
     const {SmartroPay} = NativeModules;
-    SmartroPay.prepareSmartroPay("{\"service\":\"function\",\"external-manage\":\"get-signature\",\"service-result\":\"0800\",\"service-description\":\"서비스가 중단되었습니다.\"}");
+    const smartroData=("{\"service\":\"function\",\"external-manage\":\"get-signature\",\"service-result\":\"0800\",\"service-description\":\"서비스가 중단되었습니다.\"}");
+    return await new Promise(function(resolve, reject){
+        SmartroPay.prepareSmartroPay(
+            smartroData,
+            (error)=>{
+                reject(error);
+            },
+            (msg)=>{
+                resolve(msg);
+            })
+    })
 }
 
 export const startSmartroGetDeviceInfo = async () =>{
