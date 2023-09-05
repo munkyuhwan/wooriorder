@@ -20,7 +20,7 @@ import TopMenuList from '../menuComponents/topMenuList'
 const TopMenu = () =>{
     const dispatch = useDispatch();
     const {subCategories} = useSelector((state)=>state.categories);
-
+    
     if(subCategories.length <=0) {
         return(<></>)
     }

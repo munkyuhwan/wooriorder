@@ -12,8 +12,6 @@ export const getMainCategories = createAsyncThunk("categories/getMainCategories"
 export const setSelectedMainCategory = createAsyncThunk("categories/setSelectedMainCategory", async(index,{getState,dispatch}) =>{
     return await new Promise(function(resolve, reject){
         resolve(index);
-
-
     })
 })
 export const getSubCategories = createAsyncThunk("categories/getSubCategories", async(index) =>{

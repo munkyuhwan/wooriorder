@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Animated, TouchableWithoutFeedback } from 'react-native';
 import { TopMenuText } from '../../styles/main/topMenuStyle';
 import { colorBrown, tabBaseColor } from '../../assets/colors/color';
 import { RADIUS_DOUBLE } from '../../styles/values';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedSubCategory } from '../../store/categories';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 const TopMenuList = (props) => {
@@ -12,7 +13,7 @@ const TopMenuList = (props) => {
     const data = props.data;
     const initSelect = props.initSelect;
     //console.log("data: ",data)
-    //const {selectedSubCategory} = useSelector((state)=>state.categories);
+    const {selectedMainCategory, selectedSubCategory} = useSelector((state)=>state.categories);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     const colorAnimationArray = [];;
@@ -58,36 +59,45 @@ const TopMenuList = (props) => {
 
     }
 
-    const onSelectHandleAnimation = (index) => {
-        Animated.parallel([
-            Animated.timing(colorAnimationArray[index], {
-                toValue:colorAnimationArray[index]._value==0?1:0,
-                duration: 0,
-                useNativeDriver:true,
-            }),
-            Animated.timing(heightAnimationArray[index], {
-                toValue: heightAnimationArray[index]._value==0?1:0,
-                duration: 0,
-                useNativeDriver:true,
-            }), 
-        ]).start(()=>{
-            //props.onItemPress(); 
-            //if(onOff==1) dispatch(setSelectedSubCategory(props.index))
-            //props?.onSelectItem(index);
-        });   
+    const onSelectHandleAnimation = async (index) => {
+        new Promise(function(resolve, reject){
+            Animated.parallel([
+                Animated.timing(colorAnimationArray[index], {
+                    toValue:colorAnimationArray[index]._value==0?1:0,
+                    duration: 0,
+                    useNativeDriver:true,
+                }),
+                Animated.timing(heightAnimationArray[index], {
+                    toValue: heightAnimationArray[index]._value==0?1:0,
+                    duration: 0,
+                    useNativeDriver:true,
+                }), 
+            ]).start(()=>{
+                //props.onItemPress(); 
+                //if(onOff==1) dispatch(setSelectedSubCategory(props.index))
+                //props?.onSelectItem(index);
+            });   
+        })
+        
     } 
     
     useEffect(()=>{
         if(selectedIndex!=null) {
-            //onSelectHandleAnimation(selectedSubCategory);
+            props?.onSelectItem(selectedIndex);
         }
     },[selectedIndex])
 
     useEffect(()=>{
         setSelectedIndex(initSelect); 
     },[])
+    useFocusEffect(useCallback(()=>{
+        onSelectHandleAnimation(0);
+        onPressAction(0);
+    },[selectedMainCategory]))
+    useEffect(()=>{
+        onSelectHandleAnimation(selectedSubCategory);
+    },[selectedSubCategory])
 
-    onSelectHandleAnimation(selectedIndex);
 
     const onPressAction = (index) =>{
         dispatch(setSelectedSubCategory(index)); 

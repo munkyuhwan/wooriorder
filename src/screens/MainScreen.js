@@ -30,7 +30,7 @@ const MainScreen = () =>{
                 <SideMenu/>
                 <MainWrapper>
                     <TopMenu/>
-                   {/*  <MenuListView/> */}
+                    <MenuListView/>
                     <CartView/>
                 </MainWrapper>
             </WholeWrapper> 
