@@ -125,6 +125,9 @@ const SettingPopup = () =>{
                     <TouchableWithoutFeedback onPress={()=>{testPayment();}} >
                         <SettingButtonText>테스트 결제</SettingButtonText>
                     </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={()=>{}} >
+                        <SettingButtonText>메뉴 업데이트</SettingButtonText>
+                    </TouchableWithoutFeedback>
                 </SettingButtonWrapper>
             </SettingWrapper>
         </>
