@@ -50,6 +50,7 @@ public class MainActivity extends ReactActivity {
                     | View.SYSTEM_UI_FLAG_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     onScreenTouch();
+
   }
 
 

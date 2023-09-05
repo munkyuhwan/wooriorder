@@ -1,6 +1,9 @@
 package com.wooriorder;
 
 import android.app.Application;
+
+import androidx.annotation.Nullable;
+
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
@@ -8,6 +11,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
+import com.microsoft.codepush.react.CodePush;
 import com.wooriorder.modules.screenController.KeepAwakePackage;
 import com.wooriorder.modules.smartro.SmartroPayPackage;
 import com.wooriorder.modules.toast.ToastPackage;
@@ -51,6 +55,13 @@ public class MainApplication extends Application implements ReactApplication {
         protected Boolean isHermesEnabled() {
           return BuildConfig.IS_HERMES_ENABLED;
         }
+
+          @Nullable
+          @Override
+          protected String getJSBundleFile() {
+              return CodePush.getJSBundleFile();
+
+          }
       };
 
   @Override

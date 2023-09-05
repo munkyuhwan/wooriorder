@@ -23,7 +23,8 @@ import {
 import store from './src/store'
 import { Provider } from 'react-redux'
 import Navigation from './src/navigation'
- 
+import CodePush from "react-native-code-push";
+
 
 StatusBar.setHidden(true);
 console.disableYellowBox = true;
@@ -53,5 +54,7 @@ const App = () => {
     )
 }
 */
-
-export default App;
+const codePushOptions = {
+    checkFrequency: CodePush.CheckFrequency.MANUAL,
+}
+export default CodePush(codePushOptions)(App);

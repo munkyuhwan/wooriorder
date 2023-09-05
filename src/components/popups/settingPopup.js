@@ -3,8 +3,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { SettingButtonText, SettingButtonWrapper, SettingWrapper } from '../../styles/common/settingStyle';
 import { Alert, DeviceEventEmitter, TouchableWithoutFeedback } from 'react-native';
 import { startSmartroCheckIntegrity, startSmartroGetDeviceInfo, startSmartroGetDeviceSetting, startSmartroKeyTransfer, startSmartroReadCardInfo, startSmartroRequestPayment, startSmartroSetDeviceDefaultSetting } from '../../utils/smartro';
+import CodePush from 'react-native-code-push';
+import PopupIndicator from '../common/popupIndicator';
+import { IndicatorWrapper, PopupIndicatorText, PopupIndicatorWrapper, PopupSpinner } from '../../styles/common/popupIndicatorStyle';
 
 const SettingPopup = () =>{
+    const [spinnerText, setSpinnerText] = React.useState("")
 
     const getDeviceInfo = () =>{
         startSmartroGetDeviceInfo()
@@ -99,6 +103,41 @@ const SettingPopup = () =>{
         )
     }
 
+    const checkUpdate =  async() =>{
+            
+            const update = await CodePush.checkForUpdate();
+            console.log("update: ",update);
+            if(update) {
+                /* Alert.alert(
+                    "업데이트",
+                    "앱 업데이트가 있습니다.",
+                    [{
+                        text:'확인',
+                    }]
+                ) */
+                update
+                .download((progress)=>{
+                    setSpinnerText("업데이트 중...",progress,"%");
+                })
+                .then((newPackage)=>{
+                    setSpinnerText("");
+
+                    newPackage
+                    .install(CodePush.InstallMode.IMMEDIATE)
+                    .then(()=>{CodePush.restartApp()});
+                })
+            }else {
+                Alert.alert(
+                    "업데이트",
+                    "앱 업데이트가 없습니다.",
+                    [{
+                        text:'확인',
+                    }]
+                )
+            } 
+        
+    } 
+
 
     return (
         <>
@@ -128,8 +167,20 @@ const SettingPopup = () =>{
                     <TouchableWithoutFeedback onPress={()=>{}} >
                         <SettingButtonText>메뉴 업데이트</SettingButtonText>
                     </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={()=>{checkUpdate();}} >
+                        <SettingButtonText>앱 업데이트</SettingButtonText>
+                    </TouchableWithoutFeedback>
                 </SettingButtonWrapper>
+                
             </SettingWrapper>
+            {(spinnerText!="")&&
+                <PopupIndicatorWrapper style={{right:0, position:'absolute', width:'104%', height:'104%'}}>
+                    <IndicatorWrapper>
+                        <PopupSpinner size={'large'}/>
+                        <PopupIndicatorText>{spinnerText}</PopupIndicatorText>
+                    </IndicatorWrapper>
+                </PopupIndicatorWrapper>
+            }
         </>
     )
 }
