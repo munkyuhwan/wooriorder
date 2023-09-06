@@ -10,6 +10,7 @@ import { LANGUAGE } from '../../resources/strings';
 import OrderListPopup from '../popups/orderListPopup';
 import SettingPopup from '../popups/settingPopup';
 import CallServerPopup from '../popups/callServerPopup';
+import { openPopup } from '../../utils/common';
 
 const PopUp = (props) =>{
     
@@ -75,11 +76,11 @@ const PopUp = (props) =>{
     return(
         <>
             <Animated.View  style={[{...PopStyle.animatedPop,...boxWidthStyle,...{zIndex:popupZIndex, width:size, height:size}} ]} >   
-                <TouchableWithoutFeedback onPress={()=>{dispatch(setPopupVisibility(false));}}>
+                <TouchableWithoutFeedback onPress={()=>{ openPopup(dispatch,{innerView:"", isPopupVisible:false});  /* dispatch(setPopupVisibility(false)); */ }}>
                     <PopupWrapper/>
                 </TouchableWithoutFeedback>
                 <PopupContentWrapper>
-                    <TouchableWithoutFeedback onPress={()=>{dispatch(setPopupVisibility(false));}}>
+                    <TouchableWithoutFeedback onPress={()=>{ openPopup(dispatch,{innerView:"", isPopupVisible:false});  /* dispatch(setPopupVisibility(false)); */}}>
                         <PopupCloseButtonWrapper>
                             <PopupCloseButton source={require('assets/icons/close_red.png')}/>
                         </PopupCloseButtonWrapper>
@@ -96,7 +97,7 @@ const PopUp = (props) =>{
                     }
                     {(innerView=="TogoPopup" || innerView=="OrderList") &&
                         <PopupBottomButtonWrapper>
-                            <TouchableWithoutFeedback onPress={()=>{ dispatch(setPopupVisibility({isPopupVisible:false})); }}>
+                            <TouchableWithoutFeedback onPress={()=>{openPopup(dispatch,{innerView:"", isPopupVisible:false});  /* dispatch(setPopupVisibility({isPopupVisible:false})); */ }}>
                                 <PopupBottomButtonBlack>
                                     <PopupBottomButtonText>{LANGUAGE[language].popup.closeTitle}</PopupBottomButtonText>
                                 </PopupBottomButtonBlack>
