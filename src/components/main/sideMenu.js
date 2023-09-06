@@ -4,7 +4,7 @@ import { TouchableWithoutFeedback} from 'react-native'
 import { LogoTop, LogoWrapper, SideBottomButton, SideBottomIcon, SideBottomText, SideBottomWrapper, SideMenuItem, SideMenuItemWrapper, SideMenuScrollView, SideMenuWrapper } from '../../styles/main/sideMenuStyle'
 import _ from "lodash";
 import { colorRed, colorWhite } from '../../assets/colors/color'
-import { openPopup, openTransperentPopup } from '../../utils/common'
+import { openFullSizePopup, openPopup, openTransperentPopup } from '../../utils/common'
 import LeftMenuList from '../menuComponents/leftMenuList'
 import { getMainCategories, getSubCategories, setSelectedMainCategory } from '../../store/categories';
 const SideMenu = () =>{
@@ -44,7 +44,7 @@ const SideMenu = () =>{
                             </SideBottomButton>
                         </TouchableWithoutFeedback>
                     </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={()=>{openTransperentPopup(dispatch, {innerView:"CallServer", isPopupVisible:true});}} >
+                    <TouchableWithoutFeedback onPress={()=>{openFullSizePopup(dispatch, {innerFullView:"CallServer", isFullPopupVisible:true});}} >
                         <SideBottomButton bg={"red"} borderColor={colorRed} >
                             <SideBottomText>직원호출</SideBottomText>
                             <SideBottomIcon source={require("../../assets/icons/bell_trans.png")}  />

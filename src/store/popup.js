@@ -12,14 +12,22 @@ export const setTransPopupVisibility = createAsyncThunk("popup/setTransPopupVisi
 export const setTransPopupContent = createAsyncThunk("popup/setTransperentPopupContent", async(popup) =>{
     return popup;
 })
+export const setFullPopupVisibility = createAsyncThunk("popup/setFullPopupVisibility", async(popup) =>{
+    return popup;
+})
+export const setFullPopupContent = createAsyncThunk("popup/setFullSizePopupContent", async(popup) =>{
+    return popup;
+})
 // Slice
 export const popupsSlice = createSlice({
     name: 'popup',
     initialState: {
         isPopupVisible:false,
         isTransPopupVisible:false,
+        isFullPopupVisible:false,
         innerView:"",
-        innerTransView:""
+        innerTransView:"",
+        innerFullView:"",
     },
     extraReducers:(builder)=>{
         // 메인 카테고리 받기
@@ -29,11 +37,19 @@ export const popupsSlice = createSlice({
         builder.addCase(setPopupContent.fulfilled,(state, action)=>{
             state.innerView = action.payload.innerView;
         })
+
         builder.addCase(setTransPopupVisibility.fulfilled,(state, action)=>{
             state.isTransPopupVisible = action.payload.isPopupVisible;
         })
         builder.addCase(setTransPopupContent.fulfilled,(state, action)=>{
             state.innerTransView = action.payload.innerView;
+        })
+
+        builder.addCase(setFullPopupVisibility.fulfilled,(state, action)=>{
+            state.isFullPopupVisible = action.payload.isFullPopupVisible;
+        })
+        builder.addCase(setFullPopupContent.fulfilled,(state, action)=>{
+            state.innerFullView = action.payload.innerFullView;
         })
     }
 });

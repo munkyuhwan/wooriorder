@@ -13,6 +13,7 @@ import { DeviceEventEmitter, Text, View } from 'react-native'
 import PopupIndicator from '../components/common/popupIndicator'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMainCategories, getSubCategories, setSelectedMainCategory, setSelectedSubCategory } from '../store/categories'
+import FullSizePopup from '../components/common/fullsizePopup'
 
 const Stack = createStackNavigator()
 
@@ -60,6 +61,7 @@ export default function Navigation() {
             </NavigationContainer>
             <PopUp/>
             <TransparentPopUp/>
+            <FullSizePopup/>
             {(spinnerText!="")&&
                 <PopupIndicator text={spinnerText} />
             }

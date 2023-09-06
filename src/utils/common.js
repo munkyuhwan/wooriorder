@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPopupContent, setPopupVisibility, setTransPopupContent, setTransPopupVisibility } from '../store/popup';
+import { setFullPopupContent, setFullPopupVisibility, setPopupContent, setPopupVisibility, setTransPopupContent, setTransPopupVisibility } from '../store/popup';
 
 export function openPopup (dispatch, {innerView, isPopupVisible}) {
     if(isPopupVisible) {
@@ -12,7 +12,6 @@ export function openPopup (dispatch, {innerView, isPopupVisible}) {
     }
 }
 export function openTransperentPopup (dispatch, {innerView, isPopupVisible}) {
-    console.log(innerView, isPopupVisible);
     if(isPopupVisible) {
         dispatch(setTransPopupContent({innerView:innerView})); 
         dispatch(setTransPopupVisibility({isPopupVisible:isPopupVisible}));    
@@ -24,6 +23,20 @@ export function openTransperentPopup (dispatch, {innerView, isPopupVisible}) {
         },500)
     } 
     dispatch(setTransPopupVisibility({isPopupVisible:isPopupVisible}));    
+}
+
+export function openFullSizePopup (dispatch, {innerFullView, isFullPopupVisible}) {
+    if(isFullPopupVisible) {
+        dispatch(setFullPopupContent({innerFullView:innerFullView})); 
+        dispatch(setFullPopupVisibility({isFullPopupVisible:isFullPopupVisible}));    
+    }else {
+        dispatch(setFullPopupVisibility({isFullPopupVisible:isFullPopupVisible}));    
+        const disapearTimeout = setInterval(()=>{
+            dispatch(setFullPopupContent({innerFullView:innerFullView})); 
+            clearInterval(disapearTimeout);
+        },500)
+    } 
+    dispatch(setFullPopupVisibility({isFullPopupVisible:isFullPopupVisible}));    
 }
 
 

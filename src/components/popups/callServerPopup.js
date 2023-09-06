@@ -6,20 +6,20 @@ import { TransparentPopupBottomButtonIcon, TransparentPopupBottomButtonText, Tra
 import { LANGUAGE } from '../../resources/strings';
 import SelectItemComponent from '../common/selectItemComponent';
 import { getCallServerItems } from '../../store/callServer';
-import { openTransperentPopup } from '../../utils/common';
+import { openFullSizePopup, openTransperentPopup } from '../../utils/common';
 
 const CallServerPopup = () => {
     const dispatch = useDispatch();
     const {language} = useSelector(state=>state.languages);
 
     const {callServerItems} = useSelector(state=>state.callServer);
-    const {isTransPopupVisible, innerTransView} = useSelector(state=>state.popup);
+    const {isFullPopupVisible, innerFullView} = useSelector(state=>state.popup);
 
     useEffect(()=>{
-        if(isTransPopupVisible==true && innerTransView=="CallServer") {
+        if(isFullPopupVisible==true && innerFullView=="CallServer") {
             dispatch(getCallServerItems());
         }
-    },[isTransPopupVisible, innerTransView])
+    },[isFullPopupVisible, innerFullView])
 
     const onServiceSelected = (indexArray) =>{
         console.log("service selectedIndex: ", indexArray)
@@ -49,7 +49,7 @@ const CallServerPopup = () => {
                             <TransparentPopupBottomButtonIcon source={require("assets/icons/bell_trans.png")} />
                         </TransparentPopupBottomButtonWraper>
                     </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={()=>{openTransperentPopup(dispatch, {innerView:"", isPopupVisible:false});}}>
+                    <TouchableWithoutFeedback onPress={()=>{openFullSizePopup(dispatch, {innerView:"", isPopupVisible:false});}}>
                         <TransparentPopupBottomButtonWraper bgColor={colorDarkGrey} >
                             <TransparentPopupBottomButtonText>{LANGUAGE[language].serverPopup.closeBtnText}</TransparentPopupBottomButtonText>
                             <TransparentPopupBottomButtonIcon source={require("assets/icons/cancel.png")} />

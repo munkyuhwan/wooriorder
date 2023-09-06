@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import {View, NativeModules, Animated, TouchableWithoutFeedback, StyleSheet} from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { PopupCloseButton, PopupCloseButtonWrapper, PopupContentWrapper, PopupWrapper } from 'styles/common/popup';
+import { PopupCloseButton, PopupCloseButtonWrapper, PopupContentWrapper, FullsizePopupWrapper } from 'styles/common/popup';
 import { setPopupVisibility } from '../../store/popup';
 import LanguageSelectPopup from '../popups/languageSelectPopup';
 import TogoPopup from '../popups/togoTimePopup';
 import { PopupBottomButtonBlack, PopupBottomButtonText, PopupBottomButtonWrapper } from '../../styles/common/coreStyle';
 import { LANGUAGE } from '../../resources/strings';
-import OrderListPopup from '../popups/orderListPopup';
-import SettingPopup from '../popups/settingPopup';
+import { openFullSizePopup, openTransperentPopup } from '../../utils/common';
+import { TransparentPopupWrapper } from '../../styles/common/popup';
 import CallServerPopup from '../popups/callServerPopup';
+import OrderListPopup from '../popups/orderListPopup';
 
-const PopUp = (props) =>{
+const FullSizePopup = (props) =>{
     
     const dispatch = useDispatch();
     const {language} = useSelector(state=>state.languages);
-    const {isPopupVisible, innerView} = useSelector(state=>state.popup);
+    const {isFullPopupVisible, innerFullView} = useSelector(state=>state.popup);
     const [popupZIndex, setPopupZIndex] = useState(0);
     const [size, setSize] = useState("0") 
     
@@ -63,53 +64,26 @@ const PopUp = (props) =>{
         }) 
     }
     useEffect(()=>{
-        if(isPopupVisible) {
+        if(isFullPopupVisible) {
             setPopupZIndex(999999);
             setSize('100%');
             onSelectHandleAnimation(2);
         }else {
             onSelectHandleAnimation(0);
         }
-    },[isPopupVisible])
+    },[isFullPopupVisible])
+    
 
     return(
         <>
             <Animated.View  style={[{...PopStyle.animatedPop,...boxWidthStyle,...{zIndex:popupZIndex, width:size, height:size}} ]} >   
-                <TouchableWithoutFeedback onPress={()=>{dispatch(setPopupVisibility(false));}}>
-                    <PopupWrapper/>
+                <TouchableWithoutFeedback onPress={()=>{openFullSizePopup(dispatch, {innerView:"", isPopupVisible:false});} }>
+                <FullsizePopupWrapper/>
                 </TouchableWithoutFeedback>
-                <PopupContentWrapper>
-                    <TouchableWithoutFeedback onPress={()=>{dispatch(setPopupVisibility(false));}}>
-                        <PopupCloseButtonWrapper>
-                            <PopupCloseButton source={require('assets/icons/close_red.png')}/>
-                        </PopupCloseButtonWrapper>
-                    </TouchableWithoutFeedback>
-                    {innerView=="LanguageSelectPopup"&&
-                        <LanguageSelectPopup/>
-                    }
-                    {innerView=="TogoPopup"&&
-                        <TogoPopup/>
-                    }
-                   
-                    {(innerView=="OrderList") &&
-                        <OrderListPopup/>
-                    }
-                    {(innerView=="TogoPopup" || innerView=="OrderList") &&
-                        <PopupBottomButtonWrapper>
-                            <TouchableWithoutFeedback onPress={()=>{ dispatch(setPopupVisibility({isPopupVisible:false})); }}>
-                                <PopupBottomButtonBlack>
-                                    <PopupBottomButtonText>{LANGUAGE[language].popup.closeTitle}</PopupBottomButtonText>
-                                </PopupBottomButtonBlack>
-                            </TouchableWithoutFeedback>
-                        </PopupBottomButtonWrapper>
-                    }
-                    {(innerView=="Setting") &&
-                        <SettingPopup/>
-                    }
-                    {innerView=="CallServer"&&
+                    {innerFullView=="CallServer"&&
                         <CallServerPopup/>
                     }
-                </PopupContentWrapper>
+                    
             </Animated.View>
         </>
     )
@@ -120,4 +94,4 @@ const PopStyle = StyleSheet.create({
     }
 
 })
-export default PopUp;
+export default FullSizePopup;
