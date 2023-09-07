@@ -34,6 +34,7 @@
     "react-native-screens": "^3.24.0",
     "react-native-swipe-render": "^3.1.1",
     "react-native-swiper": "^1.6.0",
+    "react-native-version-check": "^3.4.7",
     "react-native-video": "^6.0.0-alpha.7",
     "react-redux": "^8.1.2",
     "styled-components": "^6.0.7"

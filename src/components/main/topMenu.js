@@ -16,11 +16,17 @@ import { getSubCategories, setSelectedSubCategory } from '../../store/categories
 import { openPopup, openTransperentPopup } from '../../utils/common'
 import { colorWhite } from '../../assets/colors/color'
 import TopMenuList from '../menuComponents/topMenuList'
+import VersionCheck from 'react-native-version-check';
 
 const TopMenu = () =>{
     const dispatch = useDispatch();
     const {subCategories} = useSelector((state)=>state.categories);
-    
+    const [currentVersion, setCurrentVersion ] = useState("version");
+
+    useEffect(()=>{
+        setCurrentVersion(VersionCheck.getCurrentVersion());
+    },[])
+
     if(subCategories.length <=0) {
         return(<></>)
     }
@@ -42,10 +48,10 @@ const TopMenu = () =>{
                 </SafeAreaView>
                 <TableName>
                     <TableNameSmall>TABLE 01</TableNameSmall>
-                    <TableNameBig>테이블명106</TableNameBig>
+                    <TableNameBig>테이블명</TableNameBig>
                 </TableName>
                 <TouchableWithoutFeedback onPress={()=>{openPopup(dispatch,{innerView:"Setting", isPopupVisible:true}); }} >
-                    <Text style={{color:colorWhite}} >설정</Text>
+                    <Text style={{color:colorWhite}} >설정 {currentVersion}</Text>
                 </TouchableWithoutFeedback>
                 {/* 
                 <IconWrapper>
