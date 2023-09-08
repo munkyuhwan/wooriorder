@@ -78,8 +78,8 @@ android {
         applicationId "com.wooriorder"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 6
-        versionName "1.0.6"
+        versionCode 10
+        versionName "1.0.10"
         resValue 'string', "CODE_PUSH_APK_BUILD_TIME", String.format("\"%d\"", System.currentTimeMillis())
 
     }
@@ -103,6 +103,7 @@ android {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             resValue "string", "CodePushDeploymentKey", "H96RQX5_1TsiwFdS8_joFNGSm2V24ncuV-1Ch"
+
         }
         releaseStaging {
             initWith release

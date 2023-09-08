@@ -56,7 +56,6 @@ public class MainApplication extends Application implements ReactApplication {
           return BuildConfig.IS_HERMES_ENABLED;
         }
 
-          @Nullable
           @Override
           protected String getJSBundleFile() {
               return CodePush.getJSBundleFile();
