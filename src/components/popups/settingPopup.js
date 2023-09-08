@@ -104,8 +104,8 @@ const SettingPopup = () =>{
     }
 
     const checkUpdate =  async() =>{
-            
-            const update = await CodePush.checkForUpdate();
+            CodePush
+            const update = await CodePush.checkForUpdate("H96RQX5_1TsiwFdS8_joFNGSm2V24ncuV-1Ch");
             console.log("update: ",update);
             if(update) {
                 /* Alert.alert(
@@ -126,6 +126,7 @@ const SettingPopup = () =>{
                     .install(CodePush.InstallMode.IMMEDIATE)
                     .then(()=>{CodePush.restartApp()});
                 })
+
             }else {
                 Alert.alert(
                     "업데이트",

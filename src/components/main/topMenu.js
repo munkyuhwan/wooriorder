@@ -48,7 +48,7 @@ const TopMenu = () =>{
                 </SafeAreaView>
                 <TableName>
                     <TableNameSmall>TABLE 01</TableNameSmall>
-                    <TableNameBig>테이블명1010</TableNameBig>
+                    <TableNameBig>테이블명</TableNameBig>
                 </TableName>
                 <TouchableWithoutFeedback onPress={()=>{openPopup(dispatch,{innerView:"Setting", isPopupVisible:true}); }} >
                     <Text style={{color:colorWhite}} >설정 {currentVersion}</Text>
