@@ -41,6 +41,7 @@ const TopMenu = () =>{
                                     data={subCategories}
                                     onSelectItem={(index)=>{/* onSubcategorySelected(index) */}}
                                     initSelect={0}
+                                    key={subCategories.length}
                                 />
                             }
                        </CategoryWrapper>

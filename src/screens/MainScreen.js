@@ -11,9 +11,11 @@ import PopUp from '../components/common/popup'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMainCategories } from '../store/categories'
+import { getMenu } from '../store/menu'
 
 
 const MainScreen = () =>{
+    const dispatch = useDispatch();
 
     /* 
     let timeoutSet = null
@@ -24,6 +26,9 @@ const MainScreen = () =>{
             clearInterval(timeoutSet);
         },SCREEN_TIMEOUT)
     } */
+    useEffect(()=>{
+        dispatch(getMenu());
+    },[])
     return(
         <>
             <WholeWrapper onTouchStart={()=>{ /* screenTimeOut();  */ }} >

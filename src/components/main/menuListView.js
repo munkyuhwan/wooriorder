@@ -9,7 +9,6 @@ import { widthAnimationStyle } from '../../utils/animation';
 
 
 const MenuListView = () => {
-    const dispatch = useDispatch();
 
     const {menu} = useSelector((state)=>state.menu);
     const {isOn} = useSelector((state)=>state.cartView);
@@ -17,9 +16,7 @@ const MenuListView = () => {
 
     const {language} = useSelector(state=>state.languages);
     const [isDetailShow, setDetailShow] = useState(false);
-    useEffect(()=>{
-        dispatch(getMenu());
-    },[])
+    
     useEffect(()=>{
         if(isOn) {
             setNumColumns(2);

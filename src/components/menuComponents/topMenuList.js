@@ -96,7 +96,6 @@ const TopMenuList = (props) => {
         onSelectHandleAnimation(selectedSubCategory);
     },[selectedSubCategory])
 
-    console.log("top render");
     onSelectHandleAnimation(selectedIndex);
 
     const onPressAction = (index) =>{
