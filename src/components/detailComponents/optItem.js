@@ -7,23 +7,17 @@ import { OptItemDim, OptItemImage, OptItemInfoChecked, OptItemInfoPrice, OptItem
 const OptItem = (props)=>{
     const optionData = props?.optionData;
     const menuData = props?.menuData;
-    
-    const [selectedOption, setSelectedOption] = useState([]);
-    const [recommendMenu, setRecommendMenu] = useState([]);
-
-    const onOptionSelect = ()=>{
-
-    }
+    //console.log("isSelected: ",props?.isSelected);    
     return(
         <>
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={props.onPress} >
                 <OptItemWrapper>
                     <OptItemImage  source={{uri:`${optionData?.imgUrl}`}}/>
-                    <OptItemDim/>
+                    <OptItemDim isSelected={props?.isSelected}/>
                     <OptItemInfoWrapper>
                         <OptItemInfoTitle>{optionData?.name}</OptItemInfoTitle>
                         <OptItemInfoPrice>+{Number(optionData?.price).toLocaleString(undefined,{maximumFractionDigits:0})}</OptItemInfoPrice>
-                        <OptItemInfoChecked source={require("../../assets/icons/check_red.png")}/>
+                        <OptItemInfoChecked isSelected={props?.isSelected} source={require("../../assets/icons/check_red.png")}/>
                     </OptItemInfoWrapper>
                 </OptItemWrapper>
             </TouchableWithoutFeedback>

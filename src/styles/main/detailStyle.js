@@ -136,14 +136,14 @@ export const OptItemInfoChecked = styled.Image`
     position:absolute;
     right:8px;
     bottom:8px;
-    display:${(props)=>{props.isChecked?"flex":"none"} };
+    display:${(props)=>{return(props.isSelected==true?"flex":"none")} };
 `
 export const OptItemDim = styled.View`
     position:absolute;
     width:100%;
     height:100%;
     borderRadius:${RADIUS_SMALL};
-    backgroundColor:rgba(0,0,0,0.2);
+    backgroundColor:rgba(0,0,0, ${(props)=>{return props?.isSelected==true?'0.7':'0.2' }});
 `
 // 추천선택 아이템
 export const RecommendItemWrapper= styled.View`
@@ -185,14 +185,14 @@ export const RecommendItemInfoChecked = styled.Image`
     position:absolute;
     right:8px;
     bottom:8px;
-    display:${(props)=>{props.isChecked?"flex":"none"} };
+    display:${(props)=>{props.isSelected==true?"flex":"none"} };
 `
 export const RecommendItemDim = styled.View`
     position:absolute;
     width:100%;
     height:100%;
     borderRadius:${RADIUS_SMALL};
-    backgroundColor:rgba(0,0,0,0.2);
+    backgroundColor:rgba(0,0,0,${(props)=>{return props?.isSelected==true?'0.7':'0.2' }});
 `
 // 하단 버튼
 export const BottomButtonWrapper = styled.View`

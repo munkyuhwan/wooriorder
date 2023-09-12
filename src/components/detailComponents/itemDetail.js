@@ -17,6 +17,11 @@ const ItemDetail = (props) => {
     const {menuDetailIndex, menuDetail} = useSelector((state)=>state.menuDetail);
     const [detailZIndex, setDetailZIndex] = useState(0);
 
+    // 선택된 옵션
+    const [selectedOptions, setSelectedOptions] = useState([]);
+    // 함께먹기 좋은 메뉴
+    const [selectedRecommend, setSelectedRecommend] = useState([]);
+
     const optionSelect = menuDetail?.options;
     const recommendMenu = menuDetail?.recommendMenu;
     // animation set
@@ -71,14 +76,33 @@ const ItemDetail = (props) => {
         }
     },[menuDetailIndex])
 
+    const onOptionSelect = (index) =>{
+        console.log("on select");
+        var tmpArr = selectedOptions;
+        if(!tmpArr.includes(index)) {
+            tmpArr.push(index);
+        }else {
+            tmpArr.splice(tmpArr.indexOf(index),1);
+        }
+        setSelectedOptions([...tmpArr])
+    }
+    const onRecommendSelect = (index) =>{
+        console.log("on select");
+        var tmpArr = selectedRecommend;
+        if(!tmpArr.includes(index)) {
+            tmpArr.push(index);
+        }else {
+            tmpArr.splice(tmpArr.indexOf(index),1);
+        }
+        setSelectedRecommend([...tmpArr])
+    }
     useEffect(()=>{
-        console.log("isDetailShow: ",isDetailShow)
         if(isDetailShow) {
             setDetailZIndex(999)
             onSelectHandleAnimation(1);
         }
     },[isDetailShow])
-
+    console.log("detail render");
     return(
         <>
             <Animated.View  style={[{...PopStyle.animatedPop, ...boxWidthStyle,...{zIndex:detailZIndex} } ]} >
@@ -116,7 +140,7 @@ const ItemDetail = (props) => {
                                             {optionSelect!=null &&
                                                 optionSelect.map((el,index)=>{
                                                     return(
-                                                        <OptItem key={"optItem_"+index} optionData={el} menuData={menuDetail}/>    
+                                                        <OptItem key={"optItem_"+index} isSelected={selectedOptions.indexOf(index)>=0} optionData={el} menuData={menuDetail} onPress={()=>{ onOptionSelect(index); } } />    
                                                     );
                                                 })
                                             }
@@ -131,7 +155,7 @@ const ItemDetail = (props) => {
                                             {recommendMenu!=null&&
                                             recommendMenu.map((el,index)=>{
                                                 return(
-                                                    <RecommendItem key={"recoItem_"+index} recommendData={el} menuData={menuDetail}/>    
+                                                    <RecommendItem key={"recoItem_"+index} isSelected={selectedRecommend.indexOf(index)>=0}  recommendData={el} menuData={menuDetail} onPress={()=>{onRecommendSelect(index)}}/>    
                                                 );
                                             })
                                             }

@@ -7,15 +7,18 @@ const RecommendItem = (props) => {
     const recommendData = props?.recommendData;
     const menuData = props?.menuData;
 
+    console.log("props?.isSelected: ",props?.isSelected);
     
     return(
         <>
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={props?.onPress}>
                 <RecommendItemWrapper>
                     <RecommendItemImageWrapper>
                         <RecommendItemImage  source={{uri:`${recommendData?.imgUrl}`}}/>
-                        <RecommendItemDim/>
-                        <RecommendItemInfoChecked source={require("../../assets/icons/check_red.png")}/>
+                        <RecommendItemDim isSelected={props?.isSelected}/>
+                        {props?.isSelected &&
+                            <RecommendItemInfoChecked isSelected={props?.isSelected} source={require("../../assets/icons/check_red.png")}/>
+                        }
                     </RecommendItemImageWrapper>
                     <RecommendItemInfoWrapper>
                         <RecommendItemInfoTitle>{recommendData?.name}</RecommendItemInfoTitle>
