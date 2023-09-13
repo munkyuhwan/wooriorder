@@ -107,8 +107,34 @@ export const MENU_DATA =
                                 imgUrl:'https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg',
                                 opts:[0,3,1,2]
                             },
+                        ],
+                    1: // subcategory
+                        [
+                            {
+                                index:0,
+                                subCategory:0,
+                                title:"라조기",
+                                subTitle:'국내산 고기만 사용',
+                                detail:'지금까지 이런맛은 없었다.',
+                                price:10000,
+                                isNew:true,
+                                isBest:false,
+                                imgUrl:'https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg',
+                                opts:[0,3,1,2]
+                            },
+                            {
+                                index:1,
+                                subCategory:0,
+                                title:"탕수육",
+                                subTitle:'국내산 고기만 사용',
+                                detail:'지금까지 이런맛은 없었다.',
+                                price:10000,
+                                isNew:true,
+                                isBest:false,
+                                imgUrl:'https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg',
+                                opts:[0,3,1,2]
+                            },
                         ]
-                
                 }
             }
         }
