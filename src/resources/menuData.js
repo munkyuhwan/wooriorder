@@ -1,44 +1,51 @@
 export const MENU_DATA =
     {   
         options:
-            [
+            {
+                0:
                 {
                     index:0,
                     title:'면추가',
                     price:1000,
-                    imgUrl:"",
+                    imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg",
                 },
+                1:
                 {
                     index:1,
                     title:'밥 추가',
                     price:1000,
-                    imgUrl:"",
+                    imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg",
                 },
+                2:
                 {
                     index:2,
                     title:'소스 추가',
                     price:1000,
-                    imgUrl:"",
+                    imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg",
                 },
+                3:
                 {
                     index:3,
                     title:'가라아게 추가',
                     price:4000,
-                    imgUrl:"",
+                    imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg",
                 },
+                4:
                 {
                     index:4,
                     title:'감자튀김 추가',
                     price:3000,
-                    imgUrl:"",
+                    imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg",
                 },
+                5:
                 {
                     index:5,
                     title:'야채 추가',
                     price:2000,
-                    imgUrl:"",
+                    imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg",
                 },
-        ],
+        },
+        
         categories:[
             {index:0, title: '카테고리0', subCategories:[{index:999, title:"전체"},{index:0, title:"서브0"},{index:1, title:"서브1"},{index:2, title:"서브2"}]},
             {index:1, title: '카테고리1', subCategories:[{index:999, title:"전체"},{index:0, title:"서브0"},{index:1, title:"서브1"},]},
@@ -62,11 +69,13 @@ export const MENU_DATA =
                                 title:"낙지 탕탕이",
                                 subTitle:'국내산 고기만 사용',
                                 detail:'지금까지 이런맛은 없었다.',
+                                extra:'이거 꼬 무우라',
                                 price:10000,
                                 isNew:true,
                                 isBest:false,
                                 imgUrl:'https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg',
-                                opts:[0,3,1,2]
+                                opts:[0,3,1,2],
+                                recommend:[0,3,1,2]
                             },
                             {
                                 index:1,
@@ -74,11 +83,13 @@ export const MENU_DATA =
                                 title:"낙지 탕탕이",
                                 subTitle:'국내산 고기만 사용',
                                 detail:'지금까지 이런맛은 없었다.',
+                                extra:'이거 꼬 무우라',
                                 price:10000,
                                 isNew:true,
                                 isBest:true,
                                 imgUrl:'https://wooriorder.co.kr/order1/upload_file/goods/1689295706-sceie.jpg',
-                                opts:[0,3,1,2]
+                                opts:[0,3,1,2],
+                                recommend:[0,3,1,2]
                             },
                             {
                                 index:2,
@@ -86,58 +97,164 @@ export const MENU_DATA =
                                 title:"낙지 탕탕이",
                                 subTitle:'국내산 고기만 사용',
                                 detail:'지금까지 이런맛은 없었다.',
+                                extra:'이거 꼬 무우라',
                                 price:9000,
                                 isNew:false,
                                 isBest:true,
                                 imgUrl:'https://wooriorder.co.kr/order1/upload_file/goods/1690173811-hubsy.gif',
-                                opts:[0,3,1,2]
+                                opts:[0,3,1,2],
+                                recommend:[0,3,1,2]
                             },
                         ],
                     0: // subcategory
                         [
                             {
-                                index:0,
+                                index:3,
                                 subCategory:0,
                                 title:"낙지 탕탕이",
                                 subTitle:'국내산 고기만 사용',
                                 detail:'지금까지 이런맛은 없었다.',
+                                extra:'이거 꼬 무우라',
                                 price:10000,
                                 isNew:true,
                                 isBest:false,
                                 imgUrl:'https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg',
-                                opts:[0,3,1,2]
+                                opts:[0,3,1,2],
+                                recommend:[0,3,1,2]
                             },
                         ],
                     1: // subcategory
                         [
                             {
-                                index:0,
+                                index:4,
                                 subCategory:0,
                                 title:"라조기",
                                 subTitle:'국내산 고기만 사용',
                                 detail:'지금까지 이런맛은 없었다.',
+                                extra:'이거 꼬 무우라',
                                 price:10000,
                                 isNew:true,
                                 isBest:false,
                                 imgUrl:'https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg',
-                                opts:[0,3,1,2]
+                                opts:[0,3,1,2],
+                                recommend:[0,3,1,2]
                             },
                             {
-                                index:1,
+                                index:5,
                                 subCategory:0,
                                 title:"탕수육",
                                 subTitle:'국내산 고기만 사용',
                                 detail:'지금까지 이런맛은 없었다.',
+                                extra:'이거 꼬 무우라',
                                 price:10000,
                                 isNew:true,
                                 isBest:false,
                                 imgUrl:'https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg',
-                                opts:[0,3,1,2]
+                                opts:[0,3,1,2],
+                                recommend:[0,3,1,2]
                             },
                         ]
                 }
             }
-        }
+        },
+        menuAll:
+        {0:
+            {
+                index:0,
+                mainCategory:0,
+                subCategory:0,
+                title:"낙지 탕탕이",
+                subTitle:'국내산 고기만 사용',
+                detail:'지금까지 이런맛은 없었다.',
+                extra:'이거 꼬 무우라',
+                price:10000,
+                isNew:true,
+                isBest:false,
+                imgUrl:'https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg',
+                opts:[0,3,1,2],
+                recommend:[0,3,1,2]
+            },
+        1:
+            {
+                index:1,
+                mainCategory:0,
+                subCategory:0,
+                title:"낙지 탕탕이",
+                subTitle:'국내산 고기만 사용',
+                detail:'지금까지 이런맛은 없었다.',
+                extra:'이거 꼬 무우라',
+                price:10000,
+                isNew:true,
+                isBest:true,
+                imgUrl:'https://wooriorder.co.kr/order1/upload_file/goods/1689295706-sceie.jpg',
+                opts:[0,3,1,2],
+                recommend:[0,3,1,2]
+            },
+        2:
+            {
+                index:2,
+                mainCategory:1,
+                subCategory:0,
+                title:"낙지 탕탕이",
+                subTitle:'국내산 고기만 사용',
+                detail:'지금까지 이런맛은 없었다.',
+                extra:'이거 꼬 무우라',
+                price:9000,
+                isNew:false,
+                isBest:true,
+                imgUrl:'https://wooriorder.co.kr/order1/upload_file/goods/1690173811-hubsy.gif',
+                opts:[0,3,1,2],
+                recommend:[0,3,1,2]
+            },
+        3:
+            {
+                index:3,
+                mainCategory:1,
+                subCategory:0,
+                title:"낙지 탕탕이",
+                subTitle:'국내산 고기만 사용',
+                detail:'지금까지 이런맛은 없었다.',
+                extra:'이거 꼬 무우라',
+                price:10000,
+                isNew:true,
+                isBest:false,
+                imgUrl:'https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg',
+                opts:[0,3,1,2],
+                recommend:[0,3,1,2]
+            },
+        4:
+            {
+                index:4,
+                mainCategory:2,
+                subCategory:0,
+                title:"라조기",
+                subTitle:'국내산 고기만 사용',
+                detail:'지금까지 이런맛은 없었다.',
+                extra:'이거 꼬 무우라',
+                price:10000,
+                isNew:true,
+                isBest:false,
+                imgUrl:'https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg',
+                opts:[0,3,1,2],
+                recommend:[0,3,1,2]
+            },
+        5:
+            {
+                index:5,
+                mainCategory:2,
+                subCategory:0,
+                title:"탕수육",
+                subTitle:'국내산 고기만 사용',
+                detail:'지금까지 이런맛은 없었다.',
+                extra:'이거 꼬 무우라',
+                price:10000,
+                isNew:true,
+                isBest:false,
+                imgUrl:'https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg',
+                opts:[0,3,1,2],
+                recommend:[0,3,1,2]
+            },
+        },
     }
     
 

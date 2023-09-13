@@ -9,6 +9,8 @@ import CommonIndicator from '../common/waitIndicator';
 import WaitIndicator from '../common/waitIndicator';
 import RecommendItem from './recommendItem';
 import { setMenuDetail, getSingleMenu, setMenuDetailInit } from '../../store/menuDetail';
+import { numberWithCommas } from '../../utils/common';
+import { MENU_DATA } from '../../resources/menuData';
 
 const ItemDetail = (props) => {
     const language = props.language;
@@ -22,8 +24,9 @@ const ItemDetail = (props) => {
     // 함께먹기 좋은 메뉴
     const [selectedRecommend, setSelectedRecommend] = useState([]);
 
-    const optionSelect = menuDetail?.options;
-    const recommendMenu = menuDetail?.recommendMenu;
+    const optionSelect = menuDetail?.opts;
+    const recommendMenu = menuDetail?.recommend;
+
     // animation set
     const [widthAnimation, setWidthAnimation] = useState(new Animated.Value(0));
     // width interpolation
@@ -121,16 +124,20 @@ const ItemDetail = (props) => {
                                     <DetailItemInfoImage source={menuDetail?.imgUrl?{uri:`${menuDetail?.imgUrl}`}:require("../../assets/icons/logo.png")}/>
                                     <DetailItemInfoWrapper>
                                         <DetailItemInfoTitleWrapper>
-                                            <DetailItemInfoTitle>{menuDetail?.itemName}</DetailItemInfoTitle>
-                                            <DetailItemInfoTitleEtc source={require("../../assets/icons/new.png")}/>
-                                            <DetailItemInfoTitleEtc source={require("../../assets/icons/best.png")}/>
+                                            <DetailItemInfoTitle>{menuDetail?.itemTitle}</DetailItemInfoTitle>
+                                            {menuDetail?.isNew==true&&
+                                                 <DetailItemInfoTitleEtc source={require("../../assets/icons/new.png")}/>
+                                            }
+                                            {menuDetail?.isBest==true&&
+                                                <DetailItemInfoTitleEtc source={require("../../assets/icons/best.png")}/>
+                                            }
                                         </DetailItemInfoTitleWrapper>
-                                        <DetailItemInfoSource>{menuDetail?.itemAddtion}</DetailItemInfoSource>
+                                        <DetailItemInfoSource>{menuDetail?.detail}</DetailItemInfoSource>
                                         <DetailPriceMoreWrapper>
                                             <DetailItemInfoPriceWrapper>
-                                                <DetailItemInfoPrice isBold={true} >23,000</DetailItemInfoPrice><DetailItemInfoPrice isBold={false}> 원</DetailItemInfoPrice>
+                                                <DetailItemInfoPrice isBold={true} >{ menuDetail?.price?numberWithCommas(menuDetail?.price):""}</DetailItemInfoPrice><DetailItemInfoPrice isBold={false}> 원</DetailItemInfoPrice>
                                             </DetailItemInfoPriceWrapper>
-                                            <DetailItemInfoMore>이거 안먹으면 후회한다. 꼭 므그라</DetailItemInfoMore>
+                                            <DetailItemInfoMore>{menuDetail?.extra}</DetailItemInfoMore>
                                         </DetailPriceMoreWrapper>
                                     </DetailItemInfoWrapper>
                                 </DetailInfoWrapper>
@@ -141,9 +148,10 @@ const ItemDetail = (props) => {
                                         <OptTitleText>{LANGUAGE[language].detailView.selectOpt}</OptTitleText>
                                         <OptList horizontal showsHorizontalScrollIndicator={false} >
                                             {optionSelect!=null &&
-                                                optionSelect.map((el,index)=>{
+                                                optionSelect.map((index,el)=>{
+                                                    const optData= MENU_DATA.options[el];
                                                     return(
-                                                        <OptItem key={"optItem_"+index} isSelected={selectedOptions.indexOf(index)>=0} optionData={el} menuData={menuDetail} onPress={()=>{ onOptionSelect(index); } } />    
+                                                        <OptItem key={"optItem_"+index} isSelected={selectedOptions.indexOf(optData?.index)>=0} optionData={el} menuData={menuDetail} onPress={()=>{ onOptionSelect(optData?.index); } } />    
                                                     );
                                                 })
                                             }
@@ -157,8 +165,9 @@ const ItemDetail = (props) => {
                                         <OptList horizontal showsHorizontalScrollIndicator={false} >
                                             {recommendMenu!=null&&
                                             recommendMenu.map((el,index)=>{
+                                                const recommendItem = MENU_DATA.menuAll[el]
                                                 return(
-                                                    <RecommendItem key={"recoItem_"+index} isSelected={selectedRecommend.indexOf(index)>=0}  recommendData={el} menuData={menuDetail} onPress={()=>{onRecommendSelect(index)}}/>    
+                                                    <RecommendItem key={"recoItem_"+index} isSelected={selectedRecommend.indexOf(recommendItem.index)>=0}  recommendData={el} menuData={menuDetail} onPress={()=>{onRecommendSelect(recommendItem.index)}}/>    
                                                 );
                                             })
                                             }

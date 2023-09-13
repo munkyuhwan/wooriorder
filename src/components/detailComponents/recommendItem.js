@@ -2,12 +2,13 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RecommendItemDim, RecommendItemImage, RecommendItemImageWrapper, RecommendItemInfoChecked, RecommendItemInfoPrice, RecommendItemInfoTitle, RecommendItemInfoWrapper, RecommendItemWrapper } from '../../styles/main/detailStyle';
+import { MENU_DATA } from '../../resources/menuData';
 
 const RecommendItem = (props) => {
-    const recommendData = props?.recommendData;
+    const recommendData = MENU_DATA.menuAll[props?.recommendData];
     const menuData = props?.menuData;
 
-    console.log("props?.isSelected: ",props?.isSelected);
+    console.log("recommendData: ",recommendData);
     
     return(
         <>
@@ -21,7 +22,7 @@ const RecommendItem = (props) => {
                         }
                     </RecommendItemImageWrapper>
                     <RecommendItemInfoWrapper>
-                        <RecommendItemInfoTitle>{recommendData?.name}</RecommendItemInfoTitle>
+                        <RecommendItemInfoTitle>{recommendData?.title}</RecommendItemInfoTitle>
                         <RecommendItemInfoPrice>{Number(recommendData?.price).toLocaleString(undefined,{maximumFractionDigits:0})} 원</RecommendItemInfoPrice>
                     </RecommendItemInfoWrapper>
                 </RecommendItemWrapper>
