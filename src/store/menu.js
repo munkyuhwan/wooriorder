@@ -8,7 +8,6 @@ export const initMenu = createAsyncThunk("menu/initMenu", async(category) =>{
 export const getMenu = createAsyncThunk("menu/getMenu", async(_, {getState}) =>{
     const {selectedMainCategory,selectedSubCategory} = getState().categories
     const menuData = MENU_DATA?.menus[selectedMainCategory]?.items[selectedSubCategory]
-    console.log("menuData: ",menuData);
     return menuData||[];
 })
 

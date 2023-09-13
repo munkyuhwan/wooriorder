@@ -64,7 +64,7 @@ export const MENU_DATA =
                             price:10000,
                             isNew:true,
                             isBest:false,
-                            imgUrl:'',
+                            imgUrl:'https://wooriorder.co.kr/order1/upload_file/goods/1689295630-akdsh.jpg',
                             opts:[0,3,1,2]
                         },
                         {
@@ -75,8 +75,8 @@ export const MENU_DATA =
                             detail:'지금까지 이런맛은 없었다.',
                             price:10000,
                             isNew:true,
-                            isBest:false,
-                            imgUrl:'',
+                            isBest:true,
+                            imgUrl:'https://wooriorder.co.kr/order1/upload_file/goods/1689295706-sceie.jpg',
                             opts:[0,3,1,2]
                         },
                         {
@@ -86,9 +86,9 @@ export const MENU_DATA =
                             subTitle:'국내산 고기만 사용',
                             detail:'지금까지 이런맛은 없었다.',
                             price:9000,
-                            isNew:true,
-                            isBest:false,
-                            imgUrl:'',
+                            isNew:false,
+                            isBest:true,
+                            imgUrl:'https://wooriorder.co.kr/order1/upload_file/goods/1690173811-hubsy.gif',
                             opts:[0,3,1,2]
                         },
                     ]

@@ -8,11 +8,13 @@ import { setMenuDetail } from '../../store/menuDetail';
 
 const MenuItem = ({item,index,setDetailShow}) => {
     //<MenuItemImage />    
-    
+    console.log(item);
     const dispatch = useDispatch();
     const imgUrl = item.imgUrl;
-    const itemName = item.itemName;
-    const itemPrice= item.itemPrice;
+    const itemTitle = item.title;
+    const itemPrice= item.price;
+    const isNew = item.isNew;
+    const isBest = item.isBest;
     const itemPk = item.itemPk;
 
     return(
@@ -24,8 +26,12 @@ const MenuItem = ({item,index,setDetailShow}) => {
                     </TouchableWithoutFeedback>
                     <MenuItemImageWrapper>
                         <MenuItemHotnessWrapper>
+                        {isNew==true&&
                             <MenuItemHotness source={require('../../assets/icons/new.png')} />
+                        }
+                        {isBest==true&&
                             <MenuItemHotness source={require('../../assets/icons/best.png')} />
+                        }
                         </MenuItemHotnessWrapper>
                         <MenuItemButtonWrapper>
                             <TouchableWithoutFeedback onPress={()=>{setDetailShow(true);  dispatch(setMenuDetail(index)); }} >
@@ -42,7 +48,7 @@ const MenuItem = ({item,index,setDetailShow}) => {
                     </MenuItemImageWrapper>
                 </MenuItemTopWrapper>
                 <MenuItemBottomWRapper>
-                    <MenuItemName>{itemName}</MenuItemName>
+                    <MenuItemName>{itemTitle}</MenuItemName>
                     <MenuItemPrice>{itemPrice}원</MenuItemPrice>
                 </MenuItemBottomWRapper>
             </MenuItemWrapper>
