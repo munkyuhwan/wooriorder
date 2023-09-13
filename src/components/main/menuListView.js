@@ -10,6 +10,8 @@ import { widthAnimationStyle } from '../../utils/animation';
 
 const MenuListView = () => {
 
+    const dispatch = useDispatch();
+
     const {menu} = useSelector((state)=>state.menu);
     const {isOn} = useSelector((state)=>state.cartView);
     const [numColumns, setNumColumns] = useState(3);
@@ -29,9 +31,9 @@ const MenuListView = () => {
     },[isOn])
 
     useEffect(()=>{
-        console.log("selectedMainCategory: ",selectedMainCategory,", selectedSubCategory: ",selectedSubCategory);
+        dispatch(getMenu());
     },[selectedSubCategory, selectedMainCategory])
-   
+
     return(
         <>
             <MenuListWrapper>

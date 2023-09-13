@@ -5,12 +5,11 @@ export const initMenu = createAsyncThunk("menu/initMenu", async(category) =>{
     return [];
 })
 
-export const getMenu = createAsyncThunk("menu/getMenu", async(category) =>{
-    //console.log("category: ",category);
-    //console.log("menu",category,": ",MENU_DATA.menus );
-    return [];
-    //MENU_DATA
-    //return categoryMenu;
+export const getMenu = createAsyncThunk("menu/getMenu", async(_, {getState}) =>{
+    const {selectedMainCategory,selectedSubCategory} = getState().categories
+    const menuData = MENU_DATA?.menus[selectedMainCategory]?.items[selectedSubCategory]
+    console.log("menuData: ",menuData);
+    return menuData||[];
 })
 
 // Slice
