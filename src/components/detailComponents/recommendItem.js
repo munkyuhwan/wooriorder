@@ -7,8 +7,6 @@ import { MENU_DATA } from '../../resources/menuData';
 const RecommendItem = (props) => {
     const recommendData = MENU_DATA.menuAll[props?.recommendData];
     const menuData = props?.menuData;
-
-    console.log("recommendData: ",recommendData);
     
     return(
         <>

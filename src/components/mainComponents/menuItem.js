@@ -8,7 +8,6 @@ import { setMenuDetail } from '../../store/menuDetail';
 
 const MenuItem = ({item,index,setDetailShow}) => {
     //<MenuItemImage />    
-    console.log(item);
     const dispatch = useDispatch();
     const imgUrl = item.imgUrl;
     const itemTitle = item.title;

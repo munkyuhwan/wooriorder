@@ -7,7 +7,6 @@ import { MENU_DATA } from '../../resources/menuData';
 
 const OptItem = (props)=>{
     const optionData = MENU_DATA.options[props?.optionData];
-    console.log("optionData: ",optionData)
     const menuData = props?.menuData;
     //console.log("isSelected: ",props?.isSelected);    
     return(

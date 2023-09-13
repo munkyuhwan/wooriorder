@@ -11,6 +11,7 @@ import RecommendItem from './recommendItem';
 import { setMenuDetail, getSingleMenu, setMenuDetailInit } from '../../store/menuDetail';
 import { numberWithCommas } from '../../utils/common';
 import { MENU_DATA } from '../../resources/menuData';
+import { addToOrderList } from '../../store/order';
 
 const ItemDetail = (props) => {
     const language = props.language;
@@ -97,6 +98,11 @@ const ItemDetail = (props) => {
         }
         setSelectedRecommend([...tmpArr])
     }
+    const addToCart = () => {
+        dispatch(addToOrderList({menuDetailIndex, selectedOptions,selectedRecommend}))
+    }
+
+
     const init = () => {
         setSelectedOptions([]);
         setSelectedRecommend([]);
@@ -182,10 +188,13 @@ const ItemDetail = (props) => {
                                         <BottomButtonIcon source={require("../../assets/icons/folk_nife.png")} />
                                     </BottomButton>
                                 </TouchableWithoutFeedback>
-                                <BottomButton backgroundColor={colorBlack} >
-                                    <BottomButtonText>{LANGUAGE[language].detailView.addToCart}</BottomButtonText>
-                                    <BottomButtonIcon source={require("../../assets/icons/cart_select.png")} />
-                                </BottomButton>
+                                <TouchableWithoutFeedback onPress={()=>{addToCart()}}>
+                                    <BottomButton backgroundColor={colorBlack} >
+                                        <BottomButtonText>{LANGUAGE[language].detailView.addToCart}</BottomButtonText>
+                                        <BottomButtonIcon source={require("../../assets/icons/cart_select.png")} />
+                                    </BottomButton>
+                                </TouchableWithoutFeedback>
+
                             </BottomButtonWrapper>
                             </>
                             }

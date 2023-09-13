@@ -1,26 +1,46 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { MENU_DATA } from '../resources/menuData';
 
 export const setOrderList = createAsyncThunk("order/setOrderList", async(index) =>{
     return index;
+})
+export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,{getState,extra}) =>{
+    console.log("addToOrderList============================================");
+    const {menuDetail} = getState().menuDetail;
+    const {grandTotal} = getState().order;
+    var totalPrice = Number(menuDetail.price)+grandTotal;
+    for(var i=0;i<_.selectedOptions.length;i++) {
+        const optionsInfo = MENU_DATA.options[_.selectedOptions[i]];
+        totalPrice+=Number(optionsInfo.price);
+    }
+    //const optData= MENU_DATA.options[el];
+    var orderMenu = [{menuIndex:_.menuDetailIndex,selectedOptions:_.selectedOptions}];
+    
+    for(var i=0;i<_.selectedRecommend.length;i++) {
+        const recommendInfo = MENU_DATA.menuAll[_.selectedRecommend[i]];
+        orderMenu.push({menuIndex:_.selectedRecommend[i],selectedOptions:[]})
+        totalPrice+=Number(recommendInfo.price);
+    }
+    
+    console.log(orderMenu," totalPrice:",totalPrice);
+    return {orderList:orderMenu, grandTotal:totalPrice};
 })
 // Slice
 export const orderSlice = createSlice({
     name: 'order',
     initialState: {
-        grandTotal:500000,
-        orderList:[
-            {index:1, name:"떡뽁이", ea:1, price:4000, imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295671-exdfr.jpg"},
-            {index:2, name:"김밥", ea:2, price:4400, imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295671-exdfr.jpg"},
-            {index:3, name:"순대", ea:1, price:5000, imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295671-exdfr.jpg"},
-            {index:4, name:"까르본라", ea:3, price:5500, imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295671-exdfr.jpg"},
-            {index:5, name:"카리나", ea:5, price:8000, imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295671-exdfr.jpg"},
-            {index:6, name:"이리떼", ea:1, price:11000, imgUrl:"https://wooriorder.co.kr/order1/upload_file/goods/1689295671-exdfr.jpg"},
-        ],
+        grandTotal:0,
+        orderList:[],
     },
     extraReducers:(builder)=>{
         // 주문 셋
         builder.addCase(setOrderList.fulfilled,(state, action)=>{
             state.callServerItems = action.payload;
+        })
+        // 주문 추가
+        builder.addCase(addToOrderList.fulfilled,(state, action)=>{
+            state.orderList = action.payload.orderList;
+            state.grandTotal = action.payload.grandTotal;
         })
     }
 });
