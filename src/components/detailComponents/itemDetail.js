@@ -105,7 +105,7 @@ const ItemDetail = (props) => {
             onSelectHandleAnimation(1);
         }
     },[isDetailShow])
-    console.log("detail render");
+
     return(
         <>
             <Animated.View  style={[{...PopStyle.animatedPop, ...boxWidthStyle,...{zIndex:detailZIndex} } ]} >

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled, {css} from 'styled-components/native';
 import { RADIUS, RADIUS_DOUBLE } from '../values';
-import { colorRed, tabBaseColor, textColorWhite } from '../../assets/colors/color';
+import { colorBrown, colorRed, tabBaseColor, textColorWhite } from '../../assets/colors/color';
 
 export const TopMenuWrapper = styled.View`
     flexDirection:row;
@@ -27,6 +27,16 @@ export const CategoryDefault = styled.View`
     backgroundColor: ${tabBaseColor};
     width:142px;
     height:52px;
+    marginRight:7px;
+    justifyContent: flex-end;
+    marginTop:33px;
+    borderTopLeftRadius:${RADIUS_DOUBLE}px;
+    borderTopRightRadius:${RADIUS_DOUBLE}px;
+`
+export const CategorySelected = styled.View`
+    backgroundColor: ${colorBrown};
+    width:142px;
+    height:62px;
     marginRight:7px;
     justifyContent: flex-end;
     marginTop:33px;

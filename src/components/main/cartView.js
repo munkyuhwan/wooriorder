@@ -33,7 +33,6 @@ const CartView = () =>{
     };
     
     useEffect(()=>{
-        console.log("is on: ",isOn)
         /* Animated.parallel([
             Animated.timing(slideAnimation,{
                 toValue:isOn?1:0,

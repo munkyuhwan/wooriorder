@@ -53,6 +53,8 @@ export const SideMenuItemOn = styled.View`
     width:105%;
     borderTopRightRadius:${RADIUS};
     borderBottomRightRadius:${RADIUS};
+    marginTop:5px;
+
 `
 /// 사이드 메뉴 텍스트스타일
 export const SideMenuText = styled.Text`

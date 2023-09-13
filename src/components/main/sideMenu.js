@@ -14,6 +14,10 @@ const SideMenu = () =>{
     useEffect(()=>{
         dispatch(getMainCategories());
     },[])
+    const onItemPress = (index) =>{
+        dispatch(setSelectedMainCategory(index)); 
+    }
+
     // 문제 없으면 /components/menuComponents/sideMenuItem.js 제거
     if(mainCategories.length <=0) {
         return(<></>)
@@ -29,7 +33,7 @@ const SideMenu = () =>{
                         {mainCategories &&
                             <LeftMenuList
                                 data={mainCategories}
-                                onSelectItem={(index)=>{ /* dispatch(setSelectedMainCategory(index)); */ }}
+                                onSelectItem={(index)=>{onItemPress(index);}}
                                 initSelect={0}
                             />
                         }

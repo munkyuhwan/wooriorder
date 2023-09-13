@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Animated, TouchableWithoutFeedback } from 'react-native';
-import { TopMenuText } from '../../styles/main/topMenuStyle';
+import { CategoryDefault, CategorySelected, TopMenuText } from '../../styles/main/topMenuStyle';
 import { colorBrown, tabBaseColor } from '../../assets/colors/color';
 import { RADIUS_DOUBLE } from '../../styles/values';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,90 +16,13 @@ const TopMenuList = (props) => {
     const {selectedMainCategory, selectedSubCategory} = useSelector((state)=>state.categories);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
-    const colorAnimationArray = [];;
-    const heightAnimationArray=[];
-    const boxStyleArray = [];
-    const animatedColorArray = [];
-    for(var i=0;i<data.length;i++) {
-        // animation set
-        const colorAnimation = (new Animated.Value(0,{useNativeDriver:true}))
-        const heightAnimation = (new Animated.Value(0,{useNativeDriver:true}))
-
-        colorAnimationArray.push(colorAnimation);
-        heightAnimationArray.push(heightAnimation);
-
-        // height interpolation
-        const animatedHeightInterpolate = heightAnimationArray[i].interpolate({
-            inputRange:[0, 1], 
-            outputRange:[0, -5]
-        });
-       
-        // color interpolation
-        const animatedColorInterpolate =  colorAnimation.interpolate({
-            inputRange: [0, 1],
-            outputRange:[tabBaseColor, colorBrown]
-        })
-
-        animatedColorArray.push({
-            backgroundColor: animatedColorInterpolate,
-            width:142,
-            height:52,
-            marginRight:7,
-            justifyContent: 'flex-end',
-            marginTop:33,
-        });
-
-        const boxStyle = {
-            transform: [{translateY:animatedHeightInterpolate},],
-            backgroundColor: animatedColorInterpolate,
-            borderTopLeftRadius:RADIUS_DOUBLE,
-            borderTopRightRadius:RADIUS_DOUBLE,
-        };
-        boxStyleArray.push(boxStyle);
-
-    }
-
-    const onSelectHandleAnimation = async (index) => {
-        await new Promise(function(resolve, reject){
-            Animated.parallel([
-                Animated.timing(colorAnimationArray[index], {
-                    toValue:colorAnimationArray[index]._value==0?1:0,
-                    duration: 0,
-                    useNativeDriver:true,
-                }),
-                Animated.timing(heightAnimationArray[index], {
-                    toValue: heightAnimationArray[index]._value==0?1:0,
-                    duration: 0,
-                    useNativeDriver:true,
-                }), 
-            ]).start(()=>{
-            });   
-            
-        })
-        
-    } 
-    
     useEffect(()=>{
         if(selectedIndex!=null) {
             props?.onSelectItem(selectedIndex);
         }
     },[selectedIndex])
 
-    useEffect(()=>{
-        setSelectedIndex(initSelect); 
-    },[])
-    useFocusEffect(useCallback(()=>{
-        onSelectHandleAnimation(0);
-        onPressAction(0);
-    },[selectedMainCategory]))
-    useEffect(()=>{
-        onSelectHandleAnimation(selectedSubCategory);
-    },[selectedSubCategory])
-
-    onSelectHandleAnimation(selectedIndex);
-
     const onPressAction = (index) =>{
-        dispatch(setSelectedSubCategory(index)); 
         setSelectedIndex(index);
     }
 
@@ -108,9 +31,38 @@ const TopMenuList = (props) => {
         {data.map((el, index)=>{
             return(
                 <>
-                    <TouchableWithoutFeedback key={"subcat_"+index} onPress={()=>{onPressAction(index); /* dispatch(setSelectedSubCategory(index));  */}}>
+                        {
+                        (index==selectedIndex) &&
+                            <TouchableWithoutFeedback key={"subcat_"+index} onPress={()=>{ onPressAction(index); }}>
+                                <CategorySelected>
+                                    <TopMenuText key={"subcatText_"+index} >{el.title}</TopMenuText>
+                                </CategorySelected>
+                            </TouchableWithoutFeedback>
+                        }
+                        {
+                        (index!=selectedIndex) &&
+                            <TouchableWithoutFeedback key={"subcat_"+index} onPress={()=>{ onPressAction(index); }}>
+                                <CategoryDefault>
+                                    <TopMenuText key={"subcatText_"+index} >{el.title}</TopMenuText>
+                                </CategoryDefault>
+                            </TouchableWithoutFeedback>
+                        }
+                        
+                </>
+            )
+        })}
+        </>
+    )
+
+/* 
+    return (
+        <>
+        {data.map((el, index)=>{
+            return(
+                <>
+                    <TouchableWithoutFeedback key={"subcat_"+index} onPress={()=>{onPressAction(index); }}>
                         <Animated.View key={"subcatAni_"+index}  style={[{   ...animatedColorArray[index]},{...boxStyleArray[index]}]} >
-                            <TopMenuText key={"subcatText_"+index} >{el.name}</TopMenuText>
+                            <TopMenuText key={"subcatText_"+index} >{el.title}</TopMenuText>
                         </Animated.View>
                     </TouchableWithoutFeedback>
                 </>
@@ -118,6 +70,7 @@ const TopMenuList = (props) => {
         })}
         </>
     )
+     */
 }
 
 export default TopMenuList

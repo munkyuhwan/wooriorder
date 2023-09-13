@@ -16,7 +16,10 @@ const MenuListView = () => {
 
     const {language} = useSelector(state=>state.languages);
     const [isDetailShow, setDetailShow] = useState(false);
-    
+
+    // 선택 카테고리
+    const {selectedSubCategory, selectedMainCategory} = useSelector((state)=>state.categories);
+
     useEffect(()=>{
         if(isOn) {
             setNumColumns(2);
@@ -24,6 +27,10 @@ const MenuListView = () => {
             setNumColumns(3);
         }
     },[isOn])
+
+    useEffect(()=>{
+        console.log("selectedMainCategory: ",selectedMainCategory,", selectedSubCategory: ",selectedSubCategory);
+    },[selectedSubCategory, selectedMainCategory])
    
     return(
         <>

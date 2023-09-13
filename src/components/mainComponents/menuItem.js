@@ -14,6 +14,7 @@ const MenuItem = ({item,index,setDetailShow}) => {
     const itemName = item.itemName;
     const itemPrice= item.itemPrice;
     const itemPk = item.itemPk;
+
     return(
         <>
             <MenuItemWrapper>
