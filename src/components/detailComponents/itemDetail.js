@@ -8,7 +8,7 @@ import OptItem from './optItem';
 import CommonIndicator from '../common/waitIndicator';
 import WaitIndicator from '../common/waitIndicator';
 import RecommendItem from './recommendItem';
-import { setMenuDetail, getSingleMenu } from '../../store/menuDetail';
+import { setMenuDetail, getSingleMenu, setMenuDetailInit } from '../../store/menuDetail';
 
 const ItemDetail = (props) => {
     const language = props.language;
@@ -77,7 +77,6 @@ const ItemDetail = (props) => {
     },[menuDetailIndex])
 
     const onOptionSelect = (index) =>{
-        console.log("on select");
         var tmpArr = selectedOptions;
         if(!tmpArr.includes(index)) {
             tmpArr.push(index);
@@ -87,7 +86,6 @@ const ItemDetail = (props) => {
         setSelectedOptions([...tmpArr])
     }
     const onRecommendSelect = (index) =>{
-        console.log("on select");
         var tmpArr = selectedRecommend;
         if(!tmpArr.includes(index)) {
             tmpArr.push(index);
@@ -95,6 +93,11 @@ const ItemDetail = (props) => {
             tmpArr.splice(tmpArr.indexOf(index),1);
         }
         setSelectedRecommend([...tmpArr])
+    }
+    const init = () => {
+        setSelectedOptions([]);
+        setSelectedRecommend([]);
+        dispatch(setMenuDetailInit());
     }
     useEffect(()=>{
         if(isDetailShow) {
@@ -164,7 +167,7 @@ const ItemDetail = (props) => {
                                 </OptRecommendWrapper>
                             }   
                             <BottomButtonWrapper>
-                                <TouchableWithoutFeedback onPress={()=>{props.setDetailShow(false); dispatch(setMenuDetail(null))}}>
+                                <TouchableWithoutFeedback onPress={()=>{props.setDetailShow(false); dispatch(setMenuDetail(null)); init();}}>
                                     <BottomButton backgroundColor={colorRed} >
                                         <BottomButtonText>{LANGUAGE[language].detailView.toMenu}</BottomButtonText>
                                         <BottomButtonIcon source={require("../../assets/icons/folk_nife.png")} />
