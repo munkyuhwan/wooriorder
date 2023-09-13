@@ -20,16 +20,14 @@ const LeftMenuList = (props) => {
     },[selectIndex])
 
     const onPressAction = (index) =>{
-        //dispatch(setSelectedMainCategory(index)); 
-        //dispatch(getSubCategories(index));
         setSelectedIndex(index);
     }
 
     return(
         <>
             {data?.map((item, index)=>{        
-                return(
-                    <TouchableWithoutFeedback key={"leftItem_"+index} onPress={()=>{{ onPressAction(index); }}}>
+                  return(
+                    <TouchableWithoutFeedback key={"leftItem_"+index} onPress={()=>{{ onPressAction(item?.index); }}}>
                         <SideMenuItemWrapper>
                             {index==selectIndex &&
                                 <SideMenuItemOn>

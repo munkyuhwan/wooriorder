@@ -14,7 +14,7 @@ const TopMenuList = (props) => {
     const initSelect = props.initSelect;
     //console.log("data: ",data)
     const {selectedMainCategory, selectedSubCategory} = useSelector((state)=>state.categories);
-    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [selectedIndex, setSelectedIndex] = useState(999);
 
     useEffect(()=>{
         if(selectedIndex!=null) {
@@ -29,19 +29,20 @@ const TopMenuList = (props) => {
     return (
         <>
         {data.map((el, index)=>{
+            console.log(el);
             return(
                 <>
                         {
-                        (index==selectedIndex) &&
-                            <TouchableWithoutFeedback key={"subcat_"+index} onPress={()=>{ onPressAction(index); }}>
+                        (el?.index==selectedIndex) &&
+                            <TouchableWithoutFeedback key={"subcat_"+index} onPress={()=>{ onPressAction(el?.index); }}>
                                 <CategorySelected>
                                     <TopMenuText key={"subcatText_"+index} >{el.title}</TopMenuText>
                                 </CategorySelected>
                             </TouchableWithoutFeedback>
                         }
                         {
-                        (index!=selectedIndex) &&
-                            <TouchableWithoutFeedback key={"subcat_"+index} onPress={()=>{ onPressAction(index); }}>
+                        (el?.index!=selectedIndex) &&
+                            <TouchableWithoutFeedback key={"subcat_"+index} onPress={()=>{ onPressAction(el?.index); }}>
                                 <CategoryDefault>
                                     <TopMenuText key={"subcatText_"+index} >{el.title}</TopMenuText>
                                 </CategoryDefault>
