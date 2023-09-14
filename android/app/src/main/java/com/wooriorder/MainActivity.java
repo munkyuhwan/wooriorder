@@ -60,7 +60,7 @@ public class MainActivity extends ReactActivity {
       @Override
       public void run() {
         startActivity(intent);
-      }ㄱ
+      }
     });
 
  */

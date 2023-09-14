@@ -5,6 +5,8 @@ import { MenuItemBottomWRapper, MenuItemButton, MenuItemButtonInnerWrapper, Menu
 import FastImage from 'react-native-fast-image';
 import { RADIUS, RADIUS_DOUBLE } from '../../styles/values';
 import { setMenuDetail } from '../../store/menuDetail';
+import { addToOrderList } from '../../store/order';
+import { MENU_DATA } from '../../resources/menuData';
 
 const MenuItem = ({item,index,setDetailShow}) => {
     //<MenuItemImage />    
@@ -15,7 +17,8 @@ const MenuItem = ({item,index,setDetailShow}) => {
     const isNew = item.isNew;
     const isBest = item.isBest;
     const itemPk = item.itemPk;
-
+    const menuDetailIndex = item.index
+    const menuDetail = MENU_DATA.menuAll[menuDetailIndex];
     return(
         <>
             <MenuItemWrapper>
@@ -38,7 +41,7 @@ const MenuItem = ({item,index,setDetailShow}) => {
                                     <MenuItemButton source={require('../../assets/icons/more.png')}/>
                                 </MenuItemButtonInnerWrapperRight>
                             </TouchableWithoutFeedback>
-                            <TouchableWithoutFeedback onPress={()=>{}} >
+                            <TouchableWithoutFeedback onPress={()=>{dispatch(addToOrderList({menuDetail,menuDetailIndex}))}} >
                                 <MenuItemButtonInnerWrapperLeft>
                                     <MenuItemButton source={require('../../assets/icons/add.png')}/>
                                 </MenuItemButtonInnerWrapperLeft>

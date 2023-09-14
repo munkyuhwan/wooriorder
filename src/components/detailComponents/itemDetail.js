@@ -99,8 +99,14 @@ const ItemDetail = (props) => {
         setSelectedRecommend([...tmpArr])
     }
     const addToCart = () => {
-        dispatch(addToOrderList({menuDetailIndex, selectedOptions,selectedRecommend}))
-        props.setDetailShow(false); dispatch(setMenuDetail(null)); init();
+        dispatch(addToOrderList({menuDetail, menuDetailIndex, selectedOptions,selectedRecommend}))
+        closeDetail();
+    }
+
+    const closeDetail = () =>{
+        props.setDetailShow(false); 
+        dispatch(setMenuDetail(null)); 
+        init();
     }
 
 
@@ -183,7 +189,7 @@ const ItemDetail = (props) => {
                                 </OptRecommendWrapper>
                             }   
                             <BottomButtonWrapper>
-                                <TouchableWithoutFeedback onPress={()=>{props.setDetailShow(false); dispatch(setMenuDetail(null)); init();}}>
+                                <TouchableWithoutFeedback onPress={()=>{closeDetail(); }}>
                                     <BottomButton backgroundColor={colorRed} >
                                         <BottomButtonText>{LANGUAGE[language].detailView.toMenu}</BottomButtonText>
                                         <BottomButtonIcon source={require("../../assets/icons/folk_nife.png")} />

@@ -43,7 +43,7 @@ const CartView = () =>{
     }
 
     useEffect(()=>{
-        //console.log('orderList: ', orderList,',', grandTotal);
+        console.log('orderList: ', orderList,',', grandTotal);
     },[orderList, grandTotal])
  
   

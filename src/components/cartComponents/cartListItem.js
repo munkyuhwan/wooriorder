@@ -41,10 +41,10 @@ const CartListItem = (props) => {
                 <CartItemTitlePriceWrapper>
                     <CartItemTitle>{menuData.title}</CartItemTitle>
                     <CartItemOpts>
-                        {options.map((el,index)=>{
-                            return MENU_DATA.options[el].title+`${index<(options.length-1)?", ":""}`;
-                        })
-                        
+                        {options &&
+                            options.map((el,index)=>{
+                                return MENU_DATA.options[el].title+`${index<(options.length-1)?", ":""}`;
+                            })
                         }
                     </CartItemOpts>
                     <CartItemPrice>{numberWithCommas(menuData.price||0)}원</CartItemPrice>

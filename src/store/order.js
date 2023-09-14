@@ -5,19 +5,22 @@ export const setOrderList = createAsyncThunk("order/setOrderList", async(index) 
     return index;
 })
 export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,{getState,extra}) =>{
-    const {menuDetail} = getState().menuDetail;
+    const menuDetail = _.menuDetail;
     const {grandTotal} = getState().order;
+    const selectedOptions = _.selectedOptions||[];
+    const selectedRecommend = _.selectedRecommend||[];
+
     var totalPrice = Number(menuDetail.price)+grandTotal;
-    for(var i=0;i<_.selectedOptions.length;i++) {
-        const optionsInfo = MENU_DATA.options[_.selectedOptions[i]];
+    for(var i=0;i<selectedOptions.length;i++) {
+        const optionsInfo = MENU_DATA.options[selectedOptions[i]];
         totalPrice+=Number(optionsInfo.price);
     }
     //const optData= MENU_DATA.options[el];
-    var orderMenu = [{menuIndex:_.menuDetailIndex,selectedOptions:_.selectedOptions}];
+    var orderMenu = [{menuIndex:_.menuDetailIndex,selectedOptions:selectedOptions}];
     
-    for(var i=0;i<_.selectedRecommend.length;i++) {
-        const recommendInfo = MENU_DATA.menuAll[_.selectedRecommend[i]];
-        orderMenu.push({menuIndex:_.selectedRecommend[i],selectedOptions:[]})
+    for(var i=0;i<selectedRecommend.length;i++) {
+        const recommendInfo = MENU_DATA.menuAll[selectedRecommend[i]];
+        orderMenu.push({menuIndex:selectedRecommend[i],selectedOptions:[]})
         totalPrice+=Number(recommendInfo.price);
     }
     
@@ -37,7 +40,7 @@ export const orderSlice = createSlice({
         })
         // 주문 추가
         builder.addCase(addToOrderList.fulfilled,(state, action)=>{
-            state.orderList = action.payload.orderList;
+            state.orderList = [...state.orderList,...action.payload.orderList];
             state.grandTotal = action.payload.grandTotal;
         })
     }
