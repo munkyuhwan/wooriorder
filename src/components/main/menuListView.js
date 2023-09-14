@@ -4,7 +4,7 @@ import { Animated,FlatList,Text,TouchableWithoutFeedback, View } from 'react-nat
 import { MenuListWrapper } from 'styles/main/menuListStyle';
 import MenuItem from '../mainComponents/menuItem';
 import ItemDetail from '../detailComponents/itemDetail';
-import { getMenu } from '../../store/menu';
+import { getMenu, updateMenu } from '../../store/menu';
 import { widthAnimationStyle } from '../../utils/animation';
 
 
@@ -33,6 +33,16 @@ const MenuListView = () => {
     useEffect(()=>{
         dispatch(getMenu());
     },[selectedSubCategory, selectedMainCategory])
+
+    useEffect(()=>{
+        dispatch(updateMenu())
+/*         .then(response=>{
+            console.log("response: ",response);
+        })
+        .catch(error=>{
+            console.log("Error: ",error)
+        }) */
+    },[])
 
     return(
         <>

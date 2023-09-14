@@ -14,6 +14,7 @@ import { callServerSlice } from './callServer'
 import { orderSlice } from './order'
 import { adSlice } from './ad'
 import { cartViewSlice } from './cart'
+import { errorSlice } from './error'
 
 const store = configureStore({
     reducer:{
@@ -26,6 +27,7 @@ const store = configureStore({
         order:orderSlice.reducer,
         ad:adSlice.reducer,
         cartView:cartViewSlice.reducer,
+        error:errorSlice.reducer,
     },
     devTools:true
 })

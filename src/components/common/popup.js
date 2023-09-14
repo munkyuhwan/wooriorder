@@ -11,6 +11,7 @@ import OrderListPopup from '../popups/orderListPopup';
 import SettingPopup from '../popups/settingPopup';
 import CallServerPopup from '../popups/callServerPopup';
 import { openPopup } from '../../utils/common';
+import ErrorPopup from './errorPopup';
 
 const PopUp = (props) =>{
     
@@ -109,6 +110,9 @@ const PopUp = (props) =>{
                     }
                     {innerView=="CallServer"&&
                         <CallServerPopup/>
+                    }
+                    {innerView=="Error"&&
+                        <ErrorPopup/>
                     }
                 </PopupContentWrapper>
             </Animated.View>

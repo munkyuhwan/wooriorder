@@ -37,23 +37,6 @@ const App =() =>{
       )
 }
 
-/*
-const App = () => {
-    const {ToastModule, SmartroPay} = NativeModules;
-
-    return (
-        <>
-            <Text>TEST</Text>
-            <TouchableOpacity onPress={()=>{console.log("on press!"); ToastModule.show("hello", ToastModule.SHORT);  }} >
-                <Text>Toast</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={()=>{console.log("on smartro press!");console.log(SmartroPay.returnResult());  SmartroPay.prepareSmartroPay();  }} >
-                <Text>Smartro</Text>
-            </TouchableOpacity>
-        </>
-    )
-}
-*/
 const codePushOptions = {
     checkFrequency: CodePush.CheckFrequency.MANUAL,
 }

@@ -14,6 +14,7 @@ import PopupIndicator from '../components/common/popupIndicator'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMainCategories, getSubCategories, setSelectedMainCategory, setSelectedSubCategory } from '../store/categories'
 import FullSizePopup from '../components/common/fullsizePopup'
+import ErrorPopup from '../components/common/errorPopup'
 
 const Stack = createStackNavigator()
 
