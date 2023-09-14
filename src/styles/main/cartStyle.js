@@ -98,6 +98,11 @@ export const CartItemTitle = styled.Text`
     color:${mainTheme};
     flex:1;
 `
+export const CartItemOpts = styled.Text`
+    fontSize:12px;
+    color:${mainTheme};
+    flex:1;
+`
 export const CartItemPrice = styled.Text`
     fontSize:13px;
     fontWeight:normal;

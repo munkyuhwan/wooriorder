@@ -20,8 +20,8 @@ const CartView = () =>{
 
     const dispatch = useDispatch();
     const {isOn} = useSelector((state)=>state.cartView);
+    const {orderList, grandTotal} = useSelector((state)=>state.order);
     
-
     const [slideAnimation, setSlideAnimation] = useState(new Animated.Value(0));
 
     const slideInterpolate = slideAnimation.interpolate({
@@ -32,17 +32,6 @@ const CartView = () =>{
         transform: [{translateX:slideInterpolate},],
     };
     
-    useEffect(()=>{
-        /* Animated.parallel([
-            Animated.timing(slideAnimation,{
-                toValue:isOn?1:0,
-                duration:200,
-                useNativeDriver:true
-            })
-        ]).start();
- */
-    },[isOn])
-
     const drawerController = (isOpen) =>{
         Animated.parallel([
             Animated.timing(slideAnimation,{
@@ -52,6 +41,10 @@ const CartView = () =>{
             })
         ]).start();
     }
+
+    useEffect(()=>{
+        //console.log('orderList: ', orderList,',', grandTotal);
+    },[orderList, grandTotal])
  
   
     return(
@@ -73,7 +66,7 @@ const CartView = () =>{
                     </Handle>
                 </TouchableWithoutFeedback>
                 <CartFlatList
-                    data={[{},{}]}
+                    data={orderList}
                     renderItem={(item )=>{
                         return(
                             <CartListItem {...item} />

@@ -5,7 +5,6 @@ export const setOrderList = createAsyncThunk("order/setOrderList", async(index) 
     return index;
 })
 export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,{getState,extra}) =>{
-    console.log("addToOrderList============================================");
     const {menuDetail} = getState().menuDetail;
     const {grandTotal} = getState().order;
     var totalPrice = Number(menuDetail.price)+grandTotal;
@@ -22,7 +21,6 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
         totalPrice+=Number(recommendInfo.price);
     }
     
-    console.log(orderMenu," totalPrice:",totalPrice);
     return {orderList:orderMenu, grandTotal:totalPrice};
 })
 // Slice

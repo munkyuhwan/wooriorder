@@ -100,6 +100,7 @@ const ItemDetail = (props) => {
     }
     const addToCart = () => {
         dispatch(addToOrderList({menuDetailIndex, selectedOptions,selectedRecommend}))
+        props.setDetailShow(false); dispatch(setMenuDetail(null)); init();
     }
 
 

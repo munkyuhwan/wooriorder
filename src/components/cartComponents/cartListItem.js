@@ -3,41 +3,58 @@ import {
     Animated,
     TouchableWithoutFeedback
 } from 'react-native'
-import { CartItemAmtController, CartItemAmtControllerImage, CartItemAmtControllerText, CartItemAmtText, CartItemAmtWrapper, CartItemCancelBtn, CartItemCancelWrapper, CartItemImage, CartItemImageTogoWrapper, CartItemPrice, CartItemTitle, CartItemTitlePriceWrapper, CartItemTogoBtn, CartItemTogoIcon, CartItemTogoText, CartItemTogoWrapper, CartItemWrapper } from '../../styles/main/cartStyle';
+import { CartItemAmtController, CartItemAmtControllerImage, CartItemAmtControllerText, CartItemAmtText, CartItemAmtWrapper, CartItemCancelBtn, CartItemCancelWrapper, CartItemImage, CartItemImageTogoWrapper, CartItemOpts, CartItemPrice, CartItemTitle, CartItemTitlePriceWrapper, CartItemTogoBtn, CartItemTogoIcon, CartItemTogoText, CartItemTogoWrapper, CartItemWrapper } from '../../styles/main/cartStyle';
 import { setPopupContent, setPopupVisibility } from '../../store/popup';
-import { useDispatch } from 'react-redux';
-import { openPopup } from '../../utils/common';
+import { useDispatch, useSelector } from 'react-redux';
+import { numberWithCommas, openPopup } from '../../utils/common';
+import { MENU_DATA } from '../../resources/menuData';
+import { LANGUAGE } from '../../resources/strings';
 
 const CartListItem = (props) => {
     const dispatch = useDispatch();
+    const {language} = useSelector(state=>state.languages);
+    const order = props.item;
+    const options = order.selectedOptions;
+    const menuData = MENU_DATA.menuAll[order.menuIndex];
+
+    
+    //const optionsInfo = MENU_DATA.options[_.selectedOptions[i]];
+    //const recommendInfo = MENU_DATA.menuAll[_.selectedRecommend[i]];
+
     const calculateAmt = (operator, amt) =>{
         // plus, minus, cancel
         
     }
-
     return(
         <>
             <CartItemWrapper>
                 <CartItemImageTogoWrapper>
-                    <CartItemImage/>
+                    <CartItemImage source={{uri:menuData.imgUrl}} />
                     <TouchableWithoutFeedback onPress={()=>{openPopup(dispatch,{innerView:"TogoPopup", isPopupVisible:true}); }} >
                         <CartItemTogoWrapper>
-                            <CartItemTogoText>test</CartItemTogoText>
+                            <CartItemTogoText>{LANGUAGE[language].cartView.togo}</CartItemTogoText>
                             <CartItemTogoIcon source={require("assets/icons/togo.png")}  />
                         </CartItemTogoWrapper>
                     </TouchableWithoutFeedback>
                 </CartItemImageTogoWrapper>
                 
                 <CartItemTitlePriceWrapper>
-                    <CartItemTitle>메뉴명명명</CartItemTitle>
-                    <CartItemPrice>120202원</CartItemPrice>
+                    <CartItemTitle>{menuData.title}</CartItemTitle>
+                    <CartItemOpts>
+                        {options.map((el,index)=>{
+                            return MENU_DATA.options[el].title+`${index<(options.length-1)?", ":""}`;
+                        })
+                        
+                        }
+                    </CartItemOpts>
+                    <CartItemPrice>{numberWithCommas(menuData.price||0)}원</CartItemPrice>
                     <CartItemAmtWrapper>
                         <TouchableWithoutFeedback  onPress={()=>{calculateAmt("minus",1)}} >
                             <CartItemAmtController>
                                 <CartItemAmtControllerImage source={require("assets/icons/minusIcon.png")}  />
                             </CartItemAmtController>
                         </TouchableWithoutFeedback>
-                        <CartItemAmtText>11</CartItemAmtText>
+                        <CartItemAmtText>1</CartItemAmtText>
                         <TouchableWithoutFeedback  onPress={()=>{calculateAmt("plus",1)}} >
                             <CartItemAmtController>
                                 <CartItemAmtControllerImage  source={require("assets/icons/plusIcon.png")} />
