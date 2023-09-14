@@ -87,6 +87,7 @@ const ItemDetail = (props) => {
         }else {
             tmpArr.splice(tmpArr.indexOf(index),1);
         }
+        tmpArr.sort();        
         setSelectedOptions([...tmpArr])
     }
     const onRecommendSelect = (index) =>{
@@ -96,6 +97,7 @@ const ItemDetail = (props) => {
         }else {
             tmpArr.splice(tmpArr.indexOf(index),1);
         }
+        tmpArr.sort();        
         setSelectedRecommend([...tmpArr])
     }
     const addToCart = () => {
