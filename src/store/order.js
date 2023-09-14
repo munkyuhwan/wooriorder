@@ -12,16 +12,17 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
 
     var totalPrice = Number(menuDetail.price)+grandTotal;
     for(var i=0;i<selectedOptions.length;i++) {
-        const optionsInfo = MENU_DATA.options[selectedOptions[i]];
-        totalPrice+=Number(optionsInfo.price);
+        // 총합계 계산
+        totalPrice+=Number(MENU_DATA.options[selectedOptions[i]].price);
     }
     //const optData= MENU_DATA.options[el];
     var orderMenu = [{menuIndex:_.menuDetailIndex,selectedOptions:selectedOptions}];
     
     for(var i=0;i<selectedRecommend.length;i++) {
-        const recommendInfo = MENU_DATA.menuAll[selectedRecommend[i]];
+        // 메뉴 추가
         orderMenu.push({menuIndex:selectedRecommend[i],selectedOptions:[]})
-        totalPrice+=Number(recommendInfo.price);
+        // 총합계 계산
+        totalPrice+=Number(MENU_DATA.menuAll[selectedRecommend[i]].price);
     }
     
     return {orderList:orderMenu, grandTotal:totalPrice};

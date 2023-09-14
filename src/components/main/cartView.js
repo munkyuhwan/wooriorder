@@ -41,11 +41,6 @@ const CartView = () =>{
             })
         ]).start();
     }
-
-    useEffect(()=>{
-        console.log('orderList: ', orderList,',', grandTotal);
-    },[orderList, grandTotal])
- 
   
     return(
         <>  
