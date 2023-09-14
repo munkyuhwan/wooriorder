@@ -31,7 +31,6 @@ const LoginScreen = () =>{
                         ref={pwRef}
                         placeholder="비밀번호 입력"
                         onSubmitEditing={()=>{
-                            console.log("submit editing");
                         }}
                         secureTextEntry={true}  
                     />

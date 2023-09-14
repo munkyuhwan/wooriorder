@@ -41,6 +41,10 @@ const CartView = () =>{
             })
         ]).start();
     }
+
+    useEffect(()=>{
+        console.log("orderList: ",orderList);
+    },[orderList]) 
   
     return(
         <>  

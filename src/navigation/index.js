@@ -31,7 +31,6 @@ export default function Navigation() {
     })
     
  
-    console.log("index render");
     return (
         <>  
             <NavigationContainer>

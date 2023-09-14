@@ -111,7 +111,6 @@ const ItemDetail = (props) => {
         init();
     }
 
-
     const init = () => {
         setSelectedOptions([]);
         setSelectedRecommend([]);

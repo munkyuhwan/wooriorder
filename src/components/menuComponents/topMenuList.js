@@ -29,7 +29,6 @@ const TopMenuList = (props) => {
     return (
         <>
         {data.map((el, index)=>{
-            console.log(el);
             return(
                 <>
                         {

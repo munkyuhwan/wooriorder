@@ -106,7 +106,6 @@ const SettingPopup = () =>{
     const checkUpdate =  async() =>{
             CodePush
             const update = await CodePush.checkForUpdate("H96RQX5_1TsiwFdS8_joFNGSm2V24ncuV-1Ch");
-            console.log("update: ",update);
             if(update) {
                 /* Alert.alert(
                     "업데이트",
