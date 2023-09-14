@@ -7,7 +7,7 @@ import { RADIUS, RADIUS_DOUBLE } from '../../styles/values';
 import { setMenuDetail } from '../../store/menuDetail';
 import { addToOrderList } from '../../store/order';
 import { MENU_DATA } from '../../resources/menuData';
-
+/* 메인메뉴 메뉴 아이템 */
 const MenuItem = ({item,index,setDetailShow}) => {
     //<MenuItemImage />    
     const dispatch = useDispatch();

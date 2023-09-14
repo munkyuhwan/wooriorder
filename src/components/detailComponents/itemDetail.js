@@ -12,7 +12,7 @@ import { setMenuDetail, getSingleMenu, setMenuDetailInit } from '../../store/men
 import { numberWithCommas } from '../../utils/common';
 import { MENU_DATA } from '../../resources/menuData';
 import { addToOrderList } from '../../store/order';
-
+/* 메뉴 상세 */
 const ItemDetail = (props) => {
     const language = props.language;
     const isDetailShow = props.isDetailShow;
