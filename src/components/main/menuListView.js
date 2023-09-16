@@ -36,12 +36,13 @@ const MenuListView = () => {
 
     useEffect(()=>{
         dispatch(updateMenu())
-/*         .then(response=>{
+        .unwrap()
+        .then(response=>{
             console.log("response: ",response);
         })
-        .catch(error=>{
-            console.log("Error: ",error)
-        }) */
+        .catch(error=>{ 
+            //console.log("Error: ",error)
+        }) 
     },[])
 
     return(

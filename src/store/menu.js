@@ -6,11 +6,11 @@ import axios from 'axios';
 
 export const updateMenu = createAsyncThunk("menu/updateMenu", async(_,{rejectWithValue}) =>{
     return await axios.post(
-        "https://tordif.smilebiz.co.kr/partner/v1/menu/edit",
+        "https://tordif.smilebiz.co.kr/partner/v1/menu/new",
         {"STORE_ID":"3100396007"},
         {Accept: 'application/json','Content-Type': 'application/json'},
     )
-    .then((response => response.data))
+    .then((response => response))
     .catch(error=>rejectWithValue(error.response.data));
 })
 
@@ -42,8 +42,10 @@ export const menuSlice = createSlice({
         builder.addCase(updateMenu.fulfilled,(state, action)=>{
             console.log("update fulfilled: ",action.payload);
             const payload = action.payload;
-            console.log("state: ",state);
-            if(payload.ERRCODE != "") {
+            console.log("data: ",payload.data) 
+            console.log("status: ",payload.status)
+            //console.log("state: ",state);
+            if(payload.ERRCODE != "") { 
                 state.menu = action.payload;
             }else {
                 state.errorCode = action.payload.ERRORCODE
