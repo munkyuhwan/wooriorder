@@ -1,6 +1,6 @@
 import axios from "axios";
 import { POS_BASE_URL_REAL, POS_BASE_URL_TEST, POS_ORDER_NEW, POS_POST_MENU_EDIT, POS_POST_MENU_STATE, SERVICE_ID, STORE_ID } from "../resources/apiResources";
-import { errorHandler } from "./errorHandler/ErrorHandler";
+import { errorHandler, posErrorHandler } from "./errorHandler/ErrorHandler";
 
 const posOrderHeadr = {Accept: 'application/json','Content-Type': 'application/json'}
 
@@ -40,7 +40,7 @@ export const  posMenuEdit = async (dispatch) =>{
         ) 
         .then((response => {
             const data = response.data.OBJ[0].ITEM_GROUP_LIST;
-            if(errorHandler(dispatch, response.data)){
+            if(posErrorHandler(dispatch, response.data)){
                 resolve(data); 
             }else {
                 reject();
