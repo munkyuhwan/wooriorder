@@ -10,7 +10,10 @@ import { MENU_DATA } from '../../resources/menuData';
 /* 메인메뉴 메뉴 아이템 */
 const MenuItem = ({item,index,setDetailShow}) => {
     //<MenuItemImage />    
+    //console.log("item: ",item);
     const dispatch = useDispatch();
+
+    const itemID = item.ITEM_ID;
     const imgUrl = item.imgUrl;
     const itemTitle = item.ITEM_NAME;
     const itemPrice= item.ITEM_AMT;
@@ -23,7 +26,7 @@ const MenuItem = ({item,index,setDetailShow}) => {
         <>
             <MenuItemWrapper>
                 <MenuItemTopWrapper>
-                    <TouchableWithoutFeedback onPress={()=>{setDetailShow(true); dispatch(setMenuDetail(index)); }} >
+                    <TouchableWithoutFeedback onPress={()=>{setDetailShow(true); dispatch(setMenuDetail(itemID)); }} >
                         <FastImage style={{width:'100%',height:183,resizeMode:"background",borderRadius:RADIUS_DOUBLE}} source={{uri:imgUrl}}/>
                     </TouchableWithoutFeedback>
                     <MenuItemImageWrapper>
@@ -36,7 +39,7 @@ const MenuItem = ({item,index,setDetailShow}) => {
                         }
                         </MenuItemHotnessWrapper>
                         <MenuItemButtonWrapper>
-                            <TouchableWithoutFeedback onPress={()=>{setDetailShow(true);  dispatch(setMenuDetail(index)); }} >
+                            <TouchableWithoutFeedback onPress={()=>{setDetailShow(true);  dispatch(setMenuDetail(itemID)); }} >
                                 <MenuItemButtonInnerWrapperRight>
                                     <MenuItemButton source={require('../../assets/icons/more.png')}/>
                                 </MenuItemButtonInnerWrapperRight>

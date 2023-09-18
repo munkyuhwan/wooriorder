@@ -17,7 +17,7 @@ const ItemDetail = (props) => {
     const language = props.language;
     const isDetailShow = props.isDetailShow;
     const dispatch = useDispatch();
-    const {menuDetailIndex, menuDetail} = useSelector((state)=>state.menuDetail);
+    const {menuDetailID, menuDetail} = useSelector((state)=>state.menuDetail);
     const [detailZIndex, setDetailZIndex] = useState(0);
 
     // 선택된 옵션
@@ -71,14 +71,14 @@ const ItemDetail = (props) => {
     }
     
     useEffect(()=>{
-        if(menuDetailIndex!= null) {
-            dispatch(getSingleMenu(menuDetailIndex))
+        if(menuDetailID!= null) {
+            dispatch(getSingleMenu(menuDetailID))
             //setDetailZIndex(999)
             //onSelectHandleAnimation(1);
         }else {
             onSelectHandleAnimation(0);
         }
-    },[menuDetailIndex])
+    },[menuDetailID])
 
     const onOptionSelect = (index) =>{
         var tmpArr = selectedOptions;
@@ -101,7 +101,7 @@ const ItemDetail = (props) => {
         setSelectedRecommend([...tmpArr])
     }
     const addToCart = () => {
-        dispatch(addToOrderList({menuDetail, menuDetailIndex, selectedOptions,selectedRecommend}))
+        dispatch(addToOrderList({menuDetail, menuDetailID, selectedOptions,selectedRecommend}))
         closeDetail();
     }
 
@@ -128,17 +128,17 @@ const ItemDetail = (props) => {
             <Animated.View  style={[{...PopStyle.animatedPop, ...boxWidthStyle,...{zIndex:detailZIndex} } ]} >
                     <DetailWrapper>
                         <DetailWhiteWrapper>
-                            {menuDetailIndex==null &&
+                            {menuDetailID==null &&
                                 <WaitIndicator/>
                             }
-                            {menuDetailIndex!=null &&
+                            {menuDetailID!=null &&
                             <>
-                            {menuDetailIndex!=null &&
+                            {menuDetailID!=null &&
                                 <DetailInfoWrapper>
                                     <DetailItemInfoImage source={menuDetail?.imgUrl?{uri:`${menuDetail?.imgUrl}`}:require("../../assets/icons/logo.png")}/>
                                     <DetailItemInfoWrapper>
                                         <DetailItemInfoTitleWrapper>
-                                            <DetailItemInfoTitle>{menuDetail?.itemTitle}</DetailItemInfoTitle>
+                                            <DetailItemInfoTitle>{menuDetail?.ITEM_NAME}</DetailItemInfoTitle>
                                             {menuDetail?.isNew==true&&
                                                  <DetailItemInfoTitleEtc source={require("../../assets/icons/new.png")}/>
                                             }
@@ -149,14 +149,14 @@ const ItemDetail = (props) => {
                                         <DetailItemInfoSource>{menuDetail?.detail}</DetailItemInfoSource>
                                         <DetailPriceMoreWrapper>
                                             <DetailItemInfoPriceWrapper>
-                                                <DetailItemInfoPrice isBold={true} >{ menuDetail?.price?numberWithCommas(menuDetail?.price):""}</DetailItemInfoPrice><DetailItemInfoPrice isBold={false}> 원</DetailItemInfoPrice>
+                                                <DetailItemInfoPrice isBold={true} >{ menuDetail?.ITEM_AMT?numberWithCommas(menuDetail?.ITEM_AMT):""}</DetailItemInfoPrice><DetailItemInfoPrice isBold={false}> 원</DetailItemInfoPrice>
                                             </DetailItemInfoPriceWrapper>
                                             <DetailItemInfoMore>{menuDetail?.extra}</DetailItemInfoMore>
                                         </DetailPriceMoreWrapper>
                                     </DetailItemInfoWrapper>
                                 </DetailInfoWrapper>
                             }
-                            {menuDetailIndex!=null &&
+                            {menuDetailID!=null &&
                                 <OptRecommendWrapper>
                                     <OptListWrapper>
                                         <OptTitleText>{LANGUAGE[language].detailView.selectOpt}</OptTitleText>

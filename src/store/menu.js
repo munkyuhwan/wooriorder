@@ -13,7 +13,9 @@ export const getDisplayMenu = createAsyncThunk("menu/getDisplayMenu", async(_, {
     const {selectedMainCategory} = getState().categories
     const {menu} = getState().menu;
     const displayMenu = menu.filter(item => item.ITEM_GROUP_CODE == selectedMainCategory);
-    return displayMenu[0].ITEM_LIST;
+    const itemList = displayMenu[0].ITEM_LIST;
+    const finalItemList = itemList.filter(item => item.ITEM_USE_FLAG == "N");
+    return finalItemList;
 })
 
 export const updateMenu = createAsyncThunk("menu/updateMenu", async(_,{rejectWithValue}) =>{
@@ -29,7 +31,6 @@ export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, 
     
     let categories = [];
     resultData.map((el)=>{
-        //console.log("el: ",el);
         if(el.ITEM_GROUP_USE_FLAG == "N") {
             const categoryData = {
                 ITEM_GROUP_CNT:el.ITEM_GROUP_CNT,

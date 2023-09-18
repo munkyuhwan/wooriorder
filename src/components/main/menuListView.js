@@ -31,7 +31,6 @@ const MenuListView = () => {
     },[isOn])
 
     useEffect(()=>{
-        //dispatch(getMenu());
         dispatch(getDisplayMenu())
     },[selectedMainCategory])
 

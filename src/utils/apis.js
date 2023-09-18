@@ -31,7 +31,7 @@ export const  posMenuState = async (resolve,reject) =>{
         .catch(error=>reject(error.response.data));
     })
 }
-export const  posMenuEdit = async (dispatch) =>{
+export const  posMenuEdit = async(dispatch) =>{
     return await new Promise(function(resolve, reject){
         axios.post(
             `${POS_BASE_URL_REAL}${POS_POST_MENU_EDIT}`,
