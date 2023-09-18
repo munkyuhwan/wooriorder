@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { NavigationContainer } from '@react-navigation/native'
+import React, { useCallback, useEffect, useState } from 'react'
+import { NavigationContainer, useFocusEffect } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import MainScreen from '../screens/MainScreen'
@@ -15,11 +15,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getMainCategories, getSubCategories, setSelectedMainCategory, setSelectedSubCategory } from '../store/categories'
 import FullSizePopup from '../components/common/fullsizePopup'
 import ErrorPopup from '../components/common/errorPopup'
+import { getMenuEdit } from '../store/menu'
 
 const Stack = createStackNavigator()
 
 export default function Navigation() {
 
+    const dispatch = useDispatch();
     const [spinnerText, setSpinnerText] = React.useState("")
 
     // 결제진행중 팝업
@@ -31,7 +33,21 @@ export default function Navigation() {
         setSpinnerText("")
     })
     
- 
+    const {menu} = useSelector((state)=>state.menu);
+
+    useEffect(()=>{
+        //dispatch(updateMenu()) 
+        //dispatch(getMenuState()) 
+        dispatch(getMenuEdit());
+    },[])
+    useEffect(()=>{
+        /* 
+        menu.map((el)=>{
+            console.log("menu: ",el); 
+        })
+ */
+    },[menu])
+
     return (
         <>  
             <NavigationContainer>

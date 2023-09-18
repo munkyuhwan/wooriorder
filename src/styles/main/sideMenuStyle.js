@@ -60,11 +60,12 @@ export const SideMenuItemOn = styled.View`
 export const SideMenuText = styled.Text`
     paddingTop:20px;
     paddingBottom:20px;
-    paddingRight:42px;
-    paddingLeft:42px;
+    paddingRight:22px;
+    paddingLeft:22px;
     fontSize:19px;
     fontWeight:bold;
     color: #ffffff;
+    textAlign:center;
 `;
 
 // language & call wrapper

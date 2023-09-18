@@ -2,8 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { MENU_DATA } from '../resources/menuData';
 
 export const getMainCategories = createAsyncThunk("categories/getMainCategories", async() =>{
-    return MENU_DATA.categories;
+    return [];
 })
+export const setMainCategories = createAsyncThunk("categories/setMainCategories", async(_)=>{
+    return _;
+});
+
 export const setSelectedMainCategory = createAsyncThunk("categories/setSelectedMainCategory", async(index,{getState,dispatch}) =>{
     return await new Promise(function(resolve, reject){
         resolve(index);
@@ -38,6 +42,10 @@ export const cagegoriesSlice = createSlice({
     extraReducers:(builder)=>{
         // 메인 카테고리 받기
         builder.addCase(getMainCategories.fulfilled,(state, action)=>{
+            state.mainCategories = action.payload;
+        })
+        // 메인 카테고리 업데이트
+        builder.addCase(setMainCategories.fulfilled,(state, action)=>{
             state.mainCategories = action.payload;
         })
         // 메인 카테고리 선택

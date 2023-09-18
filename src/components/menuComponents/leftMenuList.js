@@ -13,30 +13,26 @@ const LeftMenuList = (props) => {
     const initSelect = props?.initSelect;
     const [selectIndex, setSelectedIndex] = useState(0);
 
-    useEffect(()=>{
-        if(selectIndex!=null) {
-            props?.onSelectItem(selectIndex);
-        }
-    },[selectIndex])
-
-    const onPressAction = (index) =>{
+    const onPressAction = (index, groupCode) =>{
         setSelectedIndex(index);
+        props?.onSelectItem(groupCode);
     }
-
+ 
     return(
         <>
-            {data?.map((item, index)=>{        
-                  return(
-                    <TouchableWithoutFeedback key={"leftItem_"+index} onPress={()=>{{ onPressAction(item?.index); }}}>
+            {data?.map((item, index)=>{     
+                console.log("item",index,": ",item);   
+                return(
+                    <TouchableWithoutFeedback key={"leftItem_"+index} onPress={()=>{{ onPressAction(index,item?.ITEM_GROUP_CODE); }}}>
                         <SideMenuItemWrapper>
                             {index==selectIndex &&
                                 <SideMenuItemOn>
-                                    <SideMenuText>{item?.title}</SideMenuText>
+                                    <SideMenuText>{item?.ITEM_GROUP_NAME}</SideMenuText>
                                 </SideMenuItemOn>
                             }
                             {index!=selectIndex &&
                                 <SideMenuItemOff>
-                                    <SideMenuText>{item?.title}</SideMenuText>
+                                    <SideMenuText>{item?.ITEM_GROUP_NAME}</SideMenuText>
                                 </SideMenuItemOff>
                             }
                         </SideMenuItemWrapper>

@@ -12,11 +12,13 @@ const SideMenu = () =>{
     const {mainCategories} = useSelector((state)=>state.categories);
     // 메뉴 아이템 받아오기 
     useEffect(()=>{
-        dispatch(getMainCategories());
-    },[])
+        //dispatch(getMainCategories());
+        console.log("mainCategories: ",mainCategories.length);
+    },[mainCategories])
     const onItemPress = (index) =>{
         dispatch(setSelectedMainCategory(index)); 
     }
+
 
     // 문제 없으면 /components/menuComponents/sideMenuItem.js 제거
     if(mainCategories.length <=0) {

@@ -4,7 +4,7 @@ import { Animated,FlatList,Text,TouchableWithoutFeedback, View } from 'react-nat
 import { MenuListWrapper } from 'styles/main/menuListStyle';
 import MenuItem from '../mainComponents/menuItem';
 import ItemDetail from '../detailComponents/itemDetail';
-import { getMenu, updateMenu } from '../../store/menu';
+import { getMenu, getMenuEdit, getMenuState, updateMenu } from '../../store/menu';
 import { widthAnimationStyle } from '../../utils/animation';
 
 
@@ -31,24 +31,28 @@ const MenuListView = () => {
     },[isOn])
 
     useEffect(()=>{
-        dispatch(getMenu());
+        //dispatch(getMenu());
     },[selectedSubCategory, selectedMainCategory])
 
     useEffect(()=>{
-        dispatch(updateMenu())
-        .unwrap()
-        .then(response=>{
-            console.log("response: ",response);
-        })
-        .catch(error=>{ 
-            //console.log("Error: ",error)
-        }) 
+        //dispatch(updateMenu()) 
+        //dispatch(getMenuState()) 
+        //dispatch(getMenuEdit());
     },[])
-
+/* 
+    useEffect(()=>{
+        console.log("menu: ",menu);
+        const itemGroupList = menu[0].ITEM_GROUP_LIST;
+        itemGroupList.map((el)=>{
+            console.log("item: ",el);
+        })
+         
+    },[menu])
+ */
     return(
         <>
             <MenuListWrapper>
-                <FlatList
+                {/* <FlatList
                     columnWrapperStyle={{gap:11}}
                     style={{height:'100%', zIndex: 99 }}
                     data={menu}
@@ -56,7 +60,7 @@ const MenuListView = () => {
                     numColumns={numColumns}
                     key={numColumns}
                     keyExtractor={(item,index)=>index}
-                />
+                /> */}
             </MenuListWrapper>
             <ItemDetail isDetailShow={isDetailShow} setDetailShow={setDetailShow} language={language}/>
         </>
