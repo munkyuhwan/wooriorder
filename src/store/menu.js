@@ -9,10 +9,11 @@ export const initMenu = createAsyncThunk("menu/initMenu", async(category) =>{
     return [];
 })
 
-export const getMenu = createAsyncThunk("menu/getMenu", async(_, {getState}) =>{
-    const {selectedMainCategory,selectedSubCategory} = getState().categories
-    const menuData = MENU_DATA?.menus[selectedMainCategory]?.items[selectedSubCategory]
-    return menuData||[];
+export const getDisplayMenu = createAsyncThunk("menu/getDisplayMenu", async(_, {getState}) =>{
+    const {selectedMainCategory} = getState().categories
+    const {menu} = getState().menu;
+    const displayMenu = menu.filter(item => item.ITEM_GROUP_CODE == selectedMainCategory);
+    return displayMenu[0].ITEM_LIST;
 })
 
 export const updateMenu = createAsyncThunk("menu/updateMenu", async(_,{rejectWithValue}) =>{
@@ -40,7 +41,7 @@ export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, 
         }
     });
     dispatch(setMainCategories(categories));
-    return await resultData();
+    return resultData;
 })
 
 // Slice
@@ -48,11 +49,12 @@ export const menuSlice = createSlice({
     name: 'menu',
     initialState: {
         menu: [],
+        displayMenu:[],
     },
     extraReducers:(builder)=>{
         // 메인 카테고리 받기
-        builder.addCase(getMenu.fulfilled,(state, action)=>{
-            state.menu = action.payload;
+        builder.addCase(getDisplayMenu.fulfilled,(state, action)=>{
+            state.displayMenu = action.payload;
         })
         builder.addCase(initMenu.fulfilled,(state, action)=>{
             state.menu = action.payload;

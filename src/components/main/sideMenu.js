@@ -14,10 +14,6 @@ const SideMenu = () =>{
     const onItemPress = (index) =>{
         dispatch(setSelectedMainCategory(index)); 
     }
-    useEffect(()=>{
-        console.log("mainCategories: ",mainCategories)
-    },[mainCategories])
-
     // 문제 없으면 /components/menuComponents/sideMenuItem.js 제거
     if(mainCategories.length <=0) {
         return(<></>)

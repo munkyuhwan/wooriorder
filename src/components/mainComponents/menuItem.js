@@ -12,18 +12,18 @@ const MenuItem = ({item,index,setDetailShow}) => {
     //<MenuItemImage />    
     const dispatch = useDispatch();
     const imgUrl = item.imgUrl;
-    const itemTitle = item.title;
-    const itemPrice= item.price;
+    const itemTitle = item.ITEM_NAME;
+    const itemPrice= item.ITEM_AMT;
     const isNew = item.isNew;
     const isBest = item.isBest;
     const itemPk = item.itemPk;
-    const menuDetailIndex = item.index
+    const menuDetailIndex = index
     const menuDetail = MENU_DATA.menuAll[menuDetailIndex];
     return(
         <>
             <MenuItemWrapper>
                 <MenuItemTopWrapper>
-                    <TouchableWithoutFeedback onPress={()=>{setDetailShow(true);  dispatch(setMenuDetail(index)); }} >
+                    <TouchableWithoutFeedback onPress={()=>{setDetailShow(true); dispatch(setMenuDetail(index)); }} >
                         <FastImage style={{width:'100%',height:183,resizeMode:"background",borderRadius:RADIUS_DOUBLE}} source={{uri:imgUrl}}/>
                     </TouchableWithoutFeedback>
                     <MenuItemImageWrapper>
