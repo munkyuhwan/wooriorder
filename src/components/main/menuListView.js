@@ -32,23 +32,9 @@ const MenuListView = () => {
 
     useEffect(()=>{
         //dispatch(getMenu());
-    },[selectedSubCategory, selectedMainCategory])
+        console.log("selectedMainCategory: ",selectedMainCategory);
+    },[selectedMainCategory])
 
-    useEffect(()=>{
-        //dispatch(updateMenu()) 
-        //dispatch(getMenuState()) 
-        //dispatch(getMenuEdit());
-    },[])
-/* 
-    useEffect(()=>{
-        console.log("menu: ",menu);
-        const itemGroupList = menu[0].ITEM_GROUP_LIST;
-        itemGroupList.map((el)=>{
-            console.log("item: ",el);
-        })
-         
-    },[menu])
- */
     return(
         <>
             <MenuListWrapper>

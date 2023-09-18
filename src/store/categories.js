@@ -50,7 +50,7 @@ export const cagegoriesSlice = createSlice({
         })
         // 메인 카테고리 선택
         builder.addCase(setSelectedMainCategory.fulfilled,(state, action)=>{
-            state.subCategories = MENU_DATA.categories[action.payload].subCategories||[]
+            //state.subCategories = MENU_DATA.categories[action.payload].subCategories||[]
             state.selectedMainCategory = action.payload;
         })
         // 서브 카테고리 받기

@@ -16,7 +16,7 @@ import { getMainCategories, getSubCategories, setSelectedMainCategory, setSelect
 import FullSizePopup from '../components/common/fullsizePopup'
 import ErrorPopup from '../components/common/errorPopup'
 import { getMenuEdit } from '../store/menu'
-
+import _ from 'lodash';
 const Stack = createStackNavigator()
 
 export default function Navigation() {
@@ -34,11 +34,8 @@ export default function Navigation() {
     })
     
     useEffect(()=>{
-        //dispatch(updateMenu()) 
-        //dispatch(getMenuState()) 
         dispatch(getMenuEdit());
     },[])
-
     return (
         <>  
             <NavigationContainer>
