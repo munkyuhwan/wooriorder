@@ -5,6 +5,30 @@ export const setOrderList = createAsyncThunk("order/setOrderList", async(index) 
     return index;
 })
 export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,{getState,extra}) =>{
+    console.log("item id: ",_);
+
+    // 선택된 아이템 정보 받기
+    const {displayMenu} = getState().menu;
+    const {grandTotal, orderList} = getState().order;
+
+    const menuDetail = displayMenu.filter(el=>el.ITEM_ID == _.itemID);
+    console.log("selectedMenuDetail: ",menuDetail[0])
+    const price = Number(menuDetail[0].ITEM_AMT)
+    console.log("price: ",price)
+
+    //const selectedOptions = _.selectedOptions||[];
+    //const selectedRecommend = _.selectedRecommend||[];
+    let tmpOrderList = orderList;
+    console.log("orderListbefore: ",tmpOrderList);
+     console.log("orderListafter: ",orderList);
+    var totalPrice = Number(price)+grandTotal;
+    //return {orderList:orderMenu, grandTotal:totalPrice};
+
+    return ;
+})
+/* 
+export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,{getState,extra}) =>{
+    console.log("menuDetail: ",_.menuDetail);
     const menuDetail = _.menuDetail;
     const {grandTotal, orderList} = getState().order;
     const selectedOptions = _.selectedOptions||[];
@@ -48,7 +72,8 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
     }
     
     return {orderList:orderMenu, grandTotal:totalPrice};
-})
+}) 
+*/
 // Slice
 export const orderSlice = createSlice({
     name: 'order',

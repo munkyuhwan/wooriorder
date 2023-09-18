@@ -29,7 +29,7 @@ const CartListItem = (props) => {
         <>
             <CartItemWrapper>
                 <CartItemImageTogoWrapper>
-                    <CartItemImage source={{uri:menuData.imgUrl}} />
+                    <CartItemImage source={{uri:menuData?.imgUrl}} />
                     <TouchableWithoutFeedback onPress={()=>{openPopup(dispatch,{innerView:"TogoPopup", isPopupVisible:true}); }} >
                         <CartItemTogoWrapper>
                             <CartItemTogoText>{LANGUAGE[language].cartView.togo}</CartItemTogoText>

@@ -101,7 +101,8 @@ const ItemDetail = (props) => {
         setSelectedRecommend([...tmpArr])
     }
     const addToCart = () => {
-        dispatch(addToOrderList({menuDetail, menuDetailID, selectedOptions,selectedRecommend}))
+        //dispatch(addToOrderList({menuDetail, menuDetailID, selectedOptions,selectedRecommend}))
+        dispatch(addToOrderList({menuDetailID,selectedOptions,selectedRecommend}));
         closeDetail();
     }
 
