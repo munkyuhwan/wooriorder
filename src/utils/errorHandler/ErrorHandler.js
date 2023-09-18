@@ -8,7 +8,7 @@ export const errorHandler = async(dispatch, data) =>{
     console.log("data: ",data,);
     const errorCode = data.ERRCODE;
     if( !_.isEmpty(errorCode) ) {    
-        dispatch(setErrorData({errorCode:"error",errorMsg:data.MSG})); 
+        dispatch(setErrorData({errorCode:data.ERRCODE,errorMsg:data.MSG})); 
         openPopup(dispatch,{innerView:"Error", isPopupVisible:true}); 
     }
     return _.isEmpty(errorCode)
