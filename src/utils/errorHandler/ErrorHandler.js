@@ -1,12 +1,16 @@
-const { Component } = require("react");
+import { useDispatch } from "react-redux";
+import _ from "lodash"
+import { setErrorData } from "../../store/error";
+import { openPopup } from "../common";
 
-export class ErrorHandler {
+export const errorHandler = async(dispatch, data) =>{
 
-    posError () {
-        console.log("error handler data: ")
+    console.log("data: ",data,);
+    const errorCode = data.ERRCODE;
+    if( !_.isEmpty(errorCode) ) {    
+        dispatch(setErrorData({errorCode:"error",errorMsg:data.MSG})); 
+        openPopup(dispatch,{innerView:"Error", isPopupVisible:true}); 
     }
-
+    return _.isEmpty(errorCode)
 }
-
-
 

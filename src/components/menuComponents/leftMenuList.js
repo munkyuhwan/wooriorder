@@ -21,7 +21,6 @@ const LeftMenuList = (props) => {
     return(
         <>
             {data?.map((item, index)=>{     
-                console.log("item",index,": ",item);   
                 return(
                     <TouchableWithoutFeedback key={"leftItem_"+index} onPress={()=>{{ onPressAction(index,item?.ITEM_GROUP_CODE); }}}>
                         <SideMenuItemWrapper>

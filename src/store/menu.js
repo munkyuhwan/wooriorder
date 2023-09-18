@@ -24,7 +24,7 @@ export const getMenuState = createAsyncThunk("menu/menuState", async(_,{rejectWi
 })
 
 export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, rejectWithValue}) =>{
-    const resultData = await posMenuEdit();
+    const resultData = await posMenuEdit(dispatch);
     
     let categories = [];
     resultData.map((el)=>{

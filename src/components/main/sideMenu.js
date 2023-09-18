@@ -11,10 +11,6 @@ const SideMenu = () =>{
     const dispatch = useDispatch();
     const {mainCategories} = useSelector((state)=>state.categories);
     // 메뉴 아이템 받아오기 
-    useEffect(()=>{
-        //dispatch(getMainCategories());
-        console.log("mainCategories: ",mainCategories.length);
-    },[mainCategories])
     const onItemPress = (index) =>{
         dispatch(setSelectedMainCategory(index)); 
     }

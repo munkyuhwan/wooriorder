@@ -33,20 +33,11 @@ export default function Navigation() {
         setSpinnerText("")
     })
     
-    const {menu} = useSelector((state)=>state.menu);
-
     useEffect(()=>{
         //dispatch(updateMenu()) 
         //dispatch(getMenuState()) 
         dispatch(getMenuEdit());
     },[])
-    useEffect(()=>{
-        /* 
-        menu.map((el)=>{
-            console.log("menu: ",el); 
-        })
- */
-    },[menu])
 
     return (
         <>  
