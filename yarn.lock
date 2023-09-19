@@ -6366,6 +6366,11 @@ react-native-gesture-handler@^2.12.1, "react-native-gesture-handler@>= 1.0.0":
     lodash "^4.17.21"
     prop-types "^15.7.2"
 
+react-native-radio-buttons-group@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.npmjs.org/react-native-radio-buttons-group/-/react-native-radio-buttons-group-3.0.3.tgz"
+  integrity sha512-T2uKaJCQF9SbdJcoM03T695XgXxcw/X+5xV5SOsBypPhSfdmAvdzNwlfeylhUUj3kZcvMCLgD4pcRsxkWePNVw==
+
 react-native-reanimated@^3.4.2:
   version "3.4.2"
   resolved "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-3.4.2.tgz"

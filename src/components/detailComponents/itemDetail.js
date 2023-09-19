@@ -8,8 +8,8 @@ import OptItem from './optItem';
 import CommonIndicator from '../common/waitIndicator';
 import WaitIndicator from '../common/waitIndicator';
 import RecommendItem from './recommendItem';
-import { setMenuDetail, getSingleMenu, setMenuDetailInit } from '../../store/menuDetail';
-import { numberWithCommas } from '../../utils/common';
+import { setMenuDetail, getSingleMenu, setMenuOptionSelect, setMenuOptionGroupCode, initMenuDetail } from '../../store/menuDetail';
+import { numberWithCommas, openPopup } from '../../utils/common';
 import { MENU_DATA } from '../../resources/menuData';
 import { addToOrderList } from '../../store/order';
 /* 메뉴 상세 */
@@ -20,12 +20,16 @@ const ItemDetail = (props) => {
     const {menuDetailID, menuDetail} = useSelector((state)=>state.menuDetail);
     const [detailZIndex, setDetailZIndex] = useState(0);
 
+    // 옵션스테이트
+    const [additiveGroupList, setAdditiveGroupList] = useState([]);
+    const [additiveItemList, setAdditiveItemList] = useState([]);
     // 선택된 옵션
     const [selectedOptions, setSelectedOptions] = useState([]);
     // 함께먹기 좋은 메뉴
     const [selectedRecommend, setSelectedRecommend] = useState([]);
 
-    const optionSelect = menuDetail?.opts;
+    //const optionSelect = menuDetail?.ADDITIVE_GROUP_LIST[0]?.ADDITIVE_ITEM_LIST;
+    //const additiveData = menuDetail?.ADDITIVE_GROUP_LIST[1];
     const recommendMenu = menuDetail?.recommend;
 
     // animation set
@@ -80,7 +84,13 @@ const ItemDetail = (props) => {
         }
     },[menuDetailID])
 
-    const onOptionSelect = (index) =>{
+    const onOptionSelect = (groupCode) =>{
+        const selectedGroup = additiveGroupList.filter(el=>el.ADDITIVE_GROUP_CODE == groupCode);
+        dispatch(setMenuOptionGroupCode(selectedGroup[0].ADDITIVE_GROUP_CODE));
+        dispatch(setMenuOptionSelect(selectedGroup[0].ADDITIVE_ITEM_LIST));
+        openPopup(dispatch,{innerView:"Option", isPopupVisible:true});
+
+        /* 기존 소스
         var tmpArr = selectedOptions;
         if(!tmpArr.includes(index)) {
             tmpArr.push(index);
@@ -89,6 +99,7 @@ const ItemDetail = (props) => {
         }
         tmpArr.sort();        
         setSelectedOptions([...tmpArr])
+        */
     }
     const onRecommendSelect = (index) =>{
         var tmpArr = selectedRecommend;
@@ -115,7 +126,8 @@ const ItemDetail = (props) => {
     const init = () => {
         setSelectedOptions([]);
         setSelectedRecommend([]);
-        dispatch(setMenuDetailInit());
+        dispatch(initMenuDetail());
+        setAdditiveGroupList([]);
     }
     useEffect(()=>{
         if(isDetailShow) {
@@ -123,6 +135,18 @@ const ItemDetail = (props) => {
             onSelectHandleAnimation(1);
         }
     },[isDetailShow])
+
+    useEffect(()=>{
+        var tmpAdditiveList = [];
+        if(menuDetail?.ADDITIVE_GROUP_LIST) {
+            tmpAdditiveList = menuDetail?.ADDITIVE_GROUP_LIST.filter(el=>el.ADDITIVE_GROUP_USE_FLAG=="N");
+            setAdditiveGroupList(tmpAdditiveList);
+        }
+    },[menuDetail])
+
+    useEffect(()=>{
+        //console.log("additiveGroupList: ",additiveGroupList);
+    },[additiveGroupList])
 
     return(
         <>
@@ -162,15 +186,24 @@ const ItemDetail = (props) => {
                                     <OptListWrapper>
                                         <OptTitleText>{LANGUAGE[language].detailView.selectOpt}</OptTitleText>
                                         <OptList horizontal showsHorizontalScrollIndicator={false} >
-                                            {optionSelect!=null &&
-                                                optionSelect.map((index,el)=>{
-                                                    const optData= MENU_DATA.options[el];
+                                            {additiveGroupList!=null &&
+                                                additiveGroupList.map((el,index)=>{
+                                                    if(el.ADDITIVE_GROUP_USE_FLAG == "N") {
+                                                        return(
+                                                            <OptItem key={"optItem_"+index} isSelected={additiveGroupList.indexOf(index)>=0} optionData={el} menuData={menuDetail} onPress={()=>{onOptionSelect(el.ADDITIVE_GROUP_CODE);} } />    
+                                                        );
+                                                    }else {
+                                                        return(<></>);
+                                                    }
+                                                    //return(<></>);
+                                                    /* 
                                                     return(
-                                                        <OptItem key={"optItem_"+index} isSelected={selectedOptions.indexOf(optData?.index)>=0} optionData={el} menuData={menuDetail} onPress={()=>{ onOptionSelect(optData?.index); } } />    
+                                                        <OptItem key={"optItem_"+index} isSelected={additiveGroupList.indexOf(index)>=0} optionData={optData} menuData={menuDetail} onPress={()=>{ onOptionSelect(optData?.index); } } />    
                                                     );
+                                                    */
                                                 })
                                             }
-                                            {optionSelect==null &&
+                                            {selectedOptions==null &&
                                                 <OptItem key={"optItem_0"} optionData={{imgUrl:require("../../assets/icons/logo.png"),name:"loading...",price:0}} menuData={menuDetail}/>    
                                             }
                                         </OptList>
