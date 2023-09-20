@@ -37,7 +37,7 @@ const OptItem = (props)=>{
                         
                         <OptItemInfoPrice>{addtivePrice?"+"+Number(addtivePrice).toLocaleString(undefined,{maximumFractionDigits:0}):""}</OptItemInfoPrice>
                         
-                        <OptItemInfoChecked isSelected={props?.isSelected} source={require("../../assets/icons/check_red.png")}/>
+                        <OptItemInfoChecked isSelected={isSelected} source={require("../../assets/icons/check_red.png")}/>
                     </OptItemInfoWrapper>
                 </OptItemWrapper>
             </TouchableWithoutFeedback>
