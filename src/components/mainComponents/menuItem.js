@@ -19,9 +19,7 @@ const MenuItem = ({item,index,setDetailShow}) => {
     const itemPrice= item.ITEM_AMT;
     const isNew = item.isNew;
     const isBest = item.isBest;
-    const itemPk = item.itemPk;
-    const menuDetailIndex = index
-    const menuDetail = MENU_DATA.menuAll[menuDetailIndex];
+
     return(
         <>
             <MenuItemWrapper>
@@ -33,7 +31,7 @@ const MenuItem = ({item,index,setDetailShow}) => {
                     }
                     {!imgUrl &&
                         <TouchableWithoutFeedback onPress={()=>{setDetailShow(true); dispatch(setMenuDetail(itemID)); }} >
-                            <Image style={{width:'100%',height:183,resizeMode:"contain", padding:10, borderRadius:RADIUS_DOUBLE}} source={require("../../assets/icons/logo.png")}/>
+                            <Image style={{width:'100%',height:183,resizeMode:"contain", padding:10,borderRadius:RADIUS_DOUBLE}} source={require("../../assets/icons/logo.png")}/>
                         </TouchableWithoutFeedback>
                     }
                     <MenuItemImageWrapper>
