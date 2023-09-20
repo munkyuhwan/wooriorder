@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Animated,FlatList,Text,TouchableWithoutFeedback } from 'react-native'
+import { Animated,FlatList,Image,Text,TouchableWithoutFeedback } from 'react-native'
 import { MenuItemBottomWRapper, MenuItemButton, MenuItemButtonInnerWrapper, MenuItemButtonInnerWrapperLeft, MenuItemButtonInnerWrapperRight, MenuItemButtonWrapper, MenuItemHotness, MenuItemHotnessWrapper, MenuItemImage, MenuItemImageWrapper, MenuItemInfoWRapper, MenuItemName, MenuItemPrice, MenuItemTopWrapper, MenuItemWrapper } from '../../styles/main/menuListStyle';
 import FastImage from 'react-native-fast-image';
 import { RADIUS, RADIUS_DOUBLE } from '../../styles/values';
@@ -26,9 +26,16 @@ const MenuItem = ({item,index,setDetailShow}) => {
         <>
             <MenuItemWrapper>
                 <MenuItemTopWrapper>
-                    <TouchableWithoutFeedback onPress={()=>{setDetailShow(true); dispatch(setMenuDetail(itemID)); }} >
-                        <FastImage style={{width:'100%',height:183,resizeMode:"background",borderRadius:RADIUS_DOUBLE}} source={{uri:imgUrl}}/>
-                    </TouchableWithoutFeedback>
+                    {imgUrl &&
+                        <TouchableWithoutFeedback onPress={()=>{setDetailShow(true); dispatch(setMenuDetail(itemID)); }} >
+                            <FastImage style={{width:'100%',height:183,resizeMode:"background",borderRadius:RADIUS_DOUBLE}} source={{uri:imgUrl}}/>
+                        </TouchableWithoutFeedback>
+                    }
+                    {!imgUrl &&
+                        <TouchableWithoutFeedback onPress={()=>{setDetailShow(true); dispatch(setMenuDetail(itemID)); }} >
+                            <Image style={{width:'100%',height:183,resizeMode:"contain", padding:10, borderRadius:RADIUS_DOUBLE}} source={require("../../assets/icons/logo.png")}/>
+                        </TouchableWithoutFeedback>
+                    }
                     <MenuItemImageWrapper>
                         <MenuItemHotnessWrapper>
                         {isNew==true&&
