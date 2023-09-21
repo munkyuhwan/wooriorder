@@ -15,8 +15,6 @@ import LogWriter from '../utils/logWriter'
 
 const MainScreen = () =>{
     
-    const logWriter = new LogWriter();
-    logWriter.writeLog("test");
 /* 
     console.log(RNFS.DocumentDirectoryPath);
     var path = RNFS.DocumentDirectoryPath + '/test.txt';
