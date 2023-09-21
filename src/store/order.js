@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { MENU_DATA } from '../resources/menuData';
+import { SERVICE_ID, STORE_ID } from '../resources/apiResources';
 
 export const setOrderList = createAsyncThunk("order/setOrderList", async(index) =>{
     return index;
@@ -80,6 +81,60 @@ export const orderSlice = createSlice({
     initialState: {
         grandTotal:0,
         orderList:[],
+        orderPayData:{
+            "STORE_ID": STORE_ID,
+            "SERVICE_ID": SERVICE_ID,
+            "MCHT_ORDERNO": "1",
+            "MEMB_TEL": "01012349876",
+            "ORDER_MEMO": "(문규환)테스트",
+            "OEG_ORDER_PAY_AMT": "18000",
+            "ORDER_PAY_AMT": "18000",
+            "DISC_AMT": "0",
+            "PREPAY_FLAG": "Y",
+            "OS_GBN": "Microsoft Windows [Version 10.0.17763.1935]",
+            "FLR_CODE": "0001",
+            "TBL_CODE": "0001",
+            "REPT_PRT_FLAG": "Y",
+            "ORDER_PRT_FLAG": "Y",
+            "ORD_PAY_LIST": [
+                {
+                    "PAY_TYPE": "cash",
+                    "CAN_FLAG": "N",
+                    "CAN_PAY_SEQ": "",
+                    "TML_NO": "",
+                    "SALE_AMT": "5000",
+                    "SALE_VAT_AMT": "0",
+                    "SVC_AMT": "0",
+                    "ISTM_TERM": "",
+                    "AUTH_NO": "",
+                    "AUTH_DATE": "",
+                    "AUTH_TIME": "",
+                    "CARD_ACQHID": "",
+                    "CARD_ACQ_NAME": "",
+                    "CARD_ACSHID": "",
+                    "CRD_HID_NAME": "",
+                    "CARD_NO": "",
+                    "CARD_MCHTNO": "",
+                    "CARD_PAY_TYPE": "",
+                    "CASH_AUTH_TYPE": "",
+                    "DDCEDI": ""
+                },
+            ],
+            "ITEM_LIST": [
+                {
+                    "ITEM_SEQ": "1",
+                    "ITEM_NAME": "돼지불백",
+                    "ITEM_ID": "2222245",
+                    "SALE_PRICE": "5000",
+                    "SALE_AMT": "5000",
+                    "ITEM_CNT": "1",
+                    "ITEM_MENO": "돼지불백맞있게",
+                    "ITEM_SET_GBN": "N",
+                    "ADDITIVE_ITEM_LIST": []
+                },
+                
+            ]
+        },
     },
     extraReducers:(builder)=>{
         // 주문 셋

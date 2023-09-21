@@ -17,7 +17,7 @@ export const POS_POST_ORDER_CANCEL = "/partner/v1/table/order/cancel"; // 반품
 
 //export const STORE_ID = "3100396007";
 export const STORE_ID = "7407191"; //테스트 
-export const SERVICE_ID = "";
+export const SERVICE_ID = "532461";
 
 // ADMIN API URL
 

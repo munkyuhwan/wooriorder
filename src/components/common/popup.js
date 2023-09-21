@@ -112,11 +112,12 @@ const PopUp = (props) =>{
                     {innerView=="CallServer"&&
                         <CallServerPopup/>
                     }
-                    {innerView=="Error"&&
-                        <ErrorPopup/>
-                    }
                     {innerView=="Option"&&
                         <OptionSelectPopup/>
+                    }
+
+                    {innerView=="Error"&&
+                        <ErrorPopup/>
                     }
                 </PopupContentWrapper>
             </Animated.View>
@@ -126,6 +127,8 @@ const PopUp = (props) =>{
 const PopStyle = StyleSheet.create({
     animatedPop:{
         position:'absolute',
+        width:'100%',
+        height:'100%'
     }
 
 })

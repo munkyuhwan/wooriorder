@@ -11,6 +11,7 @@ import { openTransperentPopup } from '../../utils/common';
 import { TransparentPopupWrapper } from '../../styles/common/popup';
 import CallServerPopup from '../popups/callServerPopup';
 import OrderListPopup from '../popups/orderListPopup';
+import ErrorPopup from './errorPopup';
 
 const TransparentPopUp = (props) =>{
     
@@ -85,6 +86,10 @@ const TransparentPopUp = (props) =>{
                     }
                      {(innerTransView=="OrderList") &&
                         <OrderListPopup/>
+                    }
+                    
+                    {innerTransView=="Error"&&
+                        <ErrorPopup/>
                     }
             </Animated.View>
         </>

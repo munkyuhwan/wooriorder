@@ -17,6 +17,7 @@ import FullSizePopup from '../components/common/fullsizePopup'
 import ErrorPopup from '../components/common/errorPopup'
 import { getMenuEdit } from '../store/menu'
 import _ from 'lodash';
+import { getTableList } from '../store/tableInfo'
 const Stack = createStackNavigator()
 
 export default function Navigation() {
@@ -36,6 +37,13 @@ export default function Navigation() {
     useEffect(()=>{
         dispatch(getMenuEdit());
     },[])
+    useEffect(()=>{
+        var getInterval = setTimeout(() => {
+            dispatch(getTableList());
+            clearTimeout(getInterval);
+        }, 1000);
+    },[]);
+
     return (
         <>  
             <NavigationContainer>
