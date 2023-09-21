@@ -6,6 +6,7 @@ import MenuItem from '../mainComponents/menuItem';
 import ItemDetail from '../detailComponents/itemDetail';
 import { getDisplayMenu, getMenu, getMenuEdit, getMenuState, updateMenu } from '../../store/menu';
 import { widthAnimationStyle } from '../../utils/animation';
+import { setSelectedMainCategory } from '../../store/categories';
 
 
 const MenuListView = () => {
@@ -20,7 +21,7 @@ const MenuListView = () => {
     const [isDetailShow, setDetailShow] = useState(false);
 
     // 선택 카테고리
-    const {selectedSubCategory, selectedMainCategory} = useSelector((state)=>state.categories);
+    const {mainCategories, selectedMainCategory} = useSelector((state)=>state.categories);
 
     useEffect(()=>{
         if(isOn) {
@@ -33,7 +34,12 @@ const MenuListView = () => {
     useEffect(()=>{
         dispatch(getDisplayMenu())
     },[selectedMainCategory])
-
+    useEffect(()=>{
+        if(mainCategories) {
+            dispatch(setSelectedMainCategory(mainCategories[0].ITEM_GROUP_CODE));
+        }
+    },[mainCategories])
+    //console.log("mainCategories: ",mainCategories[0].ITEM_GROUP_CODE)
     return(
         <>
             <MenuListWrapper>
