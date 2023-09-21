@@ -35,11 +35,11 @@ const MenuListView = () => {
         dispatch(getDisplayMenu())
     },[selectedMainCategory])
     useEffect(()=>{
-        if(mainCategories) {
+        if(mainCategories[0]) {
             dispatch(setSelectedMainCategory(mainCategories[0].ITEM_GROUP_CODE));
         }
     },[mainCategories])
-    //console.log("mainCategories: ",mainCategories[0].ITEM_GROUP_CODE)
+    //console.log("mainCategories: ",mainCategories[0].ITEM_GR`OUP_CODE)
     return(
         <>
             <MenuListWrapper>

@@ -12,6 +12,7 @@ import { setMenuDetail, getSingleMenu, setMenuOptionSelect, setMenuOptionGroupCo
 import { numberWithCommas, openPopup } from '../../utils/common';
 import { MENU_DATA } from '../../resources/menuData';
 import { addToOrderList } from '../../store/order';
+import { MenuImageDefault } from '../../styles/main/menuListStyle';
 /* 메뉴 상세 */
 const ItemDetail = (props) => {
     const language = props.language;
@@ -160,8 +161,13 @@ const ItemDetail = (props) => {
                             <>
                             {menuDetailID!=null &&
                                 <DetailInfoWrapper>
-                                    <DetailItemInfoImageWrapper source={require("../../assets/icons/logo.png")} resizeMode='contain' >
-                                        <DetailItemInfoImage source={{uri:`${menuDetail?.imgUrl}`}} />
+                                    <DetailItemInfoImageWrapper>
+                                        {menuDetail?.imgUrl &&
+                                            <DetailItemInfoImage source={{uri:`${menuDetail?.imgUrl}`}} />
+                                        }
+                                        {!menuDetail?.imgUrl &&
+                                            <MenuImageDefault source={require("../../assets/icons/logo.png")} />
+                                        }
                                     </DetailItemInfoImageWrapper>
                                     <DetailItemInfoWrapper>
                                         <DetailItemInfoTitleWrapper>
