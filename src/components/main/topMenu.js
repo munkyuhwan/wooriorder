@@ -30,17 +30,18 @@ const TopMenu = () =>{
     const onPressItem = (index) => {
         dispatch(setSelectedSubCategory(index)); 
     }
-
+    /* 
     if(subCategories.length <=0) {
         return(<></>)
     }
+     */
     return(
         <>
             <TopMenuWrapper>
                 <SafeAreaView>
                     <CategoryScrollView  horizontal showsHorizontalScrollIndicator={false} >
                         <CategoryWrapper>
-                            {subCategories.length>0 &&
+                            {//subCategories.length>0 &&
                                 <TopMenuList
                                     data={subCategories}
                                     onSelectItem={(index)=>{ onPressItem(index); }}

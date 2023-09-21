@@ -28,9 +28,14 @@ const TopMenuList = (props) => {
 
     return (
         <>
+            <TouchableWithoutFeedback key={"subcat_"} onPress={()=>{}}>
+                <CategorySelected>
+                    <TopMenuText key={"subcatText_"} >전체</TopMenuText>
+                </CategorySelected>
+            </TouchableWithoutFeedback>
         {data.map((el, index)=>{
             return(
-                <>
+                <>            
                         {
                         (el?.index==selectedIndex) &&
                             <TouchableWithoutFeedback key={"subcat_"+index} onPress={()=>{ onPressAction(el?.index); }}>
