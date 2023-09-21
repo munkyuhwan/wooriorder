@@ -67,3 +67,33 @@ export const posTableList = async(dispatch) =>{
         .catch(error=>reject(error.response.data));
     }) 
 }
+export const postOrderToPos = async(dispatch, data) =>{
+    console.log("postdata: ",
+    {
+        "STORE_ID":STORE_ID,
+        "SERVICE_ID":SERVICE_ID,
+        ...data
+    }
+    );
+    return await new Promise(function(resolve, reject){
+        axios.post(
+            `${POS_BASE_URL_REAL}${POS_ORDER_NEW}`,
+            {
+                "STORE_ID":STORE_ID,
+                "SERVICE_ID":SERVICE_ID,
+                ...data
+            },
+            posOrderHeadr,
+        )  
+        .then((response => {
+            if(posErrorHandler(dispatch, response.data)){
+                console.log();
+                const data = response.data.OBJ.TABLE_LIST;
+                resolve(data); 
+            }else {
+                reject();
+            } 
+        })) 
+        .catch(error=>reject(error.response.data));
+    }) 
+}

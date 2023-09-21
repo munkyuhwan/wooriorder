@@ -14,6 +14,7 @@ import { setCartView, setIconClick } from '../../store/cart';
 import { IconWrapper } from '../../styles/main/topMenuStyle';
 import TopButton from '../menuComponents/topButton';
 import { openTransperentPopup } from '../../utils/common';
+import { postToPos } from '../../store/order';
 
 const CartView = () =>{
     const {language} = useSelector(state=>state.languages);
@@ -42,6 +43,9 @@ const CartView = () =>{
         ]).start();
     }
 
+    const addToPos = () =>{
+        dispatch(postToPos());
+    }
   
     return(
         <>  
@@ -85,7 +89,7 @@ const CartView = () =>{
                             <PayAmtUnit> {LANGUAGE[language].cartView.totalAmtUnit}</PayAmtUnit>
                         </PayAmtWrapper>
                     </PayWrapper>
-                    <TouchableWithoutFeedback onPress={()=>{startSmartroPay();}} >
+                    <TouchableWithoutFeedback onPress={()=>{addToPos(); /* startSmartroPay(); */}} >
                         <PayBtn>
                             <PayTitle>{LANGUAGE[language].cartView.makeOrder}</PayTitle>
                             <PayIcon source={require("assets/icons/order.png")} />

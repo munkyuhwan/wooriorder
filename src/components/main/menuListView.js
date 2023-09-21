@@ -22,7 +22,7 @@ const MenuListView = () => {
 
     // 선택 카테고리
     const {mainCategories, selectedMainCategory} = useSelector((state)=>state.categories);
-
+    //console.log("menu:",menu[1].ITEM_LIST[0]);
     useEffect(()=>{
         if(isOn) {
             setNumColumns(2);

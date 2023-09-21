@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { MENU_DATA } from '../resources/menuData';
 import { SERVICE_ID, STORE_ID } from '../resources/apiResources';
+import { postOrderToPos } from '../utils/apis';
 
 export const setOrderList = createAsyncThunk("order/setOrderList", async(index) =>{
     return index;
 })
 export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,{getState,extra}) =>{
-    console.log("item id: ",_);
 
     // 선택된 아이템 정보 받기
     const {displayMenu} = getState().menu;
@@ -26,6 +26,10 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
     //return {orderList:orderMenu, grandTotal:totalPrice};
 
     return ;
+})
+export const postToPos =  createAsyncThunk("order/postToPos", async(_,{dispatch, getState,extra}) =>{
+    const {orderPayData} = getState().order;
+    return await postOrderToPos(dispatch, orderPayData);
 })
 /* 
 export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,{getState,extra}) =>{
@@ -82,8 +86,6 @@ export const orderSlice = createSlice({
         grandTotal:0,
         orderList:[],
         orderPayData:{
-            "STORE_ID": STORE_ID,
-            "SERVICE_ID": SERVICE_ID,
             "MCHT_ORDERNO": "1",
             "MEMB_TEL": "01012349876",
             "ORDER_MEMO": "(문규환)테스트",
@@ -122,15 +124,12 @@ export const orderSlice = createSlice({
             ],
             "ITEM_LIST": [
                 {
-                    "ITEM_SEQ": "1",
-                    "ITEM_NAME": "돼지불백",
-                    "ITEM_ID": "2222245",
-                    "SALE_PRICE": "5000",
-                    "SALE_AMT": "5000",
-                    "ITEM_CNT": "1",
-                    "ITEM_MENO": "돼지불백맞있게",
-                    "ITEM_SET_GBN": "N",
-                    "ADDITIVE_ITEM_LIST": []
+                    "ITEM_AMT": 4000, 
+                    "ITEM_CNT": 0, 
+                    "ITEM_ID": "1000", 
+                    "ITEM_NAME": "복숭아 아이스티", 
+                    "ITEM_SET_GBN": "N", 
+                    "ITEM_USE_FLAG": "N"
                 },
                 
             ]
