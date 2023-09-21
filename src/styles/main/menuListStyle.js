@@ -14,6 +14,17 @@ export const MenuListWrapper = styled.View`
 
 
 // menu item style
+export const MenuImageDefaultWrapper = styled.View`
+    width:100%;
+    height:183px;
+    borderRadius:${RADIUS};
+    backgroundColor:${colorWhite};
+`
+export const MenuImageDefault = styled.Image`
+    margin:auto;
+    width:100px;
+    resizeMode:contain;
+`
 export const MenuItemTopWrapper = styled.View`
     flex:1;
 `

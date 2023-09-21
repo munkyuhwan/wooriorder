@@ -23,7 +23,6 @@ export const LogoTop = styled.Image`
     height:58px;
     width:150px;
     backgroundColor:${sideMenuColor};
-    borderTopRightRadius:${RADIUS};
 `
 
 // 사이드메뉴 뤱퍼

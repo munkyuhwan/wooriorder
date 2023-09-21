@@ -33,10 +33,15 @@ export const DetailItemInfoWrapper = styled.View`
     paddingLeft:29px;
     paddingTop:12px;
 `
-export const DetailItemInfoImage = styled.Image`
+export const DetailItemInfoImageWrapper = styled.ImageBackground`
     width:262px;
     height:166px;
     borderRadius:${RADIUS};
+    backgroundColor:black;
+`
+export const DetailItemInfoImage = styled.Image`
+    width:262px;
+    height:166px;
     resizeMode:contain;
 `
 export const DetailItemInfoTitleWrapper = styled.View`
