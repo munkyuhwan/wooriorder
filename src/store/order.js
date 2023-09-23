@@ -93,11 +93,11 @@ export const orderSlice = createSlice({
             "ORDER_PAY_AMT": "18000",
             "DISC_AMT": "0",
             "PREPAY_FLAG": "Y",
-            "OS_GBN": "Microsoft Windows [Version 10.0.17763.1935]",
+            "OS_GBN": "AND",
             "FLR_CODE": "0001",
             "TBL_CODE": "0001",
-            "REPT_PRT_FLAG": "Y",
-            "ORDER_PRT_FLAG": "Y",
+            "REPT_PRT_FLAG": "N",
+            "ORDER_PRT_FLAG": "N",
             "ORD_PAY_LIST": [
                 {
                     "PAY_TYPE": "cash",

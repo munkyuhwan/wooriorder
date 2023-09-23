@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { BottomButton, BottomButtonIcon, BottomButtonText, BottomButtonWrapper, ButtonWrapper, DetailInfoWrapper, DetailItemInfoImage, DetailItemInfoImageWrapper, DetailItemInfoMore, DetailItemInfoPrice, DetailItemInfoPriceWrapper, DetailItemInfoSource, DetailItemInfoTitle, DetailItemInfoTitleEtc, DetailItemInfoTitleWrapper, DetailItemInfoWrapper, DetailPriceMoreWrapper, DetailWhiteWrapper, DetailWrapper, OptList, OptListWrapper, OptRecommendWrapper, OptTitleText } from '../../styles/main/detailStyle';
 import { ActivityIndicator, Animated, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
@@ -13,6 +13,7 @@ import { numberWithCommas, openPopup } from '../../utils/common';
 import { MENU_DATA } from '../../resources/menuData';
 import { addToOrderList } from '../../store/order';
 import { MenuImageDefault } from '../../styles/main/menuListStyle';
+import { useFocusEffect } from '@react-navigation/native';
 /* 메뉴 상세 */
 const ItemDetail = (props) => {
     const language = props.language;
@@ -75,16 +76,6 @@ const ItemDetail = (props) => {
         }) 
     }
     
-    useEffect(()=>{
-        if(menuDetailID!= null) {
-            dispatch(getSingleMenu(menuDetailID))
-            //setDetailZIndex(999)
-            //onSelectHandleAnimation(1);
-        }else {
-            onSelectHandleAnimation(0);
-        }
-    },[menuDetailID])
-
     const onOptionSelect = (groupCode) =>{
         const selectedGroup = additiveGroupList.filter(el=>el.ADDITIVE_GROUP_CODE == groupCode);
         dispatch(setMenuOptionGroupCode(selectedGroup[0].ADDITIVE_GROUP_CODE));
@@ -114,7 +105,8 @@ const ItemDetail = (props) => {
     }
     const addToCart = () => {
         //dispatch(addToOrderList({menuDetail, menuDetailID, selectedOptions,selectedRecommend}))
-        dispatch(addToOrderList({menuDetailID,selectedOptions,selectedRecommend}));
+        const itemID = menuDetailID
+        dispatch(addToOrderList({itemID,selectedOptions,selectedRecommend}));
         closeDetail();
     }
 
@@ -130,24 +122,26 @@ const ItemDetail = (props) => {
         dispatch(initMenuDetail());
         setAdditiveGroupList([]);
     }
+
+    useEffect(()=>{
+        if(menuDetailID!= null) {
+            dispatch(getSingleMenu(menuDetailID))
+        }else {
+            onSelectHandleAnimation(0);
+        }
+    },[menuDetailID])
+
     useEffect(()=>{
         if(isDetailShow) {
             setDetailZIndex(999)
             onSelectHandleAnimation(1);
-        }
-    },[isDetailShow])
-
-    useEffect(()=>{
-        var tmpAdditiveList = [];
-        if(menuDetail?.ADDITIVE_GROUP_LIST) {
-            tmpAdditiveList = menuDetail?.ADDITIVE_GROUP_LIST.filter(el=>el.ADDITIVE_GROUP_USE_FLAG=="N");
+            var tmpAdditiveList = [];
+            if(menuDetail?.ADDITIVE_GROUP_LIST) {
+                tmpAdditiveList = menuDetail?.ADDITIVE_GROUP_LIST.filter(el=>el.ADDITIVE_GROUP_USE_FLAG=="N");
+            }
             setAdditiveGroupList(tmpAdditiveList);
         }
-    },[menuDetail])
-
-    useEffect(()=>{
-        //console.log("additiveGroupList: ",additiveGroupList);
-    },[additiveGroupList])
+    },[isDetailShow, menuDetail])
 
     return(
         <>
