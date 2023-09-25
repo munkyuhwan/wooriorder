@@ -45,6 +45,19 @@ export function numberWithCommas(x) {
     return parts.join(".");
 }
 
+export function grandTotalCalculate(data) {
+    //console.log("data: ",data);
+    let amt = 0;
+    let itemCnt = 0;
+    if(data) {
+        data?.map(el=>{
+            amt += el.ITEM_AMT*el.ITEM_CNT;
+            itemCnt += el.ITEM_CNT;
+        })
+    }
+    return {grandTotal:amt, itemCnt:itemCnt};
+}
+
 
 
 /* 

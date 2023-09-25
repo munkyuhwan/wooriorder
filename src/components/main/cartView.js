@@ -21,8 +21,8 @@ const CartView = () =>{
 
     const dispatch = useDispatch();
     const {isOn} = useSelector((state)=>state.cartView);
-    const {orderList, grandTotal} = useSelector((state)=>state.order);
-    
+    const {orderList, grandTotal, totalItemCnt} = useSelector((state)=>state.order);
+    //console.log("orderList: ",orderList);
     const [slideAnimation, setSlideAnimation] = useState(new Animated.Value(0));
 
     const slideInterpolate = slideAnimation.interpolate({
@@ -65,27 +65,29 @@ const CartView = () =>{
                         }
                     </Handle>
                 </TouchableWithoutFeedback>
-                <CartFlatList
-                    data={orderList}
-                    renderItem={(item )=>{
-                        return(
-                            <CartListItem {...item} />
-                        )
-                    }}
-                >
-                </CartFlatList>
+                {orderList &&
+                    <CartFlatList
+                        data={orderList}
+                        renderItem={(item )=>{
+                            return(
+                                <CartListItem {...item} />
+                            )
+                        }}
+                    >
+                    </CartFlatList>
+                }
                 <OrderWrapper>
                     <PayWrapper>
                         <PayAmtWrapper isBordered={true}>
                             <PayAmtTitle>{LANGUAGE[language].cartView.orderAmt}</PayAmtTitle>
-                            <PayAmtNumber>3</PayAmtNumber>
+                            <PayAmtNumber>{totalItemCnt}</PayAmtNumber>
                             <PayAmtUnit> {LANGUAGE[language].cartView.orderAmtUnit}</PayAmtUnit>
                         </PayAmtWrapper>
                     </PayWrapper>
                     <PayWrapper>
                         <PayAmtWrapper >
                             <PayAmtTitle>{LANGUAGE[language].cartView.totalAmt}</PayAmtTitle>
-                            <PayAmtNumber>3,000</PayAmtNumber>
+                            <PayAmtNumber>{grandTotal}</PayAmtNumber>
                             <PayAmtUnit> {LANGUAGE[language].cartView.totalAmtUnit}</PayAmtUnit>
                         </PayAmtWrapper>
                     </PayWrapper>

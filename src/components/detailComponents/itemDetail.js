@@ -19,7 +19,7 @@ const ItemDetail = (props) => {
     const language = props.language;
     const isDetailShow = props.isDetailShow;
     const dispatch = useDispatch();
-    const {menuDetailID, menuDetail} = useSelector((state)=>state.menuDetail);
+    const {menuDetailID, menuDetail, menuOptionGroupCode} = useSelector((state)=>state.menuDetail);
     const [detailZIndex, setDetailZIndex] = useState(0);
 
     // 옵션스테이트
