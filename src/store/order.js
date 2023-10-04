@@ -3,6 +3,7 @@ import { MENU_DATA } from '../resources/menuData';
 import { SERVICE_ID, STORE_ID } from '../resources/apiResources';
 import { postOrderToPos } from '../utils/apis';
 import { grandTotalCalculate } from '../utils/common';
+import { isEqual } from 'lodash'
 
 export const setOrderList = createAsyncThunk("order/setOrderList", async(index) =>{
     return index;
@@ -47,16 +48,16 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
     // 선택된 아이템 정보 받기
     const {displayMenu} = getState().menu;
     const {orderList} = getState().order;
-    const {selectedOptions,selectedRecommend} = _;
-    console.log("selectedOptions: ",selectedOptions);
-    console.log("selectedRecommend: ",selectedRecommend);
+    const {menuOptionSelected} = getState().menuDetail;
     const menuDetail = displayMenu.filter(el=>el.ITEM_ID == _.itemID);
     // 기존 주문에 같은 메뉴 있는지 확인
-    
     // 옵션필드 추가
-    var selectedMenuDetail = Object.assign({},menuDetail[0],{"ADDITIVE_ITEM_LIST":[]});
-    //console.log("selectedMenuDetail: ",selectedMenuDetail);
-
+    let additiveList = [];
+    if(menuOptionSelected) {
+        if(menuOptionSelected.length>0) additiveList=menuOptionSelected;
+    }
+    var selectedMenuDetail = Object.assign({},menuDetail[0],{"ADDITIVE_ITEM_LIST":additiveList});
+    
     var newOrderList = []; // 새 오더 정렬;
    // 중복메뉴
     let duplicatedItem = orderList.filter(el=> (
@@ -67,18 +68,17 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
         el.ITEM_MENO==selectedMenuDetail.ITEM_MENO &&
         el.ITEM_SET_GBN==selectedMenuDetail.ITEM_SET_GBN &&
         el.ITEM_USE_FLA==selectedMenuDetail.ITEM_USE_FLA &&
-        el.ADDITIVE_ITEM_LIST.every(item=>selectedMenuDetail.ADDITIVE_ITEM_LIST.includes(item))
+        isEqual(el.ADDITIVE_ITEM_LIST,selectedMenuDetail.ADDITIVE_ITEM_LIST)
     ));    
     var addedOrder = {};
     if(duplicatedItem.length>0) {
         //newOrderList = orderList
-        addedOrder = Object.assign({},duplicatedItem[0],{"ITEM_CNT":(Number(duplicatedItem[0].ITEM_CNT)+1),"ADDITIVE_ITEM_LIST":[]});       
+        addedOrder = Object.assign({},duplicatedItem[0],{"ITEM_CNT":(Number(duplicatedItem[0].ITEM_CNT)+1),"ADDITIVE_ITEM_LIST":additiveList});       
         newOrderList = Object.assign([],orderList);
         newOrderList[orderList.indexOf(duplicatedItem[0])] = addedOrder;
-        console.log("newOrderList: ",newOrderList);
     }else {
         //addedOrder = Object.assign({},selectedMenuDetail,{"ITEM_CNT":(Number(selectedMenuDetail.ITEM_CNT)+1),"ADDITIVE_ITEM_LIST":[]});
-        addedOrder = Object.assign({},selectedMenuDetail,{"ITEM_CNT":1,"ADDITIVE_ITEM_LIST":[]});
+        addedOrder = Object.assign({},selectedMenuDetail,{"ITEM_CNT":1,"ADDITIVE_ITEM_LIST":additiveList});
         newOrderList = Object.assign([],orderList);;
         newOrderList.push(addedOrder);    
     }

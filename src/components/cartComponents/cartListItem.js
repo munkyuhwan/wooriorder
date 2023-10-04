@@ -19,7 +19,7 @@ const CartListItem = (props) => {
     const order = props?.item;
     const additiveItemList = order.ADDITIVE_ITEM_LIST;
     //console.log("order ADDITIVE_GROUP_LIST: ",order.ADDITIVE_GROUP_LIST)
-    //console.log("order ADDITIVE_ITEM_LIST: ",order.ADDITIVE_ITEM_LIST)
+    //console.log("order ADDITIVE_ITEM_LIST: ",order)
     //console.log("additiveItemList: ",additiveItemList);
     //const menuData = MENU_DATA.menuAll[order.menuIndex];
     //console.log("order: ",order.ITEM_NAME);
@@ -49,7 +49,7 @@ const CartListItem = (props) => {
                     <CartItemOpts>
                         {additiveItemList.length>0 &&
                             additiveItemList.map((el,index)=>{
-                                return el.ADDITIVE_NAME+`${index<(additiveItemList.length-1)?", ":""}`;
+                                return el.menuOptionSelected.ADDITIVE_NAME+`${index<(additiveItemList.length-1)?", ":""}`;
                             })
                          }
                     </CartItemOpts>

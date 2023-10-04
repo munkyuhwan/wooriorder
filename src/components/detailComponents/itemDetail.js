@@ -81,17 +81,6 @@ const ItemDetail = (props) => {
         dispatch(setMenuOptionGroupCode(selectedGroup[0].ADDITIVE_GROUP_CODE));
         dispatch(setMenuOptionSelect(selectedGroup[0].ADDITIVE_ITEM_LIST));
         openPopup(dispatch,{innerView:"Option", isPopupVisible:true});
-
-        /* 기존 소스
-        var tmpArr = selectedOptions;
-        if(!tmpArr.includes(index)) {
-            tmpArr.push(index);
-        }else {
-            tmpArr.splice(tmpArr.indexOf(index),1);
-        }
-        tmpArr.sort();        
-        setSelectedOptions([...tmpArr])
-        */
     }
     const onRecommendSelect = (index) =>{
         var tmpArr = selectedRecommend;
@@ -106,7 +95,7 @@ const ItemDetail = (props) => {
     const addToCart = () => {
         //dispatch(addToOrderList({menuDetail, menuDetailID, selectedOptions,selectedRecommend}))
         const itemID = menuDetailID
-        dispatch(addToOrderList({itemID,selectedOptions,selectedRecommend}));
+        dispatch(addToOrderList({itemID}));
         closeDetail();
     }
 

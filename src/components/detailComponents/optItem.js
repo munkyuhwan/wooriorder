@@ -16,7 +16,7 @@ const OptItem = (props)=>{
             setSelected(checkMenu.length>0);
             // 선택한 메뉴리스트
             if(checkMenu.length>0){
-                const checkedOption = checkMenu[0].menuOptionSelected;
+                const checkedOption = checkMenu[0]?.menuOptionSelected?.ADDITIVE_ID;
                 const itemList = optionData.ADDITIVE_ITEM_LIST;
                 const filteredItem = itemList.filter(el=>el.ADDITIVE_ID==checkedOption);
                 setAdditivePrice(filteredItem[0].ADDITIVE_SALE_PRICE);
