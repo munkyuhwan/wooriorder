@@ -15,7 +15,6 @@ const OptItem = (props)=>{
             const checkMenu = menuOptionSelected.filter(el=>el.menuOptionGroupCode==optionData.ADDITIVE_GROUP_CODE);
             setSelected(checkMenu.length>0);
             // 선택한 메뉴리스트
-            console.log("checkMenu: ",checkMenu);
             if(checkMenu.length>0){
                 const checkedOption = checkMenu[0].menuOptionSelected;
                 const itemList = optionData.ADDITIVE_ITEM_LIST;

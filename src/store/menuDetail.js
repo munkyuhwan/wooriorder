@@ -44,7 +44,11 @@ export const menuDetailSlice = createSlice({
         initMenuDetail
         // 메뉴 상세 초기화
         builder.addCase(initMenuDetail.fulfilled,(state, action)=>{
-            state = action.payload;
+            state.menuDetailID = action.payload.menuDetailID;
+            state.menuDetail = action.payload.menuDetail;
+            state.menuOptionGroupCode = action.payload.menuOptionGroupCode;
+            state.menuOptionList = action.payload.menuOptionList;
+            state.menuOptionSelected = action.payload.menuOptionSelected;
         })
         // 메인 카테고리 받기
         builder.addCase(setMenuDetail.fulfilled,(state, action)=>{
