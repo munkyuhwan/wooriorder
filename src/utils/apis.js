@@ -1,6 +1,7 @@
 import axios from "axios";
 import { POS_BASE_URL_REAL, POS_BASE_URL_TEST, POS_ORDER_NEW, POS_POST_MENU_EDIT, POS_POST_MENU_STATE, POS_POST_TABLE_LIST, SERVICE_ID, STORE_ID } from "../resources/apiResources";
 import { errorHandler, posErrorHandler } from "./errorHandler/ErrorHandler";
+import {isEmpty} from "lodash";
 
 const posOrderHeadr = {Accept: 'application/json','Content-Type': 'application/json'}
 
@@ -75,7 +76,16 @@ export const postOrderToPos = async(dispatch, data) =>{
         ...data
     }
     );
+
+    
     return await new Promise(function(resolve, reject){
+        if(isEmpty(data) ) {
+            console.log("empty data");
+            posErrorHandler(dispatch, {ERRCODE:'XXXX',MSG:"메뉴를 선택 해 주세요.",MSG2:""});
+            reject();
+            return;
+        }
+    
         axios.post(
             `${POS_BASE_URL_REAL}${POS_ORDER_NEW}`,
             {
@@ -87,7 +97,6 @@ export const postOrderToPos = async(dispatch, data) =>{
         )  
         .then((response => {
             if(posErrorHandler(dispatch, response.data)){
-                console.log();
                 const data = response.data.OBJ.TABLE_LIST;
                 resolve(data); 
             }else {

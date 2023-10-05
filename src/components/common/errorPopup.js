@@ -16,7 +16,7 @@ const ErrorPopup = () => {
 
     return(
         <>
-            <ErrorTitle>{errorCode||"error"}: {errorMsg||"error"}</ErrorTitle>
+            <ErrorTitle>{errorCode=="XXXX"?"":errorCode+":"} {errorMsg||"error"}</ErrorTitle>
         </>
     )
 }
