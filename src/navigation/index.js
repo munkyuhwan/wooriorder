@@ -48,7 +48,7 @@ export default function Navigation() {
         <>  
             <NavigationContainer>
                 <Stack.Navigator
-                    initialRouteName='main'
+                    initialRouteName='login'
                     screenOptions={{
                         gestureEnabled: true,
                         headerShown: false,

@@ -2,14 +2,24 @@ import React, { useEffect, useRef, useState } from 'react'
 import { KeyboardAvoidingView, Text, TouchableWithoutFeedback } from 'react-native'
 import { LoginActionInputID, LoginActionInputPW, LoginActionSubtitle, LoginActionTitle, LoginActionWrapper, LoginBtnIcon, LoginBtnText, LoginBtnWrapper, LoginLogo, LoginMainWrapper } from '../styles/login/loginStyle'
 import { useNavigation } from '@react-navigation/native';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { memberLogin } from '../store/member';
+import {isEmpty} from 'lodash';
 
 const LoginScreen = () =>{
+    const dispatch = useDispatch();
+    const navigation = useNavigation();
+
+    const {memberInfo} = useSelector(state=>state.memberInfo);
 
     const pwRef = useRef();
     const idRef = useRef();
 
-    const navigation = useNavigation();
+    useEffect(()=>{
+        if(!isEmpty(memberInfo)) {
+            navigation.navigate("main");
+        }
+    },[memberInfo])
 
     return(
         <>
@@ -34,7 +44,7 @@ const LoginScreen = () =>{
                         }}
                         secureTextEntry={true}  
                     />
-                    <TouchableWithoutFeedback onPress={()=>{navigation.navigate("ad")}} >
+                    <TouchableWithoutFeedback onPress={()=>{dispatch(memberLogin()); }} >
                         <LoginBtnWrapper>
                             <LoginBtnText>로그인하기</LoginBtnText>
                             <LoginBtnIcon source={require("assets/icons/lock.png")} />

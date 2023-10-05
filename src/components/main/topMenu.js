@@ -21,6 +21,8 @@ import VersionCheck from 'react-native-version-check';
 const TopMenu = () =>{
     const dispatch = useDispatch();
     const {subCategories} = useSelector((state)=>state.categories);
+    const {tableInfo} = useSelector(state => state.tableInfo);
+    
     const [currentVersion, setCurrentVersion ] = useState("version");
 
     useEffect(()=>{
@@ -53,8 +55,8 @@ const TopMenu = () =>{
                     </CategoryScrollView>
                 </SafeAreaView>
                 <TableName>
-                    <TableNameSmall>TABLE 01</TableNameSmall>
-                    <TableNameBig>테이블명</TableNameBig>
+                    <TableNameSmall>{tableInfo?.TBL_CODE}</TableNameSmall>
+                    <TableNameBig>{tableInfo?.TBL_NAME}</TableNameBig>
                 </TableName>
                 <TouchableWithoutFeedback onPress={()=>{openPopup(dispatch,{innerView:"Setting", isPopupVisible:true}); }} >
                     <Text style={{color:colorWhite}} >설정 {currentVersion}</Text>
