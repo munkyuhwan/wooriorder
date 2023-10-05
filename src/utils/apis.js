@@ -80,7 +80,6 @@ export const postOrderToPos = async(dispatch, data) =>{
     
     return await new Promise(function(resolve, reject){
         if(isEmpty(data) ) {
-            console.log("empty data");
             posErrorHandler(dispatch, {ERRCODE:'XXXX',MSG:"메뉴를 선택 해 주세요.",MSG2:""});
             reject();
             return;

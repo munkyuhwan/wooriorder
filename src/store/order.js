@@ -84,7 +84,50 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
     }
 
     const totalResult = grandTotalCalculate(newOrderList)
-    return {orderList:newOrderList,grandTotal:totalResult.grandTotal,totalItemCnt:totalResult.itemCnt };
+
+    const orderPayData = {
+        "STORE_ID": STORE_ID,
+        "SERVICE_ID": SERVICE_ID,
+        "MCHT_ORDERNO": "120",
+        "MEMB_TEL": "01012349876",
+        "ORDER_MEMO": "태스트 ",
+        "OEG_ORDER_PAY_AMT": `${totalResult}`,
+        "ORDER_PAY_AMT": `${totalResult}`,
+        "DISC_AMT": "0",
+        "PREPAY_FLAG": "Y",
+        "OS_GBN": "AND",
+        "FLR_CODE": "0001",
+        "TBL_CODE": "0005",
+        "REPT_PRT_FLAG": "Y",
+        "ORDER_PRT_FLAG": "Y",
+        "ORDER_PAY_LIST":[
+            {
+                "PAY_TYPE": "card",
+                "CAN_FLAG": "N",
+                "CAN_PAY_SEQ": "",
+                "TML_NO": "",
+                "SALE_AMT": "5000",
+                "SALE_VAT_AMT": "0",
+                "SVC_AMT": "0",
+                "ISTM_TERM": "",
+                "AUTH_NO": "",
+                "AUTH_DATE": "",
+                "AUTH_TIME": "",
+                "CARD_ACQHID": "",
+                "CARD_ACQ_NAME": "",
+                "CARD_ACSHID": "",
+                "CRD_HID_NAME": "",
+                "CARD_NO": "",
+                "CARD_MCHTNO": "",
+                "CARD_PAY_TYPE": "",
+                "CASH_AUTH_TYPE": "",
+                "DDCEDI": ""
+            },
+        ],
+        "ITEM_LIST":orderList,
+    }
+
+    return {orderList:newOrderList,grandTotal:totalResult.grandTotal,totalItemCnt:totalResult.itemCnt, orderPayData:orderPayData };
     
     // 결제 정보 관련 데이터
     const ordPayList = [
@@ -306,6 +349,7 @@ export const orderSlice = createSlice({
                 state.orderList = action.payload.orderList;
                 state.grandTotal = action.payload.grandTotal;
                 state.totalItemCnt = action.payload.totalItemCnt;
+                state.orderPayData = action.payload.orderPayData;
             }
         })
         // 주문 수량 수정
