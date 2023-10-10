@@ -11,6 +11,7 @@ import { openFullSizePopup, openTransperentPopup } from '../../utils/common';
 import { TransparentPopupWrapper } from '../../styles/common/popup';
 import CallServerPopup from '../popups/callServerPopup';
 import OrderListPopup from '../popups/orderListPopup';
+import SettingPopup from '../popups/settingPopup';
 
 const FullSizePopup = (props) =>{
     
@@ -82,6 +83,9 @@ const FullSizePopup = (props) =>{
                 </TouchableWithoutFeedback>
                     {innerFullView=="CallServer"&&
                         <CallServerPopup/>
+                    }
+                    {(innerFullView=="Setting") &&
+                        <SettingPopup/>
                     }
                     
             </Animated.View>

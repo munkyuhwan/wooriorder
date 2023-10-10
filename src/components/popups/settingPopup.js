@@ -143,6 +143,9 @@ const SettingPopup = () =>{
         <>
             <SettingWrapper>
                 <SettingButtonWrapper>
+                    <TouchableWithoutFeedback onPress={()=>{}} >
+                        <SettingButtonText>테이블 세팅</SettingButtonText>
+                    </TouchableWithoutFeedback>
                     <TouchableWithoutFeedback onPress={()=>{getDeviceInfo();}} >
                         <SettingButtonText>단말기 정보 가져오기</SettingButtonText>
                     </TouchableWithoutFeedback>
