@@ -106,6 +106,9 @@ const PopUp = (props) =>{
                             </TouchableWithoutFeedback>
                         </PopupBottomButtonWrapper>
                     }
+                    {(innerView=="Setting") &&
+                        <SettingPopup/>
+                    }
                     {innerView=="CallServer"&&
                         <CallServerPopup/>
                     }
