@@ -12,6 +12,7 @@ const LeftMenuList = (props) => {
     const data = props?.data;
     const initSelect = props?.initSelect;
     const [selectIndex, setSelectedIndex] = useState(0);
+    const {selectedMainCategory} = useSelector((state)=>state.categories);
 
     const onPressAction = (index, groupCode) =>{
         setSelectedIndex(index);
@@ -24,12 +25,12 @@ const LeftMenuList = (props) => {
                 return(
                     <TouchableWithoutFeedback key={"leftItem_"+index} onPress={()=>{{ onPressAction(index,item?.ITEM_GROUP_CODE); }}}>
                         <SideMenuItemWrapper>
-                            {index==selectIndex &&
+                            {item?.ITEM_GROUP_CODE==selectedMainCategory &&
                                 <SideMenuItemOn>
                                     <SideMenuText>{item?.ITEM_GROUP_NAME}</SideMenuText>
                                 </SideMenuItemOn>
                             }
-                            {index!=selectIndex &&
+                            {item?.ITEM_GROUP_CODE!=selectedMainCategory &&
                                 <SideMenuItemOff>
                                     <SideMenuText>{item?.ITEM_GROUP_NAME}</SideMenuText>
                                 </SideMenuItemOff>
