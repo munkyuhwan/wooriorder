@@ -33,7 +33,7 @@ export const  posMenuState = async (dispatch) =>{
     }
     return await new Promise(function(resolve, reject){
         axios.post(
-            `${POS_BASE_URL_REAL}${POS_POST_MENU_STATE}`,
+            `${POS_BASE_URL_TEST}${POS_POST_MENU_STATE}`,
             {"STORE_ID":STORE_ID,"SERVICE_ID":SERVICE_ID, "UPDATE_CHECK_DTIME":lastUpdate},
             posOrderHeadr,  
         ) 
@@ -53,7 +53,7 @@ export const  posMenuState = async (dispatch) =>{
 export const  posMenuEdit = async(dispatch) =>{
     return await new Promise(function(resolve, reject){
         axios.post(
-            `${POS_BASE_URL_REAL}${POS_POST_MENU_EDIT}`,
+            `${POS_BASE_URL_TEST}${POS_POST_MENU_EDIT}`,
             {"STORE_ID":STORE_ID},
             posOrderHeadr,
         ) 
@@ -71,7 +71,7 @@ export const  posMenuEdit = async(dispatch) =>{
 export const posTableList = async(dispatch) =>{
     return await new Promise(function(resolve, reject){
         axios.post(
-            `${POS_BASE_URL_REAL}${POS_POST_TABLE_LIST}`,
+            `${POS_BASE_URL_TEST}${POS_POST_TABLE_LIST}`,
             {"STORE_ID":STORE_ID,"SERVICE_ID":SERVICE_ID},
             posOrderHeadr,
         )  
@@ -104,7 +104,7 @@ export const postOrderToPos = async(dispatch, data) =>{
         }
     
         axios.post(
-            `${POS_BASE_URL_REAL}${POS_ORDER_NEW}`,
+            `${POS_BASE_URL_TEST}${POS_ORDER_NEW}`,
             {
                 "STORE_ID":STORE_ID,
                 "SERVICE_ID":SERVICE_ID,
