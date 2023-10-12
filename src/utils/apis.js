@@ -2,6 +2,8 @@ import axios from "axios";
 import { POS_BASE_URL_REAL, POS_BASE_URL_TEST, POS_ORDER_NEW, POS_POST_MENU_EDIT, POS_POST_MENU_STATE, POS_POST_TABLE_LIST, SERVICE_ID, STORE_ID } from "../resources/apiResources";
 import { errorHandler, posErrorHandler } from "./errorHandler/ErrorHandler";
 import {isEmpty} from "lodash";
+import { numberPad } from "./common";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const posOrderHeadr = {Accept: 'application/json','Content-Type': 'application/json'}
 
@@ -20,12 +22,19 @@ export const  posOrderNew = async (resolve,reject) =>{
     })
 }
 export const  posMenuState = async (dispatch) =>{
-    const date = new Date();
-    //`${date.getFullYear()}${date.getMonth()+1}${date.getDate()}`
+    var lastUpdate="";
+    try {
+        lastUpdate = await AsyncStorage.getItem("lastUpdate");
+        if(lastUpdate == null || lastUpdate== "") {
+            lastUpdate = `20200101000000`;
+        }
+    }catch(err) {
+        lastUpdate = `20200101000000`;
+    }
     return await new Promise(function(resolve, reject){
         axios.post(
             `${POS_BASE_URL_REAL}${POS_POST_MENU_STATE}`,
-            {"STORE_ID":STORE_ID,"SERVICE_ID":SERVICE_ID, "UPDATE_CHECK_DTIME":`${date.getFullYear()}${date.getMonth()+1}${date.getDate()}`},
+            {"STORE_ID":STORE_ID,"SERVICE_ID":SERVICE_ID, "UPDATE_CHECK_DTIME":lastUpdate},
             posOrderHeadr,  
         ) 
         .then((response => { 
@@ -38,6 +47,8 @@ export const  posMenuState = async (dispatch) =>{
         }))
         .catch(error=>reject(error.response.data));
     })
+
+
 }
 export const  posMenuEdit = async(dispatch) =>{
     return await new Promise(function(resolve, reject){

@@ -5,6 +5,7 @@ import axios from 'axios';
 import { posMenuEdit, posMenuState, posOrderNew } from '../utils/apis';
 import { setMainCategories } from './categories';
 import { EventRegister } from 'react-native-event-listeners';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const initMenu = createAsyncThunk("menu/initMenu", async(category) =>{
     return [];
@@ -29,9 +30,13 @@ export const getMenuState = createAsyncThunk("menu/menuState", async(_,{dispatch
         return
     }else {
         const isUpdated = resultData?.OBJ.UPDATE_YN;
+        const updateDateTime = resultData?.OBJ.UPDATE_DTIME.slice(0,14);
+
         if(isUpdated=="Y") {
             // 날짜 기준 메뉴 업트가 있으면 새로 받아 온다.
+            AsyncStorage.setItem("lastUpdate",updateDateTime);
             dispatch(getMenuEdit());
+            dispatch(getDisplayMenu());
         }
     }
 })
