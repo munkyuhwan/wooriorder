@@ -97,9 +97,9 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
         "PREPAY_FLAG": "Y",
         "OS_GBN": "AND",
         "FLR_CODE": "0001",
-        "TBL_CODE": "0005",
-        "REPT_PRT_FLAG": "Y",
-        "ORDER_PRT_FLAG": "Y",
+        "TBL_CODE": "0001",
+        "REPT_PRT_FLAG": "N",
+        "ORDER_PRT_FLAG": "N",
         "ORDER_PAY_LIST":[
             {
                 "PAY_TYPE": "card",
@@ -124,9 +124,9 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
                 "DDCEDI": ""
             },
         ],
-        "ITEM_LIST":orderList,
+        "ITEM_LIST":newOrderList,
     }
-
+    
     return {orderList:newOrderList,grandTotal:totalResult.grandTotal,totalItemCnt:totalResult.itemCnt, orderPayData:orderPayData };
     
     // 결제 정보 관련 데이터

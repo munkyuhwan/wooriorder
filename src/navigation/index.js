@@ -26,7 +26,7 @@ export default function Navigation() {
 
     const dispatch = useDispatch();
     const [spinnerText, setSpinnerText] = React.useState("")
-
+    const {tableList} = useSelector(state=>state.tableInfo);
     const handleEventListener = () => {
         //리스너 중복방지를 위해 한번 삭제
         DeviceEventEmitter.removeAllListeners("onPending");
@@ -50,7 +50,9 @@ export default function Navigation() {
         })
     }
 
-    
+    useEffect(()=>{
+        //console.log("tableList: ",tableList);
+    },[tableList])
     
     useEffect(()=>{
         handleEventListener();
