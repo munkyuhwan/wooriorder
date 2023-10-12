@@ -15,9 +15,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getMainCategories, getSubCategories, setSelectedMainCategory, setSelectedSubCategory } from '../store/categories'
 import FullSizePopup from '../components/common/fullsizePopup'
 import ErrorPopup from '../components/common/errorPopup'
-import { getMenuEdit } from '../store/menu'
+import { getMenuEdit, getMenuState } from '../store/menu'
 import _ from 'lodash';
 import { getTableList } from '../store/tableInfo'
+import { EventRegister } from 'react-native-event-listeners'
+
 const Stack = createStackNavigator()
 
 export default function Navigation() {
@@ -25,16 +27,33 @@ export default function Navigation() {
     const dispatch = useDispatch();
     const [spinnerText, setSpinnerText] = React.useState("")
 
-    // 결제진행중 팝업
-    DeviceEventEmitter.addListener("onPending",(ev)=>{
-        const pendingEvent = JSON.parse(ev.event)
-        setSpinnerText(pendingEvent?.description)
-    })
-    DeviceEventEmitter.addListener("onComplete",(ev)=>{
-        setSpinnerText("")
-    })
+    const handleEventListener = () => {
+        //리스너 중복방지를 위해 한번 삭제
+        DeviceEventEmitter.removeAllListeners("onPending");
+        DeviceEventEmitter.removeAllListeners("onComplete");
+        EventRegister.removeAllListeners("showSpinner");
+
+        // 결제진행중 팝업
+        DeviceEventEmitter.addListener("onPending",(ev)=>{
+            const pendingEvent = JSON.parse(ev.event)
+            setSpinnerText(pendingEvent?.description)
+        })
+        DeviceEventEmitter.addListener("onComplete",(ev)=>{
+            setSpinnerText("")
+        })
+        EventRegister.addEventListener("showSpinner",(data)=>{            
+            if(data?.isSpinnerShow) { 
+                setSpinnerText(data?.msg)
+            }else {
+                setSpinnerText("");
+            }
+        })
+    }
+
+    
     
     useEffect(()=>{
+        handleEventListener();
         dispatch(getMenuEdit());
     },[])
     useEffect(()=>{
@@ -42,6 +61,12 @@ export default function Navigation() {
             dispatch(getTableList());
             clearTimeout(getInterval);
         }, 1000);
+ 
+        // 메뉴 갱신을 위한 함수 실행 한시간에 한번
+        setInterval(()=>{
+            dispatch(getMenuState());
+        },1000*60*60) 
+
     },[]);
 
     return (

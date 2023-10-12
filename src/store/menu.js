@@ -4,6 +4,7 @@ import { MENU_DATA } from '../resources/menuData';
 import axios from 'axios';
 import { posMenuEdit, posMenuState, posOrderNew } from '../utils/apis';
 import { setMainCategories } from './categories';
+import { EventRegister } from 'react-native-event-listeners';
 
 export const initMenu = createAsyncThunk("menu/initMenu", async(category) =>{
     return [];
@@ -22,11 +23,21 @@ export const updateMenu = createAsyncThunk("menu/updateMenu", async(_,{rejectWit
     return await posOrderNew();
 })
 
-export const getMenuState = createAsyncThunk("menu/menuState", async(_,{rejectWithValue}) =>{
-    return await posMenuState();
+export const getMenuState = createAsyncThunk("menu/menuState", async(_,{dispatch}) =>{
+    const resultData = await posMenuState(dispatch);
+    if(!resultData) {
+        return
+    }else {
+        const isUpdated = resultData?.OBJ.UPDATE_YN;
+        if(isUpdated=="Y") {
+            // 날짜 기준 메뉴 업트가 있으면 새로 받아 온다.
+            dispatch(getMenuEdit());
+        }
+    }
 })
 
 export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, rejectWithValue}) =>{
+    EventRegister.emit("showSpinner",{isSpinnerShow:true, msg:"메뉴를 갱신 중입니다."})
     const resultData = await posMenuEdit(dispatch);
     
     let categories = [];
@@ -42,6 +53,7 @@ export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, 
         }
     });
     dispatch(setMainCategories(categories));
+    EventRegister.emit("showSpinner",{isSpinnerShow:false, msg:""})
     return resultData;
 })
 
@@ -75,6 +87,7 @@ export const menuSlice = createSlice({
             } */
         })
         builder.addCase(getMenuState.fulfilled,(state, action)=>{
+
         })
         builder.addCase(getMenuEdit.fulfilled,(state, action)=>{
             state.menu = action.payload;

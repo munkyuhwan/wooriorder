@@ -15,19 +15,26 @@ export const  posOrderNew = async (resolve,reject) =>{
         ) 
         .then((response => { 
             resolve(response);
-        }))
+        })) 
         .catch(error=>reject(error.response.data));
     })
 }
-export const  posMenuState = async (resolve,reject) =>{
+export const  posMenuState = async (dispatch) =>{
+    const date = new Date();
+    //`${date.getFullYear()}${date.getMonth()+1}${date.getDate()}`
     return await new Promise(function(resolve, reject){
         axios.post(
-            `${POS_BASE_URL_TEST}${POS_POST_MENU_STATE}`,
-            {"STORE_ID":STORE_ID,"SERVICE_ID":SERVICE_ID, "UPDATE_CHECK_DTIME":"20230915"},
+            `${POS_BASE_URL_REAL}${POS_POST_MENU_STATE}`,
+            {"STORE_ID":STORE_ID,"SERVICE_ID":SERVICE_ID, "UPDATE_CHECK_DTIME":`${date.getFullYear()}${date.getMonth()+1}${date.getDate()}`},
             posOrderHeadr,  
         ) 
         .then((response => { 
-            resolve(response);  
+            if(posErrorHandler(dispatch, response.data)){
+                const data = response.data;
+                resolve(data); 
+            }else {
+                reject();
+            } 
         }))
         .catch(error=>reject(error.response.data));
     })
