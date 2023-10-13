@@ -25,8 +25,7 @@ const MenuListView = () => {
     //scroll
     const [isScrollEnd, setScrollEnd] = useState(true);
     const [isTouchEnd, setTouchEnd] = useState(false);
-
-    const lastContentOffset = useSharedValue(0);
+    const [isTouchStart, setTouchStart] = useState(false);
    //const isScrolling = useSharedValue(false);
     const dragStartPosition = useSharedValue(0);
     const dragEndPosition = useSharedValue(0);
@@ -37,10 +36,9 @@ const MenuListView = () => {
     const {mainCategories, selectedMainCategory} = useSelector((state)=>state.categories);
     //console.log("menu:",menu[1].ITEM_LIST[0]);
     useEffect(()=>{
+        // 스크롤 될때
         if(isScrollEnd) {
-
             if(mainCategories.length > 0) {
-                console.log(mainCategories);
                 const selectedCat = mainCategories.filter(e => e.ITEM_GROUP_CODE==selectedMainCategory);
                 const selectedIndex = mainCategories.indexOf(selectedCat[0]);
                 var nextPage = 0;
@@ -55,33 +53,28 @@ const MenuListView = () => {
                         nextPage = selectedIndex;
                     }
                 }
-                console.log("scrolling: ",mainCategories[nextPage].ITEM_GROUP_CODE);
                 dispatch(setSelectedMainCategory(mainCategories[nextPage].ITEM_GROUP_CODE)); 
                 setScrollEnd(false);
-                //listRef.scrollToOffset({ animated: true, offset: 0 });
             }
         }
     },[isScrollEnd])
     useEffect(()=>{
-        if(isScrollEnd && isTouchEnd) {
-            /* const selectedCat = mainCategories.filter(e => e.ITEM_GROUP_CODE==selectedMainCategory);
+        // 스크롤 안될때
+        if(!isTouchStart&&isTouchEnd) {
+            const selectedCat = mainCategories.filter(e => e.ITEM_GROUP_CODE==selectedMainCategory);
             const selectedIndex = mainCategories.indexOf(selectedCat[0]);
             var nextPage = 0;
-            console.log("scrollStart: ",scrollStart," scrollEnd: ",scrollEnd);
             if(dragEndPosition.value<dragStartPosition.value) {
-                console.log('위로 스크롤')
                 nextPage = selectedIndex+1;
                 if(nextPage>mainCategories.length-1) nextPage=mainCategories.length-1;
             }else {
-                console.log('아래로  스크롤')
                 nextPage = selectedIndex-1;
                 if(nextPage<0) nextPage=0;
             }
-            console.log("nextpage: ",nextPage);
             dispatch(setSelectedMainCategory(mainCategories[nextPage].ITEM_GROUP_CODE)); 
-            setScrollEnd(false); */
+            setScrollEnd(false);  
         }
-    },[isScrollEnd, isTouchEnd])
+    },[ isTouchEnd, isTouchStart])
 
     useEffect(()=>{
         if(isOn) {
@@ -116,24 +109,20 @@ const MenuListView = () => {
                         //console.log("drag end: ",ev.nativeEvent.changedTouches[0].locationY) 
                         dragEndPosition.value = ev.nativeEvent.changedTouches[0].locationY;
                         setTouchEnd(true);
+                        setTouchStart(false);
                     }}
                     onTouchStart={(ev)=>{
                         //console.log("drag start: ",ev.nativeEvent.changedTouches[0].locationY) 
                         dragStartPosition.value = ev.nativeEvent.changedTouches[0].locationY;
                         setTouchEnd(false);
+                        setTouchStart(true);
                         //setScrollEnd(true);
                     }}
                     onScrollEndDrag={(ev)=>{
-                        //console.log("scroll end: ",ev.nativeEvent.contentOffset.y);
-                        //dragEndPosition.value = ev.nativeEvent.contentOffset.y;
                         scrollEnd.value = ev.nativeEvent.contentOffset.y;
-                        //isScrolling.value = false;
                         setScrollEnd(true);
                     }}
                     onScrollBeginDrag={(ev)=>{
-                        //console.log("scroll begin: ",ev.nativeEvent.contentOffset.y);
-                        //dragStartPosition.value = ev.nativeEvent.contentOffset.y;
-                        //isScrolling.value = true;
                         scrollStart.value = ev.nativeEvent.contentOffset.y;                       
                     }}
                     
