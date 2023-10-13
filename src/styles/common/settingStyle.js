@@ -1,18 +1,21 @@
 import styled, {css} from 'styled-components/native';
-import { colorBlack, colorGrey } from '../../assets/colors/color';
+import { colorBlack, colorDarkGrey, colorGrey, colorWhite, colorYellow } from '../../assets/colors/color';
 import { RADIUS } from '../values';
+import { ScrollView, TouchableWithoutFeedback } from 'react-native';
 
 export const SettingWrapper = styled.View`
-    paddingBottom:15px;
-    paddingLeft:10px;
-    paddingRight:10px;
+    paddingLeft:30px;
+    paddingRight:30px;
+    backgroundColor:${colorWhite};
+    width:100%;
 `
 export const SettingButtonWrapper = styled.View`
     flexDirection:column;
+    marginTop:15px;
 `
 export const SettingButtonText = styled.Text`
-    backgroundColor:${colorGrey};
-    color:${colorBlack};
+    backgroundColor:${colorDarkGrey};
+    color:${colorWhite};
     fontSize:21px;
     marginTop:10px;
     paddingTop:7px;
@@ -20,4 +23,51 @@ export const SettingButtonText = styled.Text`
     textAlign:center;
     fontWeight:bold;
     borderRadius:${RADIUS};
+`
+
+export const SettingScrollView = styled(ScrollView)`
+    height:90%;
+`
+
+export const DetailSettingWrapper = styled.View`
+    width:100%;
+    backgroundColor:${colorGrey};
+    borderRadius:${RADIUS};
+    marginTop:5px;
+    padding:10px;
+`
+export const TableColumnWrapper = styled.View`
+    flexDirection:row;
+    paddingTop:5px;
+`
+export const TableColumnTitle = styled.Text`
+    fontSize:20px;
+    color:${colorBlack};
+    fontWeight:bold;
+    marginTop:auto;
+    marginBottom:auto;
+`
+export const TableColumnInput = styled.TextInput`
+    width:100px;
+    height:30px;
+    backgroundColor:${colorWhite};
+    marginLeft:10px;
+    fontSize:15px;
+    padding:0px;
+    marginTop:auto;
+    marginBottom:auto;
+`
+export const SettingConfirmBtnWrapper = styled.View`
+    backgroundColor:${colorYellow};
+    marginTop:10px;
+    borderRadius:${RADIUS};
+    padding:5px;
+    alignItems:center;
+`
+export const SettingConfirmBtn = styled(TouchableWithoutFeedback)`
+`
+export const SettingConfirmBtnText = styled.Text`
+    fontSize:20px;
+    fontWeight:bold;
+    color:${colorBlack};
 `

@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { SettingButtonText, SettingButtonWrapper, SettingWrapper } from '../../styles/common/settingStyle';
-import { Alert, DeviceEventEmitter, TouchableWithoutFeedback } from 'react-native';
+import { DetailSettingWrapper, SettingButtonText, SettingButtonWrapper, SettingConfirmBtn, SettingConfirmBtnText, SettingConfirmBtnWrapper, SettingScrollView, SettingWrapper, TableColumnInput, TableColumnTitle, TableColumnWrapper } from '../../styles/common/settingStyle';
+import { Alert, DeviceEventEmitter, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { startSmartroCheckIntegrity, startSmartroGetDeviceInfo, startSmartroGetDeviceSetting, startSmartroKeyTransfer, startSmartroReadCardInfo, startSmartroRequestPayment, startSmartroSetDeviceDefaultSetting } from '../../utils/smartro';
 import CodePush from 'react-native-code-push';
 import PopupIndicator from '../common/popupIndicator';
 import { IndicatorWrapper, PopupIndicatorText, PopupIndicatorWrapper, PopupSpinner } from '../../styles/common/popupIndicatorStyle';
+import { PopupCloseButton, PopupCloseButtonWrapper } from '../../styles/common/popup';
+import { openFullSizePopup } from '../../utils/common';
+import RNPickerSelect from 'react-native-picker-select';
+import { Picker } from '@react-native-picker/picker';
+import { setTableInfo } from '../../store/tableInfo';
 
 const SettingPopup = () =>{
-    const [spinnerText, setSpinnerText] = React.useState("")
 
+    const dispatch = useDispatch();
+
+    const [spinnerText, setSpinnerText] = React.useState("")
+    const {tableList,tableInfo} = useSelector(state=>state.tableInfo);
+
+    const [isTableSettingShow, setTableSettingShow] = useState(false);
+    const [selectedTable, setSelectedTable] = useState(tableInfo);
+ 
     const getDeviceInfo = () =>{
         startSmartroGetDeviceInfo()
         .then((result)=>{
@@ -85,9 +97,6 @@ const SettingPopup = () =>{
             console.log("error: ",error)
         })
     }
-
-
-
     const displayOnAlert = (title, jsonResult) => {
         const objKeys = Object.keys(jsonResult)
         var str = "";
@@ -135,47 +144,102 @@ const SettingPopup = () =>{
                     }]
                 )
             } 
-        
     } 
-
+    const Dropdown = () => {
+        return (
+            <Picker
+                onValueChange = {(itemValue, itemIndex) => {
+                    console.log("itemValue: ",itemValue);
+                    dispatch(setTableInfo(itemValue))
+                }}
+                selectedValue={tableInfo}
+                style = {{
+                    width: 200,
+                    height: 50,
+                }}>
+                {tableList.map(el=>{
+                    console.log("el: ",el)
+                    return(
+                        <Picker.item label = {el.FLR_NAME+"층 "+el.TBL_NAME+"테이블"} value ={el} />
+                    )
+                })
+                }
+                {/* 
+                <Picker.item label = 'Diary' value = 'diary' />
+                <Picker.item label = 'Todo' value = 'todo' />
+                <Picker.item label = 'Study' value = 'study' />
+                */}
+            </Picker>
+        );
+    };
 
     return (
         <>
             <SettingWrapper>
-                <SettingButtonWrapper>
-                    <TouchableWithoutFeedback onPress={()=>{}} >
-                        <SettingButtonText>테이블 세팅</SettingButtonText>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={()=>{getDeviceInfo();}} >
-                        <SettingButtonText>단말기 정보 가져오기</SettingButtonText>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={()=>{deviceKeyTransfer();}}>
-                        <SettingButtonText>키교환하기(오류시 시도)</SettingButtonText>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={()=>{checkDeviceIntegrity();}}>
-                        <SettingButtonText>장치 무결성 점검</SettingButtonText>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={()=>{getCardInfo();}} >
-                        <SettingButtonText>카드정보 가져오기</SettingButtonText>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={()=>{getDeviceSetting();}} >
-                        <SettingButtonText>장치 설정</SettingButtonText>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={()=>{getDeviceDefaultSetting();}} >
-                        <SettingButtonText>장치 기본 설정</SettingButtonText>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={()=>{testPayment();}} >
-                        <SettingButtonText>테스트 결제</SettingButtonText>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={()=>{}} >
-                        <SettingButtonText>메뉴 업데이트</SettingButtonText>
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback onPress={()=>{checkUpdate();}} >
-                        <SettingButtonText>앱 업데이트</SettingButtonText>
-                    </TouchableWithoutFeedback>
-                </SettingButtonWrapper>
-                
+                {/* <TouchableWithoutFeedback onPress={()=>{ openFullSizePopup(dispatch,{innerFullView:"", isFullPopupVisible:false}); }}>
+                        <PopupCloseButtonWrapper>
+                            <PopupCloseButton source={require('assets/icons/close_red.png')}/>
+                        </PopupCloseButtonWrapper>
+                </TouchableWithoutFeedback> */}
+                <SettingScrollView>
+                    <SettingButtonWrapper>
+                        <TouchableWithoutFeedback onPress={()=>{ setTableSettingShow(!isTableSettingShow) }} >
+                            <SettingButtonText>테이블 세팅</SettingButtonText>
+                        </TouchableWithoutFeedback>
+                        
+                        {isTableSettingShow &&
+                            <Dropdown/>
+                            /* <DetailSettingWrapper>
+                                <TableColumnWrapper>
+                                    <TableColumnTitle>층:</TableColumnTitle>
+                                    <TableColumnInput inputMode='number' keyboardType='number' />
+                                </TableColumnWrapper>
+                                <TableColumnWrapper>
+                                    <TableColumnTitle>테이블 번호:</TableColumnTitle>
+                                    <TableColumnInput/>
+                                </TableColumnWrapper>
+                                <TableColumnWrapper>
+                                    <TableColumnTitle>테이블 코드:</TableColumnTitle>
+                                    <TableColumnInput/>
+                                </TableColumnWrapper>
+                                <SettingConfirmBtnWrapper onPress={()=>{setTableSettingShow(!isTableSettingShow);} }>
+                                    <SettingConfirmBtn>
+                                        <SettingConfirmBtnText>적용</SettingConfirmBtnText>
+                                    </SettingConfirmBtn>
+                                </SettingConfirmBtnWrapper>
+                            </DetailSettingWrapper> */
+                        }
+                        <TouchableWithoutFeedback onPress={()=>{getDeviceInfo();}} >
+                            <SettingButtonText>단말기 정보 가져오기</SettingButtonText>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={()=>{deviceKeyTransfer();}}>
+                            <SettingButtonText>키교환하기(오류시 시도)</SettingButtonText>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={()=>{checkDeviceIntegrity();}}>
+                            <SettingButtonText>장치 무결성 점검</SettingButtonText>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={()=>{getCardInfo();}} >
+                            <SettingButtonText>카드정보 가져오기</SettingButtonText>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={()=>{getDeviceSetting();}} >
+                            <SettingButtonText>장치 설정</SettingButtonText>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={()=>{getDeviceDefaultSetting();}} >
+                            <SettingButtonText>장치 기본 설정</SettingButtonText>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={()=>{testPayment();}} >
+                            <SettingButtonText>테스트 결제</SettingButtonText>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={()=>{}} >
+                            <SettingButtonText>메뉴 업데이트</SettingButtonText>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={()=>{checkUpdate();}} >
+                            <SettingButtonText>앱 업데이트</SettingButtonText>
+                        </TouchableWithoutFeedback>
+                    </SettingButtonWrapper>
+                </SettingScrollView>
             </SettingWrapper>
+
             {(spinnerText!="")&&
                 <PopupIndicatorWrapper style={{right:0, position:'absolute', width:'104%', height:'104%'}}>
                     <IndicatorWrapper>

@@ -12,7 +12,7 @@ export const getTableList = createAsyncThunk("tableInfo/getTableList", async(dat
 export const tableInfoSlice = createSlice({
     name: 'tableInfo',
     initialState: {
-        tableInfo:{TBL_CODE:"0001",TBL_NAME:"1"},
+        tableInfo:{"FLR_CODE": "0001", "FLR_NAME": "001", "TBL_CODE": "0029", "TBL_NAME": "27"},
         tableList:[],
         tableCode:"0001",
     },
