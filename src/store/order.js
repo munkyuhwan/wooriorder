@@ -49,6 +49,7 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
     const {displayMenu} = getState().menu;
     const {orderList} = getState().order;
     const {menuOptionSelected} = getState().menuDetail;
+    const {tableInfo} = getState().tableInfo;
     const menuDetail = displayMenu.filter(el=>el.ITEM_ID == _.itemID);
     // 기존 주문에 같은 메뉴 있는지 확인
     // 옵션필드 추가
@@ -96,8 +97,8 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
         "DISC_AMT": "0",
         "PREPAY_FLAG": "Y",
         "OS_GBN": "AND",
-        "FLR_CODE": "0001",
-        "TBL_CODE": "0001",
+        "FLR_CODE": tableInfo.FLR_CODE,
+        "TBL_CODE": tableInfo.TBL_CODE,
         "REPT_PRT_FLAG": "N",
         "ORDER_PRT_FLAG": "N",
         "ORDER_PAY_LIST":[
