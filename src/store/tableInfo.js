@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { posTableList } from '../utils/apis';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import isEmpty from 'lodash';
+import DeviceInfo, { getUniqueId, getManufacturer, getAndroidId } from 'react-native-device-info';
+
 export const initTableInfo =  createAsyncThunk("tableInfo/initTableInfo", async() =>{
     const getTableInfo = await AsyncStorage.getItem("tableInfo");
     if(getTableInfo==null) {
@@ -15,6 +16,8 @@ export const clearTableInfo = createAsyncThunk("tableInfo/clearTableInfo", async
 })
 export const setTableInfo = createAsyncThunk("tableInfo/setTableInfo", async(data) =>{
     const result = await AsyncStorage.setItem("tableInfo", JSON.stringify(data) );
+    const uniqueId = await getAndroidId();
+
     return data;    
 })
 export const getTableList = createAsyncThunk("tableInfo/getTableList", async(data,{dispatch}) =>{

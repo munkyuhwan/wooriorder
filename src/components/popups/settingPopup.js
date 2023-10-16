@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { DetailSettingWrapper, SelectCancelText, SelectCancelWrapper, SelectWrapper, SettingButtonText, SettingButtonWrapper, SettingConfirmBtn, SettingConfirmBtnText, SettingConfirmBtnWrapper, SettingScrollView, SettingWrapper, TableColumnInput, TableColumnTitle, TableColumnWrapper } from '../../styles/common/settingStyle';
 import { Alert, DeviceEventEmitter, ScrollView, Text, TouchableWithoutFeedback, View } from 'react-native';
@@ -14,6 +14,7 @@ import { clearTableInfo, initTableInfo, setTableInfo } from '../../store/tableIn
 const SettingPopup = () =>{
 
     const dispatch = useDispatch();
+    const pickerRef = useRef();
 
     const [spinnerText, setSpinnerText] = React.useState("")
     const {tableList,tableInfo} = useSelector(state=>state.tableInfo);
@@ -148,10 +149,13 @@ const SettingPopup = () =>{
         dispatch(clearTableInfo());
     }
     const Dropdown = () => {
+
         return (
             <SelectWrapper>
                 <Picker
+                    ref={pickerRef}
                     key={"tablePicker"}
+                    mode='dialog'
                     onValueChange = {(itemValue, itemIndex) => {
                         dispatch(setTableInfo(itemValue))
                     }}
@@ -161,10 +165,10 @@ const SettingPopup = () =>{
                         height: 50,
                         flex:1
                     }}>
-                            <Picker.Item label = {"미선택"} value ={{}} />
+                        <Picker.Item key={"none"} label = {"미선택"} value ={{}} />
                     {tableList.map(el=>{
                         return(
-                            <Picker.Item label = {el.FLR_NAME+"층 "+el.TBL_NAME+"테이블"} value ={el} />
+                            <Picker.Item key={el.FLR_NAME+"_"+el.TBL_NAME}  label = {el.FLR_NAME+"층 "+el.TBL_NAME+"테이블"} value ={el} />
                         )
                     })
                     }
@@ -177,7 +181,7 @@ const SettingPopup = () =>{
             </SelectWrapper>
         );
     };
-
+ 
     return (
         <>
             <SettingWrapper>
@@ -190,29 +194,9 @@ const SettingPopup = () =>{
                     <SettingButtonWrapper>
                         <TouchableWithoutFeedback onPress={()=>{ setTableSettingShow(!isTableSettingShow) }} >
                             <SettingButtonText>테이블 세팅</SettingButtonText>
-                        </TouchableWithoutFeedback>
-                        
+                        </TouchableWithoutFeedback> 
                         {isTableSettingShow &&
                             <Dropdown/>
-                            /* <DetailSettingWrapper>
-                                <TableColumnWrapper>
-                                    <TableColumnTitle>층:</TableColumnTitle>
-                                    <TableColumnInput inputMode='number' keyboardType='number' />
-                                </TableColumnWrapper>
-                                <TableColumnWrapper>
-                                    <TableColumnTitle>테이블 번호:</TableColumnTitle>
-                                    <TableColumnInput/>
-                                </TableColumnWrapper>
-                                <TableColumnWrapper>
-                                    <TableColumnTitle>테이블 코드:</TableColumnTitle>
-                                    <TableColumnInput/>
-                                </TableColumnWrapper>
-                                <SettingConfirmBtnWrapper onPress={()=>{setTableSettingShow(!isTableSettingShow);} }>
-                                    <SettingConfirmBtn>
-                                        <SettingConfirmBtnText>적용</SettingConfirmBtnText>
-                                    </SettingConfirmBtn>
-                                </SettingConfirmBtnWrapper>
-                            </DetailSettingWrapper> */
                         }
                         <TouchableWithoutFeedback onPress={()=>{getDeviceInfo();}} >
                             <SettingButtonText>단말기 정보 가져오기</SettingButtonText>
