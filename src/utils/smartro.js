@@ -122,3 +122,17 @@ export const startSmartroRequestPayment = async () =>{
     })
 }
 
+export const indicateAvailableDeviceInfo = async () => {
+    const {SmartroPay} = NativeModules;
+    const smartroData = `{"service":"indicate","available":"com"}`;
+    return await new Promise(function(resolve, reject){
+        SmartroPay.prepareSmartroPay(
+            smartroData,
+            (error)=>{
+                reject(error);
+            },
+            (msg)=>{
+                resolve(msg);
+            });
+    })
+}

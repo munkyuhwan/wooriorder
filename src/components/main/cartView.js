@@ -94,7 +94,7 @@ const CartView = () =>{
                             <PayAmtUnit> {LANGUAGE[language].cartView.totalAmtUnit}</PayAmtUnit>
                         </PayAmtWrapper>
                     </PayWrapper>
-                    <TouchableWithoutFeedback onPress={()=>{/* addToPos(); */ startSmartroPay();}} >
+                    <TouchableWithoutFeedback onPress={()=>{ addToPos(); /* startSmartroPay(); */ }} >
                         <PayBtn>
                             <PayTitle>{LANGUAGE[language].cartView.makeOrder}</PayTitle>
                             <PayIcon source={require("assets/icons/order.png")} />

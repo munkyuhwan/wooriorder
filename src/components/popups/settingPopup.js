@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { DetailSettingWrapper, SelectCancelText, SelectCancelWrapper, SelectWrapper, SettingButtonText, SettingButtonWrapper, SettingConfirmBtn, SettingConfirmBtnText, SettingConfirmBtnWrapper, SettingScrollView, SettingWrapper, TableColumnInput, TableColumnTitle, TableColumnWrapper } from '../../styles/common/settingStyle';
 import { Alert, DeviceEventEmitter, ScrollView, Text, TouchableWithoutFeedback, View } from 'react-native';
-import { startSmartroCheckIntegrity, startSmartroGetDeviceInfo, startSmartroGetDeviceSetting, startSmartroKeyTransfer, startSmartroReadCardInfo, startSmartroRequestPayment, startSmartroSetDeviceDefaultSetting } from '../../utils/smartro';
+import { indicateAvailableDeviceInfo, startSmartroCheckIntegrity, startSmartroGetDeviceInfo, startSmartroGetDeviceSetting, startSmartroKeyTransfer, startSmartroReadCardInfo, startSmartroRequestPayment, startSmartroSetDeviceDefaultSetting } from '../../utils/smartro';
 import CodePush from 'react-native-code-push';
 import PopupIndicator from '../common/popupIndicator';
 import { IndicatorWrapper, PopupIndicatorText, PopupIndicatorWrapper, PopupSpinner } from '../../styles/common/popupIndicatorStyle';
@@ -21,6 +21,18 @@ const SettingPopup = () =>{
 
     const [isTableSettingShow, setTableSettingShow] = useState(false);
     const [selectedTable, setSelectedTable] = useState(tableInfo);
+
+    const getIndicateAvailableDeviceInfo = () =>{
+        indicateAvailableDeviceInfo()
+        .then((result)=>{
+            const jsonResult=JSON.parse(result);
+            console.log("jsonResult: ",jsonResult);
+            displayOnAlert("사용가능 디바이스 정보",jsonResult);
+        })
+        .catch((error)=>{
+            console.log("error: ",error)
+        })
+    }
  
     const getDeviceInfo = () =>{
         startSmartroGetDeviceInfo()
@@ -198,6 +210,9 @@ const SettingPopup = () =>{
                         {isTableSettingShow &&
                             <Dropdown/>
                         }
+                        <TouchableWithoutFeedback onPress={()=>{getIndicateAvailableDeviceInfo();}} >
+                            <SettingButtonText>가능 단말기 가져오기</SettingButtonText>
+                        </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={()=>{getDeviceInfo();}} >
                             <SettingButtonText>단말기 정보 가져오기</SettingButtonText>
                         </TouchableWithoutFeedback>
