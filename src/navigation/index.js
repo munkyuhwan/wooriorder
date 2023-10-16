@@ -17,7 +17,7 @@ import FullSizePopup from '../components/common/fullsizePopup'
 import ErrorPopup from '../components/common/errorPopup'
 import { getMenuEdit, getMenuState } from '../store/menu'
 import _ from 'lodash';
-import { getTableList } from '../store/tableInfo'
+import { getTableList, initTableInfo } from '../store/tableInfo'
 import { EventRegister } from 'react-native-event-listeners'
 
 const Stack = createStackNavigator()
@@ -55,10 +55,10 @@ export default function Navigation() {
     },[tableList])
     
     useEffect(()=>{
+        // 초기 세팅
         handleEventListener();
         dispatch(getMenuEdit());
-    },[])
-    useEffect(()=>{
+        dispatch(initTableInfo());
         var getInterval = setTimeout(() => {
             dispatch(getTableList());
             clearTimeout(getInterval);
@@ -68,8 +68,7 @@ export default function Navigation() {
         //setInterval(()=>{
         //   dispatch(getMenuState());
         //},1000*60) 
-
-    },[]);
+    },[])
 
     return (
         <>  

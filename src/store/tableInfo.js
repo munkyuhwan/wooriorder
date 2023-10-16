@@ -1,8 +1,21 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { posTableList } from '../utils/apis';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import isEmpty from 'lodash';
+export const initTableInfo =  createAsyncThunk("tableInfo/initTableInfo", async() =>{
+    const getTableInfo = await AsyncStorage.getItem("tableInfo");
+    if(getTableInfo==null) {
+        return{};
+    }else {
+        return JSON.parse(getTableInfo);
+    }
+})
+export const clearTableInfo = createAsyncThunk("tableInfo/clearTableInfo", async() =>{
+    return {};
+})
 export const setTableInfo = createAsyncThunk("tableInfo/setTableInfo", async(data) =>{
-    return data;
+    const result = await AsyncStorage.setItem("tableInfo", JSON.stringify(data) );
+    return data;    
 })
 export const getTableList = createAsyncThunk("tableInfo/getTableList", async(data,{dispatch}) =>{
     return await posTableList(dispatch)
@@ -12,7 +25,7 @@ export const getTableList = createAsyncThunk("tableInfo/getTableList", async(dat
 export const tableInfoSlice = createSlice({
     name: 'tableInfo',
     initialState: {
-        tableInfo:{"FLR_CODE": "0001", "FLR_NAME": "001", "TBL_CODE": "0029", "TBL_NAME": "27"},
+        tableInfo:{},
         tableList:[],
         tableCode:"0001",
     },
@@ -23,6 +36,12 @@ export const tableInfoSlice = createSlice({
         })
         builder.addCase(getTableList.fulfilled,(state, action)=>{
             state.tableList = action.payload;
+        })
+        builder.addCase(clearTableInfo.fulfilled,(state, action)=>{
+            state.tableInfo = action.payload;
+        })
+        builder.addCase(initTableInfo.fulfilled,(state, action)=>{
+            state.tableInfo = action.payload;
         })
         
     }

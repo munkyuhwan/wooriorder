@@ -1,6 +1,6 @@
 import styled, {css} from 'styled-components/native';
 import { colorBlack, colorDarkGrey, colorGrey, colorWhite, colorYellow } from '../../assets/colors/color';
-import { RADIUS } from '../values';
+import { RADIUS, RADIUS_SMALL } from '../values';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native';
 
 export const SettingWrapper = styled.View`
@@ -70,4 +70,32 @@ export const SettingConfirmBtnText = styled.Text`
     fontSize:20px;
     fontWeight:bold;
     color:${colorBlack};
+`
+
+export const SelectWrapper = styled.View`
+    flexDirection:row;
+    paddingTop:10px;
+`
+export const SelectCancelText = styled.Text`
+    fontSize:20px;
+    fontWeight:bold;
+    color:${colorBlack};
+    marginTop:auto;
+    marginBottom:auto;
+    padding:0;
+`
+export const SelectCancelWrapper = styled.View`
+    backgroundColor:${colorGrey};
+    border:solid;
+    borderWidth:1px;
+    borderRadius:${RADIUS_SMALL};
+    justifyContents:center;
+    paddingTop:10px;
+    paddingBottom:10px;
+    paddingRight:15px;
+    paddingLeft:15px;
+    height:50px;
+    flex:0.3;
+    alignItems:center;
+
 `

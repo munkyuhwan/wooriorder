@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { DetailSettingWrapper, SettingButtonText, SettingButtonWrapper, SettingConfirmBtn, SettingConfirmBtnText, SettingConfirmBtnWrapper, SettingScrollView, SettingWrapper, TableColumnInput, TableColumnTitle, TableColumnWrapper } from '../../styles/common/settingStyle';
-import { Alert, DeviceEventEmitter, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import { DetailSettingWrapper, SelectCancelText, SelectCancelWrapper, SelectWrapper, SettingButtonText, SettingButtonWrapper, SettingConfirmBtn, SettingConfirmBtnText, SettingConfirmBtnWrapper, SettingScrollView, SettingWrapper, TableColumnInput, TableColumnTitle, TableColumnWrapper } from '../../styles/common/settingStyle';
+import { Alert, DeviceEventEmitter, ScrollView, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { startSmartroCheckIntegrity, startSmartroGetDeviceInfo, startSmartroGetDeviceSetting, startSmartroKeyTransfer, startSmartroReadCardInfo, startSmartroRequestPayment, startSmartroSetDeviceDefaultSetting } from '../../utils/smartro';
 import CodePush from 'react-native-code-push';
 import PopupIndicator from '../common/popupIndicator';
 import { IndicatorWrapper, PopupIndicatorText, PopupIndicatorWrapper, PopupSpinner } from '../../styles/common/popupIndicatorStyle';
 import { PopupCloseButton, PopupCloseButtonWrapper } from '../../styles/common/popup';
 import { openFullSizePopup } from '../../utils/common';
-import RNPickerSelect from 'react-native-picker-select';
 import { Picker } from '@react-native-picker/picker';
-import { setTableInfo } from '../../store/tableInfo';
+import { clearTableInfo, initTableInfo, setTableInfo } from '../../store/tableInfo';
 
 const SettingPopup = () =>{
 
@@ -145,31 +144,37 @@ const SettingPopup = () =>{
                 )
             } 
     } 
+    function releaseTable() {
+        dispatch(clearTableInfo());
+    }
     const Dropdown = () => {
         return (
-            <Picker
-                onValueChange = {(itemValue, itemIndex) => {
-                    console.log("itemValue: ",itemValue);
-                    dispatch(setTableInfo(itemValue))
-                }}
-                selectedValue={tableInfo}
-                style = {{
-                    width: 200,
-                    height: 50,
-                }}>
-                {tableList.map(el=>{
-                    console.log("el: ",el)
-                    return(
-                        <Picker.item label = {el.FLR_NAME+"층 "+el.TBL_NAME+"테이블"} value ={el} />
-                    )
-                })
-                }
-                {/* 
-                <Picker.item label = 'Diary' value = 'diary' />
-                <Picker.item label = 'Todo' value = 'todo' />
-                <Picker.item label = 'Study' value = 'study' />
-                */}
-            </Picker>
+            <SelectWrapper>
+                <Picker
+                    key={"tablePicker"}
+                    onValueChange = {(itemValue, itemIndex) => {
+                        dispatch(setTableInfo(itemValue))
+                    }}
+                    selectedValue={tableInfo}
+                    style = {{
+                        width: 200,
+                        height: 50,
+                        flex:1
+                    }}>
+                            <Picker.Item label = {"미선택"} value ={{}} />
+                    {tableList.map(el=>{
+                        return(
+                            <Picker.Item label = {el.FLR_NAME+"층 "+el.TBL_NAME+"테이블"} value ={el} />
+                        )
+                    })
+                    }
+                </Picker>
+                <TouchableWithoutFeedback onPress={()=>{releaseTable();}}>
+                    <SelectCancelWrapper>
+                        <SelectCancelText>해제</SelectCancelText>
+                    </SelectCancelWrapper>
+                </TouchableWithoutFeedback>
+            </SelectWrapper>
         );
     };
 
