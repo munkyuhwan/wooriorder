@@ -46,16 +46,19 @@ const CartView = () =>{
     const addToPos = () =>{
         dispatch(postToPos());
     }
+    useEffect(()=>{
+        drawerController(isOn); 
+    },[isOn])
   
     return(
         <>  
             <IconWrapper>
                 <TopButton onPress={()=>{ openTransperentPopup(dispatch, {innerView:"OrderList", isPopupVisible:true}); }} isSlideMenu={false} lr={"left"} onSource={require("../../assets/icons/orderlist_trans.png")} offSource={require("../../assets/icons/orderlist_grey.png")} />
-                <TopButton onPress={()=>{ drawerController(!isOn);  dispatch(setCartView(!isOn));  }} isSlideMenu={true} lr={"right"} onSource={require("../../assets/icons/cart_trans.png")} offSource={require("../../assets/icons/cart_grey.png")} />
+                <TopButton onPress={()=>{  dispatch(setCartView(!isOn));  }} isSlideMenu={true} lr={"right"} onSource={require("../../assets/icons/cart_trans.png")} offSource={require("../../assets/icons/cart_grey.png")} />
             </IconWrapper>
             <CartViewWrapper style={[{...boxStyle}]} >
                 
-                <TouchableWithoutFeedback onPress={()=>{drawerController(!isOn);  dispatch(setCartView(!isOn));  }}>
+                <TouchableWithoutFeedback onPress={()=>{   dispatch(setCartView(!isOn));  }}>
                     <Handle>
                         {isOn&&
                             <ArrowImage source={require("assets/icons/close_arrow.png")} />
@@ -91,7 +94,7 @@ const CartView = () =>{
                             <PayAmtUnit> {LANGUAGE[language].cartView.totalAmtUnit}</PayAmtUnit>
                         </PayAmtWrapper>
                     </PayWrapper>
-                    <TouchableWithoutFeedback onPress={()=>{addToPos(); /* startSmartroPay(); */}} >
+                    <TouchableWithoutFeedback onPress={()=>{/* addToPos(); */ startSmartroPay();}} >
                         <PayBtn>
                             <PayTitle>{LANGUAGE[language].cartView.makeOrder}</PayTitle>
                             <PayIcon source={require("assets/icons/order.png")} />

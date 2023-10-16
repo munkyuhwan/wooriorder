@@ -10,7 +10,7 @@ export const setCartView = createAsyncThunk("cartView/setCartView", async(isOn) 
 export const cartViewSlice = createSlice({
     name: 'cartView',
     initialState: {
-        isOn: false,
+        isOn: true,
     },
     extraReducers:(builder)=>{
         // 메인 카테고리 받기
