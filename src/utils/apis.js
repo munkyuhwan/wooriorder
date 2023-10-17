@@ -164,32 +164,36 @@ export const addOrderToPos = async(dispatch, data) =>{
 // 테이블 주문목록 받아오기
 export const getOrderByTable = async(dispatch, data) => {
     return await new Promise(function(resolve, reject){
-        if(isEmpty(data) ) {
+        if(isEmpty(data.tableInfo) ) {
             posErrorHandler(dispatch, {ERRCODE:'XXXX',MSG:"테이블을 선택 해 주세요.",MSG2:""});
             reject();
             return;
         }
-        console.log({
-            "STORE_ID":STORE_ID,
-            "SERVICE_ID":SERVICE_ID,
-            "FLR_CODE":data.FLR_CODE,
-            "TBL_CODE":data.TBL_CODE,
-        });
-
         axios.post(
             `${POS_BASE_URL_TEST}${POS_POST_ORDER}`,
             {
                 "STORE_ID":STORE_ID,
                 "SERVICE_ID":SERVICE_ID,
-                "FLR_CODE":data.FLR_CODE,
-                "TBL_CODE":data.TBL_CODE,
+                "FLR_CODE":data.tableInfo.FLR_CODE,
+                "TBL_CODE":data.tableInfo.TBL_CODE,
             },
             posOrderHeadr,
         )  
-        .then((response => {
+        .then( (response => {
             if(posErrorHandler(dispatch, response.data)){
                 const responseData = response.data
-                resolve(responseData.OBJ); 
+                if(responseData.RESULT=="SUCCESS") {
+                    const obj = responseData.OBJ;
+                    const orderList = obj.ORDER_LIST;
+                    const orderData = JSON.parse(data?.orderData);
+                    console.log("data : ",orderData.ORG_ORDERNO);
+                    console.log("orderList: ",orderList[0].ORG_ORDERNO);
+                    const filteredData = orderList.filter(el=>el.ORG_ORDERNO == orderData.ORG_ORDERNO);
+                    console.log("filteredData: ",filteredData);
+                    resolve(filteredData); 
+                }else {
+                    reject();
+                }
             }else {
                 reject();
             } 
@@ -197,3 +201,29 @@ export const getOrderByTable = async(dispatch, data) => {
         .catch(error=>reject(error.response.data));
     })
 }
+
+
+[
+    {"DISC_AMT": "0", 
+    "FLR_CODE": "0001",
+     "ITEM_LIST": [[Object], [Object], [Object]], 
+     "MCHT_ORDERNO": "130", 
+     "MEMB_TEL": "01012349876", 
+     "ORDERNO": "TO202310180006066",
+    "ORDER_DATE": "20231018",
+    "ORDER_MEMO": "태스트 ",
+    "ORDER_PAY_AMT": "35000", 
+    "ORDER_PRT_FLAG": "N", 
+    "ORDER_STATUS": "SMRO000069", 
+    "ORDER_STATUS_NAME": "완료", 
+    "ORDER_TIME": "012702", 
+    "ORD_PAY_LIST": [[Object], [Object]], 
+    "ORG_ORDERNO": "TO202310180006066", 
+    "ORG_ORDER_PAY_AMT": "35000", 
+    "OS_GBN": "", "POS_ORDERNO": "", 
+    "PREPAY_FLAG": "N", 
+    "REPT_PRT_FLAG": "N", 
+    "SERVICE_ID": "3010", 
+    "STORE_ID": "3113810001", 
+    "SUCCESS_FLAG": "", 
+    "TBL_CODE": "0002"}]

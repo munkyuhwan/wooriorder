@@ -182,17 +182,10 @@ export const postToPos =  createAsyncThunk("order/postToPos", async(_,{dispatch,
 export const postAddToPos =  createAsyncThunk("order/postAddToPos", async(_,{dispatch, getState,extra}) =>{
     const {orderPayData} = getState().order;
     const orderResult = JSON.parse(_);
-    console.log("orderResult: ",orderResult);
-
     let tmpData = orderPayData;
     // 추가 주문에 결제 정보 빼야함.
     tmpData["ORD_PAY_LIST"]=[];
-    /* tmpData["MCHT_ORDERNO"] = orderResult?.MCHT_ORDERNO;
-    tmpData["ORDERNO"] = orderResult?.ORDERNO;
-    tmpData["ORG_ORDERNO"] = orderResult?.ORG_ORDERNO;
-    tmpData["POS_ORDERNO"] = orderResult?.POS_ORDERNO; */
     tmpData = {...tmpData,...orderResult};
-    
     return await addOrderToPos(dispatch, tmpData)
     .catch(err=>{
         posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:"주문 오류",MSG2:"주문을 진행할 수 없습니다."});
@@ -203,7 +196,8 @@ export const postAddToPos =  createAsyncThunk("order/postAddToPos", async(_,{dis
 // 테이블 주문 히스토리
 export const getOrderStatus = createAsyncThunk("order/getOrderStatus", async(_,{dispatch, getState,extra}) =>{
     const {tableInfo} = getState().tableInfo;
-    return await getOrderByTable(dispatch, tableInfo)
+    const orderData = _;
+    return await getOrderByTable(dispatch, {tableInfo,orderData})
     .catch(err=>{
         console.log("error: ",err)
     });
@@ -319,7 +313,7 @@ export const orderSlice = createSlice({
         // 주문 목록
         builder.addCase(getOrderStatus.fulfilled,(state, action)=>{
             if(action.payload){
-                state.orderStatus = action.payload.ORDER_LIST;
+                state.orderStatus = action.payload;
             }
         })
 
