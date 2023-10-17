@@ -6,6 +6,7 @@ import { ErrorTitle, ErrorWrapper } from "../../styles/common/errorStyle";
 const OrderCompletePopup = () => {
 
     const dispatch = useDispatch();
+    const {popupMsg} = useSelector(state=>state.popup);
 
     useState(()=>{
         const to = setInterval(() => {

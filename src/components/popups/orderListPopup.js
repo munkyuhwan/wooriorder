@@ -8,12 +8,21 @@ import { BottomButton, BottomButtonIcon, BottomButtonText, BottomButtonWrapper }
 import { colorBlack, colorRed } from '../../assets/colors/color';
 import { openTransperentPopup } from '../../utils/common';
 import OrderListItem from '../orderListComponents/orderListItem';
+import { getOrderStatus } from '../../store/order';
 
 
 const OrderListPopup = () =>{
     const dispatch = useDispatch();
     const {language} = useSelector(state=>state.languages);
-    const {orderList, grandTotal} = useSelector(state=>state.order);    
+    const {orderList, grandTotal, orderStatus} = useSelector(state=>state.order);    
+    useEffect(()=>{
+        dispatch(getOrderStatus());
+    },[])
+    useEffect(()=>{
+        console.log("================================================")
+        console.log("orderStatus: ",orderStatus[orderStatus.length-1]);
+        console.log("================================================")
+    },[orderStatus])
     return(
         <>
             <OrderListPopupWrapper>
@@ -30,7 +39,7 @@ const OrderListPopup = () =>{
                             <OrderListTableColumnName flex={0.3} >{LANGUAGE[language].orderListPopup.tableColTotal}</OrderListTableColumnName>
                         </OrderListTableColumnNameWrapper>
                         <OrderListTableList
-                            data={orderList}
+                            data={orderStatus}
                             renderItem={(item)=>{return <OrderListItem order={item} />}}
                         />
                     </OrderListTableWrapper>

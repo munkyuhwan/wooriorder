@@ -28,6 +28,7 @@ export const popupsSlice = createSlice({
         innerView:"",
         innerTransView:"",
         innerFullView:"",
+        popupMsg:"",
     },
     extraReducers:(builder)=>{
         // 메인 카테고리 받기

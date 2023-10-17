@@ -28,7 +28,6 @@ export const OrderListTopSubtitle = styled.Text`
     fontSize:17px;
     color:${colorBlack}; 
     paddingLeft:14px;
-    justifyContents:bottom;
     marginTop:auto;
 `
 

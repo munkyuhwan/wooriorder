@@ -4,6 +4,7 @@ import { OrderListTableItemAmt, OrderListTableItemImage, OrderListTableItemImage
 
 const OrderListItem = (props) => {
     const item = props?.order.item;
+    //console.log("item: ",item); 
     return(
         <>
             <OrderListTableItemWrapper>

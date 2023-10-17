@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { MENU_DATA } from '../resources/menuData';
 import { SERVICE_ID, STORE_ID } from '../resources/apiResources';
-import { postOrderToPos } from '../utils/apis';
+import { addOrderToPos, getOrderByTable, postOrderToPos } from '../utils/apis';
 import { grandTotalCalculate, openPopup } from '../utils/common';
 import { isEqual } from 'lodash'
 import { posErrorHandler } from '../utils/errorHandler/ErrorHandler';
@@ -117,7 +117,7 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
         "OEG_ORDER_PAY_AMT": `${totalResult.grandTotal}`,
         "ORDER_PAY_AMT": `${totalResult.grandTotal}`,
         "DISC_AMT": "0",
-        "PREPAY_FLAG": "Y",
+        "PREPAY_FLAG": "N",
         "OS_GBN": "AND",
         "FLR_CODE": tableInfo.FLR_CODE,
         "TBL_CODE": tableInfo.TBL_CODE,
@@ -150,15 +150,34 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
         ],
         "ITEM_LIST":newOrderList,
     }
-
     return {orderList:newOrderList,grandTotal:totalResult.grandTotal,totalItemCnt:totalResult.itemCnt, orderPayData:orderPayData };
-    
 })
+// 새로 메뉴 등록
 export const postToPos =  createAsyncThunk("order/postToPos", async(_,{dispatch, getState,extra}) =>{
     const {orderPayData} = getState().order;
-    postOrderToPos(dispatch, orderPayData)
+    return await postOrderToPos(dispatch, orderPayData)
     .catch(err=>{
         posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:"주문 오류",MSG2:"주문을 진행할 수 없습니다."});
+        console.log("error: ",err)
+    });
+})
+// 매뉴 추가 등록
+export const postAddToPos =  createAsyncThunk("order/postAddToPos", async(_,{dispatch, getState,extra}) =>{
+    const {orderPayData} = getState().order;
+    var tmpData = orderPayData;
+    // 추가 주문에 결제 정보 빼야함.
+    tmpData["ORD_PAY_LIST"]=[]
+    return await addOrderToPos(dispatch, tmpData)
+    .catch(err=>{
+        posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:"주문 오류",MSG2:"주문을 진행할 수 없습니다."});
+        console.log("error: ",err)
+    });
+})
+// 테이블 주문 히스토리
+export const getOrderStatus = createAsyncThunk("order/getOrderStatus", async(_,{dispatch, getState,extra}) =>{
+    const {tableInfo} = getState().tableInfo;
+    return await getOrderByTable(dispatch, tableInfo)
+    .catch(err=>{
         console.log("error: ",err)
     });
 })
@@ -218,6 +237,9 @@ export const orderSlice = createSlice({
         totalItemCnt:0,
         orderList:[],
         orderPayData:{},
+        orderStatus:[],
+        orgOrderNo:"",
+        orderNo:"",
     },
     extraReducers:(builder)=>{
         // 주문 셋
@@ -257,6 +279,20 @@ export const orderSlice = createSlice({
                 state.grandTotal = action.payload.grandTotal;
                 state.totalItemCnt = action.payload.totalItemCnt;
                 state.orderPayData = action.payload.orderPayData;
+            }
+        })
+        // 새주문 등록
+        builder.addCase(postToPos.fulfilled,(state, action)=>{
+            
+        })
+        // 주문 추가등록
+        builder.addCase(postAddToPos.fulfilled,(state, action)=>{
+            
+        })
+        // 주문 목록
+        builder.addCase(getOrderStatus.fulfilled,(state, action)=>{
+            if(action.payload){
+                state.orderStatus = action.payload.ORDER_LIST;
             }
         })
 
