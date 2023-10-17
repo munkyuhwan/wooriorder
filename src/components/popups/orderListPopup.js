@@ -29,9 +29,13 @@ const OrderListPopup = () =>{
  
     useEffect(()=>{
         //console.log("orderStatus: ",orderStatus[0].ITEM_LIST);
-        orderStatus[0].ITEM_LIST.map(el=>{
-            setOrderTotalAmt(orderTotalAmt+Number(el.SALE_PRICE));
-        })
+        if(orderStatus[0]?.ITEM_LIST){
+            let tmpPrice = 0;
+            orderStatus[0].ITEM_LIST.map(el=>{
+                tmpPrice += Number(el.SALE_PRICE);
+            })
+            setOrderTotalAmt(tmpPrice);
+        }
     },[orderStatus])
      
     return(
@@ -49,10 +53,12 @@ const OrderListPopup = () =>{
                             <OrderListTableColumnName flex={0.2} >{LANGUAGE[language].orderListPopup.tableColPrice}</OrderListTableColumnName>
                             <OrderListTableColumnName flex={0.3} >{LANGUAGE[language].orderListPopup.tableColTotal}</OrderListTableColumnName>
                         </OrderListTableColumnNameWrapper>
-                        <OrderListTableList
-                            data={orderStatus[0].ITEM_LIST}
-                            renderItem={(item)=>{return <OrderListItem order={item} />}}
-                        />
+                       {orderStatus[0]?.ITEM_LIST &&
+                            <OrderListTableList
+                                data={orderStatus[0].ITEM_LIST}
+                                renderItem={(item)=>{return <OrderListItem order={item} />}}
+                            />
+                        }
                     </OrderListTableWrapper>
                     <OrderListTalbleGrandTotalWrapper>
                         <OrderListTotalTitle>총 합계</OrderListTotalTitle>
