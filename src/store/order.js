@@ -181,14 +181,24 @@ export const postToPos =  createAsyncThunk("order/postToPos", async(_,{dispatch,
 // 매뉴 추가 등록
 export const postAddToPos =  createAsyncThunk("order/postAddToPos", async(_,{dispatch, getState,extra}) =>{
     const {orderPayData} = getState().order;
-    var tmpData = orderPayData;
+    const orderResult = JSON.parse(_);
+    console.log("orderResult: ",orderResult);
+
+    let tmpData = orderPayData;
     // 추가 주문에 결제 정보 빼야함.
-    tmpData["ORD_PAY_LIST"]=[]
+    tmpData["ORD_PAY_LIST"]=[];
+    /* tmpData["MCHT_ORDERNO"] = orderResult?.MCHT_ORDERNO;
+    tmpData["ORDERNO"] = orderResult?.ORDERNO;
+    tmpData["ORG_ORDERNO"] = orderResult?.ORG_ORDERNO;
+    tmpData["POS_ORDERNO"] = orderResult?.POS_ORDERNO; */
+    tmpData = {...tmpData,...orderResult};
+    
     return await addOrderToPos(dispatch, tmpData)
     .catch(err=>{
         posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:"주문 오류",MSG2:"주문을 진행할 수 없습니다."});
         console.log("error: ",err)
-    });
+    }); 
+
 })
 // 테이블 주문 히스토리
 export const getOrderStatus = createAsyncThunk("order/getOrderStatus", async(_,{dispatch, getState,extra}) =>{

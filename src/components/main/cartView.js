@@ -14,7 +14,7 @@ import { setCartView, setIconClick } from '../../store/cart';
 import { IconWrapper } from '../../styles/main/topMenuStyle';
 import TopButton from '../menuComponents/topButton';
 import { openTransperentPopup } from '../../utils/common';
-import { postToPos } from '../../store/order';
+import { postAddToPos, postToPos } from '../../store/order';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import isEmpty from 'lodash';
 
@@ -46,15 +46,13 @@ const CartView = () =>{
     }
 
     const addToPos = async () =>{
-        const orderNo = await AsyncStorage.getItem("orderNo")
-        console.log("orderNo: ",orderNo);
-        if(isEmpty(orderNo)) {
+        const orderResult = await AsyncStorage.getItem("orderResult")
+        if(!(orderResult)) {
             console.log("no orderno");
-            //dispatch(postToPos());
-
+            dispatch(postToPos());
         }else {
             console.log("yes orderno");
-
+            dispatch(postAddToPos(orderResult));
         }
     }
     useEffect(()=>{
