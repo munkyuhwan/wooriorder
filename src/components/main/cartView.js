@@ -15,6 +15,8 @@ import { IconWrapper } from '../../styles/main/topMenuStyle';
 import TopButton from '../menuComponents/topButton';
 import { openTransperentPopup } from '../../utils/common';
 import { postToPos } from '../../store/order';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import isEmpty from 'lodash';
 
 const CartView = () =>{
     const {language} = useSelector(state=>state.languages);
@@ -43,8 +45,17 @@ const CartView = () =>{
         ]).start();
     }
 
-    const addToPos = () =>{
-        dispatch(postToPos());
+    const addToPos = async () =>{
+        const orderNo = await AsyncStorage.getItem("orderNo")
+        console.log("orderNo: ",orderNo);
+        if(isEmpty(orderNo)) {
+            console.log("no orderno");
+            //dispatch(postToPos());
+
+        }else {
+            console.log("yes orderno");
+
+        }
     }
     useEffect(()=>{
         drawerController(isOn); 

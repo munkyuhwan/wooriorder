@@ -108,6 +108,17 @@ export const postOrderToPos = async(dispatch, data) =>{
         .then((response => {
             if(posErrorHandler(dispatch, response.data)){
                 const responseData = response.data
+                if(responseData){
+                    console.log('response data: ',responseData);
+                    if(responseData?.OBJ) {
+                        const orderNo = responseData?.OBJ?.ORDERNO;
+                        const orgOrderNo = responseData?.OBJ?.ORG_ORDERNO;
+                        const mchtOrderNo = responseData?.OBJ?.MCHT_ORDERNO;
+                        const posOrderNo = responseData?.OBJ?.POS_ORDERNO;
+
+                        AsyncStorage.setItem("orderNo",orderNo);
+                    }
+                }
                 openPopup(dispatch,{innerView:"OrderComplete", isPopupVisible:true});
                 dispatch(initOrderList());
                 dispatch(setCartView(false));

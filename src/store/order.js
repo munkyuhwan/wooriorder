@@ -5,6 +5,7 @@ import { addOrderToPos, getOrderByTable, postOrderToPos } from '../utils/apis';
 import { grandTotalCalculate, openPopup } from '../utils/common';
 import { isEqual } from 'lodash'
 import { posErrorHandler } from '../utils/errorHandler/ErrorHandler';
+import { setCartView } from './cart';
 
 export const initOrderList = createAsyncThunk("order/initOrderList", async() =>{
     return  {
@@ -20,17 +21,21 @@ export const setOrderList = createAsyncThunk("order/setOrderList", async(index) 
     return index;
 })
 
-export const deleteItem = createAsyncThunk("order/deleteItem", async(_,{getState,extra}) =>{
+export const deleteItem = createAsyncThunk("order/deleteItem", async(_,{dispatch, getState,extra}) =>{
     const {grandTotal, orderList} = getState().order;
     let tmpOrderList = Object.assign([],orderList);
     tmpOrderList.remove(_.index)
-
+    // 카트 여닫기
+    console.log("tmpOrderList.length: ",tmpOrderList.length);
+    if(tmpOrderList.length <= 0) {
+        dispatch(setCartView(false));
+    }
     const totalResult = grandTotalCalculate(tmpOrderList)
     return {orderList:tmpOrderList,grandTotal:totalResult.grandTotal,totalItemCnt:totalResult.itemCnt };
 })
 
 
-export const resetAmtOrderList = createAsyncThunk("order/resetAmtOrderList", async(_,{getState,extra}) =>{
+export const resetAmtOrderList = createAsyncThunk("order/resetAmtOrderList", async(_,{dispatch, getState,extra}) =>{
     const {grandTotal, orderList} = getState().order;
     const {amt, index, operand} = _;
     
@@ -46,21 +51,25 @@ export const resetAmtOrderList = createAsyncThunk("order/resetAmtOrderList", asy
     }
     if(itemCnt<=0) {
         tmpOrderList.splice(index,1);
+        if(tmpOrderList.length <= 0) {
+            dispatch(setCartView(false));
+        }
         return {orderList:tmpOrderList}
     }
     tmpOrderList[index] = Object.assign({},selectedMenu,{ITEM_CNT:itemCnt});
-
+    
     const totalResult = grandTotalCalculate(tmpOrderList)
     return {orderList:tmpOrderList,grandTotal:totalResult.grandTotal,totalItemCnt:totalResult.itemCnt };
 })
 
-export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,{getState,extra}) =>{
+export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,{dispatch, getState,extra}) =>{
 
     // 선택된 아이템 정보 받기
     const {displayMenu} = getState().menu;
     const {orderList} = getState().order;
     const {menuOptionSelected} = getState().menuDetail;
     const {tableInfo} = getState().tableInfo;
+
     const menuDetail = displayMenu.filter(el=>el.ITEM_ID == _.itemID);
     // 기존 주문에 같은 메뉴 있는지 확인
     // 옵션필드 추가
@@ -105,6 +114,14 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
 
         newOrderList = Object.assign([],orderList);;
         newOrderList.push(addedOrder);    
+    }
+    // 카트 여닫기
+    if(newOrderList.length <= 0) {
+        console.log("close cart");
+        dispatch(setCartView(false));
+    }else {
+        console.log("open cart");
+        dispatch(setCartView(true));
     }
     const totalResult = grandTotalCalculate(newOrderList)
 
