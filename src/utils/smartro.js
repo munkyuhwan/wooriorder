@@ -1,4 +1,5 @@
 import { NativeModules } from 'react-native'
+import { BUSINESS_NO, DEVICE_NO } from '../resources/cardReaderConstant';
 
 export const startSmartroPay = async (callback) =>{
     const {SmartroPay} = NativeModules;
@@ -109,7 +110,7 @@ export const startSmartroSetDeviceDefaultSetting = async () =>{
 //{"type":"credit","deal":"approval","surtax":"82","tip":"100","total-amount":"1004","cat-id":"1111111111","business-no":"1234567890","need-card-no":"y","member-type":"VAN","van-comm":"[eth, test]","pg-comm":"[eth, test]","security-comm":"[eth, test]"}
 export const startSmartroRequestPayment = async () =>{
     const {SmartroPay} = NativeModules;
-    const smartroData = `{"type":"credit","deal":"approval","surtax":"82","tip":"100","total-amount":"1004","cat-id":"1111111111","business-no":"1234567890","need-card-no":"y","member-type":"VAN","van-comm":"[eth, test]","pg-comm":"[eth, test]","security-comm":"[eth, test]"}`;
+    const smartroData = `{"type":"credit","deal":"approval","surtax":"82","tip":"100","total-amount":"1004","cat-id":"${DEVICE_NO}","business-no":"${BUSINESS_NO}","need-card-no":"y","member-type":"VAN","van-comm":"[eth, test]","pg-comm":"[eth, test]","security-comm":"[eth, test]"}`;
     return await new Promise(function(resolve, reject){
         SmartroPay.prepareSmartroPay(
             smartroData,
