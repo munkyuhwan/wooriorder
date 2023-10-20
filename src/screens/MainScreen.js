@@ -12,10 +12,11 @@ import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import LogWriter from '../utils/logWriter'
 import { getTableList } from '../store/tableInfo'
+import { openPopup } from '../utils/common'
 
 
 const MainScreen = () =>{   
-
+    
 /* 
     console.log(RNFS.DocumentDirectoryPath);
     var path = RNFS.DocumentDirectoryPath + '/test.txt';

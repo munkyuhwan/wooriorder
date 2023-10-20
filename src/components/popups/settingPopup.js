@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { DetailSettingWrapper, SelectCancelText, SelectCancelWrapper, SelectWrapper, SettingButtonText, SettingButtonWrapper, SettingConfirmBtn, SettingConfirmBtnText, SettingConfirmBtnWrapper, SettingScrollView, SettingWrapper, TableColumnInput, TableColumnTitle, TableColumnWrapper } from '../../styles/common/settingStyle';
 import { Alert, DeviceEventEmitter, ScrollView, Text, TouchableWithoutFeedback, View } from 'react-native';
-import { indicateAvailableDeviceInfo, startSmartroCheckIntegrity, startSmartroGetDeviceInfo, startSmartroGetDeviceSetting, startSmartroKeyTransfer, startSmartroReadCardInfo, startSmartroRequestPayment, startSmartroSetDeviceDefaultSetting } from '../../utils/smartro';
+import { indicateAvailableDeviceInfo, serviceGetting, serviceIndicate, serviceSetting, startSmartroCheckIntegrity, startSmartroGetDeviceInfo, startSmartroGetDeviceSetting, startSmartroKeyTransfer, startSmartroReadCardInfo, startSmartroRequestPayment, startSmartroSetDeviceDefaultSetting, varivariTest } from '../../utils/smartro';
 import CodePush from 'react-native-code-push';
 import PopupIndicator from '../common/popupIndicator';
 import { IndicatorWrapper, PopupIndicatorText, PopupIndicatorWrapper, PopupSpinner } from '../../styles/common/popupIndicatorStyle';
@@ -10,105 +10,70 @@ import { PopupCloseButton, PopupCloseButtonWrapper } from '../../styles/common/p
 import { openFullSizePopup } from '../../utils/common';
 import { Picker } from '@react-native-picker/picker';
 import { clearTableInfo, initTableInfo, setTableInfo } from '../../store/tableInfo';
+import { SMARTRO_FUNCTION } from '../../resources/cardReaderConstant';
+import { useSharedValue } from 'react-native-reanimated';
 
 const SettingPopup = () =>{
 
     const dispatch = useDispatch();
     const pickerRef = useRef();
+    const functionPickerRef = useRef();
+    const functionTestPickerRef = useRef();
 
     const [spinnerText, setSpinnerText] = React.useState("")
     const {tableList,tableInfo} = useSelector(state=>state.tableInfo);
 
     const [isTableSettingShow, setTableSettingShow] = useState(false);
-    const [selectedTable, setSelectedTable] = useState(tableInfo);
+    
+    //const selectedFunction = useSharedValue("");
+    //const selectedFunctionTest = useSharedValue("");
+    const [selectedFunction, setSelectedFunction] = useState("");
+    const [selectedFunctionTest, setSelectedFunctionTest] = useState("");
 
     const getIndicateAvailableDeviceInfo = () =>{
-        indicateAvailableDeviceInfo()
+        serviceIndicate()
         .then((result)=>{
             const jsonResult=JSON.parse(result);
-            console.log("jsonResult: ",jsonResult);
             displayOnAlert("사용가능 디바이스 정보",jsonResult);
         })
         .catch((error)=>{
             console.log("error: ",error)
         })
     }
- 
-    const getDeviceInfo = () =>{
-        startSmartroGetDeviceInfo()
+    const smartroServiceSetting = () =>{
+        serviceSetting()
         .then((result)=>{
             const jsonResult=JSON.parse(result);
-            displayOnAlert("단말기 정보",jsonResult);
+            displayOnAlert("디바이스 설정",jsonResult);
+        })
+        .catch((error)=>{
+            console.log("error: ",error)
+        })
+    }
+    const smartroServiceGetting = () =>{
+        serviceGetting()
+        .then((result)=>{
+            const jsonResult=JSON.parse(result);
+            displayOnAlert("디바이스 설정값",jsonResult);
         })
         .catch((error)=>{
             console.log("error: ",error)
         })
     }
 
-    const deviceKeyTransfer = () => {
-        startSmartroKeyTransfer()
+    // 여러가지 테스트
+    const variousTest = () => {
+        varivariTest()
         .then((result)=>{
             const jsonResult=JSON.parse(result);
-            displayOnAlert("키교환",jsonResult);
+            console.log(jsonResult);
+            displayOnAlert("여러가지 결제 결과",jsonResult);
         })
         .catch((error)=>{
             console.log("error: ",error)
         })
     }
 
-    const checkDeviceIntegrity = () =>{
-        startSmartroCheckIntegrity()
-        .then((result)=>{
-            const jsonResult=JSON.parse(result);
-            displayOnAlert("무결성 점검",jsonResult);
-        })
-        .catch((error)=>{
-            console.log("error: ",error)
-        })
-    }
-
-    const getCardInfo = () =>{
-        startSmartroReadCardInfo()
-        .then((result)=>{
-            const jsonResult=JSON.parse(result);
-            displayOnAlert("카드정보",jsonResult);
-        })
-        .catch((error)=>{
-            console.log("error: ",error)
-        })
-    }
-    
-    const getDeviceSetting = () =>{
-        startSmartroGetDeviceSetting()
-        .then((result)=>{
-            const jsonResult=JSON.parse(result);
-            displayOnAlert("장치 설정",jsonResult);
-        })
-        .catch((error)=>{
-            console.log("error: ",error)
-        })
-    }
-
-    const getDeviceDefaultSetting = () =>{
-        startSmartroSetDeviceDefaultSetting()
-        .then((result)=>{
-            const jsonResult=JSON.parse(result);
-            displayOnAlert("장치 설정",jsonResult);
-        })
-        .catch((error)=>{
-            console.log("error: ",error)
-        })
-    }
-    const testPayment = () => {
-        startSmartroRequestPayment()
-        .then((result)=>{
-            const jsonResult=JSON.parse(result);
-            displayOnAlert("결제 결과",jsonResult);
-        })
-        .catch((error)=>{
-            console.log("error: ",error)
-        })
-    }
     const displayOnAlert = (title, jsonResult) => {
         const objKeys = Object.keys(jsonResult)
         var str = "";
@@ -160,6 +125,67 @@ const SettingPopup = () =>{
     function releaseTable() {
         dispatch(clearTableInfo());
     }
+
+    const ServiceDropDown = () => {
+        return (
+            <SelectWrapper>
+                <Picker
+                    ref={functionPickerRef}
+                    key={"functionPicker"}
+                    mode='dialog'
+                    onValueChange = {(itemValue, itemIndex) => {
+                        //selectedFunction.value = itemValue;
+                        setSelectedFunction(itemValue);
+                    }}
+                    selectedValue={selectedFunction}
+                    style = {{
+                        width: 200,
+                        height: 50,
+                        flex:1
+                    }}>
+                        <Picker.Item key={"none"} label = {"미선택"} value ={{}} />
+                    {
+                        SMARTRO_FUNCTION.map((el,index)=>{
+                            return(
+                                <Picker.Item key={index+"_"+el.key}  label = {el.label} value ={el.key} />
+                            )
+                        })
+                    }
+                </Picker>
+                <Picker
+                    ref={functionTestPickerRef}
+                    key={"functionPicker2"}
+                    mode='dialog'
+                    onValueChange = {(itemValue, itemIndex) => {
+                        //selectedFunctionTest.value = (itemValue);
+                        console.log("itemValue: ",itemValue);
+                        setSelectedFunctionTest(itemValue);
+                    }}
+                    selectedValue={selectedFunctionTest}
+                    style = {{
+                        width: 200,
+                        height: 50,
+                        flex:1
+                    }}>
+                        <Picker.Item key={"none"} label = {"미선택"} value ={{}} />
+                    {
+                        SMARTRO_FUNCTION.filter(el=>el.key==selectedFunction)[0]?.data?.map((el,index)=>{
+                            return(
+                                <Picker.Item key={index+"_"+el.value}  label = {el.label} value ={el.value} />
+                            )
+                        })
+                    }
+                </Picker>
+                <TouchableWithoutFeedback onPress={()=>{releaseTable();}}>
+                    <SelectCancelWrapper>
+                        <SelectCancelText>확인</SelectCancelText>
+                    </SelectCancelWrapper>
+                </TouchableWithoutFeedback>
+            </SelectWrapper>
+        );
+    }
+    console.log("SMARTRO_FUNCTION[selectedFunction]: ",SMARTRO_FUNCTION[selectedFunction]);
+
     const Dropdown = () => {
 
         return (
@@ -211,8 +237,17 @@ const SettingPopup = () =>{
                             <Dropdown/>
                         }
                         <TouchableWithoutFeedback onPress={()=>{getIndicateAvailableDeviceInfo();}} >
-                            <SettingButtonText>가능 단말기 가져오기</SettingButtonText>
+                            <SettingButtonText>단말기 서비스 확인</SettingButtonText>
                         </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={()=>{smartroServiceSetting();}} >
+                            <SettingButtonText>단말기 서비스 설정하기</SettingButtonText>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={()=>{smartroServiceGetting();}} >
+                            <SettingButtonText>단말기 서비스 설정값</SettingButtonText>
+                        </TouchableWithoutFeedback>
+                        <ServiceDropDown/>
+                        
+                        {/*}
                         <TouchableWithoutFeedback onPress={()=>{getDeviceInfo();}} >
                             <SettingButtonText>단말기 정보 가져오기</SettingButtonText>
                         </TouchableWithoutFeedback>
@@ -233,13 +268,18 @@ const SettingPopup = () =>{
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={()=>{testPayment();}} >
                             <SettingButtonText>테스트 결제</SettingButtonText>
+                        </TouchableWithoutFeedback> */}
+
+                        <TouchableWithoutFeedback onPress={()=>{variousTest();}} >
+                            <SettingButtonText>기타 테스트</SettingButtonText>
                         </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={()=>{}} >
+                        
+                        {/* <TouchableWithoutFeedback onPress={()=>{}} >
                             <SettingButtonText>메뉴 업데이트</SettingButtonText>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={()=>{checkUpdate();}} >
                             <SettingButtonText>앱 업데이트</SettingButtonText>
-                        </TouchableWithoutFeedback>
+                        </TouchableWithoutFeedback> */}
                     </SettingButtonWrapper>
                 </SettingScrollView>
             </SettingWrapper>
