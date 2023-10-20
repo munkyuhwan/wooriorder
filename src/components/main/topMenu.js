@@ -58,8 +58,8 @@ const TopMenu = () =>{
                     <TableNameSmall>{tableInfo?.TBL_CODE}</TableNameSmall>
                     <TableNameBig>{tableInfo?.TBL_NAME}</TableNameBig>
                 </TableName>
-               <TouchableWithoutFeedback onPress={()=>{openPopup(dispatch,{innerView:"Setting", isPopupVisible:true}); }} > 
-                {/* <TouchableWithoutFeedback onPress={()=>{openFullSizePopup(dispatch,{innerFullView:"Setting", isFullPopupVisible:true}); }} > */}
+               {/* <TouchableWithoutFeedback onPress={()=>{openPopup(dispatch,{innerView:"Setting", isPopupVisible:true}); }} >  */}
+                <TouchableWithoutFeedback onPress={()=>{openFullSizePopup(dispatch,{innerFullView:"Setting", isFullPopupVisible:true}); }} >
                     <Text style={{color:colorWhite}} >설정 {currentVersion}</Text>
                 </TouchableWithoutFeedback>
                 {/* 

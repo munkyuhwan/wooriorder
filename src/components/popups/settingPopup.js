@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { DetailSettingWrapper, SelectCancelText, SelectCancelWrapper, SelectWrapper, SettingButtonText, SettingButtonWrapper, SettingConfirmBtn, SettingConfirmBtnText, SettingConfirmBtnWrapper, SettingScrollView, SettingWrapper, TableColumnInput, TableColumnTitle, TableColumnWrapper } from '../../styles/common/settingStyle';
-import { Alert, DeviceEventEmitter, ScrollView, Text, TouchableWithoutFeedback, View } from 'react-native';
-import { indicateAvailableDeviceInfo, serviceGetting, serviceIndicate, serviceSetting, startSmartroCheckIntegrity, startSmartroGetDeviceInfo, startSmartroGetDeviceSetting, startSmartroKeyTransfer, startSmartroReadCardInfo, startSmartroRequestPayment, startSmartroSetDeviceDefaultSetting, varivariTest } from '../../utils/smartro';
+import { DetailSettingWrapper, PaymentTextInput, PaymentTextLabel, PaymentTextWrapper, SelectCancelText, SelectCancelWrapper, SelectWrapper, SelectWrapperColumn, SettingButtonText, SettingButtonWrapper, SettingConfirmBtn, SettingConfirmBtnText, SettingConfirmBtnWrapper, SettingItemWrapper, SettingScrollView, SettingWrapper, TableColumnInput, TableColumnTitle, TableColumnWrapper } from '../../styles/common/settingStyle';
+import { Alert, DeviceEventEmitter, KeyboardAvoidingView, ScrollView, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { indicateAvailableDeviceInfo, serviceFunction, serviceGetting, serviceIndicate, servicePayment, serviceSetting, startSmartroCheckIntegrity, startSmartroGetDeviceInfo, startSmartroGetDeviceSetting, startSmartroKeyTransfer, startSmartroReadCardInfo, startSmartroRequestPayment, startSmartroSetDeviceDefaultSetting, varivariTest } from '../../utils/smartro';
 import CodePush from 'react-native-code-push';
 import PopupIndicator from '../common/popupIndicator';
 import { IndicatorWrapper, PopupIndicatorText, PopupIndicatorWrapper, PopupSpinner } from '../../styles/common/popupIndicatorStyle';
@@ -19,6 +19,7 @@ const SettingPopup = () =>{
     const pickerRef = useRef();
     const functionPickerRef = useRef();
     const functionTestPickerRef = useRef();
+    const functionPaymentPickerRef = useRef();
 
     const [spinnerText, setSpinnerText] = React.useState("")
     const {tableList,tableInfo} = useSelector(state=>state.tableInfo);
@@ -29,6 +30,10 @@ const SettingPopup = () =>{
     //const selectedFunctionTest = useSharedValue("");
     const [selectedFunction, setSelectedFunction] = useState("");
     const [selectedFunctionTest, setSelectedFunctionTest] = useState("");
+    const [paymentType, setPaymentType] = useState("");
+    const paymentAmount = useSharedValue(0);
+    const paymentApprovalNo = useSharedValue("");
+    const paymentApprovalDate = useSharedValue("");
 
     const getIndicateAvailableDeviceInfo = () =>{
         serviceIndicate()
@@ -55,6 +60,29 @@ const SettingPopup = () =>{
         .then((result)=>{
             const jsonResult=JSON.parse(result);
             displayOnAlert("디바이스 설정값",jsonResult);
+        })
+        .catch((error)=>{
+            console.log("error: ",error)
+        })
+    }
+    const smartroServiceFunction = () => {
+        const data = {};
+        data[selectedFunction] = selectedFunctionTest;
+        serviceFunction(data)
+        .then((result)=>{
+            const jsonResult=JSON.parse(result);
+            displayOnAlert("서비스 기능",jsonResult);
+        })
+        .catch((error)=>{
+            console.log("error: ",error)
+        })
+    }
+    const smartroServicePayment = (paymentData) => {
+        servicePayment(dispatch, paymentData)
+        .then((result)=>{
+            console.log("payresult: ",result);
+            const jsonResult=JSON.parse(result);
+            displayOnAlert("서비스 기능",jsonResult);
         })
         .catch((error)=>{
             console.log("error: ",error)
@@ -176,7 +204,7 @@ const SettingPopup = () =>{
                         })
                     }
                 </Picker>
-                <TouchableWithoutFeedback onPress={()=>{releaseTable();}}>
+                <TouchableWithoutFeedback onPress={()=>{smartroServiceFunction();}}>
                     <SelectCancelWrapper>
                         <SelectCancelText>확인</SelectCancelText>
                     </SelectCancelWrapper>
@@ -184,7 +212,6 @@ const SettingPopup = () =>{
             </SelectWrapper>
         );
     }
-    console.log("SMARTRO_FUNCTION[selectedFunction]: ",SMARTRO_FUNCTION[selectedFunction]);
 
     const Dropdown = () => {
 
@@ -219,79 +246,119 @@ const SettingPopup = () =>{
             </SelectWrapper>
         );
     };
+
+    const PaymentDropdown = () => {
+        return (
+            <SelectWrapperColumn>
+                <Picker
+                    ref={functionPaymentPickerRef}
+                    key={"paymentPicker"}
+                    mode='dialog'
+                    onValueChange = {(itemValue, itemIndex) => {
+                        setPaymentType(itemValue);
+                    }}
+                    selectedValue={paymentType}
+                    style = {{
+                        width: 200,
+                        height: 50,
+                        flex:1
+                    }}>
+                    <Picker.Item key={"none"} label = {"미선택"} value ={{}} />
+                    <Picker.Item key={"approval"} label = {"결제"} value ={"approval"} />
+                    <Picker.Item key={"cancellation"} label = {"취소"} value ={"cancellation"} />
+                </Picker>
+                
+                <PaymentTextWrapper>
+                    <PaymentTextLabel>금액:</PaymentTextLabel>
+                    <PaymentTextInput keyboardType='numeric' defaultValue={paymentAmount.value} onChangeText={(val)=>{paymentAmount.value=val; }} />
+                </PaymentTextWrapper>
+                {paymentType=="cancellation" &&
+                    <>
+                        <PaymentTextWrapper>
+                            <PaymentTextLabel>승인번호:</PaymentTextLabel>
+                            <PaymentTextInput keyboardType='numeric' defaultValue={paymentApprovalNo.value} onChangeText={(val)=>{paymentApprovalNo.value=val;}} />
+                        </PaymentTextWrapper>
+                        <PaymentTextWrapper>
+                            <PaymentTextLabel>승인일자(YYMMDD):</PaymentTextLabel>
+                            <PaymentTextInput keyboardType='numeric' maxLength={6} defaultValue={paymentApprovalDate.value}  onChangeText={(val)=>{paymentApprovalDate.value=val}} />
+                        </PaymentTextWrapper>
+                    </>
+                }
+                <TouchableWithoutFeedback onPress={()=>{
+                    if(paymentType == "approval") {
+                        smartroServicePayment({"deal":paymentType,"total-amount":paymentAmount.value});
+                    }
+                    else if(paymentType == "cancellation"){
+                        smartroServicePayment({"deal":paymentType,"total-amount":paymentAmount.value,"approval-no":paymentApprovalNo.value,"approval-date":paymentApprovalDate.value});
+                    }
+                    
+                    }}>
+                    <SelectCancelWrapper>
+                        <SelectCancelText>실행</SelectCancelText>
+                    </SelectCancelWrapper>
+                </TouchableWithoutFeedback>
+            </SelectWrapperColumn>
+        );
+    }
  
     return (
         <>
-            <SettingWrapper>
-                {/* <TouchableWithoutFeedback onPress={()=>{ openFullSizePopup(dispatch,{innerFullView:"", isFullPopupVisible:false}); }}>
-                        <PopupCloseButtonWrapper>
-                            <PopupCloseButton source={require('assets/icons/close_red.png')}/>
-                        </PopupCloseButtonWrapper>
-                </TouchableWithoutFeedback> */}
-                <SettingScrollView>
-                    <SettingButtonWrapper>
-                        <TouchableWithoutFeedback onPress={()=>{ setTableSettingShow(!isTableSettingShow) }} >
-                            <SettingButtonText>테이블 세팅</SettingButtonText>
-                        </TouchableWithoutFeedback> 
-                        {isTableSettingShow &&
-                            <Dropdown/>
-                        }
-                        <TouchableWithoutFeedback onPress={()=>{getIndicateAvailableDeviceInfo();}} >
-                            <SettingButtonText>단말기 서비스 확인</SettingButtonText>
-                        </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={()=>{smartroServiceSetting();}} >
-                            <SettingButtonText>단말기 서비스 설정하기</SettingButtonText>
-                        </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={()=>{smartroServiceGetting();}} >
-                            <SettingButtonText>단말기 서비스 설정값</SettingButtonText>
-                        </TouchableWithoutFeedback>
-                        <ServiceDropDown/>
-                        
-                        {/*}
-                        <TouchableWithoutFeedback onPress={()=>{getDeviceInfo();}} >
-                            <SettingButtonText>단말기 정보 가져오기</SettingButtonText>
-                        </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={()=>{deviceKeyTransfer();}}>
-                            <SettingButtonText>키교환하기(오류시 시도)</SettingButtonText>
-                        </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={()=>{checkDeviceIntegrity();}}>
-                            <SettingButtonText>장치 무결성 점검</SettingButtonText>
-                        </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={()=>{getCardInfo();}} >
-                            <SettingButtonText>카드정보 가져오기</SettingButtonText>
-                        </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={()=>{getDeviceSetting();}} >
-                            <SettingButtonText>장치 설정</SettingButtonText>
-                        </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={()=>{getDeviceDefaultSetting();}} >
-                            <SettingButtonText>장치 기본 설정</SettingButtonText>
-                        </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={()=>{testPayment();}} >
-                            <SettingButtonText>테스트 결제</SettingButtonText>
-                        </TouchableWithoutFeedback> */}
+            <KeyboardAvoidingView behavior="padding" enabled style={{width:'100%', height:'100%'}} >
+                <SettingWrapper>
+                    <TouchableWithoutFeedback onPress={()=>{ openFullSizePopup(dispatch,{innerFullView:"", isFullPopupVisible:false}); }}>
+                            <PopupCloseButtonWrapper>
+                                <PopupCloseButton source={require('assets/icons/close_red.png')}/>
+                            </PopupCloseButtonWrapper>
+                    </TouchableWithoutFeedback>
+                    <SettingScrollView showsVerticalScrollIndicator={false}>
+                        <SettingButtonWrapper>
+                            <SettingItemWrapper>
+                                <TouchableWithoutFeedback onPress={()=>{ setTableSettingShow(!isTableSettingShow) }} >
+                                    <SettingButtonText isMargin={false} >테이블 세팅</SettingButtonText>
+                                </TouchableWithoutFeedback> 
+                                <Dropdown/>
+                            </SettingItemWrapper>
+                            <TouchableWithoutFeedback onPress={()=>{getIndicateAvailableDeviceInfo();}} >
+                                <SettingButtonText isMargin={true} >단말기 서비스 확인</SettingButtonText>
+                            </TouchableWithoutFeedback>
+                            <TouchableWithoutFeedback onPress={()=>{smartroServiceSetting();}} >
+                                <SettingButtonText isMargin={true} >단말기 서비스 설정하기</SettingButtonText>
+                            </TouchableWithoutFeedback>
+                                <TouchableWithoutFeedback onPress={()=>{smartroServiceGetting();}} >
+                                    <SettingButtonText isMargin={true} >단말기 서비스 설정 확인</SettingButtonText>
+                                </TouchableWithoutFeedback>
+                            <SettingItemWrapper>    
+                                <TouchableWithoutFeedback onPress={()=>{}} >
+                                    <SettingButtonText isMargin={false} >단말기 서비스 기능</SettingButtonText>
+                                </TouchableWithoutFeedback>
+                                <ServiceDropDown/>
+                            </SettingItemWrapper>
+                            <SettingItemWrapper>    
+                                <TouchableWithoutFeedback onPress={()=>{}} >
+                                    <SettingButtonText isMargin={false} >단말기 결제 기능</SettingButtonText>
+                                </TouchableWithoutFeedback>
+                            <PaymentDropdown/>
+                            </SettingItemWrapper>
+                            
+                            <TouchableWithoutFeedback onPress={()=>{}} >
+                                <SettingButtonText isMargin={true} >메뉴 업데이트</SettingButtonText>
+                            </TouchableWithoutFeedback>
+                            <TouchableWithoutFeedback onPress={()=>{checkUpdate();}} >
+                                <SettingButtonText isMargin={true} >앱 업데이트</SettingButtonText>
+                            </TouchableWithoutFeedback> 
+                        </SettingButtonWrapper>
+                    </SettingScrollView>
+                </SettingWrapper>
 
-                        <TouchableWithoutFeedback onPress={()=>{variousTest();}} >
-                            <SettingButtonText>기타 테스트</SettingButtonText>
-                        </TouchableWithoutFeedback>
-                        
-                        {/* <TouchableWithoutFeedback onPress={()=>{}} >
-                            <SettingButtonText>메뉴 업데이트</SettingButtonText>
-                        </TouchableWithoutFeedback>
-                        <TouchableWithoutFeedback onPress={()=>{checkUpdate();}} >
-                            <SettingButtonText>앱 업데이트</SettingButtonText>
-                        </TouchableWithoutFeedback> */}
-                    </SettingButtonWrapper>
-                </SettingScrollView>
-            </SettingWrapper>
-
-            {(spinnerText!="")&&
-                <PopupIndicatorWrapper style={{right:0, position:'absolute', width:'104%', height:'104%'}}>
-                    <IndicatorWrapper>
-                        <PopupSpinner size={'large'}/>
-                        <PopupIndicatorText>{spinnerText}</PopupIndicatorText>
-                    </IndicatorWrapper>
-                </PopupIndicatorWrapper>
-            }
+                {(spinnerText!="")&&
+                    <PopupIndicatorWrapper style={{right:0, position:'absolute', width:'104%', height:'104%'}}>
+                        <IndicatorWrapper>
+                            <PopupSpinner size={'large'}/>
+                            <PopupIndicatorText>{spinnerText}</PopupIndicatorText>
+                        </IndicatorWrapper>
+                    </PopupIndicatorWrapper>
+                }
+            </KeyboardAvoidingView>
         </>
     )
 }

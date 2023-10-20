@@ -8,7 +8,7 @@ import { getDisplayMenu, getMenu, getMenuEdit, getMenuState, updateMenu } from '
 import { widthAnimationStyle } from '../../utils/animation';
 import { setSelectedMainCategory } from '../../store/categories';
 import { useSharedValue } from 'react-native-reanimated';
-import { openPopup } from '../../utils/common';
+import { openFullSizePopup, openPopup } from '../../utils/common';
 
 
 const MenuListView = () => {
@@ -94,10 +94,6 @@ const MenuListView = () => {
         }
     },[mainCategories])
 
-    //지워라
-    useEffect(()=>{
-        openPopup(dispatch,{innerView:"Setting", isPopupVisible:true});
-    },[])
     //console.log("mainCategories: ",mainCategories[0].ITEM_GR`OUP_CODE)
     return(
         <>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {View, NativeModules, DeviceEventEmitter} from 'react-native'
+import {View, NativeModules, DeviceEventEmitter, KeyboardAvoidingView} from 'react-native'
 import SideMenu from '../components/main/sideMenu'
 import TopMenu from '../components/main/topMenu'
 import { MainWrapper, WholeWrapper } from '../styles/main/mainStyle'
@@ -40,14 +40,16 @@ const MainScreen = () =>{
     } */
     return(
         <>
-            <WholeWrapper onTouchStart={()=>{ /* screenTimeOut();  */ }} >
-                <SideMenu/>
-                <MainWrapper>
-                    <TopMenu/>
-                    <MenuListView/>
-                    <CartView/>
-                </MainWrapper>
-            </WholeWrapper> 
+            <KeyboardAvoidingView behavior="padding" enabled style={{width:'100%', height:'100%'}} >
+                <WholeWrapper onTouchStart={()=>{ /* screenTimeOut();  */ }} >
+                    <SideMenu/>
+                    <MainWrapper>
+                        <TopMenu/>
+                        <MenuListView/>
+                        <CartView/>
+                    </MainWrapper>
+                </WholeWrapper> 
+            </KeyboardAvoidingView>
         </>
     )
 }

@@ -6,6 +6,8 @@ import { ScrollView, TouchableWithoutFeedback } from 'react-native';
 export const SettingWrapper = styled.View`
     paddingLeft:30px;
     paddingRight:30px;
+    paddingTop:20px;
+    paddingBottom:20px;
     backgroundColor:${colorWhite};
     width:100%;
 `
@@ -17,12 +19,18 @@ export const SettingButtonText = styled.Text`
     backgroundColor:${colorDarkGrey};
     color:${colorWhite};
     fontSize:21px;
-    marginTop:10px;
+    marginTop:${props=>props.isMargin ? '10px':'0px'};
     paddingTop:7px;
     paddingBottom:7px;
     textAlign:center;
     fontWeight:bold;
     borderRadius:${RADIUS};
+`
+export const SettingItemWrapper = styled.View`
+    borderRadius:${RADIUS};
+    border:solid;
+    borderWidth:1px;
+    marginTop:10px;
 `
 
 export const SettingScrollView = styled(ScrollView)`
@@ -76,8 +84,12 @@ export const SelectWrapper = styled.View`
     flexDirection:row;
     paddingTop:10px;
 `
+export const SelectWrapperColumn = styled.View`
+    flexDirection:column;
+    paddingTop:10px;
+`
 export const SelectCancelText = styled.Text`
-    fontSize:20px;
+    fontSize:17px;
     fontWeight:bold;
     color:${colorBlack};
     marginTop:auto;
@@ -90,12 +102,30 @@ export const SelectCancelWrapper = styled.View`
     borderWidth:1px;
     borderRadius:${RADIUS_SMALL};
     justifyContents:center;
-    paddingTop:10px;
-    paddingBottom:10px;
-    paddingRight:15px;
-    paddingLeft:15px;
-    height:50px;
+    paddingTop:5px;
+    paddingBottom:5px;
+    paddingRight:7px;
+    paddingLeft:7px;
+    height:30px;
     flex:0.3;
     alignItems:center;
-
+`
+export const PaymentTextWrapper = styled.View`
+    paddingTop:5px;
+    paddingBottom:5px;
+    paddingRight:7px;
+    paddingLeft:7px;
+    flexDirection:row;
+`
+export const PaymentTextLabel = styled.Text`
+    color:${colorBlack};
+    fontSize:15px;
+    flex:0.4;
+`
+export const PaymentTextInput = styled.TextInput`
+    flex:1;
+    backgroundColor:${colorWhite};
+    borderWidth:1px;
+    height:20px;
+    padding:0;
 `

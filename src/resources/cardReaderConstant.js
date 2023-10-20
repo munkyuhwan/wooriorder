@@ -21,8 +21,8 @@ export const SMARTRO_FUNCTION = [
             {label:"키교환",value:"exchange-key"},
             {label:"무결성",value:"check-integrity"},
             {label:"장치 정보",value:"get-info"},
-            {label:"카드입력 감지",value:"get-detection"},
-            {label:"금전함 열기",value:"open-up-cash-drawer"},
+            //{label:"카드입력 감지",value:"get-detection"},
+            //{label:"금전함 열기",value:"open-up-cash-drawer"},
             {label:"카드삽입상태",value:"check-card-inserted"},
         ]
     },
@@ -35,7 +35,7 @@ export const SMARTRO_FUNCTION = [
             //{label:"qr",value:"“code-qr"},
             //{label:"qr",value:"code-qr-via-device"},
             //{label:"qr",value:"code-qr-via-additional-device"},
-            {label:"카드정보 읽어오기",value:"card-no-via-device-key"},
+            //{label:"카드정보 읽어오기",value:"card-no-via-device-key"},
         ]
     },
     /* 
