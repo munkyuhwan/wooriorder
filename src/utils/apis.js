@@ -110,11 +110,12 @@ export const postOrderToPos = async(dispatch, data) =>{
                 const responseData = response.data
                 if(responseData){
                     if(responseData?.OBJ) {
+                        console.log(responseData?.OBJ);
                         const orderNo = responseData?.OBJ?.ORDERNO;
                         const orgOrderNo = responseData?.OBJ?.ORG_ORDERNO;
                         const mchtOrderNo = responseData?.OBJ?.MCHT_ORDERNO;
                         const posOrderNo = responseData?.OBJ?.POS_ORDERNO;
-                        const orderData = {"ORDERNO":orderNo,"ORG_ORDERNO":orgOrderNo,"MCHT_ORDERNO":mchtOrderNo,"POS_ORDERNO":posOrderNo}
+                        const orderData = {"ORDERNO":orderNo,"ORG_ORDERNO":orgOrderNo,"MCHT_ORDERNO":mchtOrderNo, }
                         AsyncStorage.setItem("orderResult",JSON.stringify(orderData));
                     }
                 }

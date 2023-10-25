@@ -12,6 +12,7 @@ import { Picker } from '@react-native-picker/picker';
 import { clearTableInfo, initTableInfo, setTableInfo } from '../../store/tableInfo';
 import { SMARTRO_FUNCTION } from '../../resources/cardReaderConstant';
 import { useSharedValue } from 'react-native-reanimated';
+import { getMenuEdit } from '../../store/menu';
 
 const SettingPopup = () =>{
 
@@ -364,7 +365,7 @@ const SettingPopup = () =>{
                                 <PaymentDropdown/>
                             </SettingItemWrapper>
                             
-                            <TouchableWithoutFeedback onPress={()=>{}} >
+                            <TouchableWithoutFeedback onPress={()=>{dispatch(getMenuEdit())}} >
                                 <SettingButtonText isMargin={true} >메뉴 업데이트</SettingButtonText>
                             </TouchableWithoutFeedback>
                             <TouchableWithoutFeedback onPress={()=>{checkUpdate();}} >

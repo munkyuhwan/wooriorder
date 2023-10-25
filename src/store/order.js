@@ -172,20 +172,86 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
 // 새로 메뉴 등록
 export const postToPos =  createAsyncThunk("order/postToPos", async(_,{dispatch, getState,extra}) =>{
     const {orderPayData} = getState().order;
+    const {paymentResult} = _;
+
+    let orderPayList = [];
+
+    /* paymentResult = {
+        "acquire-info": "0300신한카드사", 
+        "additional-device-name": "SIFM", 
+        "additional-device-serial": "S522121235", 
+        "approval-date": "231026", 
+        "approval-no": "37466524", 
+        "approval-time": "004108", 
+        "business-address": "서울 영등포구 선유로3길 10 하우스디 비즈 706호", 
+        "business-name": "주식회사 우리포스",
+        "business-no": "2118806806", 
+        "business-owner-name": "김정엽", 
+        "business-phone-no": "02  15664551", 
+        "card-no": "94119400********", 
+        "cat-id": "7109912041",
+        "deal": "approval", 
+        "device-auth-info": "####SMT-R231", 
+        "device-auth-ver": "1001", 
+        "device-name": "SMT-R231", 
+        "device-serial": "S522121235", 
+        "display-msg": "정상승인거래", 
+        "external-name": "SIFM", 
+        "external-serial": "S522121235", 
+        "issuer-info": "0300마이홈플러스신한", 
+        "merchant-no": "0105512446", 
+        "persional-id": "01040618432",
+        "receipt-msg": "정상승인거래", 
+        "response-code": "00", 
+        "service": "payment", 
+        "service-result": "0000", 
+        "total-amount": 20, 
+        "type": "credit",
+        "unique-no": "710610231843",
+        "van-tran-seq": "231026004105"}
+         */
+    const orderPayItem = {
+        "AUTH_DATE": `${paymentResult['approval-date']||"" }`, 
+        "AUTH_NO": "A012", 
+        "AUTH_TIME": `${paymentResult['approval-time']||""}`, 
+        "CAN_FLAG": "N", 
+        "CAN_PAY_SEQ": "", 
+        "CARD_ACQHID": `${paymentResult['acquire-info']?.substring(0,4)||""}`, 
+        "CARD_ACQ_NAME": `${paymentResult['acquire-info']?.substring(4,paymentResult['acquire-info'].length-1)||""}`, 
+        "CARD_ACSHID": `${paymentResult['issuer-info']?.substring(0,4)||""}`, 
+        "CARD_MCHTNO": `${paymentResult['merchant-no']||""}`, 
+        "CARD_NO": `${paymentResult['card-no']}`, 
+        "CARD_PAY_TYPE": "I", 
+        "CASH_AUTH_TYPE": "P", 
+        "CRD_HID_NAME": `${paymentResult['issuer-info']?.substring(4,paymentResult['issuer-info']?.length-1)||""}`, 
+        "DDCEDI": "E", 
+        "ISTM_TERM": "01", 
+        "PAY_TYPE": "card", 
+        "SALE_AMT":`${paymentResult['total-amount']||""}`, 
+        "SALE_VAT_AMT": "0", 
+        "SVC_AMT": "0", 
+        "TML_NO":`${paymentResult['cat-id']||""}`,
+    };
+    orderPayList.push(orderPayItem);
+    orderPayData['ORD_PAY_LIST'] = orderPayList;
+
+    
     return await postOrderToPos(dispatch, orderPayData)
     .catch(err=>{
         posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:"주문 오류",MSG2:"주문을 진행할 수 없습니다."});
         console.log("error: ",err)
     });
+    
 })
 // 매뉴 추가 등록
 export const postAddToPos =  createAsyncThunk("order/postAddToPos", async(_,{dispatch, getState,extra}) =>{
     const {orderPayData} = getState().order;
-    const orderResult = JSON.parse(_);
+    const {orderResult} = _;
     let tmpData = orderPayData;
     // 추가 주문에 결제 정보 빼야함.
     tmpData["ORD_PAY_LIST"]=[];
-    tmpData = {...tmpData,...orderResult};
+    console.log(JSON.parse(orderResult));
+    tmpData = {...tmpData,...JSON.parse(orderResult)};
     return await addOrderToPos(dispatch, tmpData)
     .catch(err=>{
         posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:"주문 오류",MSG2:"주문을 진행할 수 없습니다."});

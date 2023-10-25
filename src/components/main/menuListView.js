@@ -32,13 +32,12 @@ const MenuListView = () => {
     const dragEndPosition = useSharedValue(0);
     const scrollStart = useSharedValue(0);
     const scrollEnd = useSharedValue(0);
-
     // 선택 카테고리
     const {mainCategories, selectedMainCategory} = useSelector((state)=>state.categories);
     //console.log("menu:",menu[1].ITEM_LIST[0]);
     useEffect(()=>{
         // 스크롤 될때
-        if(isScrollEnd) {
+        /* if(isScrollEnd) {
             if(mainCategories.length > 0) {
                 const selectedCat = mainCategories.filter(e => e.ITEM_GROUP_CODE==selectedMainCategory);
                 const selectedIndex = mainCategories.indexOf(selectedCat[0]);
@@ -57,11 +56,11 @@ const MenuListView = () => {
                 dispatch(setSelectedMainCategory(mainCategories[nextPage].ITEM_GROUP_CODE)); 
                 setScrollEnd(false);
             }
-        }
+        } */
     },[isScrollEnd])
     useEffect(()=>{
         // 스크롤 안될때
-        if(!isTouchStart&&isTouchEnd) {
+       /*  if(!isTouchStart&&isTouchEnd) {
             const selectedCat = mainCategories.filter(e => e.ITEM_GROUP_CODE==selectedMainCategory);
             const selectedIndex = mainCategories.indexOf(selectedCat[0]);
             var nextPage = 0;
@@ -74,7 +73,7 @@ const MenuListView = () => {
             }
             dispatch(setSelectedMainCategory(mainCategories[nextPage].ITEM_GROUP_CODE)); 
             setScrollEnd(false);  
-        }
+        } */
     },[ isTouchEnd, isTouchStart])
 
     useEffect(()=>{
