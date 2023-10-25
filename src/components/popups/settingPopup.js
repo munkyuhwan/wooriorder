@@ -13,6 +13,7 @@ import { clearTableInfo, initTableInfo, setTableInfo } from '../../store/tableIn
 import { SMARTRO_FUNCTION } from '../../resources/cardReaderConstant';
 import { useSharedValue } from 'react-native-reanimated';
 import { getMenuEdit } from '../../store/menu';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SettingPopup = () =>{
 
@@ -240,6 +241,8 @@ const SettingPopup = () =>{
                     mode='dialog'
                     onValueChange = {(itemValue, itemIndex) => {
                         dispatch(setTableInfo(itemValue))
+                        AsyncStorage.removeItem("orderResult");
+
                     }}
                     selectedValue={tableInfo}
                     style = {{
