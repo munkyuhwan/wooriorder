@@ -76,12 +76,21 @@ export const servicePayment = async(dispatch, data)=>{
                 resolve(msg);
             });
     })
-
-    // 승인
-    //const smartroData = {"service":"payment", "type":"credit", "deal":"approval", "persional-id":"01040618432","total-amount":"10", ...BASIC_DATA};
-    // 취소
-    //const smartroData = {"service":"payment", "type":"credit", "deal":"cancellation", "persional-id":"01040618432","total-amount":"10", "approval-no":"10556666","approval-date":"231020", ...BASIC_DATA};
-
+}
+export const getLastPaymentData = async(dispatch)=>{
+    const {SmartroPay} = NativeModules;
+    const smartroData = {"service":"function","getting-data":"last-payment",...BASIC_DATA};
+    
+    return await new Promise(function(resolve, reject){
+        SmartroPay.prepareSmartroPay(
+            JSON.stringify(smartroData),
+            (error)=>{
+                reject(error);
+            },
+            (msg)=>{
+                resolve(msg);
+            });
+    })
 }
 
 

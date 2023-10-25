@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { DetailSettingWrapper, PaymentTextInput, PaymentTextLabel, PaymentTextWrapper, SelectCancelText, SelectCancelWrapper, SelectWrapper, SelectWrapperColumn, SettingButtonText, SettingButtonWrapper, SettingConfirmBtn, SettingConfirmBtnText, SettingConfirmBtnWrapper, SettingItemWrapper, SettingScrollView, SettingWrapper, TableColumnInput, TableColumnTitle, TableColumnWrapper } from '../../styles/common/settingStyle';
 import { Alert, DeviceEventEmitter, KeyboardAvoidingView, ScrollView, Text, TouchableWithoutFeedback, View } from 'react-native';
-import { indicateAvailableDeviceInfo, serviceFunction, serviceGetting, serviceIndicate, servicePayment, serviceSetting, startSmartroCheckIntegrity, startSmartroGetDeviceInfo, startSmartroGetDeviceSetting, startSmartroKeyTransfer, startSmartroReadCardInfo, startSmartroRequestPayment, startSmartroSetDeviceDefaultSetting, varivariTest } from '../../utils/smartro';
+import { getLastPaymentData, indicateAvailableDeviceInfo, serviceFunction, serviceGetting, serviceIndicate, servicePayment, serviceSetting, startSmartroCheckIntegrity, startSmartroGetDeviceInfo, startSmartroGetDeviceSetting, startSmartroKeyTransfer, startSmartroReadCardInfo, startSmartroRequestPayment, startSmartroSetDeviceDefaultSetting, varivariTest } from '../../utils/smartro';
 import CodePush from 'react-native-code-push';
 import PopupIndicator from '../common/popupIndicator';
 import { IndicatorWrapper, PopupIndicatorText, PopupIndicatorWrapper, PopupSpinner } from '../../styles/common/popupIndicatorStyle';
@@ -34,6 +34,7 @@ const SettingPopup = () =>{
     const paymentAmount = useSharedValue(0);
     const paymentApprovalNo = useSharedValue("");
     const paymentApprovalDate = useSharedValue("");
+    const [lastPayData, setLastPayData] = useState("");
 
     const getIndicateAvailableDeviceInfo = () =>{
         serviceIndicate()
@@ -83,6 +84,21 @@ const SettingPopup = () =>{
             console.log("payresult: ",result);
             const jsonResult=JSON.parse(result);
             displayOnAlert("서비스 기능",jsonResult);
+        })
+        .catch((error)=>{
+            console.log("error: ",error)
+        })
+    }
+    const smartroGetLastPaymentData = () =>{
+        getLastPaymentData(dispatch)
+        .then((result)=>{
+            const jsonResult=JSON.parse(result);
+            const objKeys = Object.keys(jsonResult)
+            var str = "";
+            for(var i=0; i<objKeys.length; i++) {
+                str += `${objKeys[i]}: ${jsonResult[objKeys[i]]}\n`;
+            }
+            setLastPayData(str);
         })
         .catch((error)=>{
             console.log("error: ",error)
@@ -297,6 +313,14 @@ const SettingPopup = () =>{
                         <SelectCancelText>실행</SelectCancelText>
                     </SelectCancelWrapper>
                 </TouchableWithoutFeedback>
+                <PaymentTextWrapper>
+                    <PaymentTextLabel>{lastPayData}</PaymentTextLabel>
+                </PaymentTextWrapper>
+                <TouchableWithoutFeedback onPress={()=>{smartroGetLastPaymentData();}}>
+                    <SelectCancelWrapper>
+                        <SelectCancelText>마지막 결제 정보</SelectCancelText>
+                    </SelectCancelWrapper>
+                </TouchableWithoutFeedback>
             </SelectWrapperColumn>
         );
     }
@@ -327,7 +351,7 @@ const SettingPopup = () =>{
                                 <TouchableWithoutFeedback onPress={()=>{smartroServiceGetting();}} >
                                     <SettingButtonText isMargin={true} >단말기 서비스 설정 확인</SettingButtonText>
                                 </TouchableWithoutFeedback>
-                            <SettingItemWrapper>    
+                            <SettingItemWrapper>
                                 <TouchableWithoutFeedback onPress={()=>{}} >
                                     <SettingButtonText isMargin={false} >단말기 서비스 기능</SettingButtonText>
                                 </TouchableWithoutFeedback>
@@ -337,7 +361,7 @@ const SettingPopup = () =>{
                                 <TouchableWithoutFeedback onPress={()=>{}} >
                                     <SettingButtonText isMargin={false} >단말기 결제 기능</SettingButtonText>
                                 </TouchableWithoutFeedback>
-                            <PaymentDropdown/>
+                                <PaymentDropdown/>
                             </SettingItemWrapper>
                             
                             <TouchableWithoutFeedback onPress={()=>{}} >
