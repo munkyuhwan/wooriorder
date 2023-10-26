@@ -34,6 +34,7 @@ const MenuListView = () => {
     const scrollEnd = useSharedValue(0);
     // 선택 카테고리
     const {mainCategories, selectedMainCategory} = useSelector((state)=>state.categories);
+
     //console.log("menu:",menu[1].ITEM_LIST[0]);
     useEffect(()=>{
         // 스크롤 될때
@@ -85,8 +86,10 @@ const MenuListView = () => {
     },[isOn])
 
     useEffect(()=>{
+        if(isDetailShow)setDetailShow(false);
         dispatch(getDisplayMenu())
     },[selectedMainCategory])
+
     useEffect(()=>{
         if(mainCategories[0]) {
             dispatch(setSelectedMainCategory(mainCategories[0].ITEM_GROUP_CODE));
@@ -129,7 +132,9 @@ const MenuListView = () => {
                     
                 />
             </MenuListWrapper>
+            {isDetailShow&&
             <ItemDetail isDetailShow={isDetailShow} setDetailShow={setDetailShow} language={language}/>
+            }
         </>
     );
 }

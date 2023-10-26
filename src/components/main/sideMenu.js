@@ -7,6 +7,7 @@ import { colorRed, colorWhite } from '../../assets/colors/color'
 import { openFullSizePopup, openPopup, openTransperentPopup } from '../../utils/common'
 import LeftMenuList from '../menuComponents/leftMenuList'
 import { getMainCategories, getSubCategories, setSelectedMainCategory } from '../../store/categories';
+import { setCartView } from '../../store/cart';
 const SideMenu = () =>{
     const dispatch = useDispatch();
     const {mainCategories} = useSelector((state)=>state.categories);
