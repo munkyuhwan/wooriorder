@@ -3,6 +3,7 @@ import { BASIC_DATA, BUSINESS_NO, DEVICE_NO } from '../resources/cardReaderConst
 import isEmpty from 'lodash';
 import { hasPayError, payErrorHandler } from './errorHandler/ErrorHandler';
 import { useDispatch } from 'react-redux';
+import LogWriter from './logWriter';
 
 export const serviceIndicate = async () => {
     const {SmartroPay} = NativeModules;
@@ -66,13 +67,21 @@ export const servicePayment = async(dispatch, data)=>{
         return;
     }
     const smartroData = {"service":"payment", "type":"credit", "persional-id":"01040618432", ...data, ...BASIC_DATA};
+    // write log
+    const lw = new LogWriter();
+    const logStr = `\nPOST PAYMENT DATA==================================\nfunction:servicePayment\ndata:${JSON.stringify(smartroData)}\n`
+    lw.writeLog(logStr);
     return await new Promise(function(resolve, reject){
         SmartroPay.prepareSmartroPay(
             JSON.stringify(smartroData),
             (error)=>{
+                const logErr = `\nERROR PAYMENT DATA==================================\nerrorResult:${JSON.stringify(error)}\n`
+                lw.writeLog(logErr);
                 reject(error);
             },
             (msg)=>{
+                const logMsg = `\nMSG PAYMENT DATA==================================\nerrorResult:${JSON.stringify(msg)}\n`
+                lw.writeLog(logMsg);
                 resolve(msg);
             });
     })

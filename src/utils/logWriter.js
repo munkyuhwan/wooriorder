@@ -4,8 +4,13 @@ import RNFS from "react-native-fs";
 export default class LogWriter {
 
     constructor() {
+        let today = new Date();
+        let date = today.getDate();
+        let month = today.getMonth() + 1;
+        let year = today.getFullYear();
+
         this.config = {
-            severity: "debug",
+            severity:"debug",
             transport: fileAsyncTransport,
             transportOptions: {
               FS: RNFS,
@@ -13,7 +18,7 @@ export default class LogWriter {
               /* EXPO:
                * FS: FileSystem,
                */
-              fileName: `log.txt`, // Create a new file every day
+              fileName: `log_${year}_${month}_${date}.txt`, // Create a new file every day
             },
         }
     } 
@@ -26,7 +31,7 @@ export default class LogWriter {
         let month = today.getMonth() + 1;
         let year = today.getFullYear();
         
-        log.info(`${today}>>>`,str);
+        log.debug(`${today}>>>`,str);
 
     }
 }

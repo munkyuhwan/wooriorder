@@ -13,21 +13,21 @@ import { useDispatch, useSelector } from 'react-redux'
 import LogWriter from '../utils/logWriter'
 import { getTableList } from '../store/tableInfo'
 import { openPopup } from '../utils/common'
+import RNFS from "react-native-fs";
 
 
 const MainScreen = () =>{   
     
 /* 
-    console.log(RNFS.DocumentDirectoryPath);
-    var path = RNFS.DocumentDirectoryPath + '/test.txt';
+    var path = RNFS.DownloadDirectoryPath + '/test.txt';
     RNFS.writeFile(path, 'Lorem ipsum dolor sit amet', 'utf8')
     .then((success) => {
       console.log('FILE WRITTEN!');
     })
     .catch((err) => {
       console.log(err.message);
-    });
- */
+    }); 
+   */
 
     /* 
     let timeoutSet = null

@@ -35,7 +35,7 @@ export const SMARTRO_FUNCTION = [
             //{label:"qr",value:"“code-qr"},
             //{label:"qr",value:"code-qr-via-device"},
             //{label:"qr",value:"code-qr-via-additional-device"},
-            //{label:"카드정보 읽어오기",value:"card-no-via-device-key"},
+            //{label:"카드정보 읽어오기",value:"card-no-via-device"},
         ]
     },
     /* 

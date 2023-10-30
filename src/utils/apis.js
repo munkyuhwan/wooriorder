@@ -6,6 +6,7 @@ import { numberPad, openPopup } from "./common";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { initOrderList } from "../store/order";
 import { setCartView } from "../store/cart";
+import LogWriter from "./logWriter";
 
 const posOrderHeadr = {Accept: 'application/json','Content-Type': 'application/json'}
 
@@ -106,6 +107,10 @@ export const postOrderToPos = async(dispatch, data) =>{
             posOrderHeadr,
         )  
         .then((response => {
+            const lw = new LogWriter();
+            const logPosResponse = `\nPOST POS RESPONSE DATA==================================\ndata:${JSON.stringify(response)}\n`
+            lw.writeLog(logPosResponse);
+
             if(posErrorHandler(dispatch, response.data)){
                 const responseData = response.data
                 if(responseData){
@@ -149,6 +154,10 @@ export const addOrderToPos = async(dispatch, data) =>{
             posOrderHeadr,
         )  
         .then((response => {
+            const lw = new LogWriter();
+            const logPos = `\nPOST POS ADD DATA RESPONSE==================================\ndata:${JSON.stringify(response)}\n`
+            lw.writeLog(logPos);
+            
             if(posErrorHandler(dispatch, response.data)){
                 const responseData = response.data
                 openPopup(dispatch,{innerView:"OrderComplete", isPopupVisible:true});

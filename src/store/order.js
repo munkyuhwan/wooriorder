@@ -6,6 +6,7 @@ import { grandTotalCalculate, openPopup } from '../utils/common';
 import { isEqual } from 'lodash'
 import { posErrorHandler } from '../utils/errorHandler/ErrorHandler';
 import { setCartView } from './cart';
+import LogWriter from '../utils/logWriter';
 
 export const initOrderList = createAsyncThunk("order/initOrderList", async() =>{
     return  {
@@ -234,8 +235,10 @@ export const postToPos =  createAsyncThunk("order/postToPos", async(_,{dispatch,
     };
     orderPayList.push(orderPayItem);
     orderPayData['ORD_PAY_LIST'] = orderPayList;
+    const lw = new LogWriter();
+    const logPos = `\nPOST POS DATA==================================\ndata:${JSON.stringify(orderPayData)}\n`
+    lw.writeLog(logPos);
 
-    
     return await postOrderToPos(dispatch, orderPayData)
     .catch(err=>{
         posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:"주문 오류",MSG2:"주문을 진행할 수 없습니다."});
@@ -250,8 +253,11 @@ export const postAddToPos =  createAsyncThunk("order/postAddToPos", async(_,{dis
     let tmpData = orderPayData;
     // 추가 주문에 결제 정보 빼야함.
     tmpData["ORD_PAY_LIST"]=[];
-    console.log(JSON.parse(orderResult));
     tmpData = {...tmpData,...JSON.parse(orderResult)};
+    const lw = new LogWriter();
+    const logPos = `\nPOST POS ADD DATA==================================\ndata:${JSON.stringify(tmpData)}\n`
+    lw.writeLog(logPos);
+    
     return await addOrderToPos(dispatch, tmpData)
     .catch(err=>{
         posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:"주문 오류",MSG2:"주문을 진행할 수 없습니다."});
