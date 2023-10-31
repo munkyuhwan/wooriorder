@@ -171,8 +171,8 @@ export const addOrderToPos = async(dispatch, data) =>{
         .catch(error=>reject(error.response.data));
     }) 
 }
-// 테이블 주문목록 받아오기
-export const getOrderByTable = async(dispatch, data) => {
+// 테이블 주문 체크
+export const checkTableOrder = async(dispatch, data ) => {
     return await new Promise(function(resolve, reject){
         if(isEmpty(data.tableInfo) ) {
             posErrorHandler(dispatch, {ERRCODE:'XXXX',MSG:"테이블을 선택 해 주세요.",MSG2:""});
@@ -189,12 +189,57 @@ export const getOrderByTable = async(dispatch, data) => {
             },
             posOrderHeadr,
         )  
+        .then( response => {
+            if(posErrorHandler(dispatch, response.data)){
+                const data = response.data;
+                const obj = data.OBJ;
+                const orderList = obj.ORDER_LIST;
+                if(orderList.length > 0 ) {
+                    resolve({hasOrderList:true, orderNo:orderList[0].ORDERNO })
+                }else {
+                    resolve({hasOrderList:false, orderNo:null})
+                }
+            }
+        })
+        .catch(err=>{
+            reject();
+
+        })
+    });
+}
+// 테이블 주문목록 받아오기
+export const getOrderByTable = async(dispatch, data) => {
+    return await new Promise(function(resolve, reject){
+        if(isEmpty(data.tableInfo) ) {
+            posErrorHandler(dispatch, {ERRCODE:'XXXX',MSG:"테이블을 선택 해 주세요.",MSG2:""});
+            reject();
+            return;
+        }
+        console.log("post data: ",{
+            "STORE_ID":STORE_ID,
+            "SERVICE_ID":SERVICE_ID,
+            "FLR_CODE":data.tableInfo.FLR_CODE,
+            "TBL_CODE":data.tableInfo.TBL_CODE,
+        })
+        axios.post(
+            `${POS_BASE_URL_TEST}${POS_POST_ORDER}`,
+            {
+                "STORE_ID":STORE_ID,
+                "SERVICE_ID":SERVICE_ID,
+                "FLR_CODE":data.tableInfo.FLR_CODE,
+                "TBL_CODE":data.tableInfo.TBL_CODE,
+            },
+            posOrderHeadr,
+        )  
         .then( (response => {
+            console.log("response: ",response);
             if(posErrorHandler(dispatch, response.data)){
                 const responseData = response.data
                 if(responseData.RESULT=="SUCCESS") {
                     const obj = responseData.OBJ;
                     const orderList = obj.ORDER_LIST;
+                    console.log("orderList============================================================");
+                    console.log("orderList: ",orderList);
                     const orderData = JSON.parse(data?.orderData);
                     console.log("data : ",orderData.ORG_ORDERNO);
                     console.log("orderList: ",orderList[0].ORG_ORDERNO);

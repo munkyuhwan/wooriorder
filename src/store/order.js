@@ -141,31 +141,7 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
         "TBL_CODE": tableInfo.TBL_CODE,
         "REPT_PRT_FLAG": "N",
         "ORDER_PRT_FLAG": "N",
-        "ORD_PAY_LIST":[
-            {
-                "PAY_TYPE": "card",
-                "CAN_FLAG": "N",
-                "CAN_PAY_SEQ": "",
-                "TML_NO": "CATID_01",
-                "SALE_AMT":`${totalResult.grandTotal}`,
-                "SALE_VAT_AMT": "0",
-                "SVC_AMT": "0",
-                "ISTM_TERM": "01",
-                "AUTH_NO": "A012",
-                "AUTH_DATE": "20231016",
-                "AUTH_TIME": "220021",
-                "CARD_ACQHID": "ac01",
-                "CARD_ACQ_NAME": "국민",
-                "CARD_ACSHID": "acs02",
-                "CRD_HID_NAME": "국민",
-                "CARD_NO": "0122330345",
-                "CARD_MCHTNO": "CMCHTNO_888",
-                "CARD_PAY_TYPE": "I",
-                "CASH_AUTH_TYPE": "P",
-                "DDCEDI": "E"
-    
-            },
-        ],
+        "ORD_PAY_LIST":[],
         "ITEM_LIST":newOrderList,
     }
     return {orderList:newOrderList,grandTotal:totalResult.grandTotal,totalItemCnt:totalResult.itemCnt, orderPayData:orderPayData };
@@ -212,8 +188,8 @@ export const postToPos =  createAsyncThunk("order/postToPos", async(_,{dispatch,
         "van-tran-seq": "231026004105"}
          */
     const orderPayItem = {
-        "AUTH_DATE": `${paymentResult['approval-date']||"" }`, 
-        "AUTH_NO": "A012", 
+        "AUTH_DATE": `20${paymentResult['approval-date']||"" }`, 
+        "AUTH_NO": `${paymentResult['approval-no']||"" }`, 
         "AUTH_TIME": `${paymentResult['approval-time']||""}`, 
         "CAN_FLAG": "N", 
         "CAN_PAY_SEQ": "", 
@@ -234,15 +210,20 @@ export const postToPos =  createAsyncThunk("order/postToPos", async(_,{dispatch,
         "TML_NO":`${paymentResult['cat-id']||""}`,
     };
     orderPayList.push(orderPayItem);
-    orderPayData['ORD_PAY_LIST'] = orderPayList;
+    let submitOrderPayData = Object.assign({},orderPayData);
+    submitOrderPayData['ORD_PAY_LIST'] = orderPayList;
+    
     const lw = new LogWriter();
-    const logPos = `\nPOST POS DATA==================================\ndata:${JSON.stringify(orderPayData)}\n`
+    const logPos = `\nPOST POS DATA==================================\ndata:${JSON.stringify(submitOrderPayData)}\n`
     lw.writeLog(logPos);
 
-    return await postOrderToPos(dispatch, orderPayData)
+    return await postOrderToPos(dispatch, submitOrderPayData)
     .catch(err=>{
         posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:"주문 오류",MSG2:"주문을 진행할 수 없습니다."});
         console.log("error: ",err)
+        const lw = new LogWriter();
+        const logPos = `\nPOST POS DATA ERROR==================================\ndata:${JSON.stringify(err)}\n`
+        lw.writeLog(logPos);
     });
     
 })
@@ -268,7 +249,7 @@ export const postAddToPos =  createAsyncThunk("order/postAddToPos", async(_,{dis
 // 테이블 주문 히스토리
 export const getOrderStatus = createAsyncThunk("order/getOrderStatus", async(_,{dispatch, getState,extra}) =>{
     const {tableInfo} = getState().tableInfo;
-    const orderData = _;
+    const {orderData} = _;
     return await getOrderByTable(dispatch, {tableInfo,orderData})
     .catch(err=>{
         console.log("error: ",err)

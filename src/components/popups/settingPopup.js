@@ -107,6 +107,14 @@ const SettingPopup = () =>{
         })
     }
 
+    const uploadLog = () => {
+
+    }
+    const initTable = () => {
+        AsyncStorage.removeItem("orderResult")
+        AsyncStorage.getItem("orderResult").then(result=>console.log("Resutl: ",result))
+    }
+
     // 여러가지 테스트
     const variousTest = () => {
         varivariTest()
@@ -367,7 +375,12 @@ const SettingPopup = () =>{
                                 </TouchableWithoutFeedback>
                                 <PaymentDropdown/>
                             </SettingItemWrapper>
-                            
+                            <TouchableWithoutFeedback onPress={()=>{initTable(); }} >
+                                <SettingButtonText isMargin={true} >테이블 주문 초기화</SettingButtonText>
+                            </TouchableWithoutFeedback>
+                            <TouchableWithoutFeedback onPress={()=>{uploadLog(); }} >
+                                <SettingButtonText isMargin={true} >로그 올리기</SettingButtonText>
+                            </TouchableWithoutFeedback>
                             <TouchableWithoutFeedback onPress={()=>{dispatch(getMenuEdit())}} >
                                 <SettingButtonText isMargin={true} >메뉴 업데이트</SettingButtonText>
                             </TouchableWithoutFeedback>
