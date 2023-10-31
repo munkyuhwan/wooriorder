@@ -231,7 +231,7 @@ export const postToPos =  createAsyncThunk("order/postToPos", async(_,{dispatch,
 export const postAddToPos =  createAsyncThunk("order/postAddToPos", async(_,{dispatch, getState,extra}) =>{
     const {orderPayData} = getState().order;
     const {orderResult} = _;
-    let tmpData = orderPayData;
+    let tmpData = Object.assign({}, orderPayData);
     // 추가 주문에 결제 정보 빼야함.
     tmpData["ORD_PAY_LIST"]=[];
     tmpData = {...tmpData,...JSON.parse(orderResult)};

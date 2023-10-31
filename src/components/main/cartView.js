@@ -60,13 +60,19 @@ const CartView = () =>{
 
     const doPayment = async () =>{
         // 이전에 주문한 주문 번호가 있는지 확인하기 위함
-        const orderResult = await AsyncStorage.getItem("orderResult")
+        let orderResult = await AsyncStorage.getItem("orderResult")
         console.log("orderResult:",orderResult);
         // 테이블이 사용중인지 비교 하기
         const isTableAvailable = await checkTableOrder(dispatch,{tableInfo});
         const hasOrderList = isTableAvailable.hasOrderList;
         const orderNo = isTableAvailable.orderNo;
         // 결제 진행을 하면 안되는 조건
+        // 3. 포스에서 받아온 주문번호가 없으면 테이블 비워진거임. 앱에 저장된 주문번호 삭제
+        if(orderNo == null) {
+            await AsyncStorage.removeItem("orderResult");
+            orderResult = await AsyncStorage.getItem("orderResult")
+        }
+        
         // 1. 저장된 주문번호가 있는데 테이블 주문목록의 주문번호와 일치하지 않을 때, 테이블에 이미 다른테블릿 점유중이란것
         if(orderResult!=null) {
             const orderResultJson = JSON.parse(orderResult);
@@ -89,6 +95,7 @@ const CartView = () =>{
                 return
             }
         }
+        
 
         const paymentData = {"deal":"approval","total-amount":grandTotal};
         servicePayment(dispatch, paymentData)
