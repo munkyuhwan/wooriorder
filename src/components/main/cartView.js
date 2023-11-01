@@ -72,7 +72,6 @@ const CartView = () =>{
             await AsyncStorage.removeItem("orderResult");
             orderResult = await AsyncStorage.getItem("orderResult")
         }
-        console.log("order result after: ",orderResult);
         
         // 1. 저장된 주문번호가 있는데 테이블 주문목록의 주문번호와 일치하지 않을 때, 테이블에 이미 다른테블릿 점유중이란것
         if(orderResult!=null) {

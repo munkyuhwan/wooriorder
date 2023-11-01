@@ -3,7 +3,7 @@ import {
     Animated,
     TouchableWithoutFeedback
 } from 'react-native'
-import { CartItemAmtController, CartItemAmtControllerImage, CartItemAmtControllerText, CartItemAmtText, CartItemAmtWrapper, CartItemCancelBtn, CartItemCancelWrapper, CartItemImage, CartItemImageTogoWrapper, CartItemOpts, CartItemPrice, CartItemTitle, CartItemTitlePriceWrapper, CartItemTogoBtn, CartItemTogoIcon, CartItemTogoText, CartItemTogoWrapper, CartItemWrapper } from '../../styles/main/cartStyle';
+import { CartItemAmtController, CartItemAmtControllerImage, CartItemAmtControllerText, CartItemAmtText, CartItemAmtWrapper, CartItemCancelBtn, CartItemCancelWrapper, CartItemFastImage, CartItemImage, CartItemImageTogoWrapper, CartItemOpts, CartItemPrice, CartItemTitle, CartItemTitlePriceWrapper, CartItemTogoBtn, CartItemTogoIcon, CartItemTogoText, CartItemTogoWrapper, CartItemWrapper } from '../../styles/main/cartStyle';
 import { setPopupContent, setPopupVisibility } from '../../store/popup';
 import { useDispatch, useSelector } from 'react-redux';
 import { numberWithCommas, openPopup } from '../../utils/common';
@@ -14,28 +14,26 @@ import { resetAmtOrderList } from '../../store/order';
 const CartListItem = (props) => {
     const dispatch = useDispatch();
     const {language} = useSelector(state=>state.languages);
-
+    const {menuExtra} = useSelector(state=>state.menuExtra);
+  
+   
     const index = props?.index;
     const order = props?.item;
     const additiveItemList = order.ADDITIVE_ITEM_LIST;
-    //console.log("order ADDITIVE_GROUP_LIST: ",order.ADDITIVE_GROUP_LIST)
-    //console.log("order ADDITIVE_ITEM_LIST: ",order)
-    //console.log("additiveItemList: ",additiveItemList);
-    //const menuData = MENU_DATA.menuAll[order.menuIndex];
-    //console.log("order: ",order.ITEM_NAME);
-
-    //const optionsInfo = MENU_DATA.options[_.selectedOptions[i]];
-    //const recommendInfo = MENU_DATA.menuAll[_.selectedRecommend[i]];
-
+    
+    // 이미지 찾기
+    const itemExtra = menuExtra.filter(el=>el.pos_code == order.ITEM_ID);
+    console.log("itemExtra:",itemExtra[0]?.gimg_chg);
     const calculateAmt = (operand, amt) =>{
         // plus, minus, cancel
         dispatch(resetAmtOrderList({operand,amt,index}))
     }
+    
     return(
         <>
             <CartItemWrapper>
                 <CartItemImageTogoWrapper>
-                    <CartItemImage source={{uri:order?.imgUrl}} />
+                    <CartItemFastImage source={{uri:"http:"+itemExtra[0]?.gimg_chg}} />
                     <TouchableWithoutFeedback onPress={()=>{openPopup(dispatch,{innerView:"TogoPopup", isPopupVisible:true}); }} >
                         <CartItemTogoWrapper>
                             <CartItemTogoText>{LANGUAGE[language].cartView.togo}</CartItemTogoText>

@@ -3,6 +3,7 @@ import styled, {css} from 'styled-components/native';
 import { RADIUS, RADIUS_DOUBLE } from '../values';
 import { Animated, TouchableWithoutFeedback } from 'react-native';
 import { colorGrey, colorRed, colorWhite, mainTheme, textColorWhite } from '../../assets/colors/color';
+import FastImage from 'react-native-fast-image';
 
 export const CartViewWrapper = styled(Animated.View)`
     backgroundColor:#ffffff; 
@@ -54,6 +55,12 @@ export const CartItemImageTogoWrapper = styled.View`
     flexDirection:column;
 `
 export const CartItemImage = styled.Image`
+    width:100px;
+    height:62px;
+    backgroundColor:brown;
+    borderRadius:${RADIUS};
+`
+export const CartItemFastImage = styled(FastImage)`
     width:100px;
     height:62px;
     backgroundColor:brown;
