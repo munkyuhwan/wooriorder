@@ -72,6 +72,7 @@ const CartView = () =>{
             await AsyncStorage.removeItem("orderResult");
             orderResult = await AsyncStorage.getItem("orderResult")
         }
+        console.log("order result after: ",orderResult);
         
         // 1. 저장된 주문번호가 있는데 테이블 주문목록의 주문번호와 일치하지 않을 때, 테이블에 이미 다른테블릿 점유중이란것
         if(orderResult!=null) {
@@ -96,7 +97,7 @@ const CartView = () =>{
             }
         }
         
-
+ 
         const paymentData = {"deal":"approval","total-amount":grandTotal};
         servicePayment(dispatch, paymentData)
         .then(async(result)=>{
@@ -121,7 +122,6 @@ const CartView = () =>{
                 const cancelData = {"deal":'cancellation',"total-amount":result['total-amount'],"approval-no":result['approval-no'],"approval-date":result['approval-date']}
                 servicePayment(dispatch, cancelData)
                 .then((result)=>{
-                    console.log("payresult: ",result);
                     const jsonResult=JSON.parse(result);
 
                 })
@@ -132,7 +132,7 @@ const CartView = () =>{
         })
         .catch((error)=>{
             console.log("error: ",error)
-        });
+        }); 
         
     }
     useEffect(()=>{

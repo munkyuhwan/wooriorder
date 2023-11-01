@@ -83,7 +83,6 @@ const SettingPopup = () =>{
     const smartroServicePayment = (paymentData) => {
         servicePayment(dispatch, paymentData)
         .then((result)=>{
-            console.log("payresult: ",result);
             const jsonResult=JSON.parse(result);
             displayOnAlert("서비스 기능",jsonResult);
         })
