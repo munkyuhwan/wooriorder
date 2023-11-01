@@ -2,10 +2,11 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { useSelector } from 'react-redux';
 import { MENU_DATA } from '../resources/menuData';
 import axios from 'axios';
-import { posMenuEdit, posMenuState, posOrderNew } from '../utils/apis';
+import { adminMenuEdit, posMenuEdit, posMenuState, posOrderNew } from '../utils/apis';
 import { setMainCategories } from './categories';
 import { EventRegister } from 'react-native-event-listeners';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setMenuExtra } from './menuExtra';
 
 export const initMenu = createAsyncThunk("menu/initMenu", async(category) =>{
     return [];
@@ -43,8 +44,8 @@ export const getMenuState = createAsyncThunk("menu/menuState", async(_,{dispatch
 
 export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, rejectWithValue}) =>{
     EventRegister.emit("showSpinner",{isSpinnerShow:true, msg:"메뉴를 갱신 중입니다."})
+    // 1. 포스 메뉴 받기
     const resultData = await posMenuEdit(dispatch);
-    
     let categories = [];
     resultData.map((el)=>{
         if(el.ITEM_GROUP_USE_FLAG == "N") {
@@ -57,7 +58,17 @@ export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, 
             categories.push(categoryData)
         }
     });
+    // 카테고리 스테이트 업데이트
     dispatch(setMainCategories(categories));
+
+    // 2. 어드민 메뉴 데이터 받기
+    const adminData = await adminMenuEdit(dispatch);
+    let adminMenu = [];
+    if(adminData) {
+        adminMenu = adminData.order;
+        dispatch(setMenuExtra(adminMenu));
+    }
+
     EventRegister.emit("showSpinner",{isSpinnerShow:false, msg:""})
     return resultData;
 })

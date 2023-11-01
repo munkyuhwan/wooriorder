@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { BottomButton, BottomButtonIcon, BottomButtonText, BottomButtonWrapper, ButtonWrapper, DetailInfoWrapper, DetailItemInfoImage, DetailItemInfoImageWrapper, DetailItemInfoMore, DetailItemInfoPrice, DetailItemInfoPriceWrapper, DetailItemInfoSource, DetailItemInfoTitle, DetailItemInfoTitleEtc, DetailItemInfoTitleWrapper, DetailItemInfoWrapper, DetailPriceMoreWrapper, DetailWhiteWrapper, DetailWrapper, OptList, OptListWrapper, OptRecommendWrapper, OptTitleText } from '../../styles/main/detailStyle';
+import { BottomButton, BottomButtonIcon, BottomButtonText, BottomButtonWrapper, ButtonWrapper, DetailInfoWrapper, DetailItemInfoFastImage, DetailItemInfoImage, DetailItemInfoImageWrapper, DetailItemInfoMore, DetailItemInfoPrice, DetailItemInfoPriceWrapper, DetailItemInfoSource, DetailItemInfoTitle, DetailItemInfoTitleEtc, DetailItemInfoTitleWrapper, DetailItemInfoWrapper, DetailPriceMoreWrapper, DetailWhiteWrapper, DetailWrapper, OptList, OptListWrapper, OptRecommendWrapper, OptTitleText } from '../../styles/main/detailStyle';
 import { ActivityIndicator, Animated, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { colorBlack, colorRed } from '../../assets/colors/color';
 import { LANGUAGE } from '../../resources/strings';
@@ -14,14 +14,19 @@ import { MENU_DATA } from '../../resources/menuData';
 import { addToOrderList } from '../../store/order';
 import { MenuImageDefault } from '../../styles/main/menuListStyle';
 import { useFocusEffect } from '@react-navigation/native';
+import FastImage from 'react-native-fast-image';
+import { RADIUS, RADIUS_DOUBLE } from '../../styles/values';
 /* 메뉴 상세 */
 const ItemDetail = (props) => {
     const language = props.language;
     const isDetailShow = props.isDetailShow;
     const dispatch = useDispatch();
+    const {menu} = useSelector((state)=>state.menu);
     const {menuDetailID, menuDetail} = useSelector((state)=>state.menuDetail);
     const [detailZIndex, setDetailZIndex] = useState(0);
-
+    const {menuExtra} = useSelector(state=>state.menuExtra);
+    // 메뉴 추가정보 찾기
+    const itemExtra = menuExtra.filter(el=>el.pos_code == menuDetailID);
     // 옵션스테이트
     const [additiveGroupList, setAdditiveGroupList] = useState([]);
     const [additiveItemList, setAdditiveItemList] = useState([]);
@@ -131,7 +136,7 @@ const ItemDetail = (props) => {
             setAdditiveGroupList(tmpAdditiveList);
         }
     },[isDetailShow, menuDetail])
-
+//console.log("menu: ",menu[0].ITEM_LIST);
     return(
         <>
             <Animated.View  style={[{...PopStyle.animatedPop, ...boxWidthStyle,...{zIndex:detailZIndex} } ]} >
@@ -145,29 +150,29 @@ const ItemDetail = (props) => {
                             {menuDetailID!=null &&
                                 <DetailInfoWrapper>
                                     <DetailItemInfoImageWrapper>
-                                        {menuDetail?.imgUrl &&
-                                            <DetailItemInfoImage source={{uri:`${menuDetail?.imgUrl}`}} />
+                                        {itemExtra[0]?.gimg_chg &&
+                                            <DetailItemInfoFastImage source={{uri:"https:"+itemExtra[0]?.gimg_chg}} /> 
                                         }
-                                        {!menuDetail?.imgUrl &&
+                                        {!itemExtra[0]?.gimg_chg &&
                                             <MenuImageDefault source={require("../../assets/icons/logo.png")} />
-                                        }
+                                        }   
                                     </DetailItemInfoImageWrapper>
                                     <DetailItemInfoWrapper>
                                         <DetailItemInfoTitleWrapper>
                                             <DetailItemInfoTitle>{menuDetail?.ITEM_NAME}</DetailItemInfoTitle>
-                                            {menuDetail?.isNew==true&&
+                                            {itemExtra[0]?.is_new=='Y'&&
                                                  <DetailItemInfoTitleEtc source={require("../../assets/icons/new.png")}/>
                                             }
-                                            {menuDetail?.isBest==true&&
+                                            {itemExtra[0]?.is_best=='Y'&&
                                                 <DetailItemInfoTitleEtc source={require("../../assets/icons/best.png")}/>
                                             }
                                         </DetailItemInfoTitleWrapper>
-                                        <DetailItemInfoSource>{menuDetail?.detail}</DetailItemInfoSource>
+                                        <DetailItemInfoSource>{itemExtra[0]?.wonsanji}</DetailItemInfoSource>
                                         <DetailPriceMoreWrapper>
                                             <DetailItemInfoPriceWrapper>
                                                 <DetailItemInfoPrice isBold={true} >{ menuDetail?.ITEM_AMT?numberWithCommas(menuDetail?.ITEM_AMT):""}</DetailItemInfoPrice><DetailItemInfoPrice isBold={false}> 원</DetailItemInfoPrice>
                                             </DetailItemInfoPriceWrapper>
-                                            <DetailItemInfoMore>{menuDetail?.extra}</DetailItemInfoMore>
+                                            <DetailItemInfoMore>{itemExtra[0]?.gmemo}</DetailItemInfoMore>
                                         </DetailPriceMoreWrapper>
                                     </DetailItemInfoWrapper>
                                 </DetailInfoWrapper>
@@ -202,13 +207,23 @@ const ItemDetail = (props) => {
                                     <OptListWrapper>
                                         <OptTitleText>{LANGUAGE[language].detailView.recommendMenu}</OptTitleText>
                                         <OptList horizontal showsHorizontalScrollIndicator={false} >
-                                            {recommendMenu!=null&&
-                                            recommendMenu.map((el,index)=>{
-                                                const recommendItem = MENU_DATA.menuAll[el]
-                                                return(
-                                                    <RecommendItem key={"recoItem_"+index} isSelected={selectedRecommend.indexOf(recommendItem.index)>=0}  recommendData={el} menuData={menuDetail} onPress={()=>{onRecommendSelect(recommendItem.index)}}/>    
-                                                );
-                                            })
+                                            {/*recommendMenu!=null&&
+                                                recommendMenu.map((el,index)=>{
+                                                    const recommendItem = MENU_DATA.menuAll[el]
+                                                    return(
+                                                        <RecommendItem key={"recoItem_"+index} isSelected={selectedRecommend.indexOf(recommendItem.index)>=0}  recommendData={el} menuData={menuDetail} onPress={()=>{onRecommendSelect(recommendItem.index)}}/>    
+                                                    );
+                                                })
+                                            */}
+                                            {itemExtra[0]?.related &&
+                                                itemExtra[0]?.related.length > 0 &&
+                                                itemExtra[0]?.related.map((el,index)=>{
+                                                    const recommendItem = menu[0].ITEM_LIST.filter(el=>el.ITEM_ID==Number(el))
+                                                    return(
+                                                        <RecommendItem key={"recoItem_"+index} isSelected={selectedRecommend.indexOf(recommendItem.ITEM_ID)>=0}  recommendData={el} menuData={menuDetail} onPress={()=>{onRecommendSelect(recommendItem.ITEM_ID)}}/>    
+                                                    );
+                                                })
+                                                
                                             }
                                         </OptList>
                                     </OptListWrapper>

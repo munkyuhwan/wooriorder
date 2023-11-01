@@ -14,6 +14,12 @@ export const POS_POST_PUSH_EDIT = "/partner/v1/push/edit"; // 푸시 수신 여�
 export const POS_POST_ORDER_STATE = "{partner URL}/partner/v1/push"; //주문상태를 스마트로에서 보내줌.
 export const POS_POST_ORDER_CANCEL = "/partner/v1/table/order/cancel"; // 반품요청
 
+// ADMIN API URL
+export const ADMIN_BASE_URL = "https://wooriorder.co.kr/smartro";
+
+export const ADMIN_GOODS = "/goods2.php";
+export const ADMIN_OPTION = "/option.php";
+
 
 //export const STORE_ID = "3100396007";
 //export const STORE_ID = "7407191"; //테스트 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { POS_BASE_URL_REAL, POS_BASE_URL_TEST, POS_ORDER_ADD, POS_ORDER_NEW, POS_POST_MENU_EDIT, POS_POST_MENU_STATE, POS_POST_ORDER, POS_POST_TABLE_LIST, SERVICE_ID, STORE_ID } from "../resources/apiResources";
+import { ADMIN_BASE_URL, ADMIN_GOODS, POS_BASE_URL_REAL, POS_BASE_URL_TEST, POS_ORDER_ADD, POS_ORDER_NEW, POS_POST_MENU_EDIT, POS_POST_MENU_STATE, POS_POST_ORDER, POS_POST_TABLE_LIST, SERVICE_ID, STORE_ID } from "../resources/apiResources";
 import { errorHandler, posErrorHandler } from "./errorHandler/ErrorHandler";
 import {isEmpty} from "lodash";
 import { numberPad, openPopup } from "./common";
@@ -9,6 +9,7 @@ import { setCartView } from "../store/cart";
 import LogWriter from "./logWriter";
 
 const posOrderHeadr = {Accept: 'application/json','Content-Type': 'application/json'}
+const adminOrderHeader = {'Content-Type' : "text/plain"};
 
 
 export const  posOrderNew = async (resolve,reject) =>{
@@ -51,7 +52,7 @@ export const  posMenuState = async (dispatch) =>{
         .catch(error=>reject(error.response.data));
     })
 }
-// 메뉴 받기
+// 포스 메뉴 받기
 export const  posMenuEdit = async(dispatch) =>{
     return await new Promise(function(resolve, reject){
         axios.post(
@@ -70,6 +71,29 @@ export const  posMenuEdit = async(dispatch) =>{
         .catch(error=>reject(error.response.data));
     }) 
 }
+// 관리자 메뉴 받기
+export const adminMenuEdit = async(dispatch) => {
+    //let data = '{"STORE_ID":12312001}'
+    return await new Promise(function(resolve, reject){
+        axios.post(
+            `${ADMIN_BASE_URL}${ADMIN_GOODS}`,
+            {"STORE_ID":12312001},
+            adminOrderHeader,
+        ) 
+        .then((response => {
+            if(posErrorHandler(dispatch, response.data)){
+                const data = response.data;
+                resolve(data); 
+            }else {
+                reject();
+            } 
+        })) 
+        .catch(error=>reject(error.response.data));
+    })
+     
+}
+
+
 export const posTableList = async(dispatch) =>{
     return await new Promise(function(resolve, reject){
         axios.post(
@@ -215,12 +239,7 @@ export const getOrderByTable = async(dispatch, data) => {
             reject();
             return;
         }
-        console.log("post data: ",{
-            "STORE_ID":STORE_ID,
-            "SERVICE_ID":SERVICE_ID,
-            "FLR_CODE":data.tableInfo.FLR_CODE,
-            "TBL_CODE":data.tableInfo.TBL_CODE,
-        })
+        
         axios.post(
             `${POS_BASE_URL_TEST}${POS_POST_ORDER}`,
             {

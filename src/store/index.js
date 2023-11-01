@@ -17,6 +17,7 @@ import { cartViewSlice } from './cart'
 import { errorSlice } from './error'
 import { tableInfoSlice } from './tableInfo'
 import { memberInfoSlice } from './member'
+import { menuExtraSlice } from './menuExtra'
 
 const store = configureStore({
     reducer:{
@@ -31,6 +32,7 @@ const store = configureStore({
         cartView:cartViewSlice.reducer,
         tableInfo:tableInfoSlice.reducer,
         memberInfo:memberInfoSlice.reducer,
+        menuExtra:menuExtraSlice.reducer,
         
         error:errorSlice.reducer,
     },

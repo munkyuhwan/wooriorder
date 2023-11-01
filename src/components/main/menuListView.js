@@ -16,7 +16,7 @@ const MenuListView = () => {
     const dispatch = useDispatch();
     const listRef = useRef();
 
-    const {menu, displayMenu} = useSelector((state)=>state.menu);
+    const {displayMenu} = useSelector((state)=>state.menu);
     const {isOn} = useSelector((state)=>state.cartView);
     const {language} = useSelector(state=>state.languages);
 

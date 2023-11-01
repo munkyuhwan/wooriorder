@@ -12,14 +12,18 @@ import { colorWhite } from '../../assets/colors/color';
 const MenuItem = ({item,index,setDetailShow}) => {
     //<MenuItemImage />    
     //console.log("item: ",item);
+    // 포스 api ITEM_ID 는 관리자 api에서 pos_code임
     const dispatch = useDispatch();
+    const {menuExtra} = useSelector(state=>state.menuExtra);
+  
+    // 이미지 찾기
+    const itemExtra = menuExtra.filter(el=>el.pos_code == item.ITEM_ID);
 
     const itemID = item.ITEM_ID;
-    const imgUrl = item.imgUrl;
+    const imgUrl = "https:"+itemExtra[0]?.gimg_chg;
     const itemTitle = item.ITEM_NAME;
     const itemPrice= item.ITEM_AMT;
-    const isNew = item.isNew;
-    const isBest = item.isBest;
+
 
     return(
         <>
@@ -39,10 +43,10 @@ const MenuItem = ({item,index,setDetailShow}) => {
                     }
                     <MenuItemImageWrapper>
                         <MenuItemHotnessWrapper>
-                        {isNew==true&&
+                        {itemExtra[0]?.is_new=='Y'&&
                             <MenuItemHotness source={require('../../assets/icons/new.png')} />
                         }
-                        {isBest==true&&
+                        {itemExtra[0]?.is_best=='Y'&&
                             <MenuItemHotness source={require('../../assets/icons/best.png')} />
                         }
                         </MenuItemHotnessWrapper>

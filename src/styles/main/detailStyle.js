@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled, {css} from 'styled-components/native';
 import { colorBlack, colorRed, colorWhite, colorYellow, mainTheme } from '../../assets/colors/color';
 import { RADIUS, RADIUS_SMALL } from '../values';
+import FastImage from 'react-native-fast-image';
 
 export const DetailWrapper=styled.View`
     width:100%;
@@ -40,6 +41,12 @@ export const DetailItemInfoImageWrapper = styled.ImageBackground`
     backgroundColor:black;
 `
 export const DetailItemInfoImage = styled.Image`
+    width:262px;
+    height:166px;
+    resizeMode:contain;
+`
+
+export const DetailItemInfoFastImage = styled(FastImage)`
     width:262px;
     height:166px;
     resizeMode:contain;
