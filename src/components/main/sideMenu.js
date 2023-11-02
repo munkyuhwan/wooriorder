@@ -8,9 +8,15 @@ import { openFullSizePopup, openPopup, openTransperentPopup } from '../../utils/
 import LeftMenuList from '../menuComponents/leftMenuList'
 import { getMainCategories, getSubCategories, setSelectedMainCategory } from '../../store/categories';
 import { setCartView } from '../../store/cart';
+import { LANGUAGE } from '../../resources/strings';
 const SideMenu = () =>{
     const dispatch = useDispatch();
     const {mainCategories} = useSelector((state)=>state.categories);
+    const {language} = useSelector(state=>state.languages);
+    useEffect(()=>{
+        console.log("language: ",language);
+    },[language])
+
     // 메뉴 아이템 받아오기 
     const onItemPress = (index) =>{
         dispatch(setSelectedMainCategory(index)); 
@@ -40,14 +46,14 @@ const SideMenu = () =>{
                     <TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={()=>{openPopup(dispatch, {innerView:"LanguageSelectPopup", isPopupVisible:true}); }} >
                             <SideBottomButton borderColor={colorWhite} >
-                                <SideBottomText>언어선택</SideBottomText>
+                                <SideBottomText>{LANGUAGE[language].sideMenu.languageSelect}</SideBottomText>
                                 <SideBottomIcon source={require("../../assets/icons/korean.png")} />
                             </SideBottomButton>
                         </TouchableWithoutFeedback>
                     </TouchableWithoutFeedback>
                     <TouchableWithoutFeedback onPress={()=>{openFullSizePopup(dispatch, {innerFullView:"CallServer", isFullPopupVisible:true});}} >
                         <SideBottomButton bg={"red"} borderColor={colorRed} >
-                            <SideBottomText>직원호출</SideBottomText>
+                            <SideBottomText>{LANGUAGE[language].sideMenu.callServer}</SideBottomText>
                             <SideBottomIcon source={require("../../assets/icons/bell_trans.png")}  />
                         </SideBottomButton>
                     </TouchableWithoutFeedback>

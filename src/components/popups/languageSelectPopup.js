@@ -20,11 +20,6 @@ const LanguageSelectPopup = () => {
                 <LanguageWrapper>
                     {
                         LANGUAGE_LIST.map(el => {
-                            console.log(el)
-                            if(el=="korean") {
-
-                            }
-
                             return (
                                 <TouchableWithoutFeedback key={el+"_language"} onPress={()=>{dispatch(setLanguage(el))}}>
                                     <LanguageIconWrapper>

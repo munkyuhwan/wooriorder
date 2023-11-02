@@ -14,10 +14,18 @@ import LogWriter from '../utils/logWriter'
 import { getTableList } from '../store/tableInfo'
 import { openPopup } from '../utils/common'
 import RNFS from "react-native-fs";
+import { setLanguage } from '../store/languages'
 
 
 const MainScreen = () =>{   
-    
+    const dispatch = useDispatch();
+    const {language} = useSelector(state=>state.languages);
+    useEffect(()=>{
+        console.log("language: ",language);
+    },[language])
+    useEffect(()=>{
+      dispatch(setLanguage("korean"));  
+    },[])
 /* 
     var path = RNFS.DownloadDirectoryPath + '/test.txt';
     RNFS.writeFile(path, 'Lorem ipsum dolor sit amet', 'utf8')

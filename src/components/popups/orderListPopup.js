@@ -64,8 +64,8 @@ const OrderListPopup = () =>{
                         }
                     </OrderListTableWrapper>
                     <OrderListTalbleGrandTotalWrapper>
-                        <OrderListTotalTitle>총 합계</OrderListTotalTitle>
-                        <OrderListTotalAmount>{orderTotalAmt}원</OrderListTotalAmount>
+                        <OrderListTotalTitle>{LANGUAGE[language].orderListPopup.tableColGrandTotal}</OrderListTotalTitle>
+                        <OrderListTotalAmount>{orderTotalAmt}{LANGUAGE[language].orderListPopup.totalAmtUnit}</OrderListTotalAmount>
                     </OrderListTalbleGrandTotalWrapper>
                 </OrderListWrapper>
                 <BottomButtonWrapper>
