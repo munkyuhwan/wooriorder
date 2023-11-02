@@ -77,7 +77,7 @@ export const adminMenuEdit = async(dispatch) => {
     return await new Promise(function(resolve, reject){
         axios.post(
             `${ADMIN_BASE_URL}${ADMIN_GOODS}`,
-            {"STORE_ID":12312001},
+            {"STORE_ID":STORE_ID},
             adminOrderHeader,
         ) 
         .then((response => {
@@ -97,7 +97,7 @@ export const adminOptionEdit = async(dispatch) => {
     return await new Promise(function(resolve, reject){
         axios.post(
             `${ADMIN_BASE_URL}${ADMIN_OPTION}`,
-            {"STORE_ID":12312001},
+            {"STORE_ID":STORE_ID},
             adminOrderHeader,
         ) 
         .then((response => {
