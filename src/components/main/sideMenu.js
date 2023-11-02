@@ -13,9 +13,6 @@ const SideMenu = () =>{
     const dispatch = useDispatch();
     const {mainCategories} = useSelector((state)=>state.categories);
     const {language} = useSelector(state=>state.languages);
-    useEffect(()=>{
-        console.log("categories: ",mainCategories);
-    },[mainCategories])
     
     // 메뉴 아이템 받아오기 
     const onItemPress = (index) =>{

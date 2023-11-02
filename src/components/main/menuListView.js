@@ -16,7 +16,7 @@ const MenuListView = () => {
     const dispatch = useDispatch();
     const listRef = useRef();
 
-    const {displayMenu} = useSelector((state)=>state.menu);
+    const {displayMenu,menu} = useSelector((state)=>state.menu);
     const {isOn} = useSelector((state)=>state.cartView);
     const {language} = useSelector(state=>state.languages);
 
@@ -95,6 +95,13 @@ const MenuListView = () => {
             dispatch(setSelectedMainCategory(mainCategories[0].ITEM_GROUP_CODE));
         }
     },[mainCategories])
+
+    useEffect(()=>{
+        console.log("displayMenu: ",displayMenu);
+        if(displayMenu.length<=0) {
+            dispatch(getDisplayMenu());
+        }
+    },[displayMenu, menu])
 
     //console.log("mainCategories: ",mainCategories[0].ITEM_GR`OUP_CODE)
     return(

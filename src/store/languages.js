@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 export const setLanguage = createAsyncThunk("languages/setLanguage", async(language) =>{
-    console.log("language: ",language);
     return language;
 })
 
