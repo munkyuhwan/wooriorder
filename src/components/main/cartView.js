@@ -170,21 +170,21 @@ const CartView = () =>{
                 <OrderWrapper>
                     <PayWrapper>
                         <PayAmtWrapper isBordered={true}>
-                            <PayAmtTitle>{LANGUAGE[language].cartView.orderAmt}</PayAmtTitle>
+                            <PayAmtTitle>{LANGUAGE[language]?.cartView?.orderAmt}</PayAmtTitle>
                             <PayAmtNumber>{totalItemCnt}</PayAmtNumber>
-                            <PayAmtUnit> {LANGUAGE[language].cartView.orderAmtUnit}</PayAmtUnit>
+                            <PayAmtUnit> {LANGUAGE[language]?.cartView?.orderAmtUnit}</PayAmtUnit>
                         </PayAmtWrapper>
                     </PayWrapper>
                     <PayWrapper>
                         <PayAmtWrapper >
-                            <PayAmtTitle>{LANGUAGE[language].cartView.totalAmt}</PayAmtTitle>
+                            <PayAmtTitle>{LANGUAGE[language]?.cartView.totalAmt}</PayAmtTitle>
                             <PayAmtNumber>{grandTotal}</PayAmtNumber>
-                            <PayAmtUnit> {LANGUAGE[language].cartView.totalAmtUnit}</PayAmtUnit>
+                            <PayAmtUnit> {LANGUAGE[language]?.cartView.totalAmtUnit}</PayAmtUnit>
                         </PayAmtWrapper>
                     </PayWrapper>
                     <TouchableWithoutFeedback onPress={()=>{ doPayment();  /* addToPos(); */  }} >
                         <PayBtn>
-                            <PayTitle>{LANGUAGE[language].cartView.makeOrder}</PayTitle>
+                            <PayTitle>{LANGUAGE[language]?.cartView.makeOrder}</PayTitle>
                             <PayIcon source={require("assets/icons/order.png")} />
                         </PayBtn>
                      </TouchableWithoutFeedback>

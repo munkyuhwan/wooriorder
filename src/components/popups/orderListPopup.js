@@ -42,19 +42,19 @@ const OrderListPopup = () =>{
         <>
             <OrderListPopupWrapper>
                 <OrdrListTopWrapper>
-                    <OrderListTopTitle>{LANGUAGE[language].orderListPopup.orderListTitle}</OrderListTopTitle>
+                    <OrderListTopTitle>{LANGUAGE[language]?.orderListPopup.orderListTitle}</OrderListTopTitle>
                     <TouchableWithoutFeedback onPress={()=>{dispatch(getOrderStatus({}));}} >
-                        <OrderListTopSubtitle>{LANGUAGE[language].orderListPopup.orderListSubtitle}</OrderListTopSubtitle>
+                        <OrderListTopSubtitle>{LANGUAGE[language]?.orderListPopup.orderListSubtitle}</OrderListTopSubtitle>
                     </TouchableWithoutFeedback>
 
                 </OrdrListTopWrapper>
                 <OrderListWrapper>
                     <OrderListTableWrapper>
                         <OrderListTableColumnNameWrapper>
-                            <OrderListTableColumnName flex={0.8} >{LANGUAGE[language].orderListPopup.tableColName}</OrderListTableColumnName>
-                            <OrderListTableColumnName flex={0.2} >{LANGUAGE[language].orderListPopup.tableColAmt}</OrderListTableColumnName>
-                            <OrderListTableColumnName flex={0.2} >{LANGUAGE[language].orderListPopup.tableColPrice}</OrderListTableColumnName>
-                            <OrderListTableColumnName flex={0.3} >{LANGUAGE[language].orderListPopup.tableColTotal}</OrderListTableColumnName>
+                            <OrderListTableColumnName flex={0.8} >{LANGUAGE[language]?.orderListPopup.tableColName}</OrderListTableColumnName>
+                            <OrderListTableColumnName flex={0.2} >{LANGUAGE[language]?.orderListPopup.tableColAmt}</OrderListTableColumnName>
+                            <OrderListTableColumnName flex={0.2} >{LANGUAGE[language]?.orderListPopup.tableColPrice}</OrderListTableColumnName>
+                            <OrderListTableColumnName flex={0.3} >{LANGUAGE[language]?.orderListPopup.tableColTotal}</OrderListTableColumnName>
                         </OrderListTableColumnNameWrapper>
                        {orderStatus[0]?.ITEM_LIST &&
                             <OrderListTableList
@@ -64,18 +64,18 @@ const OrderListPopup = () =>{
                         }
                     </OrderListTableWrapper>
                     <OrderListTalbleGrandTotalWrapper>
-                        <OrderListTotalTitle>{LANGUAGE[language].orderListPopup.tableColGrandTotal}</OrderListTotalTitle>
-                        <OrderListTotalAmount>{orderTotalAmt}{LANGUAGE[language].orderListPopup.totalAmtUnit}</OrderListTotalAmount>
+                        <OrderListTotalTitle>{LANGUAGE[language]?.orderListPopup.tableColGrandTotal}</OrderListTotalTitle>
+                        <OrderListTotalAmount>{orderTotalAmt}{LANGUAGE[language]?.orderListPopup.totalAmtUnit}</OrderListTotalAmount>
                     </OrderListTalbleGrandTotalWrapper>
                 </OrderListWrapper>
                 <BottomButtonWrapper>
                       {/*   <BottomButton backgroundColor={colorRed} >
-                            <BottomButtonText>{LANGUAGE[language].orderListPopup.orderListPay}</BottomButtonText>
+                            <BottomButtonText>{LANGUAGE[language]?.orderListPopup.orderListPay}</BottomButtonText>
                             <BottomButtonIcon source={require("../../assets/icons/card.png")} />
                         </BottomButton> */}
                     <TouchableWithoutFeedback onPress={()=>{ openTransperentPopup(dispatch, {innerView:"", isPopupVisible:false}); }} >
                         <BottomButton backgroundColor={colorBlack} >
-                            <BottomButtonText>{LANGUAGE[language].orderListPopup.orderListOK}</BottomButtonText>
+                            <BottomButtonText>{LANGUAGE[language]?.orderListPopup.orderListOK}</BottomButtonText>
                             <BottomButtonIcon source={require("../../assets/icons/cancel.png")} />
                         </BottomButton>
                     </TouchableWithoutFeedback>

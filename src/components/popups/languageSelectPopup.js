@@ -14,8 +14,8 @@ const LanguageSelectPopup = () => {
         <>
             <LanguageSelectWrapper>
                 <PopupTitleWrapper>
-                    <PopupTitleText>{LANGUAGE[language].languageSelectView.title}</PopupTitleText>
-                    <PopupSubtitleText>{LANGUAGE[language].languageSelectView.subTitle}</PopupSubtitleText>
+                    <PopupTitleText>{LANGUAGE[language]?.languageSelectView.title}</PopupTitleText>
+                    <PopupSubtitleText>{LANGUAGE[language]?.languageSelectView.subTitle}</PopupSubtitleText>
                 </PopupTitleWrapper>
                 <LanguageWrapper>
                     {
@@ -39,7 +39,7 @@ const LanguageSelectPopup = () => {
                                             <LanguageSelectedWrapper>
                                                 <LanguageIconDim/>
                                                 <LanguageIconChecked source={require("assets/icons/check_red.png")} />
-                                                <LanguageSelectedText>{LANGUAGE[language].languageSelectView.selectedLanguage}</LanguageSelectedText>
+                                                <LanguageSelectedText>{LANGUAGE[language]?.languageSelectView.selectedLanguage}</LanguageSelectedText>
                                             </LanguageSelectedWrapper>
                                         }
                                     </LanguageIconWrapper>

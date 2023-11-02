@@ -15,13 +15,33 @@ const MenuItem = ({item,index,setDetailShow}) => {
     // 포스 api ITEM_ID 는 관리자 api에서 pos_code임
     const dispatch = useDispatch();
     const {menuExtra} = useSelector(state=>state.menuExtra);
-  
+    const {language} =  useSelector(state=>state.languages);
+
     // 이미지 찾기
     const itemExtra = menuExtra.filter(el=>el.pos_code == item.ITEM_ID);
-    
+    //console.log(language,"itemExtra: ",itemExtra);
     const itemID = item.ITEM_ID;
     const imgUrl = "https:"+itemExtra[0]?.gimg_chg;
-    const itemTitle = item.ITEM_NAME;
+    
+    //const itemTitle=>{} item.ITEM_NAME;
+    const itemTitle = () => {
+        let selTitleLanguage = "";
+        const selExtra = itemExtra.filter(el=>el.pos_code==item.ITEM_ID);
+        if(language=="korean") {
+            selTitleLanguage = item.ITEM_NAME;
+        }
+        else if(language=="japanese") {
+            selTitleLanguage = selExtra[0]?.gname_jp;
+        }
+        else if(language=="chinese") {
+            selTitleLanguage = selExtra[0]?.gname_cn;
+        }
+        else if(language=="english") {
+            selTitleLanguage = selExtra[0]?.gname_en;
+        }
+
+        return selTitleLanguage;
+    }
     const itemPrice= item.ITEM_AMT;
 
 
@@ -65,7 +85,7 @@ const MenuItem = ({item,index,setDetailShow}) => {
                     </MenuItemImageWrapper>
                 </MenuItemTopWrapper>
                 <MenuItemBottomWRapper>
-                    <MenuItemName>{itemTitle}</MenuItemName>
+                    <MenuItemName>{itemTitle()}</MenuItemName>
                     <MenuItemPrice>{itemPrice}원</MenuItemPrice>
                 </MenuItemBottomWRapper>
             </MenuItemWrapper>

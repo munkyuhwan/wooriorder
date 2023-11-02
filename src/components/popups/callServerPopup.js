@@ -35,8 +35,8 @@ const CallServerPopup = () => {
     return(
         <TransparentPopupWrapper>
             <TransparentPopupTopWrapper>
-                <TransperentPopupTopTitle>{LANGUAGE[language].serverPopup.callServer}</TransperentPopupTopTitle>
-                <TransperentPopupTopSubTitle>{LANGUAGE[language].serverPopup.text}</TransperentPopupTopSubTitle>
+                <TransperentPopupTopTitle>{LANGUAGE[language]?.serverPopup.callServer}</TransperentPopupTopTitle>
+                <TransperentPopupTopSubTitle>{LANGUAGE[language]?.serverPopup.text}</TransperentPopupTopSubTitle>
             </TransparentPopupTopWrapper>     
             <TransperentPopupMidWrapper>
                 <SelectItemComponent 
@@ -49,13 +49,13 @@ const CallServerPopup = () => {
                 <TransparentPopupBottomInnerWrapper>
                     <TouchableWithoutFeedback onPress={callServer}>
                         <TransparentPopupBottomButtonWraper bgColor={colorRed} >
-                            <TransparentPopupBottomButtonText>{LANGUAGE[language].serverPopup.callBtnText}</TransparentPopupBottomButtonText>
+                            <TransparentPopupBottomButtonText>{LANGUAGE[language]?.serverPopup.callBtnText}</TransparentPopupBottomButtonText>
                             <TransparentPopupBottomButtonIcon source={require("assets/icons/bell_trans.png")} />
                         </TransparentPopupBottomButtonWraper>
                     </TouchableWithoutFeedback>
                     <TouchableWithoutFeedback onPress={()=>{openFullSizePopup(dispatch, {innerView:"", isPopupVisible:false});}}>
                         <TransparentPopupBottomButtonWraper bgColor={colorDarkGrey} >
-                            <TransparentPopupBottomButtonText>{LANGUAGE[language].serverPopup.closeBtnText}</TransparentPopupBottomButtonText>
+                            <TransparentPopupBottomButtonText>{LANGUAGE[language]?.serverPopup.closeBtnText}</TransparentPopupBottomButtonText>
                             <TransparentPopupBottomButtonIcon source={require("assets/icons/cancel.png")} />
                         </TransparentPopupBottomButtonWraper>
                     </TouchableWithoutFeedback>

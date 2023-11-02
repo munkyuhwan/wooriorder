@@ -103,7 +103,7 @@ const PopUp = (props) =>{
                         <PopupBottomButtonWrapper>
                             <TouchableWithoutFeedback onPress={()=>{openPopup(dispatch,{innerView:"", isPopupVisible:false});  /* dispatch(setPopupVisibility({isPopupVisible:false})); */ }}>
                                 <PopupBottomButtonBlack>
-                                    <PopupBottomButtonText>{LANGUAGE[language].popup.closeTitle}</PopupBottomButtonText>
+                                    <PopupBottomButtonText>{LANGUAGE[language]?.popup.closeTitle}</PopupBottomButtonText>
                                 </PopupBottomButtonBlack>
                             </TouchableWithoutFeedback>
                         </PopupBottomButtonWrapper>

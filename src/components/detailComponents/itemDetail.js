@@ -183,7 +183,7 @@ const ItemDetail = (props) => {
                             {menuDetailID!=null &&
                                 <OptRecommendWrapper>
                                     <OptListWrapper>
-                                        <OptTitleText>{LANGUAGE[language].detailView.selectOpt}</OptTitleText>
+                                        <OptTitleText>{LANGUAGE[language]?.detailView.selectOpt}</OptTitleText>
                                         <OptList horizontal showsHorizontalScrollIndicator={false} >
                                             {additiveGroupList!=null &&
                                                 additiveGroupList.map((el,index)=>{
@@ -208,7 +208,7 @@ const ItemDetail = (props) => {
                                         </OptList>
                                     </OptListWrapper>
                                     <OptListWrapper>
-                                        <OptTitleText>{LANGUAGE[language].detailView.recommendMenu}</OptTitleText>
+                                        <OptTitleText>{LANGUAGE[language]?.detailView.recommendMenu}</OptTitleText>
                                         <OptList horizontal showsHorizontalScrollIndicator={false} >
                                             {/*recommendMenu!=null&&
                                                 recommendMenu.map((el,index)=>{
@@ -239,13 +239,13 @@ const ItemDetail = (props) => {
                             <BottomButtonWrapper>
                                 <TouchableWithoutFeedback onPress={()=>{closeDetail(); }}>
                                     <BottomButton backgroundColor={colorRed} >
-                                        <BottomButtonText>{LANGUAGE[language].detailView.toMenu}</BottomButtonText>
+                                        <BottomButtonText>{LANGUAGE[language]?.detailView.toMenu}</BottomButtonText>
                                         <BottomButtonIcon source={require("../../assets/icons/folk_nife.png")} />
                                     </BottomButton>
                                 </TouchableWithoutFeedback>
                                 <TouchableWithoutFeedback onPress={()=>{addToCart()}}>
                                     <BottomButton backgroundColor={colorBlack} >
-                                        <BottomButtonText>{LANGUAGE[language].detailView.addToCart}</BottomButtonText>
+                                        <BottomButtonText>{LANGUAGE[language]?.detailView.addToCart}</BottomButtonText>
                                         <BottomButtonIcon source={require("../../assets/icons/cart_select.png")} />
                                     </BottomButton>
                                 </TouchableWithoutFeedback>

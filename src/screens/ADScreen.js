@@ -71,7 +71,7 @@ const ADScreen = () =>{
                 </Swiper>
                 <TouchableWithoutFeedback onPress={()=>{navigation.navigate("main")}}>
                     <ADOrderBtnWrapper>
-                        <ADOrderBtnText>{LANGUAGE[language].adSCreen.letsOrder}</ADOrderBtnText>
+                        <ADOrderBtnText>{LANGUAGE[language]?.adSCreen.letsOrder}</ADOrderBtnText>
                         <ADOrderBtnIcon source={require("assets/icons/folk_nife.png")} />
                     </ADOrderBtnWrapper>
                 </TouchableWithoutFeedback>

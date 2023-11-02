@@ -57,7 +57,7 @@ const CartListItem = (props) => {
                     <CartItemFastImage source={{uri:"http:"+itemExtra[0]?.gimg_chg}} />
                     <TouchableWithoutFeedback onPress={()=>{ onTogoTouch(); }} >
                         <CartItemTogoWrapper>
-                            <CartItemTogoText>{additiveItemList?.filter(el=>el.menuOptionSelected.ADDITIVE_ID=="1002").length>0?LANGUAGE[language].cartView.togoCancel:LANGUAGE[language].cartView.togo}</CartItemTogoText>
+                            <CartItemTogoText>{additiveItemList?.filter(el=>el.menuOptionSelected.ADDITIVE_ID=="1002").length>0?LANGUAGE[language]?.cartView.togoCancel:LANGUAGE[language]?.cartView.togo}</CartItemTogoText>
                             
                             <CartItemTogoIcon source={require("assets/icons/togo.png")}  />
                         </CartItemTogoWrapper>

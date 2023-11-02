@@ -45,7 +45,7 @@ const TogoPopup = (props) =>{
         <>
             <TogoWrapper>
                 <PopupTitleWrapper>
-                    <PopupTitleText>{LANGUAGE[language].togoView.title}</PopupTitleText>
+                    <PopupTitleText>{LANGUAGE[language]?.togoView.title}</PopupTitleText>
                 </PopupTitleWrapper>
                 <TogoTimePickerWrapper>
                     <DatePicker mode={"time"} date={new Date()} androidVariant='nativeAndroid' is24hourSource="locale" onDateChange={(time)=>{ setTimeSelected(numberPad(time.getHours(),2)+":"+numberPad(time.getMinutes(),2));  }} />
@@ -54,7 +54,7 @@ const TogoPopup = (props) =>{
                 <PopupBottomButtonWrapper>
                     <TouchableWithoutFeedback onPress={()=>{ onComplete(); /* dispatch(setPopupVisibility({isPopupVisible:false})); */ }}>
                         <PopupBottomButtonBlack>
-                            <PopupBottomButtonText>{LANGUAGE[language].popup.okTitle}</PopupBottomButtonText>
+                            <PopupBottomButtonText>{LANGUAGE[language]?.popup.okTitle}</PopupBottomButtonText>
                         </PopupBottomButtonBlack>
                     </TouchableWithoutFeedback>
                 </PopupBottomButtonWrapper>
