@@ -19,10 +19,6 @@ import { setLanguage } from '../store/languages'
 
 const MainScreen = () =>{   
     const dispatch = useDispatch();
-    const {language} = useSelector(state=>state.languages);
-    useEffect(()=>{
-        console.log("language: ",language);
-    },[language])
     useEffect(()=>{
       dispatch(setLanguage("korean"));  
     },[])
