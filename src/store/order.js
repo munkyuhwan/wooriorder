@@ -17,9 +17,8 @@ export const initOrderList = createAsyncThunk("order/initOrderList", async() =>{
     };
 })
 
-
-export const setOrderList = createAsyncThunk("order/setOrderList", async(index) =>{
-    return index;
+export const setOrderList = createAsyncThunk("order/setOrderList", async(data) =>{
+    return data;
 })
 
 export const deleteItem = createAsyncThunk("order/deleteItem", async(_,{dispatch, getState,extra}) =>{
@@ -235,7 +234,6 @@ export const postAddToPos =  createAsyncThunk("order/postAddToPos", async(_,{dis
     // 추가 주문에 결제 정보 빼야함.
     tmpData["ORD_PAY_LIST"]=[];
     tmpData = {...tmpData,...JSON.parse(orderResult)};
-    console.log("add order tmpData: ",tmpData);
     const lw = new LogWriter();
     const logPos = `\nPOST POS ADD DATA==================================\ndata:${JSON.stringify(tmpData)}\n`
     lw.writeLog(logPos);

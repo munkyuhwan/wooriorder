@@ -9,34 +9,56 @@ import { useDispatch, useSelector } from 'react-redux';
 import { numberWithCommas, openPopup } from '../../utils/common';
 import { MENU_DATA } from '../../resources/menuData';
 import { LANGUAGE } from '../../resources/strings';
-import { resetAmtOrderList } from '../../store/order';
+import { resetAmtOrderList, setOrderList } from '../../store/order';
 
 const CartListItem = (props) => {
     const dispatch = useDispatch();
     const {language} = useSelector(state=>state.languages);
     const {menuExtra} = useSelector(state=>state.menuExtra);
-  
+    const {orderList} = useSelector(state=>state.order);
+
    
     const index = props?.index;
     const order = props?.item;
     const additiveItemList = order.ADDITIVE_ITEM_LIST;
-    
     // 이미지 찾기
     const itemExtra = menuExtra.filter(el=>el.pos_code == order.ITEM_ID);
-    console.log("itemExtra:",itemExtra[0]?.gimg_chg);
     const calculateAmt = (operand, amt) =>{
         // plus, minus, cancel
         dispatch(resetAmtOrderList({operand,amt,index}))
     }
-    
+    function onTogoTouch() {
+        //ADDITIVE_ITEM_LIST
+        let additiveList = additiveItemList;
+        let togoCheck = additiveList.filter(el=>el.menuOptionSelected.ADDITIVE_ID=="1002");
+
+        if(togoCheck.length > 0) {
+            // additive listd에서 포장을 빼야함
+            let tmpOrdList = [...orderList];
+            
+            // additive list에서 포장을 제외한 배열 만들기
+            let additiveListWithoutTogo = additiveList.filter(el=>el.menuOptionSelected.ADDITIVE_ID!="1002");
+            tmpOrdList[index] = {...tmpOrdList[index],  ADDITIVE_ITEM_LIST:additiveListWithoutTogo};
+            dispatch(setOrderList(tmpOrdList)) 
+        }else {
+            openPopup(dispatch,{innerView:"TogoPopup", isPopupVisible:true,param:{index:index}}); 
+        }
+ 
+/* 
+        if(order?.ITEM_MEMO!="") {
+            
+        }else {
+        } */
+    }
     return(
         <>
             <CartItemWrapper>
                 <CartItemImageTogoWrapper>
                     <CartItemFastImage source={{uri:"http:"+itemExtra[0]?.gimg_chg}} />
-                    <TouchableWithoutFeedback onPress={()=>{openPopup(dispatch,{innerView:"TogoPopup", isPopupVisible:true}); }} >
+                    <TouchableWithoutFeedback onPress={()=>{ onTogoTouch(); }} >
                         <CartItemTogoWrapper>
-                            <CartItemTogoText>{LANGUAGE[language].cartView.togo}</CartItemTogoText>
+                            <CartItemTogoText>{additiveItemList?.filter(el=>el.menuOptionSelected.ADDITIVE_ID=="1002").length>0?LANGUAGE[language].cartView.togoCancel:LANGUAGE[language].cartView.togo}</CartItemTogoText>
+                            
                             <CartItemTogoIcon source={require("assets/icons/togo.png")}  />
                         </CartItemTogoWrapper>
                     </TouchableWithoutFeedback>

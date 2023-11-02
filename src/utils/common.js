@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setFullPopupContent, setFullPopupVisibility, setPopupContent, setPopupVisibility, setTransPopupContent, setTransPopupVisibility } from '../store/popup';
 
-export function openPopup (dispatch, {innerView, isPopupVisible}) {
+export function openPopup (dispatch, {innerView, isPopupVisible, param}) {
     if(isPopupVisible) {
-        dispatch(setPopupContent({innerView:innerView})); 
+        dispatch(setPopupContent({innerView:innerView,param:param})); 
         dispatch(setPopupVisibility({isPopupVisible:isPopupVisible}));    
     }else {
         dispatch(setPopupVisibility({isPopupVisible:isPopupVisible}));        

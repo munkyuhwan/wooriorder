@@ -222,6 +222,7 @@ export const checkTableOrder = async(dispatch, data ) => {
             reject();
             return;
         }
+        console.log("tableINfo: ",data.tableInfo);
         axios.post(
             `${POS_BASE_URL_TEST}${POS_POST_ORDER}`,
             {

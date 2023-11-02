@@ -10,6 +10,7 @@ export const LANGUAGE = {
             totalAmtUnit:'원',
             makeOrder:"주문하기",
             togo:"포장하기",
+            togoCancel:"포장취소",
         },
         detailView:{
             toMenu:'메뉴로 이동',

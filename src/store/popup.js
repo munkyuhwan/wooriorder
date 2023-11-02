@@ -29,6 +29,7 @@ export const popupsSlice = createSlice({
         innerTransView:"",
         innerFullView:"",
         popupMsg:"",
+        param:{},
     },
     extraReducers:(builder)=>{
         // 메인 카테고리 받기
@@ -37,6 +38,7 @@ export const popupsSlice = createSlice({
         })
         builder.addCase(setPopupContent.fulfilled,(state, action)=>{
             state.innerView = action.payload.innerView;
+            state.param = action.payload.param
         })
 
         builder.addCase(setTransPopupVisibility.fulfilled,(state, action)=>{

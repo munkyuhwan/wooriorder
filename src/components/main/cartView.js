@@ -87,6 +87,7 @@ const CartView = () =>{
         }
         // 2. 저장된 주문번호가 없는데, 테이블 주문목록이 있을경우. 테이블에 이미 다른테블릿 점유중이란것
         if(orderResult == null) {
+            console.log("isTableAvailable: ",isTableAvailable);
             if(hasOrderList) {
                 // 테이블 점유중 테이블 변경해야함
                 dispatch(setErrorData({errorCode:"XXXX",errorMsg:"테이블이 이미 점유 중입니다.(주문번호없음)\n테이블을 변경 해 주세요." })); 

@@ -20,7 +20,7 @@ const PopUp = (props) =>{
     
     const dispatch = useDispatch();
     const {language} = useSelector(state=>state.languages);
-    const {isPopupVisible, innerView} = useSelector(state=>state.popup);
+    const {isPopupVisible, innerView, param} = useSelector(state=>state.popup);
     const [popupZIndex, setPopupZIndex] = useState(0);
     const [size, setSize] = useState("0") 
     
@@ -93,13 +93,13 @@ const PopUp = (props) =>{
                         <LanguageSelectPopup/>
                     }
                     {innerView=="TogoPopup"&&
-                        <TogoPopup/>
+                        <TogoPopup param={param}/>
                     }
                    
                     {(innerView=="OrderList") &&
                         <OrderListPopup/>
                     }
-                    {(innerView=="TogoPopup" || innerView=="OrderList") &&
+                    {( innerView=="OrderList") &&
                         <PopupBottomButtonWrapper>
                             <TouchableWithoutFeedback onPress={()=>{openPopup(dispatch,{innerView:"", isPopupVisible:false});  /* dispatch(setPopupVisibility({isPopupVisible:false})); */ }}>
                                 <PopupBottomButtonBlack>
