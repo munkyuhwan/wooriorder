@@ -16,6 +16,7 @@ import { MenuImageDefault } from '../../styles/main/menuListStyle';
 import { useFocusEffect } from '@react-navigation/native';
 import FastImage from 'react-native-fast-image';
 import { RADIUS, RADIUS_DOUBLE } from '../../styles/values';
+import {isEmpty} from "lodash";
 /* 메뉴 상세 */
 const ItemDetail = (props) => {
     const language = props.language;
@@ -24,9 +25,11 @@ const ItemDetail = (props) => {
     const {menu} = useSelector((state)=>state.menu);
     const {menuDetailID, menuDetail} = useSelector((state)=>state.menuDetail);
     const [detailZIndex, setDetailZIndex] = useState(0);
-    const {menuExtra} = useSelector(state=>state.menuExtra);
+
     // 메뉴 추가정보 찾기
+    const {menuExtra} = useSelector(state=>state.menuExtra);
     const itemExtra = menuExtra.filter(el=>el.pos_code == menuDetailID);
+
     // 옵션스테이트
     const [additiveGroupList, setAdditiveGroupList] = useState([]);
     const [additiveItemList, setAdditiveItemList] = useState([]);
@@ -219,9 +222,13 @@ const ItemDetail = (props) => {
                                                 itemExtra[0]?.related.length > 0 &&
                                                 itemExtra[0]?.related.map((el,index)=>{
                                                     const recommendItem = menu[0].ITEM_LIST.filter(el=>el.ITEM_ID==Number(el))
-                                                    return(
-                                                        <RecommendItem key={"recoItem_"+index} isSelected={selectedRecommend.indexOf(recommendItem.ITEM_ID)>=0}  recommendData={el} menuData={menuDetail} onPress={()=>{onRecommendSelect(recommendItem.ITEM_ID)}}/>    
-                                                    );
+                                                    if(isEmpty(recommendItem)) {
+                                                        return (<></>)
+                                                    }else {
+                                                        return(
+                                                            <RecommendItem key={"recoItem_"+index} isSelected={selectedRecommend.indexOf(recommendItem.ITEM_ID)>=0}  recommendData={el} menuData={menuDetail} onPress={()=>{onRecommendSelect(recommendItem.ITEM_ID)}}/>    
+                                                        );
+                                                    }
                                                 })
                                                 
                                             }

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { OptItemDim, OptItemImage, OptItemInfoChecked, OptItemInfoPrice, OptItemInfoTitle, OptItemInfoWrapper, OptItemWrapper } from '../../styles/main/detailStyle';
+import { OptItemDim, OptItemFastImage, OptItemImage, OptItemInfoChecked, OptItemInfoPrice, OptItemInfoTitle, OptItemInfoWrapper, OptItemWrapper } from '../../styles/main/detailStyle';
 
 
 const OptItem = (props)=>{
@@ -9,6 +9,10 @@ const OptItem = (props)=>{
     const {menuDetailID, menuOptionGroupCode, menuOptionSelected} = useSelector((state)=>state.menuDetail);
     const [isSelected, setSelected] = useState(false);
     const [addtivePrice, setAdditivePrice] = useState();
+
+    // 메뉴 옵션 추가 정보
+    const {optionCategoryExtra} = useSelector(state=>state.menuExtra);
+    const optionItemCategoryExtra = optionCategoryExtra.filter(el=>el.cate_code==optionData?.ADDITIVE_GROUP_CODE);
     useEffect(()=>{
         // 옵션 선택한 메뉴 확인
         if(menuOptionSelected.length>0) {
@@ -29,7 +33,7 @@ const OptItem = (props)=>{
         <>
             <TouchableWithoutFeedback onPress={props.onPress} >
                 <OptItemWrapper>
-                    <OptItemImage  source={{uri:`${optionData?.imgUrl}`}}/>
+                    <OptItemFastImage  source={{uri:`https:${optionItemCategoryExtra[0]?.gimg_chg}`}}/>
                     <OptItemDim isSelected={isSelected}/>
                     <OptItemInfoWrapper>
                         <OptItemInfoTitle>{optionData?.ADDITIVE_GROUP_NAME}</OptItemInfoTitle>

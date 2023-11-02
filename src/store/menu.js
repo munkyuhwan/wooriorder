@@ -2,11 +2,11 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { useSelector } from 'react-redux';
 import { MENU_DATA } from '../resources/menuData';
 import axios from 'axios';
-import { adminMenuEdit, posMenuEdit, posMenuState, posOrderNew } from '../utils/apis';
+import { adminMenuEdit, adminOptionEdit, posMenuEdit, posMenuState, posOrderNew } from '../utils/apis';
 import { setMainCategories } from './categories';
 import { EventRegister } from 'react-native-event-listeners';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setMenuExtra } from './menuExtra';
+import { setMenuExtra, setOptionExtra } from './menuExtra';
 
 export const initMenu = createAsyncThunk("menu/initMenu", async(category) =>{
     return [];
@@ -62,11 +62,19 @@ export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, 
     dispatch(setMainCategories(categories));
 
     // 2. 어드민 메뉴 데이터 받기
-    const adminData = await adminMenuEdit(dispatch);
+    const adminData = await adminMenuEdit(dispatch).catch(err=>console.log(err));
     let adminMenu = [];
     if(adminData) {
         adminMenu = adminData.order;
         dispatch(setMenuExtra(adminMenu));
+    }
+
+    // 3. 어드민 옵션 데터 받기
+    const adminOptionData = await adminOptionEdit(dispatch).catch(err=>console.log(err));
+    let adminOption = [];
+    if(adminOptionData.result) {
+        adminOption = adminOptionData;
+        dispatch(setOptionExtra(adminOption));
     }
 
     EventRegister.emit("showSpinner",{isSpinnerShow:false, msg:""})

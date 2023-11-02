@@ -122,6 +122,11 @@ export const OptItemImage = styled.Image`
     height:100%;
     borderRadius:${RADIUS_SMALL};
 `
+export const OptItemFastImage = styled(FastImage)`
+    width:100%;
+    height:100%;
+    borderRadius:${RADIUS_SMALL};
+`
 export const OptItemInfoWrapper = styled.View`
     width:100%;
     height:100%;

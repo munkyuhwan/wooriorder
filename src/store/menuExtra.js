@@ -11,7 +11,9 @@ export const initMenuExtra = createAsyncThunk("menu/initMenuExtra", async() =>{
     return [];
 })
 export const setMenuExtra = createAsyncThunk("menu/setMenuExtra", async(data) =>{
-    
+    return data;
+})
+export const setOptionExtra = createAsyncThunk("menu/setOptionExtra", async(data) =>{
     return data;
 })
 
@@ -20,6 +22,8 @@ export const menuExtraSlice = createSlice({
     name: 'menuExtra',
     initialState: {
         menuExtra: [],
+        optionCategoryExtra:[],
+        optionExtra:[],
     },
     extraReducers:(builder)=>{
         // 메뉴 기타 초기화 받기
@@ -29,6 +33,11 @@ export const menuExtraSlice = createSlice({
         // 메뉴 기타 세팅
         builder.addCase(setMenuExtra.fulfilled,(state, action)=>{
             state.menuExtra = action.payload;
+        })
+        // 옵션 기타 세팅
+        builder.addCase(setOptionExtra.fulfilled,(state, action)=>{
+            state.optionCategoryExtra = action.payload.option_category;
+            state.optionExtra = action.payload.option;
         })
 
 
