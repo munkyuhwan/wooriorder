@@ -5,7 +5,7 @@ import { colorDarkGrey, colorGrey, colorRed, colorWhite } from '../../assets/col
 import { TransparentPopupBottomButtonIcon, TransparentPopupBottomButtonText, TransparentPopupBottomButtonWraper, TransparentPopupBottomInnerWrapper, TransparentPopupBottomWrapper, TransparentPopupTopWrapper, TransparentPopupWrapper, TransperentPopupMidWrapper, TransperentPopupTopSubTitle, TransperentPopupTopTitle } from '../../styles/common/popup';
 import { LANGUAGE } from '../../resources/strings';
 import SelectItemComponent from '../common/selectItemComponent';
-import { getCallServerItems } from '../../store/callServer';
+import { getCallServerItems, sendServiceToPos, sendToPos } from '../../store/callServer';
 import { openFullSizePopup, openTransperentPopup } from '../../utils/common';
 
 const CallServerPopup = () => {
@@ -14,19 +14,23 @@ const CallServerPopup = () => {
 
     const {callServerItems} = useSelector(state=>state.callServer);
     const {isFullPopupVisible, innerFullView} = useSelector(state=>state.popup);
+    const [selectedService, setSelectedService] = useState();
 
     useEffect(()=>{
         if(isFullPopupVisible==true && innerFullView=="CallServer") {
-            dispatch(getCallServerItems());
+            //dispatch(getCallServerItems());
         }
     },[isFullPopupVisible, innerFullView])
 
+    useEffect(()=>{
+    },[callServerItems])
+
     const onServiceSelected = (indexArray) =>{
-        console.log("service selectedIndex: ", indexArray)
+        setSelectedService(indexArray);
     }
     const callServer = () =>{
-        console.log("callserver!!!")
-    }
+        dispatch(sendServiceToPos(selectedService));
+    } 
 
     return(
         <TransparentPopupWrapper>

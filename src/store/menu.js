@@ -7,6 +7,8 @@ import { setMainCategories } from './categories';
 import { EventRegister } from 'react-native-event-listeners';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setMenuExtra, setOptionExtra } from './menuExtra';
+import { CALL_SERVICE_GROUP_CODE } from '../resources/apiResources';
+import { setCallServerList } from './callServer';
 
 export const initMenu = createAsyncThunk("menu/initMenu", async(category) =>{
     return [];
@@ -47,6 +49,7 @@ export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, 
     // 1. 포스 메뉴 받기
     const resultData = await posMenuEdit(dispatch);
     let categories = [];
+    let callService = [];
     resultData.map((el)=>{
         if(el.ITEM_GROUP_USE_FLAG == "N") {
             const categoryData = {
@@ -55,9 +58,15 @@ export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, 
                 ITEM_GROUP_NAME:el.ITEM_GROUP_NAME,
                 ITEM_GROUP_USE_FLAG:el.ITEM_GROUP_USE_FLAG,
             };
-            categories.push(categoryData)
+            if(el.ITEM_GROUP_CODE != CALL_SERVICE_GROUP_CODE) {
+                categories.push(categoryData)
+            }else {
+                callService = el;
+            }
         }
     });
+    // 직원호출 스테이트 없데이트
+    dispatch(setCallServerList(callService));
     // 카테고리 스테이트 업데이트
     dispatch(setMainCategories(categories));
 

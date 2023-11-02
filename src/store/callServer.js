@@ -1,24 +1,76 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { SERVICE_ID, STORE_ID } from '../resources/apiResources';
+import { addOrderToPos, checkTableOrder, postOrderToPos } from '../utils/apis';
+import LogWriter from '../utils/logWriter';
 
 export const getCallServerItems = createAsyncThunk("callServer/getCallServerItems", async() =>{
-    const getCallServerItem = [
-        {index:0, name:"벌레가 나왔어요."},
-        {index:1, name:"음식이 잘못 나왔어요."},
-        {index:2, name:"음식이 안나와요."},
-        {index:3, name:"그릇이 부족해요."},
-        {index:4, name:"음식이 너무너무 맛이가 없으무니다."},
-        {index:5, name:"여기좀 와주세요."},
-        {index:6, name:"물좀 주세요."},
-        {index:7, name:"컵좀 주세요."},
-        {index:8, name:"요청사항 1"},
-        {index:9, name:"요청사항 2"},
-        {index:10, name:"요청사항 3"},
-        {index:11, name:"요청사항 4"},]
+    const getCallServerItem = []
     return getCallServerItem;
+})
+export const setCallServerList = createAsyncThunk("callServer/setCallServerList", async(data) =>{
+    return data;
 })
 export const setCallServerItem = createAsyncThunk("callServer/setCallServerItem", async(index) =>{
     return index;
 })
+export const sendServiceToPos = createAsyncThunk("callServer/sendToPos", async(data,{dispatch, getState}) =>{
+    const { callServerItems } = getState().callServer;
+    const {tableInfo} = getState().tableInfo;
+    const serverList = callServerItems.ITEM_LIST
+
+    let selectedItems = [];
+    data.map(itemID=>{
+        selectedItems.push(serverList.filter(el=>el.ITEM_ID==itemID)[0]);
+    })
+    console.log()
+    console.log(selectedItems)
+    let submitData = 
+    {
+        "STORE_ID": `${STORE_ID}`,
+        "SERVICE_ID": `${SERVICE_ID}`,
+        "MCHT_ORDERNO": "120",
+        "MEMB_TEL": "01012349876",
+        "ORDER_MEMO": "직원호출",
+        "OEG_ORDER_PAY_AMT": "0",
+        "ORDER_PAY_AMT": "0",
+        "DISC_AMT": "0",
+        "PREPAY_FLAG": "N",
+        "OS_GBN": "AND",
+        "FLR_CODE": `${tableInfo.FLR_CODE}`,
+        "TBL_CODE": `${tableInfo.TBL_CODE}`,
+        "REPT_PRT_FLAG": "N",
+        "ORDER_PRT_FLAG": "N",
+        "ORD_PAY_LIST": [
+        ],
+        "ITEM_LIST": selectedItems
+    }
+
+    const isTableAvailable = await checkTableOrder(dispatch,{tableInfo});
+    console.log("isTableAvailable: ",isTableAvailable)
+    if(isTableAvailable.hasOrderList) {
+        submitData["ORD_PAY_LIST"]=[];
+        submitData["ORG_ORDERNO"] = isTableAvailable.orderNo;
+        console.log("submitData: ",submitData);
+        return await addOrderToPos(dispatch, submitData)
+        .catch(err=>{
+            posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:"주문 오류",MSG2:"주문을 진행할 수 없습니다."});
+            console.log("error: ",err)
+        }); 
+    }else {
+        return await postOrderToPos(dispatch, submitData)
+        .catch(err=>{
+            posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:"주문 오류",MSG2:"주문을 진행할 수 없습니다."});
+            console.log("error: ",err)
+            const lw = new LogWriter();
+            const logPos = `\nPOST POS DATA ERROR==================================\ndata:${JSON.stringify(err)}\n`
+            lw.writeLog(logPos);
+        });
+    }
+    
+
+})
+
+
 // Slice
 export const callServerSlice = createSlice({
     name: 'callServer',
@@ -35,6 +87,11 @@ export const callServerSlice = createSlice({
         builder.addCase(setCallServerItem.fulfilled,(state, action)=>{
             state.selectedItem = action.payload;
         })
+        // 직원호출 셋
+        builder.addCase(setCallServerList.fulfilled,(state, action)=>{
+            state.callServerItems = action.payload;
+        })
+        
     }
 });
 

@@ -7,14 +7,15 @@ import { RADIUS_SMALL, RADIUS_SMALL_DOUBLE } from '../../styles/values';
 
 const SelectItemComponent = (props) =>{
 
-    const data = props?.data;
+    const data = props?.data?.ITEM_LIST;
     
     const [selectedItems, setSelectedItems] = useState([]);
 
     const onItemPressed = (index) => {
-        const addedItems = selectedItems;
+        let addedItems = selectedItems;
         if(addedItems.includes(index)) {
-            addedItems.splice(addedItems.indexOf(index),)
+            //addedItems.splice(addedItems.indexOf(index),)
+            addedItems = addedItems.filter(el=>el!=index);
         }else {
             addedItems.push(index);
         }
@@ -91,7 +92,7 @@ const SelectItem = (props) => {
         borderRadius:RADIUS_SMALL_DOUBLE,
     };
     const onSelectHandleAnimation = async (toValue) => {
-        if(selectedItems.includes(data.index)){
+        if(selectedItems.includes(data.ITEM_ID)){
             setItemTextColor(colorBlack);
             setIsItemChecked(false);
             toValue=0;
@@ -111,9 +112,9 @@ const SelectItem = (props) => {
     return(
         <>
             <Animated.View  style={[{...popStyle, ...PopStyle.animatedPop,...{zIndex:popupZIndex, width:size, height:size}} ]} >   
-                <TouchableWithoutFeedback onPress={()=>{onSelectHandleAnimation(2); props?.onPress(data.index);  } }>
+                <TouchableWithoutFeedback onPress={()=>{onSelectHandleAnimation(2); props?.onPress(data.ITEM_ID);  } }>
                     <SelectItemContentWrapper>
-                        <SelectItemText textColor={itemTextColor} >{data?.name}</SelectItemText>
+                        <SelectItemText textColor={itemTextColor} >{data?.ITEM_NAME}</SelectItemText>
                         {isItemChecked &&
                             <SelectItemChecked source={require("assets/icons/check_black.png")}/>
                         }

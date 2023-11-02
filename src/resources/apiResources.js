@@ -28,6 +28,7 @@ export const ADMIN_OPTION = "/option.php";
 export const STORE_ID = "3113810001"; 
 export const SERVICE_ID = "3010";
 
+export const CALL_SERVICE_GROUP_CODE = "99999";
 // ADMIN API URL
 
 

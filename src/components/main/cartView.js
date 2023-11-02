@@ -61,7 +61,6 @@ const CartView = () =>{
     const doPayment = async () =>{
         // 이전에 주문한 주문 번호가 있는지 확인하기 위함
         let orderResult = await AsyncStorage.getItem("orderResult")
-        console.log("orderResult:",orderResult);
         // 테이블이 사용중인지 비교 하기
         const isTableAvailable = await checkTableOrder(dispatch,{tableInfo});
         const hasOrderList = isTableAvailable.hasOrderList;

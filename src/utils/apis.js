@@ -174,7 +174,7 @@ export const postOrderToPos = async(dispatch, data) =>{
             }else {
                 reject();
             } 
-        })) 
+        }))
         .catch(error=>reject(error.response.data));
     }) 
 }
@@ -186,7 +186,7 @@ export const addOrderToPos = async(dispatch, data) =>{
             reject();
             return;
         }
-    
+        
         axios.post(
             `${POS_BASE_URL_TEST}${POS_ORDER_ADD}`,
             {
