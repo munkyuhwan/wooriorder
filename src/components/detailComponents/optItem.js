@@ -2,13 +2,19 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { OptItemDim, OptItemFastImage, OptItemImage, OptItemInfoChecked, OptItemInfoPrice, OptItemInfoTitle, OptItemInfoWrapper, OptItemWrapper } from '../../styles/main/detailStyle';
+import Translator, { useTranslator } from 'react-native-translator';
 
 
 const OptItem = (props)=>{
+    const {language} = useSelector(state=>state.languages);
+    const {translate} = useTranslator();
+
     const optionData = props.optionData;
     const {menuDetailID, menuOptionGroupCode, menuOptionSelected} = useSelector((state)=>state.menuDetail);
     const [isSelected, setSelected] = useState(false);
     const [addtivePrice, setAdditivePrice] = useState();
+    const [groupName, setGroupName] = useState("");
+
 
     // 메뉴 옵션 추가 정보
     const {optionCategoryExtra} = useSelector(state=>state.menuExtra);
@@ -28,6 +34,13 @@ const OptItem = (props)=>{
         }
 
     },[menuOptionGroupCode,menuOptionSelected])
+    const onTranslate = (word) => {
+        translate('ko', 'en', word)
+        .then(res=>{
+            console.log("Res: ",res);
+        })
+
+    };
 
     return(
         <>
@@ -36,10 +49,8 @@ const OptItem = (props)=>{
                     <OptItemFastImage  source={{uri:`https:${optionItemCategoryExtra[0]?.gimg_chg}`}}/>
                     <OptItemDim isSelected={isSelected}/>
                     <OptItemInfoWrapper>
-                        <OptItemInfoTitle>{optionData?.ADDITIVE_GROUP_NAME}</OptItemInfoTitle>
-                        
+                        <OptItemInfoTitle>{(optionData?.ADDITIVE_GROUP_NAME) }</OptItemInfoTitle>
                         <OptItemInfoPrice>{addtivePrice?"+"+Number(addtivePrice).toLocaleString(undefined,{maximumFractionDigits:0}):""}</OptItemInfoPrice>
-                        
                         <OptItemInfoChecked isSelected={isSelected} source={require("../../assets/icons/check_red.png")}/>
                     </OptItemInfoWrapper>
                 </OptItemWrapper>

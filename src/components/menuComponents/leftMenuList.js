@@ -13,10 +13,6 @@ const LeftMenuList = (props) => {
     const initSelect = props?.initSelect;
     const [selectIndex, setSelectedIndex] = useState(0);
     const {selectedMainCategory} = useSelector((state)=>state.categories);
-    
-    const {menuExtra} = useSelector(state=>state.menuExtra);
-    console.log("menuExtra: ",menuExtra[0].pos_code)
-    console.log("data: ",data[0].ITEM_GROUP_CODE)
 
     const onPressAction = (index, groupCode) =>{
         setSelectedIndex(index);

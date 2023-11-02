@@ -41,7 +41,7 @@ const ItemDetail = (props) => {
     //const optionSelect = menuDetail?.ADDITIVE_GROUP_LIST[0]?.ADDITIVE_ITEM_LIST;
     //const additiveData = menuDetail?.ADDITIVE_GROUP_LIST[1];
     const recommendMenu = menuDetail?.recommend;
-
+    
     // animation set
     const [widthAnimation, setWidthAnimation] = useState(new Animated.Value(0));
     // width interpolation
@@ -140,6 +140,41 @@ const ItemDetail = (props) => {
         }
     },[isDetailShow, menuDetail])
 //console.log("menu: ",menu[0].ITEM_LIST);
+    const ItemTitle = () =>{
+        let selTitleLanguage = "";
+        const selExtra = itemExtra.filter(el=>el.pos_code==menuDetail?.ITEM_ID);
+        if(language=="korean") {
+            selTitleLanguage = menuDetail?.ITEM_NAME;
+        }
+        else if(language=="japanese") {
+            selTitleLanguage = selExtra[0]?.gname_jp;
+        }
+        else if(language=="chinese") {
+            selTitleLanguage = selExtra[0]?.gname_cn;
+        }
+        else if(language=="english") {
+            selTitleLanguage = selExtra[0]?.gname_en;
+        }
+        return selTitleLanguage;
+    }
+    const ItemInfo = () =>{
+        let selInfoLanguage = "";
+        const selExtra = itemExtra.filter(el=>el.pos_code==menuDetail?.ITEM_ID);
+        if(language=="korean") {
+            selInfoLanguage = selExtra[0]?.gmemo;
+        }
+        else if(language=="japanese") {
+            selInfoLanguage = selExtra[0]?.gmemo_jp;
+        }
+        else if(language=="chinese") {
+            selInfoLanguage = selExtra[0]?.gmemo_cn;
+        }
+        else if(language=="english") {
+            selInfoLanguage = selExtra[0]?.gmemo_en;
+        }
+        return selInfoLanguage;
+    }
+
     return(
         <>
             <Animated.View  style={[{...PopStyle.animatedPop, ...boxWidthStyle,...{zIndex:detailZIndex} } ]} >
@@ -162,7 +197,7 @@ const ItemDetail = (props) => {
                                     </DetailItemInfoImageWrapper>
                                     <DetailItemInfoWrapper>
                                         <DetailItemInfoTitleWrapper>
-                                            <DetailItemInfoTitle>{menuDetail?.ITEM_NAME}</DetailItemInfoTitle>
+                                            <DetailItemInfoTitle>{ItemTitle()}</DetailItemInfoTitle>
                                             {itemExtra[0]?.is_new=='Y'&&
                                                  <DetailItemInfoTitleEtc source={require("../../assets/icons/new.png")}/>
                                             }
@@ -175,7 +210,7 @@ const ItemDetail = (props) => {
                                             <DetailItemInfoPriceWrapper>
                                                 <DetailItemInfoPrice isBold={true} >{ menuDetail?.ITEM_AMT?numberWithCommas(menuDetail?.ITEM_AMT):""}</DetailItemInfoPrice><DetailItemInfoPrice isBold={false}> 원</DetailItemInfoPrice>
                                             </DetailItemInfoPriceWrapper>
-                                            <DetailItemInfoMore>{itemExtra[0]?.gmemo}</DetailItemInfoMore>
+                                            <DetailItemInfoMore>{ItemInfo()}</DetailItemInfoMore>
                                         </DetailPriceMoreWrapper>
                                     </DetailItemInfoWrapper>
                                 </DetailInfoWrapper>
