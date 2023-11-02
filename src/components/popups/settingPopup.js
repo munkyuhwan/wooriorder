@@ -14,6 +14,7 @@ import { SMARTRO_FUNCTION } from '../../resources/cardReaderConstant';
 import { useSharedValue } from 'react-native-reanimated';
 import { getMenuEdit } from '../../store/menu';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { cancelOrder, checkTableOrder } from '../../utils/apis';
 
 const SettingPopup = () =>{
 
@@ -352,7 +353,13 @@ const SettingPopup = () =>{
                                     <SettingButtonText isMargin={false} >테이블 세팅</SettingButtonText>
                                 </TouchableWithoutFeedback> 
                                 <Dropdown/>
-                            </SettingItemWrapper>
+                            </SettingItemWrapper>{/* 
+                            <TouchableWithoutFeedback onPress={()=>{checkTableOrder(dispatch,{tableInfo})}} >
+                                <SettingButtonText isMargin={true} >테이블 상태</SettingButtonText>
+                            </TouchableWithoutFeedback> 
+                            <TouchableWithoutFeedback onPress={()=>{cancelOrder(dispatch,{tableInfo})}} >
+                                <SettingButtonText isMargin={true} >주문취소</SettingButtonText>
+                            </TouchableWithoutFeedback>  */}
                             <TouchableWithoutFeedback onPress={()=>{getIndicateAvailableDeviceInfo();}} >
                                 <SettingButtonText isMargin={true} >단말기 서비스 확인</SettingButtonText>
                             </TouchableWithoutFeedback>
