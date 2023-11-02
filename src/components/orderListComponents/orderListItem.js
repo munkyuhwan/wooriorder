@@ -4,12 +4,17 @@ import { OrderListTableItemAmt, OrderListTableItemImage, OrderListTableItemImage
 
 const OrderListItem = (props) => {
     const item = props?.order.item;
-    //console.log("item: ",item);
+    const {menuExtra} = useSelector(state=>state.menuExtra);
+  
+    // 이미지 찾기
+    const itemExtra = menuExtra.filter(el=>el.pos_code == item.ITEM_ID);
+    const imgUrl = "https:"+itemExtra[0]?.gimg_chg;
+
     return(
         <>
             <OrderListTableItemWrapper>
                 <OrderListTableItemImageNameWrapper flex={0.85}>
-                    <OrderListTableItemImage source={{uri:item?.imgUrl}} />
+                    <OrderListTableItemImage source={{uri:imgUrl}} />
                     <OrderListTableItemName>{item?.ITEM_NAME}</OrderListTableItemName>
                 </OrderListTableItemImageNameWrapper>
                 <OrderListTableItemAmt flex={0.1}>{item?.ITEM_CNT}ea</OrderListTableItemAmt>

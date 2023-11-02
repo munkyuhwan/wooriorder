@@ -43,7 +43,10 @@ const OrderListPopup = () =>{
             <OrderListPopupWrapper>
                 <OrdrListTopWrapper>
                     <OrderListTopTitle>{LANGUAGE[language].orderListPopup.orderListTitle}</OrderListTopTitle>
-                    <OrderListTopSubtitle>{LANGUAGE[language].orderListPopup.orderListSubtitle}</OrderListTopSubtitle>
+                    <TouchableWithoutFeedback onPress={()=>{dispatch(getOrderStatus({}));}} >
+                        <OrderListTopSubtitle>{LANGUAGE[language].orderListPopup.orderListSubtitle}</OrderListTopSubtitle>
+                    </TouchableWithoutFeedback>
+
                 </OrdrListTopWrapper>
                 <OrderListWrapper>
                     <OrderListTableWrapper>
@@ -66,13 +69,13 @@ const OrderListPopup = () =>{
                     </OrderListTalbleGrandTotalWrapper>
                 </OrderListWrapper>
                 <BottomButtonWrapper>
-                        <BottomButton backgroundColor={colorRed} >
+                      {/*   <BottomButton backgroundColor={colorRed} >
                             <BottomButtonText>{LANGUAGE[language].orderListPopup.orderListPay}</BottomButtonText>
                             <BottomButtonIcon source={require("../../assets/icons/card.png")} />
-                        </BottomButton>
+                        </BottomButton> */}
                     <TouchableWithoutFeedback onPress={()=>{ openTransperentPopup(dispatch, {innerView:"", isPopupVisible:false}); }} >
                         <BottomButton backgroundColor={colorBlack} >
-                            <BottomButtonText>{LANGUAGE[language].orderListPopup.orderListCancel}</BottomButtonText>
+                            <BottomButtonText>{LANGUAGE[language].orderListPopup.orderListOK}</BottomButtonText>
                             <BottomButtonIcon source={require("../../assets/icons/cancel.png")} />
                         </BottomButton>
                     </TouchableWithoutFeedback>

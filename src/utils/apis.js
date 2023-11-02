@@ -316,20 +316,24 @@ export const getOrderByTable = async(dispatch, data) => {
             posOrderHeadr,
         )  
         .then( (response => {
-            console.log("response: ",response);
             if(posErrorHandler(dispatch, response.data)){
                 const responseData = response.data
                 if(responseData.RESULT=="SUCCESS") {
+                    //console.log("responseData: ",responseData);
                     const obj = responseData.OBJ;
                     const orderList = obj.ORDER_LIST;
-                    console.log("orderList============================================================");
-                    console.log("orderList: ",orderList);
+                    //console.log("orderList============================================================");
+                    //console.log("orderList: ",orderList);
+                    
+                    /*
                     const orderData = JSON.parse(data?.orderData);
                     console.log("data : ",orderData.ORG_ORDERNO);
                     console.log("orderList: ",orderList[0].ORG_ORDERNO);
                     const filteredData = orderList.filter(el=>el.ORG_ORDERNO == orderData.ORG_ORDERNO);
                     console.log("filteredData: ",filteredData);
-                    resolve(filteredData); 
+                     */
+                    resolve(orderList); 
+
                 }else {
                     reject();
                 }

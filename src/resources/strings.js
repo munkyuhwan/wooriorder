@@ -48,6 +48,7 @@ export const LANGUAGE = {
             tableColGrandTotal:'총 합계',
             orderListPay:'결제하기',
             orderListCancel:'취소',
+            orderListOK:'확인',
         },
         adSCreen:{
             letsOrder:"주문하기",
