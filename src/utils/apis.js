@@ -239,10 +239,10 @@ export const checkTableOrder = async(dispatch, data ) => {
                 const data = response.data;
                 const obj = data.OBJ;
                 const orderList = obj.ORDER_LIST;
-                console.log("check data: ",data);
-                console.log("check obj: ",obj);
-                console.log("check orderList: ",orderList[0].ORG_ORDERNO);
-                console.log("check orderList ORD_PAY_LIST: ",orderList[0].ORD_PAY_LIST);
+                //console.log("check data: ",data);
+                //console.log("check obj: ",obj);
+                console.log("check orderList: ",orderList.length);
+                //console.log("check orderList ORD_PAY_LIST: ",orderList[0].ORD_PAY_LIST);
                 console.log("============================================================================");
                 console.log();
                 console.log();

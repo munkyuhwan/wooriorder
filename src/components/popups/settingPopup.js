@@ -353,7 +353,8 @@ const SettingPopup = () =>{
                                     <SettingButtonText isMargin={false} >테이블 세팅</SettingButtonText>
                                 </TouchableWithoutFeedback> 
                                 <Dropdown/>
-                            </SettingItemWrapper>{/* 
+                            </SettingItemWrapper>
+                            {/* 
                             <TouchableWithoutFeedback onPress={()=>{checkTableOrder(dispatch,{tableInfo})}} >
                                 <SettingButtonText isMargin={true} >테이블 상태</SettingButtonText>
                             </TouchableWithoutFeedback> 
