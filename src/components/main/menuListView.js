@@ -97,7 +97,6 @@ const MenuListView = () => {
     },[mainCategories])
 
     useEffect(()=>{
-        console.log("displayMenu: ",displayMenu);
         if(displayMenu.length<=0) {
             dispatch(getDisplayMenu());
         }

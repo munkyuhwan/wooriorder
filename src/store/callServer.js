@@ -20,10 +20,21 @@ export const sendServiceToPos = createAsyncThunk("callServer/sendToPos", async(d
 
     let selectedItems = [];
     data.map(itemID=>{
-        selectedItems.push(serverList.filter(el=>el.ITEM_ID==itemID)[0]);
+        let serviceItem = Object.assign({},serverList.filter(el=>el.ITEM_ID==itemID)[0]);
+        serviceItem['ITEM_SEQ'] = "1";
+        serviceItem['ITEM_CNT'] = "1";
+        serviceItem['SALE_PRICE'] = "0";
+        serviceItem['SALE_AMT'] = "0";
+        serviceItem['ITEM_MEMO'] = "";
+        serviceItem['ADDITIVE_ITEM_LIST'] = [];
+
+        delete serviceItem["ITEM_AMT"];
+
+        //console.log("serviceItem: ",serviceItem);
+        selectedItems.push(serviceItem);
     })
-    console.log()
-    console.log(selectedItems)
+    //console.log()
+    //console.log(selectedItems)
     let submitData = 
     {
         "STORE_ID": `${STORE_ID}`,
@@ -40,13 +51,16 @@ export const sendServiceToPos = createAsyncThunk("callServer/sendToPos", async(d
         "TBL_CODE": `${tableInfo.TBL_CODE}`,
         "REPT_PRT_FLAG": "N",
         "ORDER_PRT_FLAG": "N",
-        "ORD_PAY_LIST": [
-        ],
+        "ORD_PAY_LIST": [],
         "ITEM_LIST": selectedItems
     }
 
     const isTableAvailable = await checkTableOrder(dispatch,{tableInfo});
-    console.log("isTableAvailable: ",isTableAvailable)
+   // console.log("isTableAvailable: ",isTableAvailable)
+    //console.log("submitData: ",submitData);
+
+
+    
     if(isTableAvailable.hasOrderList) {
         submitData["ORD_PAY_LIST"]=[];
         submitData["ORG_ORDERNO"] = isTableAvailable.orderNo;
@@ -67,7 +81,7 @@ export const sendServiceToPos = createAsyncThunk("callServer/sendToPos", async(d
         });
     }
     
-
+ 
 })
 
 

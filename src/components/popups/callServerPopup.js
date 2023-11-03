@@ -30,6 +30,7 @@ const CallServerPopup = () => {
     }
     const callServer = () =>{
         dispatch(sendServiceToPos(selectedService));
+        openFullSizePopup(dispatch, {innerView:"", isPopupVisible:false});
     } 
 
     return(
