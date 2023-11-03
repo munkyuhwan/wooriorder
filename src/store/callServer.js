@@ -64,7 +64,6 @@ export const sendServiceToPos = createAsyncThunk("callServer/sendToPos", async(d
     if(isTableAvailable.hasOrderList) {
         submitData["ORD_PAY_LIST"]=[];
         submitData["ORG_ORDERNO"] = isTableAvailable.orderNo;
-        console.log("submitData: ",submitData);
         return await addOrderToPos(dispatch, submitData)
         .catch(err=>{
             posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:"주문 오류",MSG2:"주문을 진행할 수 없습니다."});
@@ -74,7 +73,6 @@ export const sendServiceToPos = createAsyncThunk("callServer/sendToPos", async(d
         return await postOrderToPos(dispatch, submitData)
         .catch(err=>{
             posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:"주문 오류",MSG2:"주문을 진행할 수 없습니다."});
-            console.log("error: ",err)
             const lw = new LogWriter();
             const logPos = `\nPOST POS DATA ERROR==================================\ndata:${JSON.stringify(err)}\n`
             lw.writeLog(logPos);
