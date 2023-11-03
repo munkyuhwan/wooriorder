@@ -37,7 +37,7 @@ const OrderListPopup = () =>{
             setOrderTotalAmt(tmpPrice);
         }
     },[orderStatus])
-     
+
     return(
         <>
             <OrderListPopupWrapper>
@@ -58,7 +58,7 @@ const OrderListPopup = () =>{
                         </OrderListTableColumnNameWrapper>
                        {orderStatus[0]?.ITEM_LIST &&
                             <OrderListTableList
-                                data={orderStatus[0].ITEM_LIST}
+                                data={orderStatus[0].ITEM_LIST.filter(el=>!el.ITEM_ID.startsWith("9000"))}
                                 renderItem={(item)=>{return <OrderListItem order={item} />}}
                             />
                         }
