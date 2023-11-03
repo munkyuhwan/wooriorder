@@ -174,6 +174,23 @@ const ItemDetail = (props) => {
         }
         return selInfoLanguage;
     }
+    const ItemWonsanji = () => {
+        let selWonsanjiLanguage = "";
+        const selExtra = itemExtra.filter(el=>el.pos_code==menuDetail?.ITEM_ID);
+        if(language=="korean") {
+            selWonsanjiLanguage = selExtra[0]?.wonsanji;
+        }
+        else if(language=="japanese") {
+            selWonsanjiLanguage = selExtra[0]?.wonsanji_jp;
+        }
+        else if(language=="chinese") {
+            selWonsanjiLanguage = selExtra[0]?.wonsanji_cn;
+        }
+        else if(language=="english") {
+            selWonsanjiLanguage = selExtra[0]?.wonsanji_en;
+        }
+        return selWonsanjiLanguage;
+    }
 
     return(
         <>
@@ -205,7 +222,7 @@ const ItemDetail = (props) => {
                                                 <DetailItemInfoTitleEtc source={require("../../assets/icons/best.png")}/>
                                             }
                                         </DetailItemInfoTitleWrapper>
-                                        <DetailItemInfoSource>{itemExtra[0]?.wonsanji}</DetailItemInfoSource>
+                                        <DetailItemInfoSource>{ItemWonsanji()}</DetailItemInfoSource>
                                         <DetailPriceMoreWrapper>
                                             <DetailItemInfoPriceWrapper>
                                                 <DetailItemInfoPrice isBold={true} >{ menuDetail?.ITEM_AMT?numberWithCommas(menuDetail?.ITEM_AMT):""}</DetailItemInfoPrice><DetailItemInfoPrice isBold={false}> 원</DetailItemInfoPrice>
@@ -229,12 +246,6 @@ const ItemDetail = (props) => {
                                                     }else {
                                                         return(<></>);
                                                     }
-                                                    //return(<></>);
-                                                    /* 
-                                                    return(
-                                                        <OptItem key={"optItem_"+index} isSelected={additiveGroupList.indexOf(index)>=0} optionData={optData} menuData={menuDetail} onPress={()=>{ onOptionSelect(optData?.index); } } />    
-                                                    );
-                                                    */
                                                 })
                                             }
                                             {selectedOptions==null &&

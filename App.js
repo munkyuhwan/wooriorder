@@ -10,19 +10,15 @@ import { Provider } from 'react-redux'
 import Navigation from './src/navigation'
 import CodePush from "react-native-code-push";
 
-import {TranslatorProvider} from 'react-native-translator' // here
 
 StatusBar.setHidden(true);
 console.disableYellowBox = true;
 LogBox.ignoreAllLogs();
 const App =() =>{
     return (
-        <TranslatorProvider>
           <Provider store={store} >
               <Navigation />
           </Provider>
-        </TranslatorProvider>
-
       )
 }
 

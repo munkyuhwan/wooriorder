@@ -2,23 +2,21 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { OptItemDim, OptItemFastImage, OptItemImage, OptItemInfoChecked, OptItemInfoPrice, OptItemInfoTitle, OptItemInfoWrapper, OptItemWrapper } from '../../styles/main/detailStyle';
-import Translator, { useTranslator } from 'react-native-translator';
 
 
 const OptItem = (props)=>{
     const {language} = useSelector(state=>state.languages);
-    const {translate} = useTranslator();
 
     const optionData = props.optionData;
     const {menuDetailID, menuOptionGroupCode, menuOptionSelected} = useSelector((state)=>state.menuDetail);
     const [isSelected, setSelected] = useState(false);
     const [addtivePrice, setAdditivePrice] = useState();
-    const [groupName, setGroupName] = useState("");
 
 
     // 메뉴 옵션 추가 정보
     const {optionCategoryExtra} = useSelector(state=>state.menuExtra);
     const optionItemCategoryExtra = optionCategoryExtra.filter(el=>el.cate_code==optionData?.ADDITIVE_GROUP_CODE);
+    console.log("optionItemCategoryExtra: ",optionItemCategoryExtra)
     useEffect(()=>{
         // 옵션 선택한 메뉴 확인
         if(menuOptionSelected.length>0) {
@@ -34,13 +32,6 @@ const OptItem = (props)=>{
         }
 
     },[menuOptionGroupCode,menuOptionSelected])
-    const onTranslate = (word) => {
-        translate('ko', 'en', word)
-        .then(res=>{
-            console.log("Res: ",res);
-        })
-
-    };
 
     return(
         <>

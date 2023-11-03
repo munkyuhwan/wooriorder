@@ -86,6 +86,8 @@ export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, 
         dispatch(setOptionExtra(adminOption));
     }
 
+    // 4. 어드민 카테고리 받기
+
     EventRegister.emit("showSpinner",{isSpinnerShow:false, msg:""})
     return resultData;
 })

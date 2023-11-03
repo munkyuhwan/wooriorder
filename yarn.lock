@@ -6384,11 +6384,6 @@ react-native-swiper@^1.6.0:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-translator@^1.1.6:
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/react-native-translator/-/react-native-translator-1.1.6.tgz#183be7a12123a7e5f262802c337cc33f1710b791"
-  integrity sha512-g50MjwHjAwp1Pd2qkU3O4KmrzLv5nqlL4EpwYJUecTUE8/BrLP/+n0ktUZ0Zi6a/nwhO+xgMZ7R49XoQZz7yUg==
-
 react-native-version-check@^3.4.7:
   version "3.4.7"
   resolved "https://registry.npmjs.org/react-native-version-check/-/react-native-version-check-3.4.7.tgz"

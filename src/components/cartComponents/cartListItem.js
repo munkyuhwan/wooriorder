@@ -23,6 +23,25 @@ const CartListItem = (props) => {
     const additiveItemList = order.ADDITIVE_ITEM_LIST;
     // 이미지 찾기
     const itemExtra = menuExtra.filter(el=>el.pos_code == order.ITEM_ID);
+    const ItemTitle = () => {
+        let selTitleLanguage = "";
+        const selExtra = itemExtra.filter(el=>el.pos_code==order.ITEM_ID);
+        if(language=="korean") {
+            selTitleLanguage = order.ITEM_NAME;
+        }
+        else if(language=="japanese") {
+            selTitleLanguage = selExtra[0]?.gname_jp;
+        }
+        else if(language=="chinese") {
+            selTitleLanguage = selExtra[0]?.gname_cn;
+        }
+        else if(language=="english") {
+            selTitleLanguage = selExtra[0]?.gname_en;
+        }
+
+        return selTitleLanguage;
+    }
+
     const calculateAmt = (operand, amt) =>{
         // plus, minus, cancel
         dispatch(resetAmtOrderList({operand,amt,index}))
@@ -66,7 +85,7 @@ const CartListItem = (props) => {
                 </CartItemImageTogoWrapper>
                 
                 <CartItemTitlePriceWrapper>
-                    <CartItemTitle>{order?.ITEM_NAME}</CartItemTitle>
+                    <CartItemTitle>{ItemTitle()}</CartItemTitle>
                     <CartItemOpts>
                         {additiveItemList.length>0 &&
                             additiveItemList.map((el,index)=>{
