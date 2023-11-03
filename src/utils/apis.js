@@ -242,9 +242,15 @@ export const checkTableOrder = async(dispatch, data ) => {
                 // SMRO000068-접수 / SMRO000069-완료 경우 추가 주문
                 const orderStatus = orderList.filter(el=> (el.ORDER_STATUS ==  "SMRO000068"||el.ORDER_STATUS ==  "SMRO000069")  );
                 const isAdd = orderStatus?.length>0;
-
+ 
+                orderList.map((el)=>{
+                    console.log(el);
+                    console.log();
+                    console.log("===============================================================");
+                })
+                 
                 //if(orderList.length > 0 ) {
-                    resolve({hasOrderList:true, orderNo:orderList[0]?.ORDERNO, isAdd:isAdd })
+                    resolve({hasOrderList:true, orderNo:orderList[0]?.ORDERNO, mchatOrderNo:orderList[0]?.MCHT_ORDERNO, orgOrderNo:orderList[0]?.ORG_ORDERNO, isAdd:isAdd })
                 //}else {
                 //    resolve({hasOrderList:false, orderNo:orderList[0].ORDERNO, isAdd:isAdd })
                 //}

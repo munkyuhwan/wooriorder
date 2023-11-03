@@ -78,14 +78,14 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
         if(menuOptionSelected.length>0) additiveList=menuOptionSelected;
     }
     var selectedMenuDetail = Object.assign({},menuDetail[0],{"ADDITIVE_ITEM_LIST":additiveList});
-    
+
     var newOrderList = []; // 새 오더 정렬;
    // 중복메뉴
     let duplicatedItem = orderList.filter(el=> (
         el.ITEM_NAME == selectedMenuDetail.ITEM_NAME && 
         el.ITEM_ID==selectedMenuDetail.ITEM_ID && 
-        el.SALE_PRICE==selectedMenuDetail.SALE_PRICE &&
-        el.SALE_AMT==selectedMenuDetail.SALE_AMT &&
+        el.SALE_PRICE==selectedMenuDetail.ITEM_AMT &&
+        el.SALE_AMT==selectedMenuDetail.ITEM_AMT &&
         el.ITEM_MENO==selectedMenuDetail.ITEM_MENO &&
         el.ITEM_SET_GBN==selectedMenuDetail.ITEM_SET_GBN &&
         el.ITEM_USE_FLA==selectedMenuDetail.ITEM_USE_FLA &&
@@ -230,10 +230,11 @@ export const postToPos =  createAsyncThunk("order/postToPos", async(_,{dispatch,
 export const postAddToPos =  createAsyncThunk("order/postAddToPos", async(_,{dispatch, getState,extra}) =>{
     const {orderPayData} = getState().order;
     const {orderResult} = _;
-    let tmpData = orderPayData;
+    let tmpData = Object.assign({},orderPayData);
     // 추가 주문에 결제 정보 빼야함.
     tmpData["ORD_PAY_LIST"]=[];
-    tmpData = {...tmpData,...JSON.parse(orderResult)};
+    tmpData = {...tmpData,...(orderResult)};
+    //console.log("tmpData: ",tmpData);
     const lw = new LogWriter();
     const logPos = `\nPOST POS ADD DATA==================================\ndata:${JSON.stringify(tmpData)}\n`
     lw.writeLog(logPos);
@@ -242,7 +243,7 @@ export const postAddToPos =  createAsyncThunk("order/postAddToPos", async(_,{dis
     .catch(err=>{
         posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:"주문 오류",MSG2:"주문을 진행할 수 없습니다."});
         console.log("error: ",err)
-    }); 
+    });  
 
 })
 // 테이블 주문 히스토리
