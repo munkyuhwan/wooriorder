@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, TouchableWithoutFeedback } from 'react-native';
+import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'
 import { colorDarkGrey, colorGrey, colorRed, colorWhite } from '../../assets/colors/color';
 import { TransparentPopupBottomButtonIcon, TransparentPopupBottomButtonText, TransparentPopupBottomButtonWraper, TransparentPopupBottomInnerWrapper, TransparentPopupBottomWrapper, TransparentPopupTopWrapper, TransparentPopupWrapper, TransperentPopupMidWrapper, TransperentPopupTopSubTitle, TransperentPopupTopTitle } from '../../styles/common/popup';
@@ -15,6 +15,10 @@ const CallServerPopup = () => {
     const {callServerItems} = useSelector(state=>state.callServer);
     const {isFullPopupVisible, innerFullView} = useSelector(state=>state.popup);
     const [selectedService, setSelectedService] = useState();
+
+    // 세팅 터치
+    const [settingTouch, setSettingTouch] = useState(0);
+    const [isStartCounting, setIsStartCounting] = useState(true);
 
     useEffect(()=>{
         if(isFullPopupVisible==true && innerFullView=="CallServer") {
@@ -32,10 +36,48 @@ const CallServerPopup = () => {
         dispatch(sendServiceToPos(selectedService));
         openFullSizePopup(dispatch, {innerView:"", isPopupVisible:false});
     } 
+    let settingCount=null;
+    let countTime = 5;
+    const countDown = () =>{
+        if(isStartCounting) {
+            setIsStartCounting(false);
+            settingCount = setInterval(() => {
+                if(countTime>0) {
+                    countTime = countTime-1;
+                }else {
+                    countTime = 5
+                    clearInterval(settingCount);
+                    settingCount=null;
+                    setIsStartCounting(true);
+                }
+            }, 1000);
+        }
+    }
+    const onSettingPress = () => {
+        if(settingTouch<5) {
+            setSettingTouch(settingTouch+1);
+            if(countTime>0) {
+                if(settingTouch>=4) {
+                    clearInterval(settingCount);
+                    settingCount=null;
+                    setIsStartCounting(true);
+                    setSettingTouch(0);
+                    openFullSizePopup(dispatch,{innerFullView:"Setting", isFullPopupVisible:true});
+                }
+            }
+        }else {
+            setSettingTouch(0);
+        }
+    } 
 
     return(
         <TransparentPopupWrapper>
             <TransparentPopupTopWrapper>
+                <TouchableWithoutFeedback onPress={()=>{ countDown(); onSettingPress();} } style={{position:'absolute',  top:0,left:0, zIndex:999999999}}>
+                    <View style={{width:100, height:40, backgroundColor:'yellow'}} >
+                        <Text style={{color:'white'}} >ddd</Text>    
+                    </View>
+                </TouchableWithoutFeedback>
                 <TransperentPopupTopTitle>{LANGUAGE[language]?.serverPopup.callServer}</TransperentPopupTopTitle>
                 <TransperentPopupTopSubTitle>{LANGUAGE[language]?.serverPopup.text}</TransperentPopupTopSubTitle>
             </TransparentPopupTopWrapper>     
@@ -61,7 +103,7 @@ const CallServerPopup = () => {
                         </TransparentPopupBottomButtonWraper>
                     </TouchableWithoutFeedback>
                 </TransparentPopupBottomInnerWrapper>
-            </TransparentPopupBottomWrapper>    
+            </TransparentPopupBottomWrapper>   
         </TransparentPopupWrapper>
     )
 }
