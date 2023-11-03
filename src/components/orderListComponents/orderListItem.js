@@ -4,18 +4,36 @@ import { OrderListTableItemAmt, OrderListTableItemImage, OrderListTableItemImage
 
 const OrderListItem = (props) => {
     const item = props?.order.item;
+    const {language} = useSelector(state=>state.languages);
     const {menuExtra} = useSelector(state=>state.menuExtra);
   
     // 이미지 찾기
     const itemExtra = menuExtra.filter(el=>el.pos_code == item.ITEM_ID);
     const imgUrl = "https:"+itemExtra[0]?.gimg_chg;
+    const ItemTitle = () => {
+        let selTitleLanguage = "";
+        const selExtra = itemExtra.filter(el=>el.pos_code==item.ITEM_ID);
+        if(language=="korean") {
+            selTitleLanguage = item.ITEM_NAME;
+        }
+        else if(language=="japanese") {
+            selTitleLanguage = selExtra[0]?.gname_jp;
+        }
+        else if(language=="chinese") {
+            selTitleLanguage = selExtra[0]?.gname_cn;
+        }
+        else if(language=="english") {
+            selTitleLanguage = selExtra[0]?.gname_en;
+        }
 
+        return selTitleLanguage;
+    }
     return(
         <>
             <OrderListTableItemWrapper>
                 <OrderListTableItemImageNameWrapper flex={0.85}>
                     <OrderListTableItemImage source={{uri:imgUrl}} />
-                    <OrderListTableItemName>{item?.ITEM_NAME}</OrderListTableItemName>
+                    <OrderListTableItemName>{ItemTitle()}</OrderListTableItemName>
                 </OrderListTableItemImageNameWrapper>
                 <OrderListTableItemAmt flex={0.1}>{item?.ITEM_CNT}ea</OrderListTableItemAmt>
                 <OrderListTableItemOperander flex={0.01} >X</OrderListTableItemOperander>
