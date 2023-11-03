@@ -16,7 +16,25 @@ const OptItem = (props)=>{
     // 메뉴 옵션 추가 정보
     const {optionCategoryExtra} = useSelector(state=>state.menuExtra);
     const optionItemCategoryExtra = optionCategoryExtra.filter(el=>el.cate_code==optionData?.ADDITIVE_GROUP_CODE);
-    console.log("optionItemCategoryExtra: ",optionItemCategoryExtra)
+    
+    const ItemTitle = () =>{
+        let selTitleLanguage = "";
+        const selExtra = optionItemCategoryExtra.filter(el=>el.cate_code==optionData.ADDITIVE_GROUP_CODE);
+        if(language=="korean") {
+            selTitleLanguage = optionData?.ADDITIVE_GROUP_NAME;
+        }
+        else if(language=="japanese") {
+            selTitleLanguage = selExtra[0]?.cate_name_jp;
+        }
+        else if(language=="chinese") {
+            selTitleLanguage = selExtra[0]?.cate_name_cn;
+        }
+        else if(language=="english") {
+            selTitleLanguage = selExtra[0]?.cate_name_en;
+        }
+        return selTitleLanguage;
+    }
+ 
     useEffect(()=>{
         // 옵션 선택한 메뉴 확인
         if(menuOptionSelected.length>0) {
@@ -40,7 +58,7 @@ const OptItem = (props)=>{
                     <OptItemFastImage  source={{uri:`https:${optionItemCategoryExtra[0]?.gimg_chg}`}}/>
                     <OptItemDim isSelected={isSelected}/>
                     <OptItemInfoWrapper>
-                        <OptItemInfoTitle>{(optionData?.ADDITIVE_GROUP_NAME) }</OptItemInfoTitle>
+                        <OptItemInfoTitle>{ItemTitle() }</OptItemInfoTitle>
                         <OptItemInfoPrice>{addtivePrice?"+"+Number(addtivePrice).toLocaleString(undefined,{maximumFractionDigits:0}):""}</OptItemInfoPrice>
                         <OptItemInfoChecked isSelected={isSelected} source={require("../../assets/icons/check_red.png")}/>
                     </OptItemInfoWrapper>

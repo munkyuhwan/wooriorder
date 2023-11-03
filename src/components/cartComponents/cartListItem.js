@@ -16,7 +16,8 @@ const CartListItem = (props) => {
     const {language} = useSelector(state=>state.languages);
     const {menuExtra} = useSelector(state=>state.menuExtra);
     const {orderList} = useSelector(state=>state.order);
-
+    // 메뉴 옵션 추가 정보
+    const {optionExtra} = useSelector(state=>state.menuExtra);
    
     const index = props?.index;
     const order = props?.item;
@@ -42,6 +43,24 @@ const CartListItem = (props) => {
         return selTitleLanguage;
     }
 
+    const ItemOptionTitle = (additiveId,index) =>{
+        let selOptTitleLanguage = "";
+        const selExtra = optionExtra.filter(el=>el.pos_code==additiveId);
+        if(language=="korean") {
+            selOptTitleLanguage = additiveItemList[index]?.menuOptionSelected.ADDITIVE_NAME;
+        }
+        else if(language=="japanese") {
+            selOptTitleLanguage = selExtra[0]?.op_name_jp;
+        }
+        else if(language=="chinese") {
+            selOptTitleLanguage = selExtra[0]?.op_name_cn;
+        }
+        else if(language=="english") {
+            selOptTitleLanguage = selExtra[0]?.op_name_en;
+        }
+        return selOptTitleLanguage;
+    }
+
     const calculateAmt = (operand, amt) =>{
         // plus, minus, cancel
         dispatch(resetAmtOrderList({operand,amt,index}))
@@ -63,11 +82,8 @@ const CartListItem = (props) => {
             openPopup(dispatch,{innerView:"TogoPopup", isPopupVisible:true,param:{index:index}}); 
         }
  
-/* 
-        if(order?.ITEM_MEMO!="") {
-            
-        }else {
-        } */
+
+        
     }
 
     return(
@@ -89,7 +105,10 @@ const CartListItem = (props) => {
                     <CartItemOpts>
                         {additiveItemList.length>0 &&
                             additiveItemList.map((el,index)=>{
-                                return el.menuOptionSelected.ADDITIVE_NAME+`${index<(additiveItemList.length-1)?", ":""}`;
+                                return ItemOptionTitle(el.menuOptionSelected.ADDITIVE_ID,index)+`${index<(additiveItemList.length-1)?", ":""}`;
+
+                                //return el.menuOptionSelected.ADDITIVE_NAME+`${index<(additiveItemList.length-1)?", ":""}`;
+                            
                             })
                          }
                     </CartItemOpts>

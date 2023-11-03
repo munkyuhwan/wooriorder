@@ -10,6 +10,7 @@ import { Text, TouchableWithoutFeedback, View } from "react-native";
 import { openPopup } from "../../utils/common";
 
 const OptionSelectPopup = () =>{
+    const {language} = useSelector(state=>state.languages);
     const dispatch = useDispatch();
     const {menuOptionList, menuOptionGroupCode} = useSelector((state)=>state.menuDetail);
     const [optionData, setOptionData] = useState([])
@@ -18,6 +19,25 @@ const OptionSelectPopup = () =>{
 
     // 메뉴 옵션 선택 추가 정보
     const {optionExtra} = useSelector(state=>state.menuExtra);
+    
+    const ItemTitle = (additiveId,index) =>{
+        let selTitleLanguage = "";
+        const selExtra = optionExtra.filter(el=>el.pos_code==additiveId);
+        if(language=="korean") {
+            selTitleLanguage = menuOptionList[index]?.ADDITIVE_NAME;
+        }
+        else if(language=="japanese") {
+            selTitleLanguage = selExtra[0]?.op_name_jp;
+        }
+        else if(language=="chinese") {
+            selTitleLanguage = selExtra[0]?.op_name_cn;
+        }
+        else if(language=="english") {
+            selTitleLanguage = selExtra[0]?.op_name_en;
+        }
+        return selTitleLanguage;
+    }
+    
     //console.log("optionExtra: ",optionExtra);
     useEffect(()=>{
         let radioData = [];
@@ -31,13 +51,6 @@ const OptionSelectPopup = () =>{
     useEffect(()=>{
         if(selectedId) { 
             const selectedAddtive = menuOptionList.filter(el=>el.ADDITIVE_ID==selectedId);
-            /* {
-                "ADDITIVE_ID": "1001",
-                "ADDITIVE_NAME": "시원함",
-                "RULE_ID": "1000",
-                "ADDITIVE_PRICE": "500",
-                "ADDITIVE_CNT": "1"
-            } */
             const additiveData = {
                 "ADDITIVE_ID": selectedId,
                 "ADDITIVE_NAME": selectedAddtive[0].ADDITIVE_NAME,
@@ -61,7 +74,7 @@ const OptionSelectPopup = () =>{
                             <TouchableWithoutFeedback onPress={()=>{setSelectedId(el.id)}} >
                                 <View style={{padding:10}} >
                                         <FastImage style={{width:100, height:100, resizeMode:'contain',  }} source={{uri:`https:${optionRight[0]?.gimg_chg}`}} />
-                                        <Text style={{width:'100%', color:'black', fontWeight:'bold', fontSize:17, textAlign:'center'}}  >{menuOptionList[index]?.ADDITIVE_NAME}</Text>
+                                        <Text style={{width:'100%', color:'black', fontWeight:'bold', fontSize:17, textAlign:'center'}}  >{ItemTitle(menuOptionList[index]?.ADDITIVE_ID, index) /* menuOptionList[index]?.ADDITIVE_NAME */}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
 
