@@ -22,7 +22,6 @@ const MenuItem = ({item,index,setDetailShow}) => {
     //console.log(language,"itemExtra: ",itemExtra);
     const itemID = item.ITEM_ID;
     const imgUrl = "https:"+itemExtra[0]?.gimg_chg;
-    
     //const itemTitle=>{} item.ITEM_NAME;
     const itemTitle = () => {
         let selTitleLanguage = "";
