@@ -113,8 +113,10 @@ const CartView = () =>{
                 // 결제가 완료된 후
                 // 1. 주문번호가 저장된게 있으면 
                 if(isAdd) {
+                    console.log("추가 주문");
                     dispatch(postAddToPos({orderResult}));
                 }else {
+                    console.log("신규 주문");
                     const paymentResult = jsonResult
                     dispatch(postToPos({paymentResult}));
                 }
