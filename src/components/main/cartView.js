@@ -62,11 +62,13 @@ const CartView = () =>{
         // 이전에 주문한 주문 번호가 있는지 확인하기 위함
         let orderResult = await AsyncStorage.getItem("orderResult")
         // 테이블이 사용중인지 비교 하기
-        const isTableAvailable = await checkTableOrder(dispatch,{tableInfo});
-        const hasOrderList = isTableAvailable.hasOrderList;
-        const orderNo = isTableAvailable.orderNo;
+        const orderStatus = await checkTableOrder(dispatch,{tableInfo}).catch(err=>{return});
+        console.log("orderStatus: ",orderStatus);
+        const isAdd = orderStatus.isAdd;
+        const orderNo = orderStatus.orderNo;
         // 결제 진행을 하면 안되는 조건
         // 3. 포스에서 받아온 주문번호가 없으면 테이블 비워진거임. 앱에 저장된 주문번호 삭제
+        /* 
         if(orderNo == null) {
             await AsyncStorage.removeItem("orderResult");
             orderResult = await AsyncStorage.getItem("orderResult")
@@ -95,8 +97,11 @@ const CartView = () =>{
                 return
             }
         }
+        */
+
         
  
+        
         const paymentData = {"deal":"approval","total-amount":grandTotal};
         servicePayment(dispatch, paymentData)
         .then(async(result)=>{
@@ -107,11 +112,11 @@ const CartView = () =>{
             if(jsonResult['service-result'] == "0000") {
                 // 결제가 완료된 후
                 // 1. 주문번호가 저장된게 있으면 
-                if(!(orderResult)) {
+                if(isAdd) {
+                    dispatch(postAddToPos({orderResult}));
+                }else {
                     const paymentResult = jsonResult
                     dispatch(postToPos({paymentResult}));
-                }else {
-                    dispatch(postAddToPos({orderResult}));
                 }
                 
             }else {
@@ -132,7 +137,7 @@ const CartView = () =>{
         .catch((error)=>{
             console.log("error: ",error)
         }); 
-        
+          
     }
     useEffect(()=>{
         drawerController(isOn); 
