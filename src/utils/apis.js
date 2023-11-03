@@ -237,20 +237,12 @@ export const checkTableOrder = async(dispatch, data ) => {
                 const data = response.data;
                 const obj = data.OBJ;
                 const orderList = obj.ORDER_LIST;
-                //console.log("check data: ",data);
-                //console.log("check obj: ",obj);
-                console.log("============================================================================= ");
-                console.log("check orderList: ",orderList);
-                //console.log("check orderList ORD_PAY_LIST: ",orderList[0].ORD_PAY_LIST);
-                orderList.map((el)=>{
-                    console.log("ORDER_STATUS: ",el.ORDER_STATUS);
-                })
+                
                 // SMRO000068-접수 / SMRO000069-완료 / SMRO000070-취소 / SMRO000071-반품 / SMRO000088-결제완료
                 // SMRO000068-접수 / SMRO000069-완료 경우 추가 주문
                 const orderStatus = orderList.filter(el=> (el.ORDER_STATUS ==  "SMRO000068"||el.ORDER_STATUS ==  "SMRO000069")  );
-                console.log("orderStatus: ",orderStatus);
                 const isAdd = orderStatus?.length>0;
-                
+
                 //if(orderList.length > 0 ) {
                     resolve({hasOrderList:true, orderNo:orderList[0]?.ORDERNO, isAdd:isAdd })
                 //}else {
