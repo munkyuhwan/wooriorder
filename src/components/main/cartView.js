@@ -23,7 +23,6 @@ import { checkTableOrder, getOrderByTable } from '../../utils/apis';
 
 const CartView = () =>{
     const lw = new LogWriter();
-
     const {language} = useSelector(state=>state.languages);
 
     const dispatch = useDispatch();
@@ -63,7 +62,7 @@ const CartView = () =>{
         //let orderResult = await AsyncStorage.getItem("orderResult")
         // 테이블이 사용중인지 비교 하기
         const orderStatus = await checkTableOrder(dispatch,{tableInfo}).catch(err=>{return});
-        console.log("orderStatus: ",orderStatus);
+
         const isAdd = orderStatus.isAdd;
         const orderNo = orderStatus.orderNo;
         const mchatOrderNo = orderStatus.mchatOrderNo;
@@ -102,8 +101,7 @@ const CartView = () =>{
         }
         */
         //dispatch(postAddToPos({orderResult}));
-
-         
+        
         const paymentData = {"deal":"approval","total-amount":grandTotal};
         servicePayment(dispatch, paymentData)
         .then(async(result)=>{

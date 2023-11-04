@@ -38,7 +38,8 @@ export const deleteItem = createAsyncThunk("order/deleteItem", async(_,{dispatch
 export const resetAmtOrderList = createAsyncThunk("order/resetAmtOrderList", async(_,{dispatch, getState,extra}) =>{
     const {grandTotal, orderList} = getState().order;
     const {amt, index, operand} = _;
-    
+    const {tableInfo} = getState().tableInfo;
+
     let tmpOrderList = Object.assign([],orderList);
     const selectedMenu = tmpOrderList[index];
     let itemCnt = selectedMenu?.ITEM_CNT;
@@ -49,17 +50,57 @@ export const resetAmtOrderList = createAsyncThunk("order/resetAmtOrderList", asy
     }else {
         itemCnt = 0;
     }
+    
+    
     if(itemCnt<=0) {
         tmpOrderList.splice(index,1);
         if(tmpOrderList.length <= 0) {
             dispatch(setCartView(false));
         }
-        return {orderList:tmpOrderList}
+        const totalResult = grandTotalCalculate(tmpOrderList)
+        //console.log("tmpOrderList:",tmpOrderList);
+        var orderPayData = {
+            "STORE_ID": STORE_ID,
+            "SERVICE_ID": SERVICE_ID,
+            "MCHT_ORDERNO": "130",
+            "MEMB_TEL": "01012349876",
+            "ORDER_MEMO": "태스트 ",
+            "OEG_ORDER_PAY_AMT": `${totalResult.grandTotal}`,
+            "ORDER_PAY_AMT": `${totalResult.grandTotal}`,
+            "DISC_AMT": "0",
+            "PREPAY_FLAG": "N",
+            "OS_GBN": "AND",
+            "FLR_CODE": tableInfo.FLR_CODE,
+            "TBL_CODE": tableInfo.TBL_CODE,
+            "REPT_PRT_FLAG": "N",
+            "ORDER_PRT_FLAG": "N",
+            "ORD_PAY_LIST":[],
+            "ITEM_LIST":tmpOrderList,
+        } 
+        return {orderList:tmpOrderList,grandTotal:totalResult.grandTotal,totalItemCnt:totalResult.itemCnt, orderPayData:orderPayData };
+        //return {orderList:tmpOrderList}
     }
     tmpOrderList[index] = Object.assign({},selectedMenu,{ITEM_CNT:itemCnt});
-    
     const totalResult = grandTotalCalculate(tmpOrderList)
-    return {orderList:tmpOrderList,grandTotal:totalResult.grandTotal,totalItemCnt:totalResult.itemCnt };
+    var orderPayData = {
+        "STORE_ID": STORE_ID,
+        "SERVICE_ID": SERVICE_ID,
+        "MCHT_ORDERNO": "130",
+        "MEMB_TEL": "01012349876",
+        "ORDER_MEMO": "태스트 ",
+        "OEG_ORDER_PAY_AMT": `${totalResult.grandTotal}`,
+        "ORDER_PAY_AMT": `${totalResult.grandTotal}`,
+        "DISC_AMT": "0",
+        "PREPAY_FLAG": "N",
+        "OS_GBN": "AND",
+        "FLR_CODE": tableInfo.FLR_CODE,
+        "TBL_CODE": tableInfo.TBL_CODE,
+        "REPT_PRT_FLAG": "N",
+        "ORDER_PRT_FLAG": "N",
+        "ORD_PAY_LIST":[],
+        "ITEM_LIST":tmpOrderList,
+    } 
+    return {orderList:tmpOrderList,grandTotal:totalResult.grandTotal,totalItemCnt:totalResult.itemCnt, orderPayData:orderPayData };
 })
 
 export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,{dispatch, getState,extra}) =>{
@@ -336,6 +377,7 @@ export const orderSlice = createSlice({
                 state.orderList = action.payload.orderList;
                 state.grandTotal = action.payload.grandTotal;
                 state.totalItemCnt = action.payload.totalItemCnt;
+                state.orderPayData = action.payload.orderPayData;
             }
         })
          // 주문 삭제

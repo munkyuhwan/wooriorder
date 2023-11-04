@@ -46,7 +46,6 @@ export function numberWithCommas(x) {
 }
 
 export function grandTotalCalculate(data) {
-    //console.log("data: ",data);
     let amt = 0;
     let itemCnt = 0;
     if(data) {
