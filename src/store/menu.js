@@ -2,11 +2,11 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { useSelector } from 'react-redux';
 import { MENU_DATA } from '../resources/menuData';
 import axios from 'axios';
-import { adminMenuEdit, adminOptionEdit, posMenuEdit, posMenuState, posOrderNew } from '../utils/apis';
+import { adminMenuEdit, adminOptionEdit, getAdminCategories, posMenuEdit, posMenuState, posOrderNew } from '../utils/apis';
 import { setMainCategories } from './categories';
 import { EventRegister } from 'react-native-event-listeners';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setMenuExtra, setOptionExtra } from './menuExtra';
+import { setMenuCategories, setMenuExtra, setOptionExtra } from './menuExtra';
 import { CALL_SERVICE_GROUP_CODE } from '../resources/apiResources';
 import { setCallServerList } from './callServer';
 
@@ -87,6 +87,14 @@ export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, 
     }
 
     // 4. 어드민 카테고리 받기
+    const getAdminCategoriesData = await getAdminCategories(dispatch).catch(err=>console.log(err));
+    let adminCategories = [];
+    if(getAdminCategoriesData.result) {
+        adminCategories = getAdminCategoriesData;
+        dispatch(setMenuCategories(adminCategories));
+    }
+
+    
 
     EventRegister.emit("showSpinner",{isSpinnerShow:false, msg:""})
     return resultData;

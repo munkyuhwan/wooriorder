@@ -19,6 +19,7 @@ export const ADMIN_BASE_URL = "https://wooriorder.co.kr/smartro";
 
 export const ADMIN_GOODS = "/goods2.php";
 export const ADMIN_OPTION = "/option.php";
+export const ADMIN_CATEGORIES= "/category.php";
 
 
 //export const STORE_ID = "3100396007";
