@@ -8,7 +8,7 @@ import OptItem from './optItem';
 import CommonIndicator from '../common/waitIndicator';
 import WaitIndicator from '../common/waitIndicator';
 import RecommendItem from './recommendItem';
-import { setMenuDetail, getSingleMenu, setMenuOptionSelect, setMenuOptionGroupCode, initMenuDetail } from '../../store/menuDetail';
+import { setMenuDetail, getSingleMenu, setMenuOptionSelect, setMenuOptionGroupCode, initMenuDetail, getSingleMenuFromAllItems } from '../../store/menuDetail';
 import { numberWithCommas, openPopup } from '../../utils/common';
 import { MENU_DATA } from '../../resources/menuData';
 import { addToOrderList } from '../../store/order';
@@ -25,7 +25,6 @@ const ItemDetail = (props) => {
     const {menu} = useSelector((state)=>state.menu);
     const {menuDetailID, menuDetail} = useSelector((state)=>state.menuDetail);
     const [detailZIndex, setDetailZIndex] = useState(0);
-
     // 메뉴 추가정보 찾기
     const {menuExtra} = useSelector(state=>state.menuExtra);
     const itemExtra = menuExtra.filter(el=>el.pos_code == menuDetailID);
@@ -121,8 +120,9 @@ const ItemDetail = (props) => {
     }
 
     useEffect(()=>{
+        console.log("menuDEtailID:",menuDetailID)
         if(menuDetailID!= null) {
-            dispatch(getSingleMenu(menuDetailID))
+            dispatch(getSingleMenuFromAllItems(menuDetailID))
         }else {
             onSelectHandleAnimation(0);
         }
@@ -191,7 +191,6 @@ const ItemDetail = (props) => {
         }
         return selWonsanjiLanguage;
     }
-
     return(
         <>
             <Animated.View  style={[{...PopStyle.animatedPop, ...boxWidthStyle,...{zIndex:detailZIndex} } ]} >
@@ -267,12 +266,12 @@ const ItemDetail = (props) => {
                                             {itemExtra[0]?.related &&
                                                 itemExtra[0]?.related.length > 0 &&
                                                 itemExtra[0]?.related.map((el,index)=>{
-                                                    const recommendItem = menu[0].ITEM_LIST.filter(el=>el.ITEM_ID==Number(el))
-                                                    if(isEmpty(recommendItem)) {
+                                                    
+                                                    if(isEmpty(el)) {
                                                         return (<></>)
                                                     }else {
                                                         return(
-                                                            <RecommendItem key={"recoItem_"+index} isSelected={selectedRecommend.indexOf(recommendItem.ITEM_ID)>=0}  recommendData={el} menuData={menuDetail} onPress={()=>{onRecommendSelect(recommendItem.ITEM_ID)}}/>    
+                                                            <RecommendItem key={"recoItem_"+index}   recommendData={el} menuData={menuDetail}  />    
                                                         );
                                                     }
                                                 })

@@ -106,12 +106,12 @@ export const resetAmtOrderList = createAsyncThunk("order/resetAmtOrderList", asy
 export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,{dispatch, getState,extra}) =>{
 
     // 선택된 아이템 정보 받기
-    const {displayMenu} = getState().menu;
+    const {displayMenu, allItems} = getState().menu;
     const {orderList} = getState().order;
     const {menuOptionSelected} = getState().menuDetail;
     const {tableInfo} = getState().tableInfo;
 
-    const menuDetail = displayMenu.filter(el=>el.ITEM_ID == _.itemID);
+    const menuDetail = allItems.filter(el=>el.ITEM_ID == _.itemID);
     // 기존 주문에 같은 메뉴 있는지 확인
     // 옵션필드 추가
     let additiveList = [];

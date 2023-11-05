@@ -27,7 +27,7 @@ const LeftMenuList = (props) => {
     }
     const ItemTitle = (categoryID, index) => {
         let selTitleLanguage = "";
-        const selExtra = menuCategories?.goods_category.filter(el=>el.cate_code1==categoryID);
+        const selExtra = menuCategories?.goods_category?.filter(el=>el.cate_code1==categoryID);
         
         if(language=="korean") {
             selTitleLanguage = data[index]?.ITEM_GROUP_NAME;

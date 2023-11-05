@@ -50,6 +50,7 @@ export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, 
     const resultData = await posMenuEdit(dispatch);
     let categories = [];
     let callService = [];
+    let allItems = [];
     resultData.map((el)=>{
         if(el.ITEM_GROUP_USE_FLAG == "N") {
             const categoryData = {
@@ -60,6 +61,12 @@ export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, 
             };
             if(el.ITEM_GROUP_CODE != CALL_SERVICE_GROUP_CODE) {
                 categories.push(categoryData)
+                el.ITEM_LIST.map(itemList=>{
+                    if(itemList.ITEM_USE_FLAG=="N") {
+                        allItems.push(itemList);
+                    }
+                })
+                //allItems.push(el.ITEM_LIST);
             }else {
                 callService = el;
             }
@@ -94,10 +101,8 @@ export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, 
         dispatch(setMenuCategories(adminCategories));
     }
 
-    
-
     EventRegister.emit("showSpinner",{isSpinnerShow:false, msg:""})
-    return resultData;
+    return {menu:resultData,allItems:allItems};
 })
 
 // Slice
@@ -106,6 +111,7 @@ export const menuSlice = createSlice({
     initialState: {
         menu: [],
         displayMenu:[],
+        allItems:[],
     },
     extraReducers:(builder)=>{
         // 메인 카테고리 받기
@@ -133,7 +139,8 @@ export const menuSlice = createSlice({
 
         })
         builder.addCase(getMenuEdit.fulfilled,(state, action)=>{
-            state.menu = action.payload;
+            state.menu = action.payload.menu;
+            state.allItems = action.payload.allItems;
         })
 
     }

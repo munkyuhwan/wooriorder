@@ -13,6 +13,11 @@ export const getSingleMenu = createAsyncThunk("menuDetail/getSingleMenu", async(
     const selectedMenuDetail = displayMenu.filter(el=>el.ITEM_ID == itemID);
     return selectedMenuDetail[0];
 });
+export const getSingleMenuFromAllItems = createAsyncThunk("menuDetail/getSingleMenuFromAllItems", async(itemID,{getState}) =>{
+    const {allItems} = getState().menu;
+    const selectedMenuDetail = allItems.filter(el=>el.ITEM_ID == itemID);
+    return selectedMenuDetail[0];
+});
 export const setMenuOptionSelect = createAsyncThunk("menuDetail/setMenuOptionSelect", async(data) =>{
     return data;
 });
@@ -58,6 +63,11 @@ export const menuDetailSlice = createSlice({
         builder.addCase(getSingleMenu.fulfilled,(state, action)=>{
             state.menuDetail = action.payload;
         })
+        // 메뉴 상세 받기 전체 메 스테이트에서
+        builder.addCase(getSingleMenuFromAllItems.fulfilled,(state, action)=>{
+            state.menuDetail = action.payload;
+        })
+        getSingleMenuFromAllItems
         // 메뉴 옵션 셋
         builder.addCase(setMenuOptionSelect.fulfilled,(state, action)=>{
             state.menuOptionList = action.payload;
