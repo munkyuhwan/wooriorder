@@ -10,6 +10,7 @@ const OrderCompletePopup = () => {
 
     useState(()=>{
         const to = setInterval(() => {
+            clearInterval(to);
             openPopup(dispatch,{innerView:"", isPopupVisible:false});
         }, 3000);
     },[])
