@@ -68,6 +68,7 @@ const CartView = () =>{
         const mchatOrderNo = orderStatus.mchatOrderNo;
         const orgOrderNo = orderStatus.orgOrderNo
         const orderResult = {"ORG_ORDERNO":orgOrderNo,"MCHT_ORDERNO":mchatOrderNo,"ORDERNO":orderNo}
+        //console.log("orderResult: ",orderResult);
         // 결제 진행을 하면 안되는 조건
         // 3. 포스에서 받아온 주문번호가 없으면 테이블 비워진거임. 앱에 저장된 주문번호 삭제
         /* 
@@ -101,6 +102,9 @@ const CartView = () =>{
         }
         */
         //dispatch(postAddToPos({orderResult}));
+        //console.log(orderResult);
+        //dispatch(postAddToPos({orderResult}));
+        
         
         const paymentData = {"deal":"approval","total-amount":grandTotal};
         servicePayment(dispatch, paymentData)
@@ -139,6 +143,7 @@ const CartView = () =>{
         .catch((error)=>{
             console.log("error: ",error)
         }); 
+        
         
     }
     useEffect(()=>{
