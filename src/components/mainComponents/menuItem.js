@@ -18,27 +18,30 @@ const MenuItem = ({item,index,setDetailShow}) => {
     const {language} =  useSelector(state=>state.languages);
 
     // 이미지 찾기
-    const itemExtra = menuExtra.filter(el=>el.pos_code == item.ITEM_ID);
+    const itemExtra = menuExtra?.filter(el=>el.pos_code == item.ITEM_ID)|[];
     //console.log(language,"itemExtra: ",itemExtra);
     const itemID = item.ITEM_ID;
     const imgUrl = "https:"+itemExtra[0]?.gimg_chg;
     //const itemTitle=>{} item.ITEM_NAME;
     const itemTitle = () => {
         let selTitleLanguage = "";
-        const selExtra = itemExtra.filter(el=>el.pos_code==item.ITEM_ID);
-        if(language=="korean") {
+        if(itemExtra) {
+        const selExtra = itemExtra?.filter(el=>el.pos_code==item.ITEM_ID);
+            if(language=="korean") {
+                selTitleLanguage = item.ITEM_NAME;
+            }
+            else if(language=="japanese") {
+                selTitleLanguage = selExtra[0]?.gname_jp;
+            }
+            else if(language=="chinese") {
+                selTitleLanguage = selExtra[0]?.gname_cn;
+            }
+            else if(language=="english") {
+                selTitleLanguage = selExtra[0]?.gname_en;
+            }
+        }else {
             selTitleLanguage = item.ITEM_NAME;
         }
-        else if(language=="japanese") {
-            selTitleLanguage = selExtra[0]?.gname_jp;
-        }
-        else if(language=="chinese") {
-            selTitleLanguage = selExtra[0]?.gname_cn;
-        }
-        else if(language=="english") {
-            selTitleLanguage = selExtra[0]?.gname_en;
-        }
-
         return selTitleLanguage;
     }
     const itemPrice= item.ITEM_AMT;

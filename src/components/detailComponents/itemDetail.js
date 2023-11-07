@@ -27,7 +27,7 @@ const ItemDetail = (props) => {
     const [detailZIndex, setDetailZIndex] = useState(0);
     // 메뉴 추가정보 찾기
     const {menuExtra} = useSelector(state=>state.menuExtra);
-    const itemExtra = menuExtra.filter(el=>el.pos_code == menuDetailID);
+    const itemExtra = menuExtra?.filter(el=>el.pos_code == menuDetailID);
 
     // 옵션스테이트
     const [additiveGroupList, setAdditiveGroupList] = useState([]);
@@ -120,7 +120,6 @@ const ItemDetail = (props) => {
     }
 
     useEffect(()=>{
-        console.log("menuDEtailID:",menuDetailID)
         if(menuDetailID!= null) {
             dispatch(getSingleMenuFromAllItems(menuDetailID))
         }else {
@@ -142,52 +141,64 @@ const ItemDetail = (props) => {
 //console.log("menu: ",menu[0].ITEM_LIST);
     const ItemTitle = () =>{
         let selTitleLanguage = "";
-        const selExtra = itemExtra.filter(el=>el.pos_code==menuDetail?.ITEM_ID);
-        if(language=="korean") {
+        if(itemExtra) {
+            const selExtra = itemExtra?.filter(el=>el.pos_code==menuDetail?.ITEM_ID);
+            if(language=="korean") {
+                selTitleLanguage = menuDetail?.ITEM_NAME;
+            }
+            else if(language=="japanese") {
+                selTitleLanguage = selExtra[0]?.gname_jp;
+            }
+            else if(language=="chinese") {
+                selTitleLanguage = selExtra[0]?.gname_cn;
+            }
+            else if(language=="english") {
+                selTitleLanguage = selExtra[0]?.gname_en;
+            }
+        }else {
             selTitleLanguage = menuDetail?.ITEM_NAME;
-        }
-        else if(language=="japanese") {
-            selTitleLanguage = selExtra[0]?.gname_jp;
-        }
-        else if(language=="chinese") {
-            selTitleLanguage = selExtra[0]?.gname_cn;
-        }
-        else if(language=="english") {
-            selTitleLanguage = selExtra[0]?.gname_en;
         }
         return selTitleLanguage;
     }
     const ItemInfo = () =>{
         let selInfoLanguage = "";
-        const selExtra = itemExtra.filter(el=>el.pos_code==menuDetail?.ITEM_ID);
-        if(language=="korean") {
-            selInfoLanguage = selExtra[0]?.gmemo;
-        }
-        else if(language=="japanese") {
-            selInfoLanguage = selExtra[0]?.gmemo_jp;
-        }
-        else if(language=="chinese") {
-            selInfoLanguage = selExtra[0]?.gmemo_cn;
-        }
-        else if(language=="english") {
-            selInfoLanguage = selExtra[0]?.gmemo_en;
+        if(itemExtra) {
+            const selExtra = itemExtra.filter(el=>el.pos_code==menuDetail?.ITEM_ID);
+            if(language=="korean") {
+                selInfoLanguage = selExtra[0]?.gmemo;
+            }
+            else if(language=="japanese") {
+                selInfoLanguage = selExtra[0]?.gmemo_jp;
+            }
+            else if(language=="chinese") {
+                selInfoLanguage = selExtra[0]?.gmemo_cn;
+            }
+            else if(language=="english") {
+                selInfoLanguage = selExtra[0]?.gmemo_en;
+            }
+        }else {
+            selInfoLanguage = "";
         }
         return selInfoLanguage;
     }
     const ItemWonsanji = () => {
         let selWonsanjiLanguage = "";
-        const selExtra = itemExtra.filter(el=>el.pos_code==menuDetail?.ITEM_ID);
-        if(language=="korean") {
-            selWonsanjiLanguage = selExtra[0]?.wonsanji;
-        }
-        else if(language=="japanese") {
-            selWonsanjiLanguage = selExtra[0]?.wonsanji_jp;
-        }
-        else if(language=="chinese") {
-            selWonsanjiLanguage = selExtra[0]?.wonsanji_cn;
-        }
-        else if(language=="english") {
-            selWonsanjiLanguage = selExtra[0]?.wonsanji_en;
+        if(itemExtra){
+            const selExtra = itemExtra.filter(el=>el.pos_code==menuDetail?.ITEM_ID);
+            if(language=="korean") {
+                selWonsanjiLanguage = selExtra[0]?.wonsanji;
+            }
+            else if(language=="japanese") {
+                selWonsanjiLanguage = selExtra[0]?.wonsanji_jp;
+            }
+            else if(language=="chinese") {
+                selWonsanjiLanguage = selExtra[0]?.wonsanji_cn;
+            }
+            else if(language=="english") {
+                selWonsanjiLanguage = selExtra[0]?.wonsanji_en;
+            }
+        }else {
+            selWonsanjiLanguage = "";
         }
         return selWonsanjiLanguage;
     }
@@ -204,20 +215,25 @@ const ItemDetail = (props) => {
                             {menuDetailID!=null &&
                                 <DetailInfoWrapper>
                                     <DetailItemInfoImageWrapper>
-                                        {itemExtra[0]?.gimg_chg &&
+                                        
+                                        {itemExtra&& 
+                                        itemExtra[0]?.gimg_chg &&
                                             <DetailItemInfoFastImage source={{uri:"https:"+itemExtra[0]?.gimg_chg}} /> 
                                         }
-                                        {!itemExtra[0]?.gimg_chg &&
+                                        {itemExtra&&
+                                        !itemExtra[0]?.gimg_chg &&
                                             <MenuImageDefault source={require("../../assets/icons/logo.png")} />
                                         }   
                                     </DetailItemInfoImageWrapper>
                                     <DetailItemInfoWrapper>
                                         <DetailItemInfoTitleWrapper>
                                             <DetailItemInfoTitle>{ItemTitle()}</DetailItemInfoTitle>
-                                            {itemExtra[0]?.is_new=='Y'&&
+                                            {itemExtra&&
+                                        itemExtra[0]?.is_new=='Y'&&
                                                  <DetailItemInfoTitleEtc source={require("../../assets/icons/new.png")}/>
                                             }
-                                            {itemExtra[0]?.is_best=='Y'&&
+                                            {itemExtra&&
+                                        itemExtra[0]?.is_best=='Y'&&
                                                 <DetailItemInfoTitleEtc source={require("../../assets/icons/best.png")}/>
                                             }
                                         </DetailItemInfoTitleWrapper>
@@ -263,7 +279,8 @@ const ItemDetail = (props) => {
                                                     );
                                                 })
                                             */}
-                                            {itemExtra[0]?.related &&
+                                            {itemExtra&&
+                                            itemExtra[0]?.related &&
                                                 itemExtra[0]?.related.length > 0 &&
                                                 itemExtra[0]?.related.map((el,index)=>{
                                                     

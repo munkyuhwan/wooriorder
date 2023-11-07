@@ -61,6 +61,7 @@ export const  posMenuEdit = async(dispatch) =>{
             posOrderHeadr,
         ) 
         .then((response => {
+            console.log("response: ",response.data.OBJ[0].ITEM_GROUP_LIST);
             if(posErrorHandler(dispatch, response.data)){
                 const data = response.data.OBJ[0].ITEM_GROUP_LIST;
                 resolve(data); 
