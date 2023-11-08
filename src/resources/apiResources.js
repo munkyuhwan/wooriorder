@@ -31,7 +31,7 @@ export const ADMIN_CATEGORIES= "/category.php";
 //export const SERVICE_ID = "3010";
 
 // 우리포스 테스트용
-export const STORE_ID = "311381301"; 
+export const STORE_ID = "3113813001"; 
 export const SERVICE_ID = "3010";
 
 

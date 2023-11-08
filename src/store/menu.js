@@ -95,6 +95,7 @@ export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, 
 
     // 4. 어드민 카테고리 받기
     const getAdminCategoriesData = await getAdminCategories(dispatch).catch(err=>console.log(err));
+    console.log("getAdminCategoriesData: ",getAdminCategoriesData.goods_category[0]);
     let adminCategories = [];
     if(getAdminCategoriesData.result) {
         adminCategories = getAdminCategoriesData;

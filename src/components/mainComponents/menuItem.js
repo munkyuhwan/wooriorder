@@ -18,8 +18,7 @@ const MenuItem = ({item,index,setDetailShow}) => {
     const {language} =  useSelector(state=>state.languages);
 
     // 이미지 찾기
-    const itemExtra = menuExtra?.filter(el=>el.pos_code == item.ITEM_ID)|[];
-    //console.log(language,"itemExtra: ",itemExtra);
+    const itemExtra = menuExtra?.filter(el=>el.pos_code == item.ITEM_ID);
     const itemID = item.ITEM_ID;
     const imgUrl = "https:"+itemExtra[0]?.gimg_chg;
     //const itemTitle=>{} item.ITEM_NAME;
