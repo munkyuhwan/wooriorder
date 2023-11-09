@@ -33,7 +33,7 @@ const MenuListView = () => {
     const scrollStart = useSharedValue(0);
     const scrollEnd = useSharedValue(0);
     // 선택 카테고리
-    const {mainCategories, selectedMainCategory} = useSelector((state)=>state.categories);
+    const {mainCategories, selectedMainCategory, selectedSubCategory} = useSelector((state)=>state.categories);
 
     //console.log("menu:",menu[1].ITEM_LIST[0]);
     useEffect(()=>{
@@ -88,7 +88,7 @@ const MenuListView = () => {
     useEffect(()=>{
         if(isDetailShow)setDetailShow(false);
         dispatch(getDisplayMenu())
-    },[selectedMainCategory])
+    },[selectedMainCategory,selectedSubCategory])
 
     useEffect(()=>{
         if(mainCategories[0]) {

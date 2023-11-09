@@ -31,7 +31,7 @@ const TopMenu = () =>{
     const [currentVersion, setCurrentVersion ] = useState("version");
 
     useEffect(()=>{
-        const goodsCategories = menuCategories?.goods_category;
+        const goodsCategories = menuCategories;
         if(goodsCategories?.length > 0){
             const selectedCategoryItem = goodsCategories.filter(el=>el.cate_code1==selectedMainCategory);
             if(selectedCategoryItem.length > 0) {

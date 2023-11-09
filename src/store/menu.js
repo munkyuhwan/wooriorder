@@ -15,7 +15,7 @@ export const initMenu = createAsyncThunk("menu/initMenu", async(category) =>{
 })
 
 export const getDisplayMenu = createAsyncThunk("menu/getDisplayMenu", async(_, {getState}) =>{
-    const {selectedMainCategory} = getState().categories
+    const {selectedMainCategory,selectedSubCategory} = getState().categories
     const {menu} = getState().menu;
     const displayMenu = menu.filter(item => item.ITEM_GROUP_CODE == selectedMainCategory);
     const itemList = displayMenu[0].ITEM_LIST;
@@ -97,10 +97,13 @@ export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, 
     const getAdminCategoriesData = await getAdminCategories(dispatch).catch(err=>console.log(err));
     let adminCategories = [];
     if(getAdminCategoriesData.result) {
-        adminCategories = getAdminCategoriesData;
+        adminCategories = getAdminCategoriesData?.goods_category;
         dispatch(setMenuCategories(adminCategories));
     }
 
+    console.log("admin categories: ",adminCategories);
+    //console.log("admin menu: ",adminMenu); 
+    
     EventRegister.emit("showSpinner",{isSpinnerShow:false, msg:""})
     return {menu:resultData,allItems:allItems};
 })
