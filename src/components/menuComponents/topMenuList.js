@@ -12,43 +12,51 @@ const TopMenuList = (props) => {
     const dispatch = useDispatch();
     const data = props.data;
     const initSelect = props.initSelect;
-    //console.log("data: ",data)
-    const {selectedMainCategory, selectedSubCategory} = useSelector((state)=>state.categories);
-    const [selectedIndex, setSelectedIndex] = useState(999);
+    const {selectedMainCategory, selectedSubCategory, subCategories} = useSelector((state)=>state.categories);
+    const [selectedCode, setSelectedCode] = useState(999);
 
     useEffect(()=>{
-        if(selectedIndex!=null) {
-            props?.onSelectItem(selectedIndex);
+        if(selectedCode!=null) {
+            props?.onSelectItem(selectedCode);
         }
-    },[selectedIndex])
+    },[selectedCode])
 
     const onPressAction = (index) =>{
-        setSelectedIndex(index);
+        setSelectedCode(index);
     }
 
     return (
         <>
+        {selectedCode == 999 &&
             <TouchableWithoutFeedback key={"subcat_"} onPress={()=>{}}>
                 <CategorySelected>
                     <TopMenuText key={"subcatText_"} >전체</TopMenuText>
                 </CategorySelected>
             </TouchableWithoutFeedback>
+        }
+        {selectedCode != 999 &&
+            <TouchableWithoutFeedback key={"subcat_"} onPress={()=>{onPressAction(999);}}>
+                <CategoryDefault>
+                <TopMenuText key={"subcatText_"} >전체</TopMenuText>
+                </CategoryDefault>
+            </TouchableWithoutFeedback>
+        }
         {data.map((el, index)=>{
             return(
                 <>            
                         {
-                        (el?.index==selectedIndex) &&
-                            <TouchableWithoutFeedback key={"subcat_"+index} onPress={()=>{ onPressAction(el?.index); }}>
+                        (el?.cate_code2==selectedCode) &&
+                            <TouchableWithoutFeedback key={"subcat_"+el?.cate_code2} onPress={()=>{ onPressAction(el?.cate_code2); }}>
                                 <CategorySelected>
-                                    <TopMenuText key={"subcatText_"+index} >{el.title}</TopMenuText>
+                                    <TopMenuText key={"subcatText_"+el?.cate_code2} >{el.cate_name2}</TopMenuText>
                                 </CategorySelected>
                             </TouchableWithoutFeedback>
                         }
                         {
-                        (el?.index!=selectedIndex) &&
-                            <TouchableWithoutFeedback key={"subcat_"+index} onPress={()=>{ onPressAction(el?.index); }}>
+                        (el?.cate_code2!=selectedCode) &&
+                            <TouchableWithoutFeedback key={"subcat_"+el?.cate_code2} onPress={()=>{ onPressAction(el?.cate_code2); }}>
                                 <CategoryDefault>
-                                    <TopMenuText key={"subcatText_"+index} >{el.title}</TopMenuText>
+                                    <TopMenuText key={"subcatText_"+el?.cate_code2} >{el.cate_name2}</TopMenuText>
                                 </CategoryDefault>
                             </TouchableWithoutFeedback>
                         }

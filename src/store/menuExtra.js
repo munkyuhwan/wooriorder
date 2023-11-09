@@ -14,7 +14,7 @@ export const setMenuExtra = createAsyncThunk("menu/setMenuExtra", async(data) =>
     return data;
 })
 export const setMenuCategories = createAsyncThunk("menu/setMenuCategories", async(data) =>{
-    return data;
+    return data; 
 })
 export const setOptionExtra = createAsyncThunk("menu/setOptionExtra", async(data) =>{
     return data;

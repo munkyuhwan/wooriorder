@@ -12,7 +12,7 @@ import { CategoryScrollView, CategoryWrapper, IconWrapper, TableName, TableNameB
  import TopButton from '../menuComponents/topButton'
 import { useDispatch, useSelector } from 'react-redux'
 import ItemDetail from '../detailComponents/itemDetail'
-import { getSubCategories, setSelectedSubCategory } from '../../store/categories'
+import { getSubCategories, setCategories, setSelectedSubCategory } from '../../store/categories'
 import { openFullSizePopup, openPopup, openTransperentPopup } from '../../utils/common'
 import { colorWhite } from '../../assets/colors/color'
 import TopMenuList from '../menuComponents/topMenuList'
@@ -21,12 +21,26 @@ import { uploadFile } from '../../store/etcFunctions'
 
 const TopMenu = () =>{
     const dispatch = useDispatch();
-    const {subCategories} = useSelector((state)=>state.categories);
     const {tableInfo} = useSelector(state => state.tableInfo);
+    const {menuCategories} = useSelector(state=>state.menuExtra);
+    const {selectedMainCategory,subCategories} = useSelector(state => state.categories);
+
+    //console.log("selectedMainCategory: ",selectedMainCategory);
+    //console.log("menuCategories: ",menuCategories);
     
     const [currentVersion, setCurrentVersion ] = useState("version");
 
     useEffect(()=>{
+        const goodsCategories = menuCategories?.goods_category;
+        if(goodsCategories?.length > 0){
+            const selectedCategoryItem = goodsCategories.filter(el=>el.cate_code1==selectedMainCategory);
+            if(selectedCategoryItem.length > 0) {
+                dispatch(setCategories({subCategories:selectedCategoryItem[0]?.level2}));
+            }
+        }
+    },[selectedMainCategory])
+
+    useEffect(()=>{ 
         setCurrentVersion(VersionCheck.getCurrentVersion());
     },[])
 
@@ -47,7 +61,7 @@ const TopMenu = () =>{
                 <SafeAreaView>
                     <CategoryScrollView  horizontal showsHorizontalScrollIndicator={false} >
                         <CategoryWrapper>
-                            {//subCategories.length>0 &&
+                            {subCategories &&
                                 <TopMenuList
                                     data={subCategories}
                                     onSelectItem={(index)=>{ onPressItem(index); }}

@@ -27,12 +27,12 @@ export const ADMIN_CATEGORIES= "/category.php";
 //export const SERVICE_ID = "532461";
 
 // 내꺼 테스트용
-//export const STORE_ID = "3113810001"; 
-//export const SERVICE_ID = "3010";
+export const STORE_ID = "3113810001"; 
+export const SERVICE_ID = "3010";
 
 // 우리포스 테스트용
-export const STORE_ID = "3113813001"; 
-export const SERVICE_ID = "3010";
+//export const STORE_ID = "3113813001"; 
+//export const SERVICE_ID = "3010";
 
 
 export const CALL_SERVICE_GROUP_CODE = "99999";
