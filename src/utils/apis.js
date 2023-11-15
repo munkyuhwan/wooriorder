@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ADMIN_BASE_URL, ADMIN_CALL_SERVICE, ADMIN_CATEGORIES, ADMIN_GOODS, ADMIN_OPTION, ADMIN_TABLE_STATUS, POS_BASE_URL_REAL, POS_BASE_URL_TEST, POS_ORDER_ADD, POS_ORDER_NEW, POS_POST_MENU_EDIT, POS_POST_MENU_STATE, POS_POST_ORDER, POS_POST_ORDER_CANCEL, POS_POST_TABLE_LIST, SERVICE_ID, STORE_ID } from "../resources/apiResources";
+import { ADMIN_BASE_URL, ADMIN_CALL_SERVICE, ADMIN_CATEGORIES, ADMIN_GOODS, ADMIN_OPTION, ADMIN_POST_CALL_SERVICE, ADMIN_TABLE_STATUS, POS_BASE_URL_REAL, POS_BASE_URL_TEST, POS_ORDER_ADD, POS_ORDER_NEW, POS_POST_MENU_EDIT, POS_POST_MENU_STATE, POS_POST_ORDER, POS_POST_ORDER_CANCEL, POS_POST_TABLE_LIST, SERVICE_ID, STORE_ID } from "../resources/apiResources";
 import { errorHandler, posErrorHandler } from "./errorHandler/ErrorHandler";
 import {isEmpty} from "lodash";
 import { numberPad, openPopup } from "./common";
@@ -379,7 +379,28 @@ export const getAdminServices = async(dispatch) => {
     return await new Promise(function(resolve, reject){
         axios.post(
             `${ADMIN_BASE_URL}${ADMIN_CALL_SERVICE}`,
-            {"STORE_ID":STORE_ID},
+            {"STORE_ID":SERVICE_ID},
+            adminOrderHeader,
+        ) 
+        .then((response => {
+            if(posErrorHandler(dispatch, response.data)){
+                const data = response.data;
+                resolve(data); 
+            }else {
+                reject();
+            } 
+        })) 
+        .catch(error=>reject(error.response.data));
+    })
+}
+
+// 관리자 직원호출 하기
+export const postAdminServices = async(dispatch,data) => {
+    //let data = '{"STORE_ID":12312001}'    
+    return await new Promise(function(resolve, reject){
+        axios.post(
+            `${ADMIN_BASE_URL}${ADMIN_POST_CALL_SERVICE}`,
+            {"STORE_ID":STORE_ID, "t_id":data?.t_id, "midx":data?.midx,"subject":data?.subject },
             adminOrderHeader,
         ) 
         .then((response => {

@@ -5,9 +5,10 @@ import { colorDarkGrey, colorGrey, colorRed, colorWhite } from '../../assets/col
 import { TransparentPopupBottomButtonIcon, TransparentPopupBottomButtonText, TransparentPopupBottomButtonWraper, TransparentPopupBottomInnerWrapper, TransparentPopupBottomWrapper, TransparentPopupTopWrapper, TransparentPopupWrapper, TransperentPopupMidWrapper, TransperentPopupTopSubTitle, TransperentPopupTopTitle } from '../../styles/common/popup';
 import { LANGUAGE } from '../../resources/strings';
 import SelectItemComponent from '../common/selectItemComponent';
-import { getCallServerItems, getServiceList, sendToPos } from '../../store/callServer';
+import { getCallServerItems, getServiceList, postAdminSerivceList, sendToPos } from '../../store/callServer';
 import { openFullSizePopup, openTransperentPopup } from '../../utils/common';
 import { getAdminServices } from '../../utils/apis';
+import { STORE_ID } from '../../resources/apiResources';
 
 const CallServerPopup = () => {
     const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const CallServerPopup = () => {
 
     const {callServerItems} = useSelector(state=>state.callServer);
     const {isFullPopupVisible, innerFullView} = useSelector(state=>state.popup);
+    const {tableInfo} = useSelector(state=>state.tableInfo);
     const [selectedService, setSelectedService] = useState();
 
     // 세팅 터치
@@ -23,13 +25,14 @@ const CallServerPopup = () => {
 
     useEffect(()=>{
         if(isFullPopupVisible==true && innerFullView=="CallServer") {
+            console.log("popup up open");
             //dispatch(getCallServerItems());
             dispatch(getServiceList());
         }
     },[isFullPopupVisible, innerFullView])
 
     useEffect(()=>{
-        console.log("callServerItems : ",callServerItems)
+        //console.log("callServerItems : ",callServerItems)
     },[callServerItems])
 
     const onServiceSelected = (indexArray) =>{
@@ -38,8 +41,23 @@ const CallServerPopup = () => {
     const callServer = () =>{
         // dispatch(sendServiceToPos(selectedService));
         // 직원 호출하기
-        dispatch(postAdminSerivceList(selectedService));
-        openFullSizePopup(dispatch, {innerView:"", isPopupVisible:false});
+        let subjectData = [];
+        if(selectedService) {
+            if(selectedService?.length > 0) {
+                selectedService.map(el=>{
+                    const tmpData = callServerItems.filter(item=>item.idx == el);
+                    if(tmpData.length > 0){
+                        subjectData.push(tmpData[0].subject);
+                    }
+                })
+                const postCallData = {"STORE_ID":STORE_ID, "t_id":tableInfo.TBL_CODE, midx:selectedService, subject:subjectData};
+                dispatch(postAdminSerivceList(postCallData));
+                openFullSizePopup(dispatch, {innerView:"", isPopupVisible:false});
+            }else {
+                
+            }
+        }
+       
     } 
     let settingCount=null;
     let countTime = 5;

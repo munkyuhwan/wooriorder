@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { SERVICE_ID, STORE_ID } from '../resources/apiResources';
-import { addOrderToPos, checkTableOrder, getAdminServices, postOrderToPos } from '../utils/apis';
+import { addOrderToPos, checkTableOrder, getAdminServices, postAdminServices, postOrderToPos } from '../utils/apis';
 import LogWriter from '../utils/logWriter';
 
 export const getCallServerItems = createAsyncThunk("callServer/getCallServerItems", async() =>{
@@ -14,11 +14,12 @@ export const setCallServerItem = createAsyncThunk("callServer/setCallServerItem"
     return index;
 })
 
-export const getServiceList = createAsyncThunk("callServer/getServiceList", async() =>{
-    const serviceList = await getAdminServices();
+export const getServiceList = createAsyncThunk("callServer/getServiceList", async(_,{dispatch}) =>{
+    const serviceList = await getAdminServices(dispatch);
     return serviceList?.data;
 })
-export const postAdminSerivceList = createAsyncThunk("callServer/getServiceList", async(data) =>{
+export const postAdminSerivceList = createAsyncThunk("callServer/postAdminSerivceList", async(data,{dispatch}) =>{
+    const postService = await postAdminServices(dispatch,data);
     return [];
 })
 /* 

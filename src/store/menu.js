@@ -49,7 +49,7 @@ export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, 
     // 1. 포스 메뉴 받기
     const resultData = await posMenuEdit(dispatch);
     let categories = [];
-    let callService = [];
+    //let callService = [];
     let allItems = [];
     resultData.map((el)=>{
         if(el.ITEM_GROUP_USE_FLAG == "N") {
@@ -68,12 +68,12 @@ export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, 
                 })
                 //allItems.push(el.ITEM_LIST);
             }else {
-                callService = el;
+                //callService = el;
             }
         }
     });
     // 직원호출 스테이트 없데이트
-    dispatch(setCallServerList(callService));
+    //dispatch(setCallServerList(callService));
     // 카테고리 스테이트 업데이트
     dispatch(setMainCategories(categories));
 
