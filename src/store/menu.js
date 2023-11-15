@@ -101,7 +101,7 @@ export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, 
         dispatch(setMenuCategories(adminCategories));
     }
 
-    console.log("admin categories: ",adminCategories);
+    //console.log("admin categories: ",adminCategories);
     //console.log("admin menu: ",adminMenu); 
     
     EventRegister.emit("showSpinner",{isSpinnerShow:false, msg:""})
