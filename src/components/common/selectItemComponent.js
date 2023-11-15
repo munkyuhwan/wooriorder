@@ -108,7 +108,6 @@ const SelectItem = (props) => {
         }) 
     }
     const {language} = useSelector(state=>state.languages);
-    console.log("language: ",language);
 
     const languageSelect = () => {
         switch(language){
