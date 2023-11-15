@@ -7,8 +7,7 @@ import { RADIUS_SMALL, RADIUS_SMALL_DOUBLE } from '../../styles/values';
 
 const SelectItemComponent = (props) =>{
 
-    const data = props?.data?.ITEM_LIST;
-    
+    const data = props?.data;
     const [selectedItems, setSelectedItems] = useState([]);
 
     const onItemPressed = (index) => {
@@ -43,8 +42,8 @@ const SelectItemComponent = (props) =>{
 const SelectItem = (props) => {
 
     const data = props?.item;
-    const selectedItems = props?.selectedItems;
 
+    const selectedItems = props?.selectedItems;
     const [itemTextColor, setItemTextColor] = useState(colorBlack);
     const [isItemChecked, setIsItemChecked] = useState(false);
     const [popupZIndex, setPopupZIndex] = useState(0);
@@ -92,7 +91,7 @@ const SelectItem = (props) => {
         borderRadius:RADIUS_SMALL_DOUBLE,
     };
     const onSelectHandleAnimation = async (toValue) => {
-        if(selectedItems.includes(data.ITEM_ID)){
+        if(selectedItems.includes(data.idx)){
             setItemTextColor(colorBlack);
             setIsItemChecked(false);
             toValue=0;
@@ -108,13 +107,33 @@ const SelectItem = (props) => {
             
         }) 
     }
-   
+    const {language} = useSelector(state=>state.languages);
+    console.log("language: ",language);
+
+    const languageSelect = () => {
+        switch(language){
+            case "japanese":
+                return data?.subject_jp;
+                break;
+            case "chinese":
+                return data?.subject_cn;
+                break;
+            case "english":
+                return data?.subject_en;
+                break;
+            default:
+                return data?.subject
+                break;
+
+        }
+    }
+
     return(
         <>
             <Animated.View  style={[{...popStyle, ...PopStyle.animatedPop,...{zIndex:popupZIndex, width:size, height:size}} ]} >   
-                <TouchableWithoutFeedback onPress={()=>{onSelectHandleAnimation(2); props?.onPress(data.ITEM_ID);  } }>
+                <TouchableWithoutFeedback onPress={()=>{onSelectHandleAnimation(2); props?.onPress(data?.idx);  } }>
                     <SelectItemContentWrapper>
-                        <SelectItemText textColor={itemTextColor} >{data?.ITEM_NAME}</SelectItemText>
+                        <SelectItemText textColor={itemTextColor} >{languageSelect()}</SelectItemText>
                         {isItemChecked &&
                             <SelectItemChecked source={require("assets/icons/check_black.png")}/>
                         }

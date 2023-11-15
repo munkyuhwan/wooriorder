@@ -5,8 +5,9 @@ import { colorDarkGrey, colorGrey, colorRed, colorWhite } from '../../assets/col
 import { TransparentPopupBottomButtonIcon, TransparentPopupBottomButtonText, TransparentPopupBottomButtonWraper, TransparentPopupBottomInnerWrapper, TransparentPopupBottomWrapper, TransparentPopupTopWrapper, TransparentPopupWrapper, TransperentPopupMidWrapper, TransperentPopupTopSubTitle, TransperentPopupTopTitle } from '../../styles/common/popup';
 import { LANGUAGE } from '../../resources/strings';
 import SelectItemComponent from '../common/selectItemComponent';
-import { getCallServerItems, sendServiceToPos, sendToPos } from '../../store/callServer';
+import { getCallServerItems, getServiceList, sendToPos } from '../../store/callServer';
 import { openFullSizePopup, openTransperentPopup } from '../../utils/common';
+import { getAdminServices } from '../../utils/apis';
 
 const CallServerPopup = () => {
     const dispatch = useDispatch();
@@ -23,17 +24,21 @@ const CallServerPopup = () => {
     useEffect(()=>{
         if(isFullPopupVisible==true && innerFullView=="CallServer") {
             //dispatch(getCallServerItems());
+            dispatch(getServiceList());
         }
     },[isFullPopupVisible, innerFullView])
 
     useEffect(()=>{
+        console.log("callServerItems : ",callServerItems)
     },[callServerItems])
 
     const onServiceSelected = (indexArray) =>{
         setSelectedService(indexArray);
     }
     const callServer = () =>{
-        dispatch(sendServiceToPos(selectedService));
+        // dispatch(sendServiceToPos(selectedService));
+        // 직원 호출하기
+        dispatch(postAdminSerivceList(selectedService));
         openFullSizePopup(dispatch, {innerView:"", isPopupVisible:false});
     } 
     let settingCount=null;
@@ -82,11 +87,13 @@ const CallServerPopup = () => {
                 <TransperentPopupTopSubTitle>{LANGUAGE[language]?.serverPopup.text}</TransperentPopupTopSubTitle>
             </TransparentPopupTopWrapper>     
             <TransperentPopupMidWrapper>
+                
                 <SelectItemComponent 
                     data={callServerItems}
                     numColumns={4}
                     onServiceSelected={onServiceSelected}
                 />
+                
             </TransperentPopupMidWrapper>   
             <TransparentPopupBottomWrapper>
                 <TransparentPopupBottomInnerWrapper>

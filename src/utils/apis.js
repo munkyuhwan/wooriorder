@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ADMIN_BASE_URL, ADMIN_CATEGORIES, ADMIN_GOODS, ADMIN_OPTION, POS_BASE_URL_REAL, POS_BASE_URL_TEST, POS_ORDER_ADD, POS_ORDER_NEW, POS_POST_MENU_EDIT, POS_POST_MENU_STATE, POS_POST_ORDER, POS_POST_ORDER_CANCEL, POS_POST_TABLE_LIST, SERVICE_ID, STORE_ID } from "../resources/apiResources";
+import { ADMIN_BASE_URL, ADMIN_CALL_SERVICE, ADMIN_CATEGORIES, ADMIN_GOODS, ADMIN_OPTION, POS_BASE_URL_REAL, POS_BASE_URL_TEST, POS_ORDER_ADD, POS_ORDER_NEW, POS_POST_MENU_EDIT, POS_POST_MENU_STATE, POS_POST_ORDER, POS_POST_ORDER_CANCEL, POS_POST_TABLE_LIST, SERVICE_ID, STORE_ID } from "../resources/apiResources";
 import { errorHandler, posErrorHandler } from "./errorHandler/ErrorHandler";
 import {isEmpty} from "lodash";
 import { numberPad, openPopup } from "./common";
@@ -70,66 +70,6 @@ export const  posMenuEdit = async(dispatch) =>{
         })) 
         .catch(error=>reject(error.response.data));
     }) 
-}
-// 관리자 메뉴 받기
-export const adminMenuEdit = async(dispatch) => {
-    //let data = '{"STORE_ID":12312001}'
-    return await new Promise(function(resolve, reject){
-        axios.post(
-            `${ADMIN_BASE_URL}${ADMIN_GOODS}`,
-            {"STORE_ID":STORE_ID},
-            adminOrderHeader,
-        ) 
-        .then((response => {
-            if(posErrorHandler(dispatch, response.data)){
-                const data = response.data;
-                resolve(data); 
-            }else {
-                reject();
-            } 
-        })) 
-        .catch(error=>reject(error.response.data));
-    })
-}
-// 관리자 옵션 받기
-export const adminOptionEdit = async(dispatch) => {
-    //let data = '{"STORE_ID":12312001}'
-    return await new Promise(function(resolve, reject){
-        axios.post(
-            `${ADMIN_BASE_URL}${ADMIN_OPTION}`,
-            {"STORE_ID":STORE_ID},
-            adminOrderHeader,
-        ) 
-        .then((response => {
-            if(posErrorHandler(dispatch, response.data)){
-                const data = response.data;
-                resolve(data); 
-            }else {
-                reject();
-            } 
-        })) 
-        .catch(error=>reject(error.response.data));
-    })
-}
-// 관리자 카테고리 받기
-export const getAdminCategories = async(dispatch) => {
-    //let data = '{"STORE_ID":12312001}'
-    return await new Promise(function(resolve, reject){
-        axios.post(
-            `${ADMIN_BASE_URL}${ADMIN_CATEGORIES}`,
-            {"STORE_ID":STORE_ID},
-            adminOrderHeader,
-        ) 
-        .then((response => {
-            if(posErrorHandler(dispatch, response.data)){
-                const data = response.data;
-                resolve(data); 
-            }else {
-                reject();
-            } 
-        })) 
-        .catch(error=>reject(error.response.data));
-    })
 }
 
 
@@ -369,28 +309,87 @@ export const getOrderByTable = async(dispatch, data) => {
     })
 }
 
+///// 관리자 apis
 
-[
-    {"DISC_AMT": "0", 
-    "FLR_CODE": "0001",
-     "ITEM_LIST": [[Object], [Object], [Object]], 
-     "MCHT_ORDERNO": "130", 
-     "MEMB_TEL": "01012349876", 
-     "ORDERNO": "TO202310180006066",
-    "ORDER_DATE": "20231018",
-    "ORDER_MEMO": "태스트 ",
-    "ORDER_PAY_AMT": "35000", 
-    "ORDER_PRT_FLAG": "N", 
-    "ORDER_STATUS": "SMRO000069", 
-    "ORDER_STATUS_NAME": "완료", 
-    "ORDER_TIME": "012702", 
-    "ORD_PAY_LIST": [[Object], [Object]], 
-    "ORG_ORDERNO": "TO202310180006066", 
-    "ORG_ORDER_PAY_AMT": "35000", 
-    "OS_GBN": "", "POS_ORDERNO": "", 
-    "PREPAY_FLAG": "N", 
-    "REPT_PRT_FLAG": "N", 
-    "SERVICE_ID": "3010", 
-    "STORE_ID": "3113810001", 
-    "SUCCESS_FLAG": "", 
-    "TBL_CODE": "0002"}]
+
+// 관리자 메뉴 받기
+export const adminMenuEdit = async(dispatch) => {
+    //let data = '{"STORE_ID":12312001}'
+    return await new Promise(function(resolve, reject){
+        axios.post(
+            `${ADMIN_BASE_URL}${ADMIN_GOODS}`,
+            {"STORE_ID":STORE_ID},
+            adminOrderHeader,
+        ) 
+        .then((response => {
+            if(posErrorHandler(dispatch, response.data)){
+                const data = response.data;
+                resolve(data); 
+            }else {
+                reject();
+            } 
+        })) 
+        .catch(error=>reject(error.response.data));
+    })
+}
+// 관리자 옵션 받기
+export const adminOptionEdit = async(dispatch) => {
+    //let data = '{"STORE_ID":12312001}'
+    return await new Promise(function(resolve, reject){
+        axios.post(
+            `${ADMIN_BASE_URL}${ADMIN_OPTION}`,
+            {"STORE_ID":STORE_ID},
+            adminOrderHeader,
+        ) 
+        .then((response => {
+            if(posErrorHandler(dispatch, response.data)){
+                const data = response.data;
+                resolve(data); 
+            }else {
+                reject();
+            } 
+        })) 
+        .catch(error=>reject(error.response.data));
+    })
+}
+// 관리자 카테고리 받기
+export const getAdminCategories = async(dispatch) => {
+    //let data = '{"STORE_ID":12312001}'
+    return await new Promise(function(resolve, reject){
+        axios.post(
+            `${ADMIN_BASE_URL}${ADMIN_CATEGORIES}`,
+            {"STORE_ID":STORE_ID},
+            adminOrderHeader,
+        ) 
+        .then((response => {
+            if(posErrorHandler(dispatch, response.data)){
+                const data = response.data;
+                resolve(data); 
+            }else {
+                reject();
+            } 
+        })) 
+        .catch(error=>reject(error.response.data));
+    })
+}
+
+// 관리자 직원호출 목록 받기
+export const getAdminServices = async(dispatch) => {
+    //let data = '{"STORE_ID":12312001}'
+    return await new Promise(function(resolve, reject){
+        axios.post(
+            `${ADMIN_BASE_URL}${ADMIN_CALL_SERVICE}`,
+            {"STORE_ID":STORE_ID},
+            adminOrderHeader,
+        ) 
+        .then((response => {
+            if(posErrorHandler(dispatch, response.data)){
+                const data = response.data;
+                resolve(data); 
+            }else {
+                reject();
+            } 
+        })) 
+        .catch(error=>reject(error.response.data));
+    })
+}

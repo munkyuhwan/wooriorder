@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { SERVICE_ID, STORE_ID } from '../resources/apiResources';
-import { addOrderToPos, checkTableOrder, postOrderToPos } from '../utils/apis';
+import { addOrderToPos, checkTableOrder, getAdminServices, postOrderToPos } from '../utils/apis';
 import LogWriter from '../utils/logWriter';
 
 export const getCallServerItems = createAsyncThunk("callServer/getCallServerItems", async() =>{
@@ -13,6 +13,15 @@ export const setCallServerList = createAsyncThunk("callServer/setCallServerList"
 export const setCallServerItem = createAsyncThunk("callServer/setCallServerItem", async(index) =>{
     return index;
 })
+
+export const getServiceList = createAsyncThunk("callServer/getServiceList", async() =>{
+    const serviceList = await getAdminServices();
+    return serviceList?.data;
+})
+export const postAdminSerivceList = createAsyncThunk("callServer/getServiceList", async(data) =>{
+    return [];
+})
+/* 
 export const sendServiceToPos = createAsyncThunk("callServer/sendToPos", async(data,{dispatch, getState}) =>{
     const { callServerItems } = getState().callServer;
     const {tableInfo} = getState().tableInfo;
@@ -81,7 +90,7 @@ export const sendServiceToPos = createAsyncThunk("callServer/sendToPos", async(d
     
  
 })
-
+ */
 
 // Slice
 export const callServerSlice = createSlice({
@@ -101,6 +110,10 @@ export const callServerSlice = createSlice({
         })
         // 직원호출 셋
         builder.addCase(setCallServerList.fulfilled,(state, action)=>{
+            state.callServerItems = action.payload;
+        })
+        // 관리자 직원호출 하기
+        builder.addCase(getServiceList.fulfilled,(state, action)=>{
             state.callServerItems = action.payload;
         })
         
