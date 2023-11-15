@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { posTableList } from '../utils/apis';
+import { getAdminTableStatus, posTableList } from '../utils/apis';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DeviceInfo, { getUniqueId, getManufacturer, getAndroidId } from 'react-native-device-info';
 
@@ -23,6 +23,19 @@ export const setTableInfo = createAsyncThunk("tableInfo/setTableInfo", async(dat
 export const getTableList = createAsyncThunk("tableInfo/getTableList", async(data,{dispatch}) =>{
     return await posTableList(dispatch)
 })
+// 관리자 테이블 상테 받아오기
+export const getTableStatus = createAsyncThunk("tableInfo/getTableStatus", async(data,{dispatch, getState}) =>{
+    const {tableInfo} = getState().tableInfo;
+    const t_id = tableInfo?.TBL_CODE;
+    if(t_id) {
+        const tableStatus = await getAdminTableStatus(dispatch, {t_id:t_id});
+        const tableData = tableStatus?.data[0].table;
+        //console.log("tableData: ",tableData)
+        //const tStatus = tableData.filter(el=>el.t_id == tableInfo.TBL_CODE);
+        const tStatus = tableData[0];
+        return tStatus;
+    }
+})
 
 // Slice
 export const tableInfoSlice = createSlice({
@@ -30,6 +43,7 @@ export const tableInfoSlice = createSlice({
     initialState: {
         tableInfo:{},
         tableList:[],
+        tableStatus:{},
         tableCode:"0001",
     },
     extraReducers:(builder)=>{
@@ -45,6 +59,9 @@ export const tableInfoSlice = createSlice({
         })
         builder.addCase(initTableInfo.fulfilled,(state, action)=>{
             state.tableInfo = action.payload;
+        })
+        builder.addCase(getTableStatus.fulfilled, (state,action)=>{
+            state.tableStatus = action.payload
         })
         
     }

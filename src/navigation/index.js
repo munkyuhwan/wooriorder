@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { NavigationContainer, useFocusEffect } from '@react-navigation/native'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { NavigationContainer, useFocusEffect, useNavigation } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import MainScreen from '../screens/MainScreen'
@@ -17,16 +17,20 @@ import FullSizePopup from '../components/common/fullsizePopup'
 import ErrorPopup from '../components/common/errorPopup'
 import { getMenuEdit, getMenuState } from '../store/menu'
 import _ from 'lodash';
-import { getTableList, initTableInfo } from '../store/tableInfo'
+import { getTableList, getTableStatus, initTableInfo } from '../store/tableInfo'
 import { EventRegister } from 'react-native-event-listeners'
+import {isEmpty} from 'lodash';
+import StatusScreen from '../screens/StatusScreen'
+import { initOrderList } from '../store/order'
 
 const Stack = createStackNavigator()
 
 export default function Navigation() {
-
+    var statusInterval;
     const dispatch = useDispatch();
     const [spinnerText, setSpinnerText] = React.useState("")
-    const {tableList} = useSelector(state=>state.tableInfo);
+    const {tableList, tableInfo, tableStatus} = useSelector(state=>state.tableInfo);
+    const navigate = useRef();
     const handleEventListener = () => {
         //리스너 중복방지를 위해 한번 삭제
         DeviceEventEmitter.removeAllListeners("onPending");
@@ -51,18 +55,57 @@ export default function Navigation() {
     }
 
     useEffect(()=>{
-        //console.log("tableList: ",tableList);
-    },[tableList])
-    
+        if(!isEmpty(tableStatus)) {
+            const statusValue = tableStatus?.status;
+            switch (statusValue) {
+                case "1":
+                    // 판매중
+
+                break;
+                case "2":
+                    // 준비중
+                    dispatch(initOrderList());
+                    navigate?.current.navigate("status");
+                break;
+                case "3":
+                    // 강제 판매중
+                    //dispatch(initOrderList());
+                    //navigate?.current.navigate("status");
+                break;
+                case "4":
+                    // 예약중
+                    dispatch(initOrderList());
+                    navigate?.current.navigate("status");
+                break;
+                default:
+
+                break;
+
+            }
+
+        }
+
+    },[tableStatus])
+
+
+    useEffect(()=>{
+        if(!isEmpty(tableInfo)) { 
+            // 주석 나중에 빼자
+            //statusInterval = setInterval(() => {
+                console.log("status interval")
+                dispatch(getTableStatus());
+            //}, 600000);
+        }
+    },[tableInfo])
     useEffect(()=>{
         // 초기 세팅
         handleEventListener();
         dispatch(getMenuEdit());
         dispatch(initTableInfo());
-        var getInterval = setTimeout(() => {
+        //var getInterval = setTimeout(() => {
             dispatch(getTableList());
-            clearTimeout(getInterval);
-        }, 1000);
+        //    clearTimeout(getInterval);
+        //}, 1000);
  
         // 메뉴 갱신을 위한 함수 실행 한시간에 한번
         //setInterval(()=>{
@@ -72,7 +115,9 @@ export default function Navigation() {
 
     return (
         <>  
-            <NavigationContainer>
+            <NavigationContainer
+                ref={navigate}
+            >
                 <Stack.Navigator
                     initialRouteName='main'
                     screenOptions={{
@@ -94,6 +139,11 @@ export default function Navigation() {
                         name='ad'
                         component={ADScreen}
                         options={{title:"Login screen"}}
+                    />
+                    <Stack.Screen
+                        name='status'
+                        component={StatusScreen}
+                        options={{title:"Status Screen"}}
                     />
                 </Stack.Navigator>
             </NavigationContainer>
