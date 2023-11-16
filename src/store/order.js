@@ -189,7 +189,7 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
 // 새로 메뉴 등록
 export const postToPos =  createAsyncThunk("order/postToPos", async(_,{dispatch, getState,extra}) =>{
     const {orderPayData} = getState().order;
-    const {paymentResult} = _;
+    const {paymentResult, isPrepay} = _;
 
     let orderPayList = [];
 
@@ -227,32 +227,36 @@ export const postToPos =  createAsyncThunk("order/postToPos", async(_,{dispatch,
         "unique-no": "710610231843",
         "van-tran-seq": "231026004105"}
          */
-    const orderPayItem = {
-        "AUTH_DATE": `20${paymentResult['approval-date']||"" }`, 
-        "AUTH_NO": `${paymentResult['approval-no']||"" }`, 
-        "AUTH_TIME": `${paymentResult['approval-time']||""}`, 
-        "CAN_FLAG": "N", 
-        "CAN_PAY_SEQ": "", 
-        "CARD_ACQHID": `${paymentResult['acquire-info']?.substring(0,4)||""}`, 
-        "CARD_ACQ_NAME": `${paymentResult['acquire-info']?.substring(4,paymentResult['acquire-info'].length-1)||""}`, 
-        "CARD_ACSHID": `${paymentResult['issuer-info']?.substring(0,4)||""}`, 
-        "CARD_MCHTNO": `${paymentResult['merchant-no']||""}`, 
-        "CARD_NO": `${paymentResult['card-no']}`, 
-        "CARD_PAY_TYPE": "I", 
-        "CASH_AUTH_TYPE": "P", 
-        "CRD_HID_NAME": `${paymentResult['issuer-info']?.substring(4,paymentResult['issuer-info']?.length-1)||""}`, 
-        "DDCEDI": "E", 
-        "ISTM_TERM": "01", 
-        "PAY_TYPE": "card", 
-        "SALE_AMT":`${paymentResult['total-amount']||""}`, 
-        "SALE_VAT_AMT": "0", 
-        "SVC_AMT": "0", 
-        "TML_NO":`${paymentResult['cat-id']||""}`,
-    };
-    orderPayList.push(orderPayItem);
+    if(isPrepay) {
+        const orderPayItem = {
+            "AUTH_DATE": `20${paymentResult['approval-date']||"" }`, 
+            "AUTH_NO": `${paymentResult['approval-no']||"" }`, 
+            "AUTH_TIME": `${paymentResult['approval-time']||""}`, 
+            "CAN_FLAG": "N", 
+            "CAN_PAY_SEQ": "", 
+            "CARD_ACQHID": `${paymentResult['acquire-info']?.substring(0,4)||""}`, 
+            "CARD_ACQ_NAME": `${paymentResult['acquire-info']?.substring(4,paymentResult['acquire-info'].length-1)||""}`, 
+            "CARD_ACSHID": `${paymentResult['issuer-info']?.substring(0,4)||""}`, 
+            "CARD_MCHTNO": `${paymentResult['merchant-no']||""}`, 
+            "CARD_NO": `${paymentResult['card-no']}`, 
+            "CARD_PAY_TYPE": "I", 
+            "CASH_AUTH_TYPE": "P", 
+            "CRD_HID_NAME": `${paymentResult['issuer-info']?.substring(4,paymentResult['issuer-info']?.length-1)||""}`, 
+            "DDCEDI": "E", 
+            "ISTM_TERM": "01", 
+            "PAY_TYPE": "card", 
+            "SALE_AMT":`${paymentResult['total-amount']||""}`, 
+            "SALE_VAT_AMT": "0", 
+            "SVC_AMT": "0", 
+            "TML_NO":`${paymentResult['cat-id']||""}`,
+        };
+        orderPayList.push(orderPayItem);
+    }
+
     let submitOrderPayData = Object.assign({},orderPayData);
+    submitOrderPayData['PREPAY_FLAG'] = isPrepay?"Y":"N";
     submitOrderPayData['ORD_PAY_LIST'] = orderPayList;
-    
+     
     const lw = new LogWriter();
     const logPos = `\nPOST POS DATA==================================\ndata:${JSON.stringify(submitOrderPayData)}\n`
     lw.writeLog(logPos);
@@ -265,7 +269,7 @@ export const postToPos =  createAsyncThunk("order/postToPos", async(_,{dispatch,
         const logPos = `\nPOST POS DATA ERROR==================================\ndata:${JSON.stringify(err)}\n`
         lw.writeLog(logPos);
     });
-    
+     
 })
 // 매뉴 추가 등록
 export const postAddToPos =  createAsyncThunk("order/postAddToPos", async(_,{dispatch, getState,extra}) =>{
