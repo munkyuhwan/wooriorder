@@ -80,11 +80,8 @@ export default function Navigation() {
                 default:
 
                 break;
-
             }
-
         }
-
     },[tableStatus])
 
 

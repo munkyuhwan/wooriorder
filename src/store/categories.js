@@ -20,9 +20,7 @@ export const getSubCategories = createAsyncThunk("categories/getSubCategories", 
     return data
 })
 export const setSelectedSubCategory = createAsyncThunk("categories/setSelectedSubCategory", async(index) =>{
-    return await new Promise(function(resolve, reject){
-        resolve(index);
-    })
+    return index
 })
 // Slice
 export const cagegoriesSlice = createSlice({

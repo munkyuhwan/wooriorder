@@ -1,0 +1,1 @@
+export const DEFAULT_CATEGORY_ALL_CODE = "0000";

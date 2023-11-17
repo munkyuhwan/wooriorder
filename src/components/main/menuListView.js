@@ -6,9 +6,10 @@ import MenuItem from '../mainComponents/menuItem';
 import ItemDetail from '../detailComponents/itemDetail';
 import { getDisplayMenu, getMenu, getMenuEdit, getMenuState, updateMenu } from '../../store/menu';
 import { widthAnimationStyle } from '../../utils/animation';
-import { setSelectedMainCategory } from '../../store/categories';
+import { setSelectedMainCategory, setSelectedSubCategory } from '../../store/categories';
 import { useSharedValue } from 'react-native-reanimated';
 import { openFullSizePopup, openPopup } from '../../utils/common';
+import { DEFAULT_CATEGORY_ALL_CODE } from '../../resources/defaults';
 
 
 const MenuListView = () => {

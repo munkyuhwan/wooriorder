@@ -6,6 +6,7 @@ import { RADIUS_DOUBLE } from '../../styles/values';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedSubCategory } from '../../store/categories';
 import { useFocusEffect } from '@react-navigation/native';
+import { DEFAULT_CATEGORY_ALL_CODE } from '../../resources/defaults';
 
 
 const TopMenuList = (props) => {
@@ -13,7 +14,7 @@ const TopMenuList = (props) => {
     const data = props.data;
     const initSelect = props.initSelect;
     const {selectedMainCategory, selectedSubCategory, subCategories} = useSelector((state)=>state.categories);
-    const [selectedCode, setSelectedCode] = useState(999);
+    const [selectedCode, setSelectedCode] = useState(DEFAULT_CATEGORY_ALL_CODE);
 
     useEffect(()=>{
         if(selectedCode!=null) {
@@ -27,25 +28,26 @@ const TopMenuList = (props) => {
 
     return (
         <>
-        {selectedCode == 999 &&
+        {selectedSubCategory == DEFAULT_CATEGORY_ALL_CODE &&
             <TouchableWithoutFeedback key={"subcat_"} onPress={()=>{}}>
                 <CategorySelected>
                     <TopMenuText key={"subcatText_"} >전체</TopMenuText>
                 </CategorySelected>
             </TouchableWithoutFeedback>
         }
-        {selectedCode != 999 &&
-            <TouchableWithoutFeedback key={"subcat_"} onPress={()=>{onPressAction(999);}}>
+        {selectedSubCategory != DEFAULT_CATEGORY_ALL_CODE &&
+            <TouchableWithoutFeedback key={"subcat_"} onPress={()=>{onPressAction(DEFAULT_CATEGORY_ALL_CODE);}}>
                 <CategoryDefault>
                 <TopMenuText key={"subcatText_"} >전체</TopMenuText>
                 </CategoryDefault>
             </TouchableWithoutFeedback>
         }
-        {data.map((el, index)=>{
+        {data &&
+        data.map((el, index)=>{
             return(
                 <>            
                         {
-                        (el?.cate_code2==selectedCode) &&
+                        (el?.cate_code2==selectedSubCategory) &&
                             <TouchableWithoutFeedback key={"subcat_"+el?.cate_code2} onPress={()=>{ onPressAction(el?.cate_code2); }}>
                                 <CategorySelected>
                                     <TopMenuText key={"subcatText_"+el?.cate_code2} >{el.cate_name2}</TopMenuText>
@@ -53,7 +55,7 @@ const TopMenuList = (props) => {
                             </TouchableWithoutFeedback>
                         }
                         {
-                        (el?.cate_code2!=selectedCode) &&
+                        (el?.cate_code2!=selectedSubCategory) &&
                             <TouchableWithoutFeedback key={"subcat_"+el?.cate_code2} onPress={()=>{ onPressAction(el?.cate_code2); }}>
                                 <CategoryDefault>
                                     <TopMenuText key={"subcatText_"+el?.cate_code2} >{el.cate_name2}</TopMenuText>

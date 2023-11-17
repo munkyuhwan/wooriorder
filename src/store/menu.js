@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setMenuCategories, setMenuExtra, setOptionExtra } from './menuExtra';
 import { CALL_SERVICE_GROUP_CODE } from '../resources/apiResources';
 import { setCallServerList } from './callServer';
+import { DEFAULT_CATEGORY_ALL_CODE } from '../resources/defaults';
 
 export const initMenu = createAsyncThunk("menu/initMenu", async(category) =>{
     return [];
@@ -16,11 +17,39 @@ export const initMenu = createAsyncThunk("menu/initMenu", async(category) =>{
 
 export const getDisplayMenu = createAsyncThunk("menu/getDisplayMenu", async(_, {getState}) =>{
     const {selectedMainCategory,selectedSubCategory} = getState().categories
-    const {menu} = getState().menu;
-    const displayMenu = menu.filter(item => item.ITEM_GROUP_CODE == selectedMainCategory);
-    const itemList = displayMenu[0].ITEM_LIST;
-    const finalItemList = itemList.filter(item => item.ITEM_USE_FLAG == "N");
-    return finalItemList;
+    const {menu, allItems} = getState().menu;
+    const {menuExtra} = getState().menuExtra;
+
+    if(selectedMainCategory == 0 && selectedSubCategory == 0) {
+        return;
+    }
+
+    const cateCode = selectedSubCategory==DEFAULT_CATEGORY_ALL_CODE ? selectedMainCategory:selectedSubCategory;
+  
+    if(selectedSubCategory == DEFAULT_CATEGORY_ALL_CODE) {
+        // 소분류 전체 일떄
+        const displayMenu = menu.filter(item => item.ITEM_GROUP_CODE == selectedMainCategory);
+        const itemList = displayMenu[0].ITEM_LIST;
+        const finalItemList = itemList.filter(item => item.ITEM_USE_FLAG == "N");
+        
+        return finalItemList;
+    }else {
+        // 소분류 선택 되었을때
+        const displayMenuExtra = menuExtra.filter(el => el.cate_code == cateCode);
+        const displayMenu = [];
+        if(displayMenuExtra.length>0) {
+            displayMenuExtra.map(displayEl =>{
+                const filteredMenu = allItems.filter(menuItem => menuItem.ITEM_ID == displayEl.pos_code);
+                displayMenu.push(filteredMenu[0]);
+            })
+        }
+        const finalItemList = displayMenu.filter(item => item.ITEM_USE_FLAG == "N");
+        return finalItemList;
+    
+    }
+   
+
+    
 })
 
 export const updateMenu = createAsyncThunk("menu/updateMenu", async(_,{rejectWithValue}) =>{
@@ -74,8 +103,7 @@ export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, 
     });
     // 직원호출 스테이트 없데이트
     //dispatch(setCallServerList(callService));
-    // 카테고리 스테이트 업데이트
-    dispatch(setMainCategories(categories));
+    
 
     // 2. 어드민 메뉴 데이터 받기
     const adminData = await adminMenuEdit(dispatch).catch(err=>console.log(err));
@@ -92,18 +120,25 @@ export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, 
         adminOption = adminOptionData;
         dispatch(setOptionExtra(adminOption));
     }
-
     // 4. 어드민 카테고리 받기
     const getAdminCategoriesData = await getAdminCategories(dispatch).catch(err=>console.log(err));
     let adminCategories = [];
+    let totalCategories = []
     if(getAdminCategoriesData.result) {
         adminCategories = getAdminCategoriesData?.goods_category;
-        dispatch(setMenuCategories(adminCategories));
+        
+        categories.map(catData => {
+            const filteredCategory = adminCategories.filter(acEl => acEl.cate_code1 == catData.ITEM_GROUP_CODE);
+            if(filteredCategory.length > 0) {
+                totalCategories.push(filteredCategory[0]);
+            }
+        })
+        
+        dispatch(setMenuCategories(totalCategories));
     }
-
-    //console.log("admin categories: ",adminCategories);
-    //console.log("admin menu: ",adminMenu); 
     
+    // 카테고리 스테이트 업데이트
+    dispatch(setMainCategories(categories));
     EventRegister.emit("showSpinner",{isSpinnerShow:false, msg:""})
     return {menu:resultData,allItems:allItems};
 })
@@ -119,7 +154,9 @@ export const menuSlice = createSlice({
     extraReducers:(builder)=>{
         // 메인 카테고리 받기
         builder.addCase(getDisplayMenu.fulfilled,(state, action)=>{
-            state.displayMenu = action.payload;
+            if(action.payload) {
+                state.displayMenu = action.payload;
+            }
         })
         builder.addCase(initMenu.fulfilled,(state, action)=>{
             state.menu = action.payload;

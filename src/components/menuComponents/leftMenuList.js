@@ -12,7 +12,7 @@ const LeftMenuList = (props) => {
     const data = props?.data;
     const initSelect = props?.initSelect;
     const [selectIndex, setSelectedIndex] = useState(0);
-    const {selectedMainCategory} = useSelector((state)=>state.categories);
+    const {selectedMainCategory,mainCategories} = useSelector((state)=>state.categories);
 
 
     const {menuCategories} = useSelector(state=>state.menuExtra);

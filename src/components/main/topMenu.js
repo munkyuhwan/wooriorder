@@ -25,7 +25,6 @@ const TopMenu = () =>{
     const {menuCategories} = useSelector(state=>state.menuExtra);
     const {selectedMainCategory,subCategories} = useSelector(state => state.categories);
 
-    //console.log("selectedMainCategory: ",selectedMainCategory);
     //console.log("menuCategories: ",menuCategories);
     
     const [currentVersion, setCurrentVersion ] = useState("version");
@@ -37,7 +36,7 @@ const TopMenu = () =>{
             if(selectedCategoryItem.length > 0) {
                 dispatch(setCategories({subCategories:selectedCategoryItem[0]?.level2}));
             }
-        }
+        } 
     },[selectedMainCategory])
 
     useEffect(()=>{ 
@@ -61,12 +60,11 @@ const TopMenu = () =>{
                 <SafeAreaView>
                     <CategoryScrollView  horizontal showsHorizontalScrollIndicator={false} >
                         <CategoryWrapper>
-                            {subCategories &&
+                            {
                                 <TopMenuList
                                     data={subCategories}
                                     onSelectItem={(index)=>{ onPressItem(index); }}
                                     initSelect={0}
-                                    key={subCategories.length}
                                 />
                             }
                        </CategoryWrapper>
