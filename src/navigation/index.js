@@ -22,6 +22,7 @@ import { EventRegister } from 'react-native-event-listeners'
 import {isEmpty} from 'lodash';
 import StatusScreen from '../screens/StatusScreen'
 import { initOrderList } from '../store/order'
+import { DEFAULT_TABLE_STATUS_UPDATE_TIME } from '../resources/defaults'
 
 const Stack = createStackNavigator()
 
@@ -91,7 +92,7 @@ export default function Navigation() {
             //statusInterval = setInterval(() => {
                 console.log("status interval")
                 dispatch(getTableStatus());
-            //}, 600000);
+            //}, DEFAULT_TABLE_STATUS_UPDATE_TIME);
         }
     },[tableInfo])
     useEffect(()=>{

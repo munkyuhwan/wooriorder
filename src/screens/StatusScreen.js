@@ -9,7 +9,6 @@ const StatusScreen = () =>{
     const {tableStatus} = useSelector(state=>state.tableInfo);
     const [statusText, setStatusText] = useState("");
     useEffect(()=>{
-        console.log("status screen: ",tableStatus);
         if(tableStatus) {
             if(tableStatus?.status == "1") {
                 navigation.navigate("main");
