@@ -31,8 +31,9 @@ export const getDisplayMenu = createAsyncThunk("menu/getDisplayMenu", async(_, {
         const displayMenu = menu.filter(item => item.ITEM_GROUP_CODE == selectedMainCategory);
         const itemList = displayMenu[0].ITEM_LIST;
         const finalItemList = itemList.filter(item => item.ITEM_USE_FLAG == "N");
-        
-        return finalItemList;
+        return [...finalItemList,...finalItemList];
+
+        //return finalItemList;
     }else {
         // 소분류 선택 되었을때
         const displayMenuExtra = menuExtra.filter(el => el.cate_code == cateCode);

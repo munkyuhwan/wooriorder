@@ -11,6 +11,13 @@ import { useSharedValue } from 'react-native-reanimated';
 import { openFullSizePopup, openPopup } from '../../utils/common';
 import { DEFAULT_CATEGORY_ALL_CODE } from '../../resources/defaults';
 
+// 스크롤링 관련
+var touchStartOffset = 0;
+var touchEndOffset = 0;
+var currentOffset = 0;
+var scrollDownReached = false;
+var scrollUpReached = false;
+var isScrolling = false;
 
 const MenuListView = () => {
 
@@ -78,6 +85,25 @@ const MenuListView = () => {
         } */
     },[ isTouchEnd, isTouchStart])
 
+    const toNextCaterogy = () =>{
+        const selectedCat = mainCategories.filter(e => e.ITEM_GROUP_CODE==selectedMainCategory);
+        const selectedIndex = mainCategories.indexOf(selectedCat[0]);
+        var nextPage = 0;
+        nextPage = selectedIndex+1;
+        if(nextPage>mainCategories.length-1) nextPage=mainCategories.length-1;
+        dispatch(setSelectedMainCategory(mainCategories[nextPage].ITEM_GROUP_CODE)); 
+        dispatch(setSelectedSubCategory("0000"))
+    }
+    const toPrevCaterogy = () =>{
+        const selectedCat = mainCategories.filter(e => e.ITEM_GROUP_CODE==selectedMainCategory);
+        const selectedIndex = mainCategories.indexOf(selectedCat[0]);
+        var nextPage = 0;
+        nextPage = selectedIndex-1;
+        if(nextPage<0) nextPage=0;
+        if(nextPage>mainCategories.length-1) nextPage=mainCategories.length-1;
+        dispatch(setSelectedMainCategory(mainCategories[nextPage].ITEM_GROUP_CODE)); 
+        dispatch(setSelectedSubCategory("0000"))
+    }
     useEffect(()=>{
         if(isOn) {
             setNumColumns(2);
@@ -102,7 +128,15 @@ const MenuListView = () => {
             dispatch(getDisplayMenu());
         }
     },[displayMenu, menu])
+    const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+        const paddingToBottom = 2;
+        return layoutMeasurement.height + contentOffset.y >=
+          contentSize.height - paddingToBottom;
+    };
 
+    const isCloseToTop = ({contentOffset}) => {
+        return contentOffset.y == 0;
+    };
     //console.log("mainCategories: ",mainCategories[0].ITEM_GR`OUP_CODE)
     return(
         <>
@@ -116,25 +150,91 @@ const MenuListView = () => {
                     numColumns={numColumns}
                     key={numColumns}
                     keyExtractor={(item,index)=>index}
-                    onTouchEnd={(ev)=>{ 
-                        //console.log("drag end: ",ev.nativeEvent.changedTouches[0].locationY) 
-                        dragEndPosition.value = ev.nativeEvent.changedTouches[0].locationY;
-                        setTouchEnd(true);
-                        setTouchStart(false);
+                    onScroll={(event)=>{
+                        //console.log("on scroll========================================================");
+                        let direction = event.nativeEvent.contentOffset.y > currentOffset ? 'down' : 'up';
+                        currentOffset = event.nativeEvent.contentOffset.y;
+                        console.log("scroll direction:",direction); // up or down accordingly
+                        
+                        scrollDownReached = false;
+                        scrollUpReached = false;
+                        
+
+                        if (isCloseToBottom(event.nativeEvent)) {
+                            console.log("close to bottom");
+                            if(direction == "down") scrollDownReached = true; scrollUpReached = false;
+                        }
+                        if (isCloseToTop(event.nativeEvent)) {
+                            console.log("reach to Top");
+                            if(direction == 'up') scrollUpReached = true; scrollDownReached = false;
+                        }
+
                     }}
-                    onTouchStart={(ev)=>{
-                        //console.log("drag start: ",ev.nativeEvent.changedTouches[0].locationY) 
-                        dragStartPosition.value = ev.nativeEvent.changedTouches[0].locationY;
-                        setTouchEnd(false);
-                        setTouchStart(true);
-                        //setScrollEnd(true);
+                    onTouchStart={(event)=>{
+                        console.log("touch start========================================================");
+                        touchStartOffset = event.nativeEvent.locationY;
+                        console.log("touchs start: ",event.nativeEvent.locationY);
                     }}
-                    onScrollEndDrag={(ev)=>{
-                        scrollEnd.value = ev.nativeEvent.contentOffset.y;
-                        setScrollEnd(true);
+                    onTouchEnd={(event)=>{   
+                        // 스크롤 잇을떄는 호출 안됨
+                        console.log("touch end========================================================");
+                        touchEndOffset = event.nativeEvent.locationY;
+                        console.log("touchStartOffset: ",touchStartOffset," touchEndOffset: ",touchEndOffset);
+                        const touchSize = touchStartOffset - touchEndOffset;
+                        console.log("touchSize: ",touchSize);
+                        if(touchSize < 0) {
+                            // swipe down
+                            if( (touchSize*-1) > 50 ) {
+                                // action
+                                console.log("prev page");
+                                toPrevCaterogy();
+                                //touchEndOffset = 0;
+                                //touchStartOffset = 0;
+                            }
+                        }else {
+                            // swipe up
+                            if(touchSize>50) {
+                                //action
+                                console.log("next page");
+                                toNextCaterogy();
+                                //touchEndOffset = 0;
+                                //touchStartOffset = 0;
+                            } 
+                        }
+                        //console.log("scroll up reached: ",scrollUpReached, " scroll down reached: ",scrollDownReached);
+
                     }}
                     onScrollBeginDrag={(ev)=>{
-                        scrollStart.value = ev.nativeEvent.contentOffset.y;                       
+                        // 스크롤 없을떄는 호출 안됨
+                        //console.log("drag start========================================================");
+                        //console.log("scroll up reached: ",scrollUpReached, " scroll down reached: ",scrollDownReached);
+                        if(scrollDownReached) {
+                            //toNextCaterogy();
+                            //scrollUpReached = false;
+                            //scrollDownReached  = false;
+                        }
+                        if(scrollUpReached) {
+                            //toPrevCaterogy();
+                           // scrollUpReached = false;
+                           // scrollDownReached  = false;
+                        }
+                        // 스크롤 되고 있는지 체크
+                        isScrolling=true;
+                        //scrollStart.value = ev.nativeEvent.contentOffset.y;                       
+                    }}
+                    onScrollEndDrag={(ev)=>{
+                        // 스크롤 없을떄는 호출 안됨
+                        // 스크롤 되고 있는지 체크
+                        //isScrolling=false;
+                        console.log("drag end========================================================");
+                        if(scrollDownReached ) {
+                            toNextCaterogy();
+                        }
+                        if(scrollUpReached) {
+                            toPrevCaterogy();
+                        }
+                        //scrollEnd.value = ev.nativeEvent.contentOffset.y;
+                        //setScrollEnd(true);
                     }}
                     
                 />
