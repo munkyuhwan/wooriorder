@@ -21,20 +21,22 @@ const TopMenuList = (props) => {
     
     const ItemTitle = (cateCode) => {
         const subCategories = menuCategories?.filter(el=>el.cate_code1 == selectedMainCategory);
-        const subCatList = subCategories[0].level2
+        const subCatList = subCategories[0]?.level2
         const subCatData = subCatList?.filter(el=>el.cate_code2 == cateCode);
         let selTitleLanguage = "";
-        if(language=="korean") {
-            selTitleLanguage = subCatData[0].cate_name2
-        }
-        else if(language=="japanese") {
-            selTitleLanguage = subCatData[0].cate_name2_jp
-        }
-        else if(language=="chinese") {
-            selTitleLanguage = subCatData[0].cate_name2_cn
-        }
-        else if(language=="english") {
-            selTitleLanguage = subCatData[0].cate_name2_en
+        if(subCatData){
+            if(language=="korean") {
+                selTitleLanguage = subCatData[0]?.cate_name2
+            }
+            else if(language=="japanese") {
+                selTitleLanguage = subCatData[0]?.cate_name2_jp
+            }
+            else if(language=="chinese") {
+                selTitleLanguage = subCatData[0]?.cate_name2_cn
+            }
+            else if(language=="english") {
+                selTitleLanguage = subCatData[0]?.cate_name2_en
+            }
         }
         return selTitleLanguage;
     }
