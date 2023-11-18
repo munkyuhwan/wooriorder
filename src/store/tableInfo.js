@@ -30,8 +30,6 @@ export const getTableStatus = createAsyncThunk("tableInfo/getTableStatus", async
     if(t_id) {
         const tableStatus = await getAdminTableStatus(dispatch, {t_id:t_id});
         const tableData = tableStatus?.data[0].table;
-        //console.log("tableData: ",tableData)
-        //const tStatus = tableData.filter(el=>el.t_id == tableInfo.TBL_CODE);
         const tStatus = tableData[0];
         return tStatus;
     }

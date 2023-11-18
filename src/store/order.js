@@ -287,7 +287,7 @@ export const postAddToPos =  createAsyncThunk("order/postAddToPos", async(_,{dis
     return await addOrderToPos(dispatch, tmpData)
     .catch(err=>{
         posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:"주문 오류",MSG2:"주문을 진행할 수 없습니다."});
-        console.log("error: ",err)
+        //console.log("error: ",err)
     });  
 
 })

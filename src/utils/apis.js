@@ -99,13 +99,46 @@ export const postOrderToPos = async(dispatch, data) =>{
             reject();
             return;
         }
-    
+        var postData = {
+            "DISC_AMT": data.DISC_AMT, 
+            "FLR_CODE": data.FLR_CODE, 
+            "ITEM_LIST": [], 
+            "MCHT_ORDERNO": data.MCHT_ORDERNO, 
+            "MEMB_TEL": data.MEMB_TEL, 
+            "OEG_ORDER_PAY_AMT": data.OEG_ORDER_PAY_AMT, 
+            "ORDERNO": data.ORDERNO, 
+            "ORDER_MEMO": data.ORDER_MEMO, 
+            "ORDER_PAY_AMT": data.ORDER_PAY_AMT, 
+            "ORDER_PRT_FLAG": data.ORDER_PRT_FLAG, 
+            "ORD_PAY_LIST":data.ORD_PAY_LIST, 
+            "ORG_ORDERNO": data.ORG_ORDERNO, 
+            "OS_GBN": data.OS_GBN, 
+            "PREPAY_FLAG": data.PREPAY_FLAG,
+            "REPT_PRT_FLAG": data.REPT_PRT_FLAG, 
+            "SERVICE_ID": data.SERVICE_ID, 
+            "STORE_ID":data.STORE_ID, 
+            "TBL_CODE": data.TBL_CODE
+        };
+        //console.log("post dta: ",postData);
+        let itemList = data.ITEM_LIST;
+        let newItemList = [];
+        itemList.map((item)=>{
+            let newItem = Object.assign({},item)
+            let addItemList= newItem.ADDITIVE_ITEM_LIST;
+            let newAddItem = [];
+            addItemList.map((addItem)=>{
+                newAddItem.push(addItem.menuOptionSelected);
+            })
+            newItem.ADDITIVE_ITEM_LIST = newAddItem;
+            newItemList.push(newItem);
+        })
+        postData.ITEM_LIST = newItemList;
         axios.post(
             `${POS_BASE_URL_TEST}${POS_ORDER_NEW}`,
             {
                 "STORE_ID":STORE_ID,
                 "SERVICE_ID":SERVICE_ID,
-                ...data
+                ...postData
             },
             posOrderHeadr,
         )  
@@ -144,14 +177,48 @@ export const addOrderToPos = async(dispatch, data) =>{
             posErrorHandler(dispatch, {ERRCODE:'XXXX',MSG:"메뉴를 선택 해 주세요.",MSG2:""});
             reject();
             return;
-        }
-        
+        } 
+        var postData = {
+            "DISC_AMT": data.DISC_AMT, 
+            "FLR_CODE": data.FLR_CODE, 
+            "ITEM_LIST": [], 
+            "MCHT_ORDERNO": data.MCHT_ORDERNO, 
+            "MEMB_TEL": data.MEMB_TEL, 
+            "OEG_ORDER_PAY_AMT": data.OEG_ORDER_PAY_AMT, 
+            "ORDERNO": data.ORDERNO, 
+            "ORDER_MEMO": data.ORDER_MEMO, 
+            "ORDER_PAY_AMT": data.ORDER_PAY_AMT, 
+            "ORDER_PRT_FLAG": data.ORDER_PRT_FLAG, 
+            "ORD_PAY_LIST":data.ORD_PAY_LIST, 
+            "ORG_ORDERNO": data.ORG_ORDERNO, 
+            "OS_GBN": data.OS_GBN, 
+            "PREPAY_FLAG": data.PREPAY_FLAG,
+            "REPT_PRT_FLAG": data.REPT_PRT_FLAG, 
+            "SERVICE_ID": data.SERVICE_ID, 
+            "STORE_ID":data.STORE_ID, 
+            "TBL_CODE": data.TBL_CODE
+        };
+        //console.log("post dta: ",postData);
+        let itemList = data.ITEM_LIST;
+        let newItemList = [];
+        itemList.map((item)=>{
+            let newItem = Object.assign({},item)
+            let addItemList= newItem.ADDITIVE_ITEM_LIST;
+            let newAddItem = [];
+            addItemList.map((addItem)=>{
+                newAddItem.push(addItem.menuOptionSelected);
+            })
+            newItem.ADDITIVE_ITEM_LIST = newAddItem;
+            newItemList.push(newItem);
+        })
+        postData.ITEM_LIST = newItemList;
+ 
         axios.post(
             `${POS_BASE_URL_TEST}${POS_ORDER_ADD}`,
             {
                 "STORE_ID":STORE_ID,
                 "SERVICE_ID":SERVICE_ID,
-                ...data
+                ...postData
             },
             posOrderHeadr,
         )  
@@ -171,7 +238,9 @@ export const addOrderToPos = async(dispatch, data) =>{
             } 
         })) 
         .catch(error=>reject(error.response.data));
+        
     }) 
+
 }
 // 테이블 주문 체크
 export const checkTableOrder = async(dispatch, data ) => {
@@ -203,13 +272,14 @@ export const checkTableOrder = async(dispatch, data ) => {
                 const orderStatus = orderList.filter(el=> (el.ORDER_STATUS ==  "SMRO000068"||el.ORDER_STATUS ==  "SMRO000069")  );
                 const isAdd = orderStatus?.length>0;
                 //console.log(orderStatus.length)
+                /* 
                 orderStatus.map((el)=>{
                     console.log("===============================================================");
                     console.log(el);
                     console.log();
                     console.log("===============================================================");
                 })
-                
+                 */
                 //if(orderList.length > 0 ) {
                     resolve({hasOrderList:true, orderNo:orderList[0]?.ORDERNO, mchatOrderNo:orderStatus[0]?.MCHT_ORDERNO, orgOrderNo:orderStatus[0]?.ORG_ORDERNO, isAdd:isAdd })
                 //}else {

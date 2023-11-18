@@ -69,10 +69,12 @@ const OrderListPopup = () =>{
                     </OrderListTalbleGrandTotalWrapper>
                 </OrderListWrapper>
                 <BottomButtonWrapper>
-                      {/*   <BottomButton backgroundColor={colorRed} >
+                    {/*!isPrepay &&
+                       <BottomButton backgroundColor={colorRed} >
                             <BottomButtonText>{LANGUAGE[language]?.orderListPopup.orderListPay}</BottomButtonText>
                             <BottomButtonIcon source={require("../../assets/icons/card.png")} />
-                        </BottomButton> */}
+                        </BottomButton>
+                    */}
                     <TouchableWithoutFeedback onPress={()=>{ openTransperentPopup(dispatch, {innerView:"", isPopupVisible:false}); }} >
                         <BottomButton backgroundColor={colorBlack} >
                             <BottomButtonText>{LANGUAGE[language]?.orderListPopup.orderListOK}</BottomButtonText>

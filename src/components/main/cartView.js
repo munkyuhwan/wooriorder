@@ -39,7 +39,8 @@ const CartView = () =>{
     const boxStyle = {
         transform: [{translateX:slideInterpolate},],
     };
-    
+    const isPrepay = tableStatus?.now_later=="선불"?true:false;
+
     const drawerController = (isOpen) =>{
         Animated.parallel([
             Animated.timing(slideAnimation,{
@@ -62,8 +63,9 @@ const CartView = () =>{
         //let orderResult = await AsyncStorage.getItem("orderResult")
         // 테이블이 사용중인지 비교 하기
 
-        const isPrepay = tableStatus?.now_later=="선불"?true:false;
         console.log("isPrepay: ",isPrepay);
+        // 선불경우 OrderList띄웟 결제 진행, 주문내역 확인 안됨
+        // 후불의 경우 바로 결제 진행하고 OrderList는 주문내역 확인
 
         const orderStatus = await checkTableOrder(dispatch,{tableInfo}).catch(err=>{return});
 
@@ -72,6 +74,8 @@ const CartView = () =>{
         const mchatOrderNo = orderStatus.mchatOrderNo;
         const orgOrderNo = orderStatus.orgOrderNo
         const orderResult = {"ORG_ORDERNO":orgOrderNo,"MCHT_ORDERNO":mchatOrderNo,"ORDERNO":orderNo}
+
+
         //console.log("orderResult: ",orderResult);
         // 결제 진행을 하면 안되는 조건
         // 3. 포스에서 받아온 주문번호가 없으면 테이블 비워진거임. 앱에 저장된 주문번호 삭제
@@ -109,7 +113,8 @@ const CartView = () =>{
         //console.log(orderResult);
         //dispatch(postAddToPos({orderResult}));
         if(isPrepay) {
-    
+            //openTransperentPopup(dispatch, {innerView:"OrderList", isPopupVisible:true});
+
             const paymentData = {"deal":"approval","total-amount":grandTotal};
             const result = await servicePayment(dispatch, paymentData)
             .catch((error)=>{
@@ -154,9 +159,15 @@ const CartView = () =>{
             }
              */
         }else {
-                console.log("후불 신규 주문");
                 const paymentResult = {}
-                dispatch(postToPos({paymentResult,isPrepay}));
+                if(isAdd) {
+                    console.log("후불 추가 주문");
+                    console.log("orderResult: ",orderResult);
+                    dispatch(postAddToPos({orderResult}));
+                }else {
+                    console.log("후불 신규 주문");
+                    dispatch(postToPos({paymentResult,isPrepay}));
+                }
             
         }
  
@@ -208,7 +219,9 @@ const CartView = () =>{
     return(
         <>  
             <IconWrapper>
-                <TopButton onPress={()=>{ openTransperentPopup(dispatch, {innerView:"OrderList", isPopupVisible:true}); }} isSlideMenu={false} lr={"left"} onSource={require("../../assets/icons/orderlist_trans.png")} offSource={require("../../assets/icons/orderlist_grey.png")} />
+                {!isPrepay &&
+                    <TopButton onPress={()=>{ openTransperentPopup(dispatch, {innerView:"OrderList", isPopupVisible:true}); }} isSlideMenu={false} lr={"left"} onSource={require("../../assets/icons/orderlist_trans.png")} offSource={require("../../assets/icons/orderlist_grey.png")} />
+                }
                 <TopButton onPress={()=>{  dispatch(setCartView(!isOn));  }} isSlideMenu={true} lr={"right"} onSource={require("../../assets/icons/cart_trans.png")} offSource={require("../../assets/icons/cart_grey.png")} />
             </IconWrapper>
             <CartViewWrapper style={[{...boxStyle}]} >
