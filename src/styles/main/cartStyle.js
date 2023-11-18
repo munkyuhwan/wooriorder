@@ -44,7 +44,7 @@ export const CartItemWrapper = styled.View`
     width:100%;
     paddingBottom:12px;
     paddingTop:12px; 
-    paddingLeft:23px;
+    paddingLeft:20px;
     paddingRight:23px;
     borderBottomWidth:1px;
     borderColor:${colorGrey};
@@ -56,7 +56,7 @@ export const CartItemImageTogoWrapper = styled.View`
 `
 export const CartItemImage = styled.Image`
     width:100px;
-    height:62px;
+    height:66px;
     backgroundColor:brown;
     borderRadius:${RADIUS};
 `
@@ -68,7 +68,7 @@ export const CartItemFastImage = styled(FastImage)`
 `
 export const CartItemTogoWrapper = styled.View`
     width:100px;
-    height: 36px;
+    height: 40px;
     backgroundColor:${mainTheme};
     marginTop:12px;
     alignItem:center;
@@ -79,13 +79,13 @@ export const CartItemTogoWrapper = styled.View`
 export const CartItemTogoText = styled.Text`
     color:${textColorWhite};
     textAlign:center;
-    fontSize:13px;
+    fontSize:17px;
     marginTop:auto;
     marginBottom:auto;
 `
 export const CartItemTogoIcon = styled.Image`
-    width:13px;
-    height:13px;
+    width:17px;
+    height:17px;
     resizeMode:contain;
     marginLeft:6px;
     marginTop:auto;
@@ -100,7 +100,7 @@ export const CartItemTitlePriceWrapper = styled.View`
     flexDirection:column;
 `
 export const CartItemTitle = styled.Text`
-    fontSize:15px;
+    fontSize:17px;
     fontWeight:bold;
     color:${mainTheme};
     flex:1;
@@ -111,7 +111,7 @@ export const CartItemOpts = styled.Text`
     flex:1;
 `
 export const CartItemPrice = styled.Text`
-    fontSize:13px;
+    fontSize:15px;
     fontWeight:normal;
     color:${colorRed};
     flex:1;
@@ -119,15 +119,15 @@ export const CartItemPrice = styled.Text`
 // 수량 조절 
 export const CartItemAmtWrapper = styled.View`
     width:128px;
-    height: 36px;
+    height: 40px;
     backgroundColor:${colorGrey};
     borderRadius:${RADIUS};
     flexDirection:row;
     padding:5px;
 `
 export const CartItemAmtController = styled.View`
-    width:25px;
-    height:25px;
+    width:28px;
+    height:28px;
     backgroundColor:${colorWhite};
     borderRadius:${RADIUS};
     marginTop:auto;
@@ -136,12 +136,12 @@ export const CartItemAmtController = styled.View`
     textAlign:center;
 `
 export const CartItemAmtControllerImage = styled.Image`
-    width:25px;
-    height:25px;
+    width:28px;
+    height:28px;
     flex:1;
  `
 export const CartItemAmtText = styled.Text`
-    fontSize:14px;
+    fontSize:20px;
     fontWeight:bold;
     flex:1;
     textAlign:center;
@@ -154,8 +154,8 @@ export const CartItemCancelWrapper = styled.View`
     flex:1;
 `
 export const CartItemCancelBtn = styled.Image`
-    width:25px;
-    height:25px;
+    width:32px;
+    height:32px;
     resizeMode:contain;
 `
 // 주문하기

@@ -25,21 +25,21 @@ export const CategoryScrollView = styled.ScrollView`
 `
 export const CategoryDefault = styled.View`
     backgroundColor: ${tabBaseColor};
-    width:142px;
-    height:52px;
+    width:160px;
+    height:60px;
     marginRight:7px;
     justifyContent: flex-end;
-    marginTop:33px;
+    marginTop:26px;
     borderTopLeftRadius:${RADIUS_DOUBLE}px;
     borderTopRightRadius:${RADIUS_DOUBLE}px;
 `
 export const CategorySelected = styled.View`
     backgroundColor: ${colorBrown};
-    width:142px;
-    height:62px;
+    width:160px;
+    height:60px;
     marginRight:7px;
     justifyContent: flex-end;
-    marginTop:33px;
+    marginTop:26px;
     borderTopLeftRadius:${RADIUS_DOUBLE}px;
     borderTopRightRadius:${RADIUS_DOUBLE}px;
 `
@@ -50,7 +50,7 @@ export const TopMenuText = styled.Text`
     justifyContent:center;
     display:flex;
     alignItems:center;
-    fontSize:15px;
+    fontSize:20px;
     fontWeight:bold;
     paddingTop:17px;
     color: ${textColorWhite};

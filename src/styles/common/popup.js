@@ -24,8 +24,8 @@ export const PopupCloseButtonWrapper = styled.View`
     alignItems:flex-end;
 `
 export const PopupCloseButton = styled.Image`
-    width:26px;
-    height:26px;
+    width:36px;
+    height:36px;
     resizeMode:contain;
 `
 
@@ -42,7 +42,7 @@ export const TransparentPopupTopWrapper = styled.View`
 
 `
 export const TransperentPopupTopTitle = styled.Text`
-    fontSize:30px;
+    fontSize:38px;
     color:${colorRed};
     fontWeight:bold;
 `
@@ -50,6 +50,7 @@ export const TransperentPopupTopSubTitle = styled.Text`
     paddingTop:40px;
     color:${colorWhite};
     lineHeight:31px;
+    fontSize:24px;
 `
 // 투명배경 팝업 중간 뷰
 export const TransperentPopupMidWrapper = styled.View`

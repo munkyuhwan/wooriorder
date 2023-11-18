@@ -63,7 +63,6 @@ const CartView = () =>{
         //let orderResult = await AsyncStorage.getItem("orderResult")
         // 테이블이 사용중인지 비교 하기
 
-        console.log("isPrepay: ",isPrepay);
         // 선불경우 OrderList띄웟 결제 진행, 주문내역 확인 안됨
         // 후불의 경우 바로 결제 진행하고 OrderList는 주문내역 확인
 

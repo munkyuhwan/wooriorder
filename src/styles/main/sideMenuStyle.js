@@ -61,7 +61,7 @@ export const SideMenuText = styled.Text`
     paddingBottom:20px;
     paddingRight:22px;
     paddingLeft:22px;
-    fontSize:19px;
+    fontSize:24px;
     fontWeight:bold;
     color: #ffffff;
     textAlign:center;

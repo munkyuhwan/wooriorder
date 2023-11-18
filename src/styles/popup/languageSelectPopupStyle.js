@@ -21,8 +21,8 @@ export const LanguageWrapper = styled.View`
 `
 // 아이콘
 export const LanguageIconWrapper = styled.View`
-    width:65px;
-    height:65px;
+    width:70px;
+    height:70px;
 
 `
 export const LanguageIconImage = styled.Image`
@@ -37,8 +37,8 @@ export const LanguageSelectedWrapper = styled.View`
     position:absolute;
 `
 export const LanguageIconDim = styled.View`
-    width:65px;
-    height:65px;
+    width:70px;
+    height:70px;
     backgroundColor:rgba(0,0,0,0.7);
     position:absolute;
     borderRadius:100px;

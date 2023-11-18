@@ -21,7 +21,7 @@ const CartListItem = (props) => {
    
     const index = props?.index;
     const order = props?.item;
-    console.log("order: ",order)
+
     const additiveItemList = order.ADDITIVE_ITEM_LIST;
     // 이미지 찾기
     const itemExtra = menuExtra.filter(el=>el.pos_code == order.ITEM_ID);

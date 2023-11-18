@@ -8,13 +8,13 @@ export const PopupTitleWrapper = styled.View`
 `
 export const PopupTitleText = styled.Text`
     textAlign:center;
-    fontSize:16px;
+    fontSize:24px;
     fontWeight:bold;
     color:${colorBlack};
 `
 export const PopupSubtitleText = styled.Text`
     textAlign:center;
-    fontSize:11px;
+    fontSize:14px;
     color:${colorBlack};
 `
 
@@ -38,4 +38,5 @@ export const PopupBottomButtonText = styled.Text`
     color:${colorWhite};
     textAlign:center;
     alignSelf:center;
+    fontSize:20px;
 `

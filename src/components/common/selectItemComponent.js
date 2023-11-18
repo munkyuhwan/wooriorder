@@ -172,6 +172,8 @@ const SelectItemText = styled.Text`
     color:${props=>props.textColor};
     marginTop:auto;
     marginBottom:auto;
+    fontSize:26px;
+    textAlign:center;
 `
 const SelectItemChecked = styled.Image`
     position:absolute;
