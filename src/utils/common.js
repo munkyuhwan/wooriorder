@@ -50,7 +50,7 @@ export function grandTotalCalculate(data) {
     let itemCnt = 0;
     if(data) {
         data?.map(el=>{
-            amt += el.ITEM_AMT*el.ITEM_CNT;
+            amt += el.SALE_PRICE*el.ITEM_CNT;
             itemCnt += el.ITEM_CNT;
         })
     }

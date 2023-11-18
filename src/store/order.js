@@ -137,9 +137,14 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
         //newOrderList = orderList
         addedOrder = Object.assign({},duplicatedItem[0],{"ITEM_CNT":(Number(duplicatedItem[0].ITEM_CNT)+1),"ADDITIVE_ITEM_LIST":additiveList});       
         newOrderList = Object.assign([],orderList);
-
-        addedOrder["SALE_PRICE"] = `${addedOrder["ITEM_AMT"]}`;
-        addedOrder["SALE_AMT"] = `${addedOrder["ITEM_AMT"]}`;
+        let additivePrice = 0;
+        if(additiveList.length > 0 ) {
+            additiveList?.map(el=>{
+                additivePrice = additivePrice+el?.menuOptionSelected.ADDITIVE_PRICE
+            })
+        }
+        addedOrder["SALE_PRICE"] = `${Number(addedOrder["ITEM_AMT"])+additivePrice}`;
+        addedOrder["SALE_AMT"] = `${Number(addedOrder["ITEM_AMT"])+additivePrice}`;
         addedOrder["ITEM_MEMO"] = ``;
         addedOrder["ITEM_SEQ"] = `${newOrderList.length}`;
         
@@ -147,9 +152,14 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
     }else {
         //addedOrder = Object.assign({},selectedMenuDetail,{"ITEM_CNT":(Number(selectedMenuDetail.ITEM_CNT)+1),"ADDITIVE_ITEM_LIST":[]});
         addedOrder = Object.assign({},selectedMenuDetail,{"ITEM_CNT":1,"ADDITIVE_ITEM_LIST":additiveList});
-
-        addedOrder["SALE_PRICE"] = `${addedOrder["ITEM_AMT"]}`;
-        addedOrder["SALE_AMT"] = `${addedOrder["ITEM_AMT"]}`;
+        let additivePrice = 0;
+        if(additiveList.length > 0 ) {
+            additiveList?.map(el=>{
+                additivePrice = additivePrice+el?.menuOptionSelected.ADDITIVE_PRICE
+            })
+        }
+        addedOrder["SALE_PRICE"] = `${Number(addedOrder["ITEM_AMT"])+additivePrice}`;
+        addedOrder["SALE_AMT"] = `${Number(addedOrder["ITEM_AMT"])+additivePrice}`;
         addedOrder["ITEM_MEMO"] = ``;
         addedOrder["ITEM_SEQ"] = `${newOrderList.length}`;
 
@@ -158,10 +168,8 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
     }
     // 카트 여닫기
     if(newOrderList.length <= 0) {
-        console.log("close cart");
         dispatch(setCartView(false));
     }else {
-        console.log("open cart");
         dispatch(setCartView(true));
     }
     const totalResult = grandTotalCalculate(newOrderList)

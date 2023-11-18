@@ -21,6 +21,7 @@ const CartListItem = (props) => {
    
     const index = props?.index;
     const order = props?.item;
+    console.log("order: ",order)
     const additiveItemList = order.ADDITIVE_ITEM_LIST;
     // 이미지 찾기
     const itemExtra = menuExtra.filter(el=>el.pos_code == order.ITEM_ID);
@@ -112,7 +113,7 @@ const CartListItem = (props) => {
                             })
                          }
                     </CartItemOpts>
-                    <CartItemPrice>{numberWithCommas(order?.ITEM_AMT||0)}원</CartItemPrice>
+                    <CartItemPrice>{numberWithCommas(order?.SALE_PRICE||0)}원</CartItemPrice>
                     <CartItemAmtWrapper>
                         <TouchableWithoutFeedback  onPress={()=>{calculateAmt("minus",1)}} >
                             <CartItemAmtController>
