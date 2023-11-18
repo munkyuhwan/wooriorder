@@ -31,7 +31,7 @@ export const getDisplayMenu = createAsyncThunk("menu/getDisplayMenu", async(_, {
         const displayMenu = menu.filter(item => item.ITEM_GROUP_CODE == selectedMainCategory);
         const itemList = displayMenu[0].ITEM_LIST;
         const finalItemList = itemList.filter(item => item.ITEM_USE_FLAG == "N");
-        return [...finalItemList,...finalItemList];
+        return [...finalItemList];
 
         //return finalItemList;
     }else {
