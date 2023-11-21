@@ -8,6 +8,7 @@ import { setMenuDetail } from '../../store/menuDetail';
 import { addToOrderList } from '../../store/order';
 import { MENU_DATA } from '../../resources/menuData';
 import { colorWhite } from '../../assets/colors/color';
+import {isEmpty} from 'lodash'
 /* 메인메뉴 메뉴 아이템 */
 const MenuItem = ({item,index,setDetailShow}) => {
     //<MenuItemImage />    
@@ -16,7 +17,12 @@ const MenuItem = ({item,index,setDetailShow}) => {
     const dispatch = useDispatch();
     const {menuExtra} = useSelector(state=>state.menuExtra);
     const {language} =  useSelector(state=>state.languages);
-
+    if(isEmpty(item)) {
+        return <></>
+    }
+    if(isEmpty(menuExtra)) {
+        return <></>
+    }
     // 이미지 찾기
     const itemExtra = menuExtra?.filter(el=>el.pos_code == item.ITEM_ID);
     const itemID = item.ITEM_ID;
