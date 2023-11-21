@@ -11,6 +11,9 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
+import com.microsoft.appcenter.reactnative.analytics.AppCenterReactNativeAnalyticsPackage;
+import com.microsoft.appcenter.reactnative.appcenter.AppCenterReactNativePackage;
+import com.microsoft.appcenter.reactnative.crashes.AppCenterReactNativeCrashesPackage;
 import com.microsoft.codepush.react.CodePush;
 import com.wooriorder.modules.screenController.KeepAwakePackage;
 import com.wooriorder.modules.smartro.SmartroPayPackage;
@@ -36,6 +39,9 @@ public class MainApplication extends Application implements ReactApplication {
             packages.add(new ToastPackage());
             packages.add(new SmartroPayPackage());
             packages.add(new KeepAwakePackage());
+            //packages.add(new AppCenterReactNativeCrashesPackage(MainApplication.this, getResources().getString(R.string.appCenterCrashes_whenToSendCrashes)));
+            //packages.add(new AppCenterReactNativeAnalyticsPackage(MainApplication.this, getResources().getString(R.string.appCenterAnalytics_whenToEnableAnalytics)));
+            //packages.add(new AppCenterReactNativePackage(MainApplication.this) );
             // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
           return packages;

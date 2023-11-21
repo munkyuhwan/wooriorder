@@ -148,7 +148,7 @@ const SettingPopup = () =>{
 
     const checkUpdate =  async() =>{
             CodePush
-            const update = await CodePush.checkForUpdate("H96RQX5_1TsiwFdS8_joFNGSm2V24ncuV-1Ch");
+            const update = await CodePush.checkForUpdate("73MTJE-Zu27E7cnvd0jdRVE66gkFu-zFUdZn-");
             if(update) {
                 /* Alert.alert(
                     "업데이트",
@@ -377,9 +377,9 @@ const SettingPopup = () =>{
                                 </TouchableWithoutFeedback> 
                                 <SelectWrapper style={{marginRight:'auto', marginLeft:'auto', paddingBottom:20}} >
                                     <StoreIDTextLabel>STORE ID:</StoreIDTextLabel>
-                                    <StoreIDTextInput defaultValue={storeIDText} onChangeText={(val)=>{ setStoreIDText(val); }} />
+                                    <StoreIDTextInput keyboardType='numeric'  defaultValue={storeIDText} onChangeText={(val)=>{ setStoreIDText(val); }} />
                                     <StoreIDTextLabel>SERVICE ID:</StoreIDTextLabel>
-                                    <StoreIDTextInput defaultValue={serviceIDText} onChangeText={(val)=>{ setServiceIDText(val); }} />
+                                    <StoreIDTextInput  keyboardType='numeric'  defaultValue={serviceIDText} onChangeText={(val)=>{ setServiceIDText(val); }} />
                                     <TouchableWithoutFeedback onPress={()=>{setStoreInfo();}}>
                                         <SelectCancelWrapper>
                                             <SelectCancelText>설정하기</SelectCancelText>
@@ -434,7 +434,7 @@ const SettingPopup = () =>{
                                 <SettingButtonText isMargin={true} >메뉴 업데이트</SettingButtonText>
                             </TouchableWithoutFeedback>
                             <TouchableWithoutFeedback onPress={()=>{checkUpdate();}} >
-                                <SettingButtonText isMargin={true} >앱 업데이트 1.0.1-rc1</SettingButtonText>
+                                <SettingButtonText isMargin={true} >앱 업데이트 1.0.1-8</SettingButtonText>
                             </TouchableWithoutFeedback> 
                         </SettingButtonWrapper>
                     </SettingScrollView>
