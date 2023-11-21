@@ -1,18 +1,21 @@
 import axios from "axios";
-import { ADMIN_BASE_URL, ADMIN_CALL_SERVICE, ADMIN_CATEGORIES, ADMIN_GOODS, ADMIN_OPTION, ADMIN_POST_CALL_SERVICE, ADMIN_TABLE_STATUS, POS_BASE_URL_REAL, POS_BASE_URL_TEST, POS_ORDER_ADD, POS_ORDER_NEW, POS_POST_MENU_EDIT, POS_POST_MENU_STATE, POS_POST_ORDER, POS_POST_ORDER_CANCEL, POS_POST_TABLE_LIST, SERVICE_ID, STORE_ID } from "../resources/apiResources";
+import { ADMIN_BASE_URL, ADMIN_CALL_SERVICE, ADMIN_CATEGORIES, ADMIN_GOODS, ADMIN_OPTION, ADMIN_POST_CALL_SERVICE, ADMIN_TABLE_STATUS, POS_BASE_URL_REAL, POS_BASE_URL_TEST, POS_ORDER_ADD, POS_ORDER_NEW, POS_POST_MENU_EDIT, POS_POST_MENU_STATE, POS_POST_ORDER, POS_POST_ORDER_CANCEL, POS_POST_TABLE_LIST/* , SERVICE_ID, STORE_ID  */} from "../resources/apiResources";
 import { errorHandler, posErrorHandler } from "./errorHandler/ErrorHandler";
 import {isEmpty} from "lodash";
-import { numberPad, openPopup } from "./common";
+import { getStoreID, numberPad, openPopup } from "./common";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { initOrderList } from "../store/order";
 import { setCartView } from "../store/cart";
 import LogWriter from "./logWriter";
+import { EventRegister } from "react-native-event-listeners";
 
 const posOrderHeadr = {Accept: 'application/json','Content-Type': 'application/json'}
 const adminOrderHeader = {'Content-Type' : "text/plain"};
 
 
 export const  posOrderNew = async (resolve,reject) =>{
+    const {STORE_ID, SERVICE_ID} = await getStoreID()
+
     return await new Promise(function(resolve, reject){
         axios.post(
             `${POS_BASE_URL_TEST}${POS_ORDER_NEW}`,
@@ -26,6 +29,11 @@ export const  posOrderNew = async (resolve,reject) =>{
     })
 }
 export const  posMenuState = async (dispatch) =>{
+    const {STORE_ID, SERVICE_ID} = await getStoreID()
+    .catch(err=>{
+        posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:'STORE_ID, SERVICE_ID를 입력 해 주세요.',MSG2:""})
+    });
+
     var lastUpdate="";
     try {
         lastUpdate = await AsyncStorage.getItem("lastUpdate");
@@ -54,6 +62,16 @@ export const  posMenuState = async (dispatch) =>{
 }
 // 포스 메뉴 받기
 export const  posMenuEdit = async(dispatch) =>{
+    console.log("posMenuEdit: ");
+    const {STORE_ID, SERVICE_ID} = await getStoreID()
+    .catch(err=>{
+        EventRegister.emit("showSpinner",{isSpinnerShow:false, msg:""})
+        posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:'STORE_ID, SERVICE_ID를 입력 해 주세요.',MSG2:""})
+    });
+    if(isEmpty(STORE_ID) || isEmpty(SERVICE_ID)) {
+        EventRegister.emit("showSpinner",{isSpinnerShow:false, msg:""})
+        posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:'STORE_ID, SERVICE_ID를 입력 해 주세요.',MSG2:""})
+    }
     return await new Promise(function(resolve, reject){
         axios.post(
             `${POS_BASE_URL_TEST}${POS_POST_MENU_EDIT}`,
@@ -74,6 +92,10 @@ export const  posMenuEdit = async(dispatch) =>{
 
 
 export const posTableList = async(dispatch) =>{
+    const {STORE_ID, SERVICE_ID} = await getStoreID()
+    .catch(err=>{
+        posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:'STORE_ID, SERVICE_ID를 입력 해 주세요.',MSG2:""})
+    });
     return await new Promise(function(resolve, reject){
         axios.post(
             `${POS_BASE_URL_TEST}${POS_POST_TABLE_LIST}`,
@@ -93,6 +115,11 @@ export const posTableList = async(dispatch) =>{
 }
 // 새로운 오더
 export const postOrderToPos = async(dispatch, data) =>{
+    const {STORE_ID, SERVICE_ID} = await getStoreID()
+    .catch(err=>{
+        posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:'STORE_ID, SERVICE_ID를 입력 해 주세요.',MSG2:""})
+    });
+    
     return await new Promise(function(resolve, reject){
         if(isEmpty(data) ) {
             posErrorHandler(dispatch, {ERRCODE:'XXXX',MSG:"메뉴를 선택 해 주세요.",MSG2:""});
@@ -172,6 +199,10 @@ export const postOrderToPos = async(dispatch, data) =>{
 }
 // 오더 추가
 export const addOrderToPos = async(dispatch, data) =>{
+    const {STORE_ID, SERVICE_ID} = await getStoreID()
+    .catch(err=>{
+        posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:'STORE_ID, SERVICE_ID를 입력 해 주세요.',MSG2:""})
+    });
     return await new Promise(function(resolve, reject){
         if(isEmpty(data) ) {
             posErrorHandler(dispatch, {ERRCODE:'XXXX',MSG:"메뉴를 선택 해 주세요.",MSG2:""});
@@ -244,6 +275,10 @@ export const addOrderToPos = async(dispatch, data) =>{
 }
 // 테이블 주문 체크
 export const checkTableOrder = async(dispatch, data ) => {
+    const {STORE_ID, SERVICE_ID} = await getStoreID()
+    .catch(err=>{
+        posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:'STORE_ID, SERVICE_ID를 입력 해 주세요.',MSG2:""})
+    });
     return await new Promise(function(resolve, reject){
         if(isEmpty(data.tableInfo) ) {
             posErrorHandler(dispatch, {ERRCODE:'XXXX',MSG:"테이블을 선택 해 주세요.",MSG2:""});
@@ -296,6 +331,10 @@ export const checkTableOrder = async(dispatch, data ) => {
 }
 
 export const cancelOrder = async(dispatch, data) => {
+    const {STORE_ID, SERVICE_ID} = await getStoreID()
+    .catch(err=>{
+        posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:'STORE_ID, SERVICE_ID를 입력 해 주세요.',MSG2:""})
+    });
     return await new Promise(function(resolve, reject){
         if(isEmpty(data.tableInfo) ) {
             posErrorHandler(dispatch, {ERRCODE:'XXXX',MSG:"테이블을 선택 해 주세요.",MSG2:""});
@@ -331,6 +370,10 @@ export const cancelOrder = async(dispatch, data) => {
 
 // 테이블 주문목록 받아오기
 export const getOrderByTable = async(dispatch, data) => {
+    const {STORE_ID, SERVICE_ID} = await getStoreID()
+    .catch(err=>{
+        posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:'STORE_ID, SERVICE_ID를 입력 해 주세요.',MSG2:""})
+    });
     return await new Promise(function(resolve, reject){
         if(isEmpty(data.tableInfo) ) {
             posErrorHandler(dispatch, {ERRCODE:'XXXX',MSG:"테이블을 선택 해 주세요.",MSG2:""});
@@ -384,6 +427,10 @@ export const getOrderByTable = async(dispatch, data) => {
 // 관리자 메뉴 받기
 export const adminMenuEdit = async(dispatch) => {
     //let data = '{"STORE_ID":12312001}'
+    const {STORE_ID, SERVICE_ID} = await getStoreID()
+    .catch(err=>{
+        posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:'STORE_ID, SERVICE_ID를 입력 해 주세요.',MSG2:""})
+    });
     return await new Promise(function(resolve, reject){
         axios.post(
             `${ADMIN_BASE_URL}${ADMIN_GOODS}`,
@@ -403,6 +450,10 @@ export const adminMenuEdit = async(dispatch) => {
 }
 // 관리자 옵션 받기
 export const adminOptionEdit = async(dispatch) => {
+    const {STORE_ID, SERVICE_ID} = await getStoreID()
+    .catch(err=>{
+        posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:'STORE_ID, SERVICE_ID를 입력 해 주세요.',MSG2:""})
+    });
     //let data = '{"STORE_ID":12312001}'
     return await new Promise(function(resolve, reject){
         axios.post(
@@ -423,6 +474,10 @@ export const adminOptionEdit = async(dispatch) => {
 }
 // 관리자 카테고리 받기
 export const getAdminCategories = async(dispatch) => {
+    const {STORE_ID, SERVICE_ID} = await getStoreID()
+    .catch(err=>{
+        posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:'STORE_ID, SERVICE_ID를 입력 해 주세요.',MSG2:""})
+    });
     //let data = '{"STORE_ID":12312001}'
     return await new Promise(function(resolve, reject){
         axios.post(
@@ -444,6 +499,10 @@ export const getAdminCategories = async(dispatch) => {
 
 // 관리자 직원호출 목록 받기
 export const getAdminServices = async(dispatch) => {
+    const {STORE_ID, SERVICE_ID} = await getStoreID()
+    .catch(err=>{
+        posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:'STORE_ID, SERVICE_ID를 입력 해 주세요.',MSG2:""})
+    });
     //let data = '{"STORE_ID":12312001}'
     return await new Promise(function(resolve, reject){
         axios.post(
@@ -465,6 +524,10 @@ export const getAdminServices = async(dispatch) => {
 
 // 관리자 직원호출 하기
 export const postAdminServices = async(dispatch,data) => {
+    const {STORE_ID, SERVICE_ID} = await getStoreID()
+    .catch(err=>{
+        posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:'STORE_ID, SERVICE_ID를 입력 해 주세요.',MSG2:""})
+    });
     //let data = '{"STORE_ID":12312001}'    
     return await new Promise(function(resolve, reject){
         axios.post(
@@ -486,6 +549,10 @@ export const postAdminServices = async(dispatch,data) => {
 
 // 관리자 테이블 상태 받아오기
 export const getAdminTableStatus = async(dispatch,data) => {
+    const {STORE_ID, SERVICE_ID} = await getStoreID()
+    .catch(err=>{
+        posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:'STORE_ID, SERVICE_ID를 입력 해 주세요.',MSG2:""})
+    });
     return await new Promise(function(resolve, reject){
         axios.post(
             `${ADMIN_BASE_URL}${ADMIN_TABLE_STATUS}`,

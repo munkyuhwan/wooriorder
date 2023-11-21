@@ -6,9 +6,10 @@ import { TransparentPopupBottomButtonIcon, TransparentPopupBottomButtonText, Tra
 import { LANGUAGE } from '../../resources/strings';
 import SelectItemComponent from '../common/selectItemComponent';
 import { getCallServerItems, getServiceList, postAdminSerivceList, sendToPos } from '../../store/callServer';
-import { openFullSizePopup, openTransperentPopup } from '../../utils/common';
+import { getStoreID, openFullSizePopup, openTransperentPopup } from '../../utils/common';
 import { getAdminServices } from '../../utils/apis';
-import { STORE_ID } from '../../resources/apiResources';
+import { posErrorHandler } from '../../utils/errorHandler/ErrorHandler';
+//import { STORE_ID } from '../../resources/apiResources';
 
 const CallServerPopup = () => {
     const dispatch = useDispatch();
@@ -38,7 +39,7 @@ const CallServerPopup = () => {
     const onServiceSelected = (indexArray) =>{
         setSelectedService(indexArray);
     }
-    const callServer = () =>{
+    const callServer = async () =>{
         // dispatch(sendServiceToPos(selectedService));
         // 직원 호출하기
         let subjectData = [];
@@ -50,6 +51,10 @@ const CallServerPopup = () => {
                         subjectData.push(tmpData[0].subject);
                     }
                 })
+                const {STORE_ID, SERVICE_ID} = await getStoreID()
+                .catch(err=>{
+                    posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:'STORE_ID, SERVICE_ID를 입력 해 주세요.',MSG2:""})
+                });;
                 const postCallData = {"STORE_ID":STORE_ID, "t_id":tableInfo.TBL_CODE, midx:selectedService, subject:subjectData};
                 dispatch(postAdminSerivceList(postCallData));
                 openFullSizePopup(dispatch, {innerView:"", isPopupVisible:false});

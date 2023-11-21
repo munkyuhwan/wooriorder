@@ -22,7 +22,30 @@ const SideMenu = () =>{
     }
     // 문제 없으면 /components/menuComponents/sideMenuItem.js 제거
     if(mainCategories.length <=0) {
-        return(<></>)
+        return (
+            <SideMenuWrapper>
+                <LogoWrapper>
+                    <LogoTop source={require("../../assets/icons/logo.png")}  />
+                </LogoWrapper>
+                
+                <SideBottomWrapper>
+                    <TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={()=>{openPopup(dispatch, {innerView:"LanguageSelectPopup", isPopupVisible:true}); }} >
+                            <SideBottomButton borderColor={colorWhite} >
+                                <SideBottomText>{LANGUAGE[language]?.sideMenu.languageSelect}</SideBottomText>
+                                <SideBottomIcon source={require("../../assets/icons/korean.png")} />
+                            </SideBottomButton>
+                        </TouchableWithoutFeedback>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={()=>{openFullSizePopup(dispatch, {innerFullView:"CallServer", isFullPopupVisible:true});}} >
+                        <SideBottomButton bg={"red"} borderColor={colorRed} >
+                            <SideBottomText>{LANGUAGE[language]?.sideMenu.callServer}</SideBottomText>
+                            <SideBottomIcon source={require("../../assets/icons/bell_trans.png")}  />
+                        </SideBottomButton>
+                    </TouchableWithoutFeedback>
+                </SideBottomWrapper>
+            </SideMenuWrapper>    
+        )
     }
     return(
         <>

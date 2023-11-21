@@ -74,10 +74,10 @@ const TopMenu = () =>{
                     <TableNameSmall>{tableInfo?.TBL_CODE}</TableNameSmall>
                     <TableNameBig>{tableInfo?.TBL_NAME}</TableNameBig>
                 </TableName>
-               {/*
                 <TouchableWithoutFeedback onPress={()=>{openFullSizePopup(dispatch,{innerFullView:"Setting", isFullPopupVisible:true}); }} >
                     <Text style={{color:colorWhite}} >설정 {currentVersion}</Text>
                 </TouchableWithoutFeedback>
+               {/*
                 <TouchableWithoutFeedback onPress={()=>{ console.log("upload file"); dispatch(uploadFile()) }} >
                     <Text style={{color:colorWhite, fontSize:20}} >파일올리기 </Text>
                 </TouchableWithoutFeedback>

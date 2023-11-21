@@ -122,10 +122,24 @@ export const PaymentTextLabel = styled.Text`
     fontSize:15px;
     flex:0.4;
 `
+export const StoreIDTextLabel = styled.Text`
+    color:${colorBlack};
+    fontSize:15px;
+    marginRight:10px
+`
 export const PaymentTextInput = styled.TextInput`
     flex:1;
     backgroundColor:${colorWhite};
     borderWidth:1px;
     height:20px;
     padding:0;
+`
+
+export const StoreIDTextInput = styled.TextInput`
+    backgroundColor:${colorWhite};
+    borderWidth:1px;
+    height:20px;
+    width:200px;
+    padding:0;
+    marginRight:20px;
 `

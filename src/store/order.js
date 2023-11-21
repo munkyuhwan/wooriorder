@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { MENU_DATA } from '../resources/menuData';
-import { SERVICE_ID, STORE_ID } from '../resources/apiResources';
+//import { SERVICE_ID, STORE_ID } from '../resources/apiResources';
 import { addOrderToPos, getOrderByTable, postOrderToPos } from '../utils/apis';
-import { grandTotalCalculate, openPopup } from '../utils/common';
+import { getStoreID, grandTotalCalculate, openPopup } from '../utils/common';
 import { isEqual } from 'lodash'
 import { posErrorHandler } from '../utils/errorHandler/ErrorHandler';
 import { setCartView } from './cart';
@@ -39,6 +39,10 @@ export const resetAmtOrderList = createAsyncThunk("order/resetAmtOrderList", asy
     const {grandTotal, orderList} = getState().order;
     const {amt, index, operand} = _;
     const {tableInfo} = getState().tableInfo;
+    const {STORE_ID, SERVICE_ID} = await getStoreID()
+    .catch(err=>{
+        posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:'STORE_ID, SERVICE_ID를 입력 해 주세요.',MSG2:""})
+    });
 
     let tmpOrderList = Object.assign([],orderList);
     const selectedMenu = tmpOrderList[index];
@@ -104,6 +108,10 @@ export const resetAmtOrderList = createAsyncThunk("order/resetAmtOrderList", asy
 })
 
 export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,{dispatch, getState,extra}) =>{
+    const {STORE_ID, SERVICE_ID} = await getStoreID()
+    .catch(err=>{
+        posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:'STORE_ID, SERVICE_ID를 입력 해 주세요.',MSG2:""})
+    });
 
     // 선택된 아이템 정보 받기
     const {displayMenu, allItems} = getState().menu;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, version } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { DetailSettingWrapper, PaymentTextInput, PaymentTextLabel, PaymentTextWrapper, SelectCancelText, SelectCancelWrapper, SelectWrapper, SelectWrapperColumn, SettingButtonText, SettingButtonWrapper, SettingConfirmBtn, SettingConfirmBtnText, SettingConfirmBtnWrapper, SettingItemWrapper, SettingScrollView, SettingWrapper, TableColumnInput, TableColumnTitle, TableColumnWrapper } from '../../styles/common/settingStyle';
+import { DetailSettingWrapper, PaymentTextInput, PaymentTextLabel, PaymentTextWrapper, SelectCancelText, SelectCancelWrapper, SelectWrapper, SelectWrapperColumn, SettingButtonText, SettingButtonWrapper, SettingConfirmBtn, SettingConfirmBtnText, SettingConfirmBtnWrapper, SettingItemWrapper, SettingScrollView, SettingWrapper, StoreIDTextInput, StoreIDTextLabel, TableColumnInput, TableColumnTitle, TableColumnWrapper } from '../../styles/common/settingStyle';
 import { Alert, DeviceEventEmitter, KeyboardAvoidingView, ScrollView, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { getLastPaymentData, indicateAvailableDeviceInfo, serviceFunction, serviceGetting, serviceIndicate, servicePayment, serviceSetting, startSmartroCheckIntegrity, startSmartroGetDeviceInfo, startSmartroGetDeviceSetting, startSmartroKeyTransfer, startSmartroReadCardInfo, startSmartroRequestPayment, startSmartroSetDeviceDefaultSetting, varivariTest } from '../../utils/smartro';
 import CodePush from 'react-native-code-push';
@@ -26,7 +26,6 @@ const SettingPopup = () =>{
 
     const [spinnerText, setSpinnerText] = React.useState("")
     const {tableList,tableInfo} = useSelector(state=>state.tableInfo);
-
     const [isTableSettingShow, setTableSettingShow] = useState(false);
     
     //const selectedFunction = useSharedValue("");
@@ -38,6 +37,10 @@ const SettingPopup = () =>{
     const paymentApprovalNo = useSharedValue("");
     const paymentApprovalDate = useSharedValue("");
     const [lastPayData, setLastPayData] = useState("");
+    // store id, service id
+    const [storeIDText, setStoreIDText] = useState("");
+    const [serviceIDText, setServiceIDText] = useState("");
+
 
     const getIndicateAvailableDeviceInfo = () =>{
         serviceIndicate()
@@ -336,6 +339,25 @@ const SettingPopup = () =>{
             </SelectWrapperColumn>
         );
     }
+
+    useEffect(()=>{
+        AsyncStorage.getItem("STORE_ID")
+        .then((value)=>{
+            setStoreIDText(value)
+        })
+        AsyncStorage.getItem("SERVICE_ID")
+        .then((value)=>{
+            setServiceIDText(value)
+        })
+        
+    },[])
+
+    const setStoreInfo = () =>{
+        AsyncStorage.setItem("STORE_ID", storeIDText);
+        AsyncStorage.setItem("SERVICE_ID",serviceIDText);
+        displayOnAlert("설정되었습니다.",{});
+
+    }
  
     return (
         <>
@@ -348,6 +370,24 @@ const SettingPopup = () =>{
                     </TouchableWithoutFeedback>
                     <SettingScrollView showsVerticalScrollIndicator={false}>
                         <SettingButtonWrapper>
+                            { 
+                            <SettingItemWrapper>
+                                <TouchableWithoutFeedback onPress={()=>{ }} >
+                                    <SettingButtonText isMargin={false} >스토어 아이디 설정</SettingButtonText>
+                                </TouchableWithoutFeedback> 
+                                <SelectWrapper style={{marginRight:'auto', marginLeft:'auto', paddingBottom:20}} >
+                                    <StoreIDTextLabel>STORE ID:</StoreIDTextLabel>
+                                    <StoreIDTextInput defaultValue={storeIDText} onChangeText={(val)=>{ setStoreIDText(val); }} />
+                                    <StoreIDTextLabel>SERVICE ID:</StoreIDTextLabel>
+                                    <StoreIDTextInput defaultValue={serviceIDText} onChangeText={(val)=>{ setServiceIDText(val); }} />
+                                    <TouchableWithoutFeedback onPress={()=>{setStoreInfo();}}>
+                                        <SelectCancelWrapper>
+                                            <SelectCancelText>설정하기</SelectCancelText>
+                                        </SelectCancelWrapper>
+                                    </TouchableWithoutFeedback>
+                                </SelectWrapper>
+                            </SettingItemWrapper>
+                            }
                             <SettingItemWrapper>
                                 <TouchableWithoutFeedback onPress={()=>{ setTableSettingShow(!isTableSettingShow) }} >
                                     <SettingButtonText isMargin={false} >테이블 세팅</SettingButtonText>
@@ -385,9 +425,11 @@ const SettingPopup = () =>{
                             <TouchableWithoutFeedback onPress={()=>{initTable(); }} >
                                 <SettingButtonText isMargin={true} >테이블 주문 초기화</SettingButtonText>
                             </TouchableWithoutFeedback>
+                            {/* 
                             <TouchableWithoutFeedback onPress={()=>{uploadLog(); }} >
                                 <SettingButtonText isMargin={true} >로그 올리기</SettingButtonText>
                             </TouchableWithoutFeedback>
+                            */}
                             <TouchableWithoutFeedback onPress={()=>{dispatch(getMenuEdit())}} >
                                 <SettingButtonText isMargin={true} >메뉴 업데이트</SettingButtonText>
                             </TouchableWithoutFeedback>
