@@ -35,7 +35,7 @@ export const MenuItemImageWrapper = styled.View`
     width:100%;
     height:100%;    
     position:absolute;
-    paddingTop:15px;
+    paddingTop:7px;
     paddingBottom:15px;
     paddingLeft:12px;
     paddingRight:12px;
@@ -71,9 +71,9 @@ export const MenuItemHotnessWrapper = styled.View`
     flex:1;
 `
 export const MenuItemHotness = styled.Image`
-    marginRight:4px;
-    width:31px;
-    height:21px;
+    marginRight:6px;
+    width:52px;
+    resizeMode:contain;
 `
 export const MenuItemBottomWRapper = styled.View`
     width:100%; 
@@ -105,6 +105,14 @@ export const SoldOutDimLayer = styled.View`
     opacity:0.5;
     width:300px;
     height:183px;
+`
+export const SoldOutDimLayerAbs = styled.View`
+    background:${colorBlack};
+    opacity:0.2;
+    width:300px;
+    height:183px;
+    position:absolute;
+    zIndex:2;
 `
 export const SoldOutText = styled.Text`
     position:absolute;
