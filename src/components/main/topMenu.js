@@ -71,7 +71,7 @@ const TopMenu = () =>{
                     </CategoryScrollView>
                 </SafeAreaView>
                 <TableName>
-                    <TableNameSmall>{tableInfo?.TBL_CODE}</TableNameSmall>
+                    {/* <TableNameSmall>{tableInfo?.TBL_CODE}</TableNameSmall> */}
                     <TableNameBig>{tableInfo?.TBL_NAME}</TableNameBig>
                 </TableName>
                 {/*<TouchableWithoutFeedback onPress={()=>{openFullSizePopup(dispatch,{innerFullView:"Setting", isFullPopupVisible:true}); }} >
