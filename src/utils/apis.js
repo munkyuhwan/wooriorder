@@ -146,7 +146,6 @@ export const postOrderToPos = async(dispatch, data) =>{
             "STORE_ID":data.STORE_ID, 
             "TBL_CODE": data.TBL_CODE
         };
-        //console.log("post dta: ",postData);
         let itemList = data.ITEM_LIST;
         let newItemList = [];
         itemList.map((item)=>{
@@ -160,6 +159,7 @@ export const postOrderToPos = async(dispatch, data) =>{
             newItemList.push(newItem);
         })
         postData.ITEM_LIST = newItemList;
+        //console.log("post dta: ",postData);
         axios.post(
             `${POS_BASE_URL_TEST}${POS_ORDER_NEW}`,
             {
