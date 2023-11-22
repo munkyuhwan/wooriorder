@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled, {css} from 'styled-components/native';
 import { RADIUS } from '../values';
-import { colorWhite } from '../../assets/colors/color';
+import { colorBlack, colorWhite } from '../../assets/colors/color';
 
 export const MenuListWrapper = styled.View`
     width:100%;
@@ -92,5 +92,31 @@ export const MenuItemPrice = styled.Text`
     fontSize:17px;
     color:${colorWhite};
  
+`
+export const SoldOutLayer = styled.View`
+    with:300px;
+    height:183px;
+    position:absolute;
+    z-index:99999;
+    flex:1;
+`
+export const SoldOutDimLayer = styled.View`
+    background:${colorBlack};
+    opacity:0.5;
+    width:300px;
+    height:183px;
+`
+export const SoldOutText = styled.Text`
+    position:absolute;
+    zIndex:9999999;
+    margin:auto;
+    color:${colorWhite};
+    fontWeight:bold;
+    fontSize:45px;
+    backgroundColor:#00000000;
+    textAlignVertical:center;
+    textAlign:center;
+    width:100%;
+    height:100%;
 `
 

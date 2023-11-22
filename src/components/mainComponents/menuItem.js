@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Animated,FlatList,Image,Text,TouchableWithoutFeedback } from 'react-native'
-import { MenuImageDefault, MenuImageDefaultWrapper, MenuItemBottomWRapper, MenuItemButton, MenuItemButtonInnerWrapper, MenuItemButtonInnerWrapperLeft, MenuItemButtonInnerWrapperRight, MenuItemButtonWrapper, MenuItemHotness, MenuItemHotnessWrapper, MenuItemImage, MenuItemImageWrapper, MenuItemInfoWRapper, MenuItemName, MenuItemPrice, MenuItemTopWrapper, MenuItemWrapper } from '../../styles/main/menuListStyle';
+import { MenuImageDefault, MenuImageDefaultWrapper, MenuItemBottomWRapper, MenuItemButton, MenuItemButtonInnerWrapper, MenuItemButtonInnerWrapperLeft, MenuItemButtonInnerWrapperRight, MenuItemButtonWrapper, MenuItemHotness, MenuItemHotnessWrapper, MenuItemImage, MenuItemImageWrapper, MenuItemInfoWRapper, MenuItemName, MenuItemPrice, MenuItemTopWrapper, MenuItemWrapper, SoldOutDimLayer, SoldOutLayer, SoldOutText } from '../../styles/main/menuListStyle';
 import FastImage from 'react-native-fast-image';
 import { RADIUS, RADIUS_DOUBLE } from '../../styles/values';
 import { setMenuDetail } from '../../store/menuDetail';
@@ -57,9 +57,11 @@ const MenuItem = ({item,index,setDetailShow}) => {
             <MenuItemWrapper>
                 <MenuItemTopWrapper>
                     {imgUrl &&
-                        <TouchableWithoutFeedback onPress={()=>{setDetailShow(true); dispatch(setMenuDetail(itemID)); }} >
-                            <FastImage style={{width:'100%',height:183,resizeMode:"background",borderRadius:RADIUS_DOUBLE}} source={{uri:imgUrl}}/>
-                        </TouchableWithoutFeedback>
+                        <>
+                            <TouchableWithoutFeedback onPress={()=>{setDetailShow(true); dispatch(setMenuDetail(itemID)); }} >
+                                <FastImage style={{ width:'100%',height:183,resizeMode:"background",borderRadius:RADIUS_DOUBLE}} source={{uri:imgUrl}}/>
+                            </TouchableWithoutFeedback>
+                        </>
                     }
                     {!imgUrl &&
                         <TouchableWithoutFeedback onPress={()=>{setDetailShow(true); dispatch(setMenuDetail(itemID)); }} >
@@ -68,6 +70,7 @@ const MenuItem = ({item,index,setDetailShow}) => {
                             </MenuImageDefaultWrapper>
                         </TouchableWithoutFeedback>
                     }
+                    
                     <MenuItemImageWrapper>
                         <MenuItemHotnessWrapper>
                         {itemExtra[0]?.is_new=='Y'&&
@@ -90,12 +93,20 @@ const MenuItem = ({item,index,setDetailShow}) => {
                             </TouchableWithoutFeedback>
                         </MenuItemButtonWrapper>
                     </MenuItemImageWrapper>
+                    {itemExtra[0]?.soldout=='Y'&&
+                        <SoldOutLayer>
+                            <SoldOutText>SOLD OUT</SoldOutText>    
+                            <SoldOutDimLayer/>
+                        </SoldOutLayer>
+                    }
+
                 </MenuItemTopWrapper>
                 <MenuItemBottomWRapper>
                     <MenuItemName>{itemTitle()}</MenuItemName>
                     <MenuItemPrice>{itemPrice}원</MenuItemPrice>
                 </MenuItemBottomWRapper>
             </MenuItemWrapper>
+
         </>
     );
 }
