@@ -5,6 +5,7 @@ import { RecommendItemDim, RecommendItemImage, RecommendItemImageWrapper, Recomm
 import { MENU_DATA } from '../../resources/menuData';
 import {isEmpty} from "lodash";
 import { getSingleMenu, getSingleMenuFromAllItems, setMenuDetail } from '../../store/menuDetail';
+import { addToOrderList } from '../../store/order';
 
 const RecommendItem = (props) => {
     const recommentItemID = props?.recommendData
@@ -41,10 +42,10 @@ const RecommendItem = (props) => {
         }
         return selTitleLanguage;
     }
-
+    
     return(
         <>
-            <TouchableWithoutFeedback onPress={()=>{dispatch(setMenuDetail(recommentItemID));/* dispatch(getSingleMenuFromAllItems(recommentItemID)) */ }}>
+            <TouchableWithoutFeedback onPress={()=>{dispatch(addToOrderList({itemID:recommentItemID})); /* dispatch(setMenuDetail(recommentItemID)); */ }}>
                 <RecommendItemWrapper>
                     <RecommendItemImageWrapper>
                         <RecommendItemImage  source={{uri:`${"https:"+itemExtra[0]?.gimg_chg}`}}/>

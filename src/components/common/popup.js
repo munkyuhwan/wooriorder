@@ -15,6 +15,7 @@ import ErrorPopup from './errorPopup';
 import OptionSelectPopup from '../popups/optionSelectPopup';
 import OrderCompletePopup from './orderCompletePopup';
 import TimeOutPopup from './orderCompletePopup';
+import AutoClosePopup from './autoClosePopup';
 
 const PopUp = (props) =>{
     
@@ -123,6 +124,9 @@ const PopUp = (props) =>{
                     }
                     {innerView=="OrderComplete"&&
                         <OrderCompletePopup/>
+                    }
+                    {innerView=="AutoClose"&&
+                        <AutoClosePopup/>
                     }
                 </PopupContentWrapper>
             </Animated.View>
