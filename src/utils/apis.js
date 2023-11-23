@@ -528,7 +528,7 @@ export const postAdminServices = async(dispatch,data) => {
     return await new Promise(function(resolve, reject){
         axios.post(
             `${ADMIN_BASE_URL}${ADMIN_POST_CALL_SERVICE}`,
-            {"STORE_ID":STORE_ID, "t_id":data?.t_id, "midx":data?.midx,"subject":data?.subject },
+            data,
             adminOrderHeader,
         ) 
         .then((response => {

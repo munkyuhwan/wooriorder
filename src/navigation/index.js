@@ -107,7 +107,7 @@ export default function Navigation() {
                 ref={navigate}
             >
                 <Stack.Navigator
-                    initialRouteName='ad'
+                    initialRouteName='main'
                     screenOptions={{
                         gestureEnabled: true,
                         headerShown: false,

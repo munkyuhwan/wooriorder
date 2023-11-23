@@ -6,7 +6,7 @@ import { TransparentPopupBottomButtonIcon, TransparentPopupBottomButtonText, Tra
 import { LANGUAGE } from '../../resources/strings';
 import SelectItemComponent from '../common/selectItemComponent';
 import { getCallServerItems, getServiceList, postAdminSerivceList, sendToPos } from '../../store/callServer';
-import { getStoreID, openFullSizePopup, openTransperentPopup } from '../../utils/common';
+import { getStoreID, openFullSizePopup, openPopup, openTransperentPopup } from '../../utils/common';
 import { getAdminServices } from '../../utils/apis';
 import { posErrorHandler } from '../../utils/errorHandler/ErrorHandler';
 //import { STORE_ID } from '../../resources/apiResources';
@@ -43,21 +43,24 @@ const CallServerPopup = () => {
         // dispatch(sendServiceToPos(selectedService));
         // 직원 호출하기
         let subjectData = [];
+        let indexData = [];
         if(selectedService) {
             if(selectedService?.length > 0) {
                 selectedService.map(el=>{
                     const tmpData = callServerItems.filter(item=>item.idx == el);
                     if(tmpData.length > 0){
-                        subjectData.push(tmpData[0].subject);
+                        subjectData.push(`${tmpData[0].subject}`);
+                        indexData.push(`"${el}"`);
                     }
                 })
                 const {STORE_ID, SERVICE_ID} = await getStoreID()
                 .catch(err=>{
                     posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:'STORE_ID, SERVICE_ID를 입력 해 주세요.',MSG2:""})
                 });;
-                const postCallData = {"STORE_ID":STORE_ID, "t_id":tableInfo.TBL_CODE, midx:selectedService, subject:subjectData};
+                const postCallData = {"STORE_ID":STORE_ID,"t_name":tableInfo.TBL_NAME, "t_id":tableInfo.TBL_CODE, midx:selectedService, subject:subjectData};
                 dispatch(postAdminSerivceList(postCallData));
                 openFullSizePopup(dispatch, {innerView:"", isPopupVisible:false});
+                openPopup(dispatch,{innerView:"AutoClose", isPopupVisible:true,param:{msg:"직원호출을 완료했습니다."}});
             }else {
                 
             }
