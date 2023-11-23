@@ -28,7 +28,7 @@ const store = configureStore({
         popup:popupsSlice.reducer,
         callServer:callServerSlice.reducer,
         order:orderSlice.reducer,
-        ad:adSlice.reducer,
+        ads:adSlice.reducer,
         cartView:cartViewSlice.reducer,
         tableInfo:tableInfoSlice.reducer,
         memberInfo:memberInfoSlice.reducer,

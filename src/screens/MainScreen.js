@@ -11,16 +11,30 @@ import PopUp from '../components/common/popup'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import LogWriter from '../utils/logWriter'
-import { getTableList } from '../store/tableInfo'
+import { getTableList, getTableStatus } from '../store/tableInfo'
 import { openPopup } from '../utils/common'
 import RNFS from "react-native-fs";
 import { setLanguage } from '../store/languages'
-
+import { DEFAULT_TABLE_STATUS_UPDATE_TIME } from '../resources/defaults'
+import {isEmpty} from 'lodash';
 
 const MainScreen = () =>{   
+    const navigation = useNavigation();
     const dispatch = useDispatch();
+    const {tableList, tableInfo, tableStatus} = useSelector(state=>state.tableInfo);
     useEffect(()=>{
       dispatch(setLanguage("korean"));  
+    },[])
+    var statusInterval;
+
+    useEffect(()=>{
+        if(!isEmpty(tableInfo)) { 
+            // 주석 나중에 빼자
+            statusInterval = setInterval(() => {
+                console.log("status interval")
+                dispatch(getTableStatus());
+            }, DEFAULT_TABLE_STATUS_UPDATE_TIME);
+        }
     },[])
 /* 
     var path = RNFS.DownloadDirectoryPath + '/test.txt';
@@ -33,7 +47,7 @@ const MainScreen = () =>{
     }); 
    */
 
-    /* 
+     
     let timeoutSet = null
     function screenTimeOut(){
         if(timeoutSet!=null){clearInterval(timeoutSet);}
@@ -41,11 +55,11 @@ const MainScreen = () =>{
             navigation.navigate('ad');
             clearInterval(timeoutSet);
         },SCREEN_TIMEOUT)
-    } */
+    } 
     return(
         <>
             <KeyboardAvoidingView behavior="padding" enabled style={{width:'100%', height:'100%'}} >
-                <WholeWrapper onTouchStart={()=>{ /* screenTimeOut();  */ }} >
+                <WholeWrapper onTouchStart={()=>{  screenTimeOut();  }} >
                     <SideMenu/>
                     <MainWrapper>
                         <TopMenu/>

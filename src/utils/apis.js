@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ADMIN_BASE_URL, ADMIN_CALL_SERVICE, ADMIN_CATEGORIES, ADMIN_GOODS, ADMIN_OPTION, ADMIN_POST_CALL_SERVICE, ADMIN_TABLE_STATUS, POS_BASE_URL_REAL, POS_BASE_URL_TEST, POS_ORDER_ADD, POS_ORDER_NEW, POS_POST_MENU_EDIT, POS_POST_MENU_STATE, POS_POST_ORDER, POS_POST_ORDER_CANCEL, POS_POST_TABLE_LIST/* , SERVICE_ID, STORE_ID  */} from "../resources/apiResources";
+import { ADMIN_BANNER, ADMIN_BASE_URL, ADMIN_CALL_SERVICE, ADMIN_CATEGORIES, ADMIN_GOODS, ADMIN_OPTION, ADMIN_POST_CALL_SERVICE, ADMIN_TABLE_STATUS, POS_BASE_URL_REAL, POS_BASE_URL_TEST, POS_ORDER_ADD, POS_ORDER_NEW, POS_POST_MENU_EDIT, POS_POST_MENU_STATE, POS_POST_ORDER, POS_POST_ORDER_CANCEL, POS_POST_TABLE_LIST/* , SERVICE_ID, STORE_ID  */} from "../resources/apiResources";
 import { errorHandler, posErrorHandler } from "./errorHandler/ErrorHandler";
 import {isEmpty} from "lodash";
 import { getStoreID, numberPad, openPopup } from "./common";
@@ -62,7 +62,6 @@ export const  posMenuState = async (dispatch) =>{
 }
 // 포스 메뉴 받기
 export const  posMenuEdit = async(dispatch) =>{
-    console.log("posMenuEdit: ");
     const {STORE_ID, SERVICE_ID} = await getStoreID()
     .catch(err=>{
         EventRegister.emit("showSpinner",{isSpinnerShow:false, msg:""})
@@ -554,6 +553,30 @@ export const getAdminTableStatus = async(dispatch,data) => {
         axios.post(
             `${ADMIN_BASE_URL}${ADMIN_TABLE_STATUS}`,
             {"STORE_ID":STORE_ID, t_id:data?.t_id},
+            adminOrderHeader,
+        ) 
+        .then((response => {
+            if(posErrorHandler(dispatch, response.data)){
+                const data = response.data;
+                resolve(data);
+            }else {
+                reject();
+            } 
+        })) 
+        .catch(error=>reject(error.response.data));
+    })
+}
+
+// 관리자 배너 받아오기
+export const getAdminBanners = async(dispatch) => {
+    const {STORE_ID, SERVICE_ID} = await getStoreID()
+    .catch(err=>{
+        posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:'STORE_ID, SERVICE_ID를 입력 해 주세요.',MSG2:""})
+    });
+    return await new Promise(function(resolve, reject){
+        axios.post(
+            `${ADMIN_BASE_URL}${ADMIN_BANNER}`,
+            {"STORE_ID":STORE_ID},
             adminOrderHeader,
         ) 
         .then((response => {

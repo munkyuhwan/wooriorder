@@ -22,8 +22,10 @@ export const ADMIN_OPTION = "/option.php";
 export const ADMIN_CATEGORIES= "/category.php";
 export const ADMIN_CALL_SERVICE = "/call.php";
 export const ADMIN_POST_CALL_SERVICE = "/call_ok.php";
-
+export const ADMIN_BANNER = "/banner.php";
 export const ADMIN_TABLE_STATUS = "/store_table.php";
+
+export const ADMIN_BANNER_DIR = "https://wooriorder.co.kr/smartro/upload_file/banner/";
 
 //export const STORE_ID = "3100396007";
 //export const STORE_ID = "7407191"; //테스트 

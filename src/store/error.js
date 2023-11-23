@@ -21,7 +21,6 @@ export const errorSlice = createSlice({
             state.errorMsg = action.payload;
         })
         builder.addCase(setErrorData.fulfilled,(state, action)=>{
-            console.log("reducer: ",action.payload);
             state.errorMsg = action.payload.errorMsg;
             state.errorCode = action.payload.errorCode;
         })

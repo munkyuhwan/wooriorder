@@ -27,7 +27,6 @@ import { DEFAULT_TABLE_STATUS_UPDATE_TIME } from '../resources/defaults'
 const Stack = createStackNavigator()
 
 export default function Navigation() {
-    var statusInterval;
     const dispatch = useDispatch();
     const [spinnerText, setSpinnerText] = React.useState("")
     const {tableList, tableInfo, tableStatus} = useSelector(state=>state.tableInfo);
@@ -87,15 +86,6 @@ export default function Navigation() {
 
 
     useEffect(()=>{
-        if(!isEmpty(tableInfo)) { 
-            // 주석 나중에 빼자
-            statusInterval = setInterval(() => {
-                console.log("status interval")
-                dispatch(getTableStatus());
-            }, DEFAULT_TABLE_STATUS_UPDATE_TIME);
-        }
-    },[tableInfo])
-    useEffect(()=>{
         // 초기 세팅
         handleEventListener();
         dispatch(getMenuEdit());
@@ -117,7 +107,7 @@ export default function Navigation() {
                 ref={navigate}
             >
                 <Stack.Navigator
-                    initialRouteName='main'
+                    initialRouteName='ad'
                     screenOptions={{
                         gestureEnabled: true,
                         headerShown: false,
@@ -136,7 +126,7 @@ export default function Navigation() {
                     <Stack.Screen
                         name='ad'
                         component={ADScreen}
-                        options={{title:"Login screen"}}
+                        options={{title:"AD screen"}}
                     />
                     <Stack.Screen
                         name='status'
