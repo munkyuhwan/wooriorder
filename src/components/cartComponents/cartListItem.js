@@ -102,11 +102,11 @@ const CartListItem = (props) => {
                 </CartItemImageTogoWrapper>
                 
                 <CartItemTitlePriceWrapper>
-                    <CartItemTitle>{ItemTitle()}</CartItemTitle>
+                    <CartItemTitle>{ItemTitle()||order.ITEM_NAME}</CartItemTitle>
                     <CartItemOpts>
                         {additiveItemList.length>0 &&
                             additiveItemList.map((el,index)=>{
-                                return ItemOptionTitle(el.menuOptionSelected.ADDITIVE_ID,index)+`${index<(additiveItemList.length-1)?", ":""}`;
+                                return `${ItemOptionTitle(el.menuOptionSelected.ADDITIVE_ID,index)||el.menuOptionSelected.ADDITIVE_NAME}`+`${index<(additiveItemList.length-1)?", ":""}`;
 
                                 //return el.menuOptionSelected.ADDITIVE_NAME+`${index<(additiveItemList.length-1)?", ":""}`;
                             

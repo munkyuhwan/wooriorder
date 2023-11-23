@@ -56,7 +56,7 @@ const RecommendItem = (props) => {
                         }
                     </RecommendItemImageWrapper>
                     <RecommendItemInfoWrapper>
-                        <RecommendItemInfoTitle>{ItemTitle()}</RecommendItemInfoTitle>
+                        <RecommendItemInfoTitle>{ItemTitle()||recItem[0]?.ITEM_NAME}</RecommendItemInfoTitle>
                         <RecommendItemInfoPrice>{recItem[0]?.ITEM_AMT==null?"":Number(recItem[0]?.ITEM_AMT ).toLocaleString(undefined,{maximumFractionDigits:0}) } 원</RecommendItemInfoPrice>
                     </RecommendItemInfoWrapper>
                 </RecommendItemWrapper>

@@ -74,7 +74,7 @@ const OptionSelectPopup = () =>{
                             <TouchableWithoutFeedback onPress={()=>{setSelectedId(el.id)}} >
                                 <View style={{padding:10}} >
                                         <FastImage style={{width:100, height:100, resizeMode:'contain',  }} source={{uri:`https:${optionRight[0]?.gimg_chg}`}} />
-                                        <Text style={{width:'100%', color:'black', fontWeight:'bold', fontSize:17, textAlign:'center'}}  >{ItemTitle(menuOptionList[index]?.ADDITIVE_ID, index) /* menuOptionList[index]?.ADDITIVE_NAME */}</Text>
+                                        <Text style={{width:'100%', color:'black', fontWeight:'bold', fontSize:17, textAlign:'center'}}  >{ItemTitle(menuOptionList[index]?.ADDITIVE_ID, index)||menuOptionList[index]?.ADDITIVE_NAME /* menuOptionList[index]?.ADDITIVE_NAME */}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
 

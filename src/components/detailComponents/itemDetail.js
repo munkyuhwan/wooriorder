@@ -168,13 +168,13 @@ const ItemDetail = (props) => {
                 selInfoLanguage = selExtra[0]?.gmemo;
             }
             else if(language=="japanese") {
-                selInfoLanguage = selExtra[0]?.gmemo_jp;
+                selInfoLanguage = selExtra[0]?.gmemo_jp||selExtra[0]?.gmemo;
             }
             else if(language=="chinese") {
-                selInfoLanguage = selExtra[0]?.gmemo_cn;
+                selInfoLanguage = selExtra[0]?.gmemo_cn||selExtra[0]?.gmemo;
             }
             else if(language=="english") {
-                selInfoLanguage = selExtra[0]?.gmemo_en;
+                selInfoLanguage = selExtra[0]?.gmemo_en||selExtra[0]?.gmemo;
             }
         }else {
             selInfoLanguage = "";
@@ -189,13 +189,13 @@ const ItemDetail = (props) => {
                 selWonsanjiLanguage = selExtra[0]?.wonsanji;
             }
             else if(language=="japanese") {
-                selWonsanjiLanguage = selExtra[0]?.wonsanji_jp;
+                selWonsanjiLanguage = selExtra[0]?.wonsanji_jp||selExtra[0]?.wonsanji;
             }
             else if(language=="chinese") {
-                selWonsanjiLanguage = selExtra[0]?.wonsanji_cn;
+                selWonsanjiLanguage = selExtra[0]?.wonsanji_cn||selExtra[0]?.wonsanji;
             }
             else if(language=="english") {
-                selWonsanjiLanguage = selExtra[0]?.wonsanji_en;
+                selWonsanjiLanguage = selExtra[0]?.wonsanji_en||selExtra[0]?.wonsanji;
             }
         }else {
             selWonsanjiLanguage = "";
@@ -227,7 +227,7 @@ const ItemDetail = (props) => {
                                     </DetailItemInfoImageWrapper>
                                     <DetailItemInfoWrapper>
                                         <DetailItemInfoTitleWrapper>
-                                            <DetailItemInfoTitle>{ItemTitle()}</DetailItemInfoTitle>
+                                            <DetailItemInfoTitle>{ItemTitle()||menuDetail?.ITEM_NAME}</DetailItemInfoTitle>
                                             {itemExtra&&
                                         itemExtra[0]?.is_new=='Y'&&
                                                  <DetailItemInfoTitleEtc source={require("../../assets/icons/new.png")}/>

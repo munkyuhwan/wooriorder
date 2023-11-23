@@ -53,12 +53,12 @@ const LeftMenuList = (props) => {
                         <SideMenuItemWrapper>
                             {item?.ITEM_GROUP_CODE==selectedMainCategory &&
                                 <SideMenuItemOn>
-                                    <SideMenuText>{ItemTitle(item?.ITEM_GROUP_CODE,index) }</SideMenuText>
+                                    <SideMenuText>{ItemTitle(item?.ITEM_GROUP_CODE,index)||data[index]?.ITEM_GROUP_NAME }</SideMenuText>
                                 </SideMenuItemOn>
                             }
                             {item?.ITEM_GROUP_CODE!=selectedMainCategory &&
                                 <SideMenuItemOff>
-                                    <SideMenuText>{ItemTitle(item?.ITEM_GROUP_CODE,index)}</SideMenuText>
+                                    <SideMenuText>{ItemTitle(item?.ITEM_GROUP_CODE,index)||data[index]?.ITEM_GROUP_NAME}</SideMenuText>
                                 </SideMenuItemOff>
                             }
                         </SideMenuItemWrapper>

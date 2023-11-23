@@ -33,7 +33,7 @@ const OrderListItem = (props) => {
             <OrderListTableItemWrapper>
                 <OrderListTableItemImageNameWrapper flex={0.85}>
                     <OrderListTableItemImage source={{uri:imgUrl}} />
-                    <OrderListTableItemName>{ItemTitle()}</OrderListTableItemName>
+                    <OrderListTableItemName>{ItemTitle()||item.ITEM_NAME}</OrderListTableItemName>
                 </OrderListTableItemImageNameWrapper>
                 <OrderListTableItemAmt flex={0.1}>{item?.ITEM_CNT}ea</OrderListTableItemAmt>
                 <OrderListTableItemOperander flex={0.01} >X</OrderListTableItemOperander>

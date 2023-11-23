@@ -58,7 +58,7 @@ const OptItem = (props)=>{
                     <OptItemFastImage  source={{uri:`https:${optionItemCategoryExtra[0]?.gimg_chg}`}}/>
                     <OptItemDim isSelected={isSelected}/>
                     <OptItemInfoWrapper>
-                        <OptItemInfoTitle>{ItemTitle() }</OptItemInfoTitle>
+                        <OptItemInfoTitle>{ItemTitle()||optionData?.ADDITIVE_GROUP_NAME }</OptItemInfoTitle>
                         <OptItemInfoPrice>{addtivePrice?"+"+Number(addtivePrice).toLocaleString(undefined,{maximumFractionDigits:0}):""}</OptItemInfoPrice>
                         <OptItemInfoChecked isSelected={isSelected} source={require("../../assets/icons/check_red.png")}/>
                     </OptItemInfoWrapper>

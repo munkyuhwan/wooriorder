@@ -29,13 +29,13 @@ const TopMenuList = (props) => {
                 selTitleLanguage = subCatData[0]?.cate_name2
             }
             else if(language=="japanese") {
-                selTitleLanguage = subCatData[0]?.cate_name2_jp
+                selTitleLanguage = subCatData[0]?.cate_name2_jp||subCatData[0]?.cate_name2
             }
             else if(language=="chinese") {
-                selTitleLanguage = subCatData[0]?.cate_name2_cn
+                selTitleLanguage = subCatData[0]?.cate_name2_cn||subCatData[0]?.cate_name2
             }
             else if(language=="english") {
-                selTitleLanguage = subCatData[0]?.cate_name2_en
+                selTitleLanguage = subCatData[0]?.cate_name2_en||subCatData[0]?.cate_name2
             }
         }
         return selTitleLanguage;

@@ -102,7 +102,7 @@ const MenuItem = ({item,index,setDetailShow}) => {
 
                 </MenuItemTopWrapper>
                 <MenuItemBottomWRapper>
-                    <MenuItemName>{itemTitle()}</MenuItemName>
+                    <MenuItemName>{itemTitle()||item.ITEM_NAME}</MenuItemName>
                     <MenuItemPrice>{itemPrice}원</MenuItemPrice>
                 </MenuItemBottomWRapper>
             </MenuItemWrapper>
