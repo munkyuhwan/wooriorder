@@ -9,7 +9,7 @@ export const DetailWrapper=styled.View`
     height:100%;
     paddingRight:64px;
     paddingBottom:23px;
-    backgroundColor:${mainTheme};
+    backgroundColor:#00000000;
 `
 export const DetailWhiteWrapper = styled.View`
     width:100%;
@@ -20,6 +20,8 @@ export const DetailWhiteWrapper = styled.View`
     paddingBottom:31px;
     paddingRight:36px;
     paddingLeft:36px;
+    borderColor:${colorBlack};
+    borderWidth:0.5px;
 `
 
 export const DetailInfoWrapper = styled.View`
