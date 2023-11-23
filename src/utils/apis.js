@@ -300,7 +300,6 @@ export const checkTableOrder = async(dispatch, data ) => {
                 const data = response.data;
                 const obj = data.OBJ;
                 const orderList = obj.ORDER_LIST;
-                
                 // SMRO000068-접수 / SMRO000069-완료 / SMRO000070-취소 / SMRO000071-반품 / SMRO000088-결제완료
                 // SMRO000068-접수 / SMRO000069-완료 경우 추가 주문
                 //console.log(orderList.length)
