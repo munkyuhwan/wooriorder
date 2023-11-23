@@ -263,7 +263,14 @@ const CartView = () =>{
                     </PayWrapper>
                     <TouchableWithoutFeedback onPress={()=>{ doPayment();  /* addToPos(); */  }} >
                         <PayBtn>
-                            <PayTitle>{LANGUAGE[language]?.cartView.makeOrder}</PayTitle>
+                            {
+                                !isPrepay&&
+                                <PayTitle>{LANGUAGE[language]?.cartView.makeOrder}</PayTitle>
+                            }
+                            {
+                                isPrepay&&
+                                <PayTitle>{LANGUAGE[language]?.cartView.payOrder}</PayTitle>
+                            }
                             <PayIcon source={require("assets/icons/order.png")} />
                         </PayBtn>
                      </TouchableWithoutFeedback>

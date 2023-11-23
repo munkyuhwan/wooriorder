@@ -23,6 +23,7 @@ const CartListItem = (props) => {
     const order = props?.item;
 
     const additiveItemList = order.ADDITIVE_ITEM_LIST;
+    console.log("additiveItemList: ",order);
     // 이미지 찾기
     const itemExtra = menuExtra.filter(el=>el.pos_code == order.ITEM_ID);
     const ItemTitle = () => {
@@ -95,7 +96,6 @@ const CartListItem = (props) => {
                     <TouchableWithoutFeedback onPress={()=>{ onTogoTouch(); }} >
                         <CartItemTogoWrapper>
                             <CartItemTogoText>{additiveItemList?.filter(el=>el.menuOptionSelected.ADDITIVE_ID=="1002").length>0?LANGUAGE[language]?.cartView.togoCancel:LANGUAGE[language]?.cartView.togo}</CartItemTogoText>
-                            
                             <CartItemTogoIcon source={require("assets/icons/togo.png")}  />
                         </CartItemTogoWrapper>
                     </TouchableWithoutFeedback>

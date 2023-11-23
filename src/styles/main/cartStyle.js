@@ -42,10 +42,10 @@ export const ArrowImage = styled.Image`
 // cart list item
 export const CartItemWrapper = styled.View`
     width:100%;
-    paddingBottom:12px;
-    paddingTop:12px; 
-    paddingLeft:20px;
-    paddingRight:23px;
+    paddingBottom:17px;
+    paddingTop:17px; 
+    paddingLeft:13px;
+    paddingRight:13px;
     borderBottomWidth:1px;
     borderColor:${colorGrey};
     flexDirection:row;
@@ -55,8 +55,8 @@ export const CartItemImageTogoWrapper = styled.View`
     flexDirection:column;
 `
 export const CartItemImage = styled.Image`
-    width:100px;
-    height:66px;
+    width:120px;
+    height:76px;
     backgroundColor:brown;
     borderRadius:${RADIUS};
 `
@@ -67,8 +67,8 @@ export const CartItemFastImage = styled(FastImage)`
     borderRadius:${RADIUS};
 `
 export const CartItemTogoWrapper = styled.View`
-    width:100px;
-    height: 40px;
+    width:120px;
+    height: 50px;
     backgroundColor:${mainTheme};
     marginTop:12px;
     alignItem:center;
@@ -79,7 +79,8 @@ export const CartItemTogoWrapper = styled.View`
 export const CartItemTogoText = styled.Text`
     color:${textColorWhite};
     textAlign:center;
-    fontSize:17px;
+    fontSize:23px;
+    fontWeight:bold;
     marginTop:auto;
     marginBottom:auto;
 `
@@ -93,17 +94,18 @@ export const CartItemTogoIcon = styled.Image`
 `
 // cart 이름, 가격, 수량
 export const CartItemTitlePriceWrapper = styled.View`
-    width:145px;
-    paddingLeft:16px;
+    width:130px;
+    paddingLeft:8px;
     paddingRiight:2px;
     paddingTop:2px;
     flexDirection:column;
 `
 export const CartItemTitle = styled.Text`
-    fontSize:17px;
+    fontSize:24px;
     fontWeight:bold;
     color:${mainTheme};
     flex:1;
+    maxWidth:110px;
 `
 export const CartItemOpts = styled.Text`
     fontSize:12px;
@@ -111,23 +113,24 @@ export const CartItemOpts = styled.Text`
     flex:1;
 `
 export const CartItemPrice = styled.Text`
-    fontSize:15px;
+    fontSize:20px;
     fontWeight:normal;
     color:${colorRed};
     flex:1;
 `
 // 수량 조절 
 export const CartItemAmtWrapper = styled.View`
-    width:128px;
-    height: 40px;
+    width:150px;
+    height: 50px;
     backgroundColor:${colorGrey};
     borderRadius:${RADIUS};
     flexDirection:row;
     padding:5px;
+    marginTop:10px;
 `
 export const CartItemAmtController = styled.View`
-    width:28px;
-    height:28px;
+    width:34px;
+    height:34px;
     backgroundColor:${colorWhite};
     borderRadius:${RADIUS};
     marginTop:auto;
@@ -136,16 +139,17 @@ export const CartItemAmtController = styled.View`
     textAlign:center;
 `
 export const CartItemAmtControllerImage = styled.Image`
-    width:28px;
-    height:28px;
+    width:38px;
+    height:38px;
     flex:1;
+    resizeMode:contain;
  `
 export const CartItemAmtText = styled.Text`
-    fontSize:20px;
+    fontSize:30px;
     fontWeight:bold;
     flex:1;
     textAlign:center;
-    lineHeight:28px;
+    lineHeight:42px;
 `
 // 취소 버튼
 export const CartItemCancelWrapper = styled.View`
@@ -187,16 +191,16 @@ export const PayAmtWrapper = styled.View`
 `
 export const PayAmtTitle = styled.Text`
     flex:1;
-    fontSize:15px;
+    fontSize:20px;
     color:${colorWhite}
 `
 export const PayAmtNumber = styled.Text`
-    fontSize:15px;
+    fontSize:20px;
     color:${colorWhite};
     fontWeight:bold;
 `
 export const PayAmtUnit = styled.Text`
-    fontSize:15px;
+    fontSize:20px;
     color:${colorWhite};
 `
 export const PayBtn = styled.View`
@@ -211,7 +215,8 @@ export const PayBtn = styled.View`
 `
 export const PayTitle = styled.Text`
     color:${colorWhite};
-    fontSize:19px;
+    fontSize:25px;
+    fontWeight:bold;
     marginTop:auto;
     marginBottom:auto;
     marginRight:7px;
@@ -220,6 +225,6 @@ export const PayIcon = styled.Image`
     marginTop:auto;
     marginBottom:auto;
     marginLeft:7px;
-    width:20px;
+    width:25px;
     resizeMode:contain;
 `
