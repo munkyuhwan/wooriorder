@@ -16,10 +16,10 @@ export const DetailWhiteWrapper = styled.View`
     height:100%;
     borderRadius:${RADIUS};
     backgroundColor:${colorWhite};
-    paddingTop:31px;
-    paddingBottom:31px;
-    paddingRight:36px;
-    paddingLeft:36px;
+    paddingTop:10px;
+    paddingBottom:10px;
+    paddingRight:10px;
+    paddingLeft:10px;
     borderColor:${colorBlack};
     borderWidth:0.5px;
 `
@@ -33,44 +33,45 @@ export const DetailInfoWrapper = styled.View`
 // 상단 
 export const DetailItemInfoWrapper = styled.View`
     flexDirection:column;
-    paddingLeft:29px;
+    paddingLeft:69px;
     paddingTop:12px;
 `
 export const DetailItemInfoImageWrapper = styled.ImageBackground`
-    width:262px;
-    height:166px;
+    width:290px;
+    height:200px;
     borderRadius:${RADIUS};
     backgroundColor:black;
 `
 export const DetailItemInfoImage = styled.Image`
-    width:262px;
-    height:166px;
+    width:350px;
+    height:210px;
     resizeMode:contain;
 `
 
 export const DetailItemInfoFastImage = styled(FastImage)`
-    width:262px;
-    height:166px;
-    resizeMode:contain;
+    width:350px;
+    height:210px;
+    resizeMode:cover;
+    borderRadius:${RADIUS};
 `
 export const DetailItemInfoTitleWrapper = styled.View`
     flexDirection:row;
 `
 export const DetailItemInfoTitle = styled.Text`
-    fontSize:28px;
+    fontSize:38px;
     fontWeight:bold;
     marginRight:11px;
     color:${colorBlack}
 `
 export const DetailItemInfoTitleEtc = styled.Image`
-    width:31px;
-    height:21px;
-    marginRight:11px;
+    width:54px;
+    height:42px;
+    marginRight:7px;
     resizeMode:contain;
 
 `
 export const DetailItemInfoSource = styled.Text`
-    fontSize:14px;
+    fontSize:22px;
     color:${colorRed};
 `
 export const DetailPriceMoreWrapper = styled.View`
@@ -82,14 +83,14 @@ export const DetailItemInfoPriceWrapper = styled.View`
     flex:1;
 `
 export const DetailItemInfoPrice = styled.Text`
-    fontSize:25px;
+    fontSize:38px;
     color:${colorRed};
     ${(props)=>props.isBold?"fontWeight:bold;":""}
     marginTop:auto;
     marginBottom:auto;
 `
 export const DetailItemInfoMore = styled.Text`
-    fontSize:12px;
+    fontSize:22px;
     color:${colorBlack};
     flex:1
 `
@@ -98,24 +99,25 @@ export const DetailItemInfoMore = styled.Text`
 export const OptRecommendWrapper = styled.View`
     flex:1;
     flexDirection:column;
+    paddingTop:38px;
 `
 export const OptListWrapper = styled.View`
     flexDirection:column;
 `
 export const OptTitleText = styled.Text`
-    fontSize:17px;   
+    fontSize:23px;   
     color:${colorBlack};
     fontWeight:bold;
-    paddingTop:29px;
-    paddingBottom:12px;
+    paddingTop:5px;
+    paddingBottom:4px;
 `
 export const OptList = styled.ScrollView`
     width:100%;
 `
 // 옵션선택 아이템
 export const OptItemWrapper= styled.View`
-    width:95px;
-    height:60px;
+    width:130px;
+    height:90px;
     borderRadius:${RADIUS_SMALL};
     marginRight:9px;
 `
@@ -169,8 +171,8 @@ export const RecommendItemWrapper= styled.View`
 
 `
 export const RecommendItemImageWrapper = styled.View`
-    width:95px;
-    height:60px;
+    width:130px;
+    height:90px;
     borderRadius:${RADIUS_SMALL};
     marginRight:9px;
 `
@@ -187,13 +189,13 @@ export const RecommendItemInfoWrapper = styled.View`
     justifyContents:center;
 `
 export const RecommendItemInfoTitle = styled.Text`
-    fontSize:12px;
+    fontSize:20px;
     color:${colorBlack};
     fontWeight:bold;
     textAlign:center;
 `
 export const RecommendItemInfoPrice = styled.Text`
-    fontSize:12px;
+    fontSize:18px;
     color:${colorRed};
     textAlign:center;
 `
