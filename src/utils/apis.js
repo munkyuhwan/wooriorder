@@ -398,17 +398,15 @@ export const getOrderByTable = async(dispatch, data) => {
                     //console.log("responseData: ",responseData);
                     const obj = responseData.OBJ;
                     const orderList = obj.ORDER_LIST;
-                    //console.log("orderList============================================================");
-                    //console.log("orderList: ",orderList);
                     
-                    /*
-                    const orderData = JSON.parse(data?.orderData);
-                    console.log("data : ",orderData.ORG_ORDERNO);
-                    console.log("orderList: ",orderList[0].ORG_ORDERNO);
-                    const filteredData = orderList.filter(el=>el.ORG_ORDERNO == orderData.ORG_ORDERNO);
-                    console.log("filteredData: ",filteredData);
-                     */
-                    resolve(orderList); 
+                    const orderData = (data?.orderData);
+                    let filteredData = orderList.filter(el=>el.ORG_ORDERNO == orderData.ORG_ORDERNO);
+
+                    if(filteredData.length <=0) {
+                        filteredData = [];
+                    }
+                    
+                    resolve(filteredData); 
 
                 }else {
                     reject();

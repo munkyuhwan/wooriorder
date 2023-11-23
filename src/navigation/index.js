@@ -89,10 +89,10 @@ export default function Navigation() {
     useEffect(()=>{
         if(!isEmpty(tableInfo)) { 
             // 주석 나중에 빼자
-            statusInterval = setInterval(() => {
+            //statusInterval = setInterval(() => {
                 console.log("status interval")
                 dispatch(getTableStatus());
-            }, DEFAULT_TABLE_STATUS_UPDATE_TIME);
+            //}, DEFAULT_TABLE_STATUS_UPDATE_TIME);
         }
     },[tableInfo])
     useEffect(()=>{

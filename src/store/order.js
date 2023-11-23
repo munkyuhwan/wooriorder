@@ -281,7 +281,7 @@ export const postToPos =  createAsyncThunk("order/postToPos", async(_,{dispatch,
 
     return await postOrderToPos(dispatch, submitOrderPayData)
     .catch(err=>{
-        posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:"주문 오류",MSG2:"주문을 진행할 수 없습니다."});
+        //posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:"주문 오류",MSG2:"주문을 진행할 수 없습니다."});
         console.log("error: ",err)
         const lw = new LogWriter();
         const logPos = `\nPOST POS DATA ERROR==================================\ndata:${JSON.stringify(err)}\n`
@@ -313,7 +313,7 @@ export const postAddToPos =  createAsyncThunk("order/postAddToPos", async(_,{dis
 export const getOrderStatus = createAsyncThunk("order/getOrderStatus", async(_,{dispatch, getState,extra}) =>{
     const {tableInfo} = getState().tableInfo;
     const {orderData} = _;
-    return await getOrderByTable(dispatch, {tableInfo,orderData})
+    return await getOrderByTable(dispatch, {tableInfo ,orderData})
     .catch(err=>{
         console.log("error: ",err)
     });

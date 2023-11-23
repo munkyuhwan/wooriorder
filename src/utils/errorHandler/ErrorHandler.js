@@ -4,7 +4,7 @@ import { setErrorData } from "../../store/error";
 import { openPopup, openTransperentPopup } from "../common";
 import isEmpty from "lodash";
 
-export const posErrorHandler = async(dispatch, data) =>{
+export const posErrorHandler = (dispatch, data) =>{
     const errorCode = data.ERRCODE;
     if( !_.isEmpty(errorCode) ) {    
         dispatch(setErrorData({errorCode:data.ERRCODE,errorMsg:data.MSG+`\n${data.MSG2}`})); 

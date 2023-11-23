@@ -10,25 +10,43 @@ import { openTransperentPopup } from '../../utils/common';
 import OrderListItem from '../orderListComponents/orderListItem';
 import { getOrderStatus } from '../../store/order';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { checkTableOrder } from '../../utils/apis';
+import {isEmpty} from 'lodash';
 
 const OrderListPopup = () =>{
     const dispatch = useDispatch();
     const {language} = useSelector(state=>state.languages);
     const {orderStatus} = useSelector(state=>state.order);    
     const [orderTotalAmt, setOrderTotalAmt] = useState(0);
+    const { tableInfo } = useSelector(state=>state.tableInfo);
     useEffect(()=>{
-        AsyncStorage.getItem("orderResult")
+        //const orderStatus = await checkTableOrder(dispatch,{tableInfo}).catch(err=>{return});
+       /*  AsyncStorage.getItem("orderResult")
         .then(result =>{
-            dispatch(getOrderStatus(result));
+            console.log("order result: ",result);
+            if(result) {
+                dispatch(getOrderStatus({orderData:orderResult}));  
+            }
         })
         .catch(error=>{
 
+        })  */
+        checkTableOrder(dispatch,{tableInfo})
+        .then(orderStatus=>{
+            const orderNo = orderStatus.orderNo;
+            const mchatOrderNo = orderStatus.mchatOrderNo;
+            const orgOrderNo = orderStatus.orgOrderNo
+            const orderResult = {"ORG_ORDERNO":orgOrderNo,"MCHT_ORDERNO":mchatOrderNo,"ORDERNO":orderNo}
+            dispatch(getOrderStatus({orderData:orderResult}));
         })
+        .catch(err=>{}) 
+        
     },[])
  
     useEffect(()=>{
-        //console.log("orderStatus: ",orderStatus[0].ITEM_LIST);
+        if(isEmpty(orderStatus)) {
+            setOrderTotalAmt(0);
+        }
         if(orderStatus[0]?.ITEM_LIST){
             let tmpPrice = 0;
             orderStatus[0].ITEM_LIST.map(el=>{
