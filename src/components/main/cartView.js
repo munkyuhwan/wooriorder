@@ -15,11 +15,13 @@ import TopButton from '../menuComponents/topButton';
 import { openPopup, openTransperentPopup } from '../../utils/common';
 import { getOrderStatus, postAddToPos, postToPos } from '../../store/order';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import isEmpty from 'lodash';
+import {isEmpty} from 'lodash';
 import { servicePayment } from '../../utils/smartro';
 import LogWriter from '../../utils/logWriter';
 import { setErrorData } from '../../store/error';
-import { checkTableOrder, getOrderByTable } from '../../utils/apis';
+import { checkTableOrder, getOrderByTable, posMenuState } from '../../utils/apis';
+import { posErrorHandler } from '../../utils/errorHandler/ErrorHandler';
+import { getMenuState } from '../../store/menu';
 
 const CartView = () =>{
     const lw = new LogWriter();
@@ -59,12 +61,36 @@ const CartView = () =>{
     } 
 
     const doPayment = async () =>{
+        // 업데이트 메뉴가 있는지 체크
+        //dispatch(getMenuState());
+
+        const resultData = await posMenuState(dispatch);
+        if(!resultData) {
+            //return
+        }else {
+            const isUpdated = resultData?.OBJ.UPDATE_YN;
+            const updateDateTime = resultData?.OBJ.UPDATE_DTIME.slice(0,14);
+            if(isUpdated=="Y") {
+                AsyncStorage.setItem("lastUpdate",updateDateTime);
+                posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:"메뉴가 업데이트 되었습니다.",MSG2:"업데이트 후 다시 진행 해 주세요."});
+                return;
+            }
+        }
+ 
+        //posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:"메뉴가 업데이트 되었습니다.",MSG2:"업데이트 후 다시 진행 해 주세요."});
+        //return;
+
         // 이전에 주문한 주문 번호가 있는지 확인하기 위함
         //let orderResult = await AsyncStorage.getItem("orderResult")
         // 테이블이 사용중인지 비교 하기
 
         // 선불경우 OrderList띄웟 결제 진행, 주문내역 확인 안됨
         // 후불의 경우 바로 결제 진행하고 OrderList는 주문내역 확인
+        //console.log("tableInfo: ",(tableInfo))
+        if(isEmpty(tableInfo)) {
+            posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:"테이블 선택이 안되었습니다.",MSG2:"직원호출을 해 주세요."});
+            return;
+        }
 
         const orderStatus = await checkTableOrder(dispatch,{tableInfo}).catch(err=>{return});
 

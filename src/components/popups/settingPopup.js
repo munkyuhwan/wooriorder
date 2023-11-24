@@ -12,7 +12,7 @@ import { Picker } from '@react-native-picker/picker';
 import { clearTableInfo, initTableInfo, setTableInfo } from '../../store/tableInfo';
 import { SMARTRO_FUNCTION } from '../../resources/cardReaderConstant';
 import { useSharedValue } from 'react-native-reanimated';
-import { getMenuEdit } from '../../store/menu';
+import { getMenuEdit, getMenuState } from '../../store/menu';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { cancelOrder, checkTableOrder } from '../../utils/apis';
 
@@ -430,7 +430,7 @@ const SettingPopup = () =>{
                                 <SettingButtonText isMargin={true} >로그 올리기</SettingButtonText>
                             </TouchableWithoutFeedback>
                             */}
-                            <TouchableWithoutFeedback onPress={()=>{dispatch(getMenuEdit())}} >
+                            <TouchableWithoutFeedback onPress={()=>{dispatch(getMenuEdit()); dispatch(getMenuState());}} >
                                 <SettingButtonText isMargin={true} >메뉴 업데이트</SettingButtonText>
                             </TouchableWithoutFeedback>
                             <TouchableWithoutFeedback onPress={()=>{checkUpdate();}} >

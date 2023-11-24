@@ -96,9 +96,9 @@ export default function Navigation() {
         //}, 1000);
  
         // 메뉴 갱신을 위한 함수 실행 한시간에 한번
-        //setInterval(()=>{
-        //   dispatch(getMenuState());
-        //},1000*60) 
+        setInterval(()=>{
+           dispatch(getMenuState());
+        },1000*60*60) 
     },[])
 
     return (
