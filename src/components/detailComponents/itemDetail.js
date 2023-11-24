@@ -23,7 +23,7 @@ const ItemDetail = (props) => {
     const isDetailShow = props.isDetailShow;
     const dispatch = useDispatch();
     const {menu} = useSelector((state)=>state.menu);
-    const {menuDetailID, menuDetail} = useSelector((state)=>state.menuDetail);
+    const {menuDetailID, menuDetail, menuOptionSelected} = useSelector((state)=>state.menuDetail);
     const [detailZIndex, setDetailZIndex] = useState(0);
     // 메뉴 추가정보 찾기
     const {menuExtra} = useSelector(state=>state.menuExtra);
@@ -102,7 +102,8 @@ const ItemDetail = (props) => {
     const addToCart = () => {
         //dispatch(addToOrderList({menuDetail, menuDetailID, selectedOptions,selectedRecommend}))
         const itemID = menuDetailID
-        dispatch(addToOrderList({itemID}));
+        console.log("menuOptionSelected: ",menuOptionSelected);
+        dispatch(addToOrderList({itemID,menuOptionSelected}));
         closeDetail();
     }
 

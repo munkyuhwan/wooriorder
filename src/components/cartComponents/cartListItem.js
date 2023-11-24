@@ -23,7 +23,6 @@ const CartListItem = (props) => {
     const order = props?.item;
 
     const additiveItemList = order.ADDITIVE_ITEM_LIST;
-    console.log("additiveItemList: ",order);
     // 이미지 찾기
     const itemExtra = menuExtra.filter(el=>el.pos_code == order.ITEM_ID);
     const ItemTitle = () => {
@@ -52,13 +51,13 @@ const CartListItem = (props) => {
             selOptTitleLanguage = additiveItemList[index]?.menuOptionSelected.ADDITIVE_NAME;
         }
         else if(language=="japanese") {
-            selOptTitleLanguage = selExtra[0]?.op_name_jp;
+            selOptTitleLanguage = selExtra[0]?.op_name_jp||additiveItemList[index]?.menuOptionSelected.ADDITIVE_NAME;
         }
         else if(language=="chinese") {
-            selOptTitleLanguage = selExtra[0]?.op_name_cn;
+            selOptTitleLanguage = selExtra[0]?.op_name_cn||additiveItemList[index]?.menuOptionSelected.ADDITIVE_NAME;
         }
         else if(language=="english") {
-            selOptTitleLanguage = selExtra[0]?.op_name_en;
+            selOptTitleLanguage = selExtra[0]?.op_name_en||additiveItemList[index]?.menuOptionSelected.ADDITIVE_NAME;
         }
         return selOptTitleLanguage;
     }

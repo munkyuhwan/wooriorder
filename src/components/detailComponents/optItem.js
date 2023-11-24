@@ -24,13 +24,13 @@ const OptItem = (props)=>{
             selTitleLanguage = optionData?.ADDITIVE_GROUP_NAME;
         }
         else if(language=="japanese") {
-            selTitleLanguage = selExtra[0]?.cate_name_jp;
+            selTitleLanguage = selExtra[0]?.cate_name_jp||optionData?.ADDITIVE_GROUP_NAME;
         }
         else if(language=="chinese") {
-            selTitleLanguage = selExtra[0]?.cate_name_cn;
+            selTitleLanguage = selExtra[0]?.cate_name_cn||optionData?.ADDITIVE_GROUP_NAME;
         }
         else if(language=="english") {
-            selTitleLanguage = selExtra[0]?.cate_name_en;
+            selTitleLanguage = selExtra[0]?.cate_name_en||optionData?.ADDITIVE_GROUP_NAME;
         }
         return selTitleLanguage;
     }

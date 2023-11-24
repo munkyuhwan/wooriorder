@@ -116,7 +116,7 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
     // 선택된 아이템 정보 받기
     const {displayMenu, allItems} = getState().menu;
     const {orderList} = getState().order;
-    const {menuOptionSelected} = getState().menuDetail;
+    const {menuOptionSelected} = _;
     const {tableInfo} = getState().tableInfo;
 
     const menuDetail = allItems.filter(el=>el.ITEM_ID == _.itemID);
@@ -126,8 +126,11 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
     if(menuOptionSelected) {
         if(menuOptionSelected.length>0) additiveList=menuOptionSelected;
     }
+    //console.log("menuOptionSelected: ",menuOptionSelected)
     var selectedMenuDetail = Object.assign({},menuDetail[0],{"ADDITIVE_ITEM_LIST":additiveList});
-
+    //console.log("selectedMenuDetail:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: ")
+    //console.log("selectedMenuDetail: ",selectedMenuDetail)
+    //console.log("selectedMenuDetail: ",selectedMenuDetail.ADDITIVE_ITEM_LIST)
     var newOrderList = []; // 새 오더 정렬;
    // 중복메뉴
     let duplicatedItem = orderList.filter(el=> (
