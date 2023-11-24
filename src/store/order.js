@@ -3,7 +3,7 @@ import { MENU_DATA } from '../resources/menuData';
 //import { SERVICE_ID, STORE_ID } from '../resources/apiResources';
 import { addOrderToPos, getOrderByTable, postOrderToPos } from '../utils/apis';
 import { getStoreID, grandTotalCalculate, openPopup } from '../utils/common';
-import { isEqual } from 'lodash'
+import { isEqual, isEmpty } from 'lodash'
 import { posErrorHandler } from '../utils/errorHandler/ErrorHandler';
 import { setCartView } from './cart';
 import LogWriter from '../utils/logWriter';
@@ -118,6 +118,11 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
     const {orderList} = getState().order;
     const {menuOptionSelected} = _;
     const {tableInfo} = getState().tableInfo;
+
+    if(isEmpty(tableInfo)) {
+        posErrorHandler(dispatch, {ERRCODE:"XXXX",MSG:'테이블 지정 후 이용하실 수 있습니다.',MSG2:"직원호출을 해 주세요."})
+        return
+    }
 
     const menuDetail = allItems.filter(el=>el.ITEM_ID == _.itemID);
     // 기존 주문에 같은 메뉴 있는지 확인

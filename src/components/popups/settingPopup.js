@@ -15,6 +15,8 @@ import { useSharedValue } from 'react-native-reanimated';
 import { getMenuEdit, getMenuState } from '../../store/menu';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { cancelOrder, checkTableOrder } from '../../utils/apis';
+import { initOrderList } from '../../store/order';
+import { setCartView } from '../../store/cart';
 
 const SettingPopup = () =>{
 
@@ -253,6 +255,9 @@ const SettingPopup = () =>{
                     onValueChange = {(itemValue, itemIndex) => {
                         dispatch(setTableInfo(itemValue))
                         AsyncStorage.removeItem("orderResult");
+                        dispatch(initOrderList());
+                        dispatch(setCartView(false));
+                        displayOnAlert("수정되었습니다.",[]);
 
                     }}
                     selectedValue={tableInfo}
