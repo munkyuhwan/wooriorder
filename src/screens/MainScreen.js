@@ -25,17 +25,8 @@ const MainScreen = () =>{
     useEffect(()=>{
       dispatch(setLanguage("korean"));  
     },[])
-    var statusInterval;
 
-    useEffect(()=>{
-        if(!isEmpty(tableInfo)) { 
-            // 주석 나중에 빼자
-            statusInterval = setInterval(() => {
-                console.log("status interval")
-                dispatch(getTableStatus());
-            }, DEFAULT_TABLE_STATUS_UPDATE_TIME);
-        }
-    },[])
+   
 /* 
     var path = RNFS.DownloadDirectoryPath + '/test.txt';
     RNFS.writeFile(path, 'Lorem ipsum dolor sit amet', 'utf8')

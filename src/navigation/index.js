@@ -27,6 +27,7 @@ import { DEFAULT_TABLE_STATUS_UPDATE_TIME } from '../resources/defaults'
 const Stack = createStackNavigator()
 
 export default function Navigation() {
+    var statusInterval;
     const dispatch = useDispatch();
     const [spinnerText, setSpinnerText] = React.useState("")
     const {tableList, tableInfo, tableStatus} = useSelector(state=>state.tableInfo);
@@ -83,7 +84,15 @@ export default function Navigation() {
             }
         }
     },[tableStatus])
-
+    useEffect(()=>{
+        //if(!isEmpty(tableInfo)) { 
+            // 주석 나중에 빼자
+            statusInterval = setInterval(() => {
+                //console.log("status interval")
+                dispatch(getTableStatus());
+            }, DEFAULT_TABLE_STATUS_UPDATE_TIME);
+        //}
+    },[])
 
     useEffect(()=>{
         // 초기 세팅
