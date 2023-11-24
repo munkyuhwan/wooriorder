@@ -9,7 +9,7 @@ import { IndicatorWrapper, PopupIndicatorText, PopupIndicatorWrapper, PopupSpinn
 import { PopupCloseButton, PopupCloseButtonWrapper } from '../../styles/common/popup';
 import { openFullSizePopup } from '../../utils/common';
 import { Picker } from '@react-native-picker/picker';
-import { clearTableInfo, initTableInfo, setTableInfo } from '../../store/tableInfo';
+import { clearTableInfo, getTableList, initTableInfo, setTableInfo } from '../../store/tableInfo';
 import { SMARTRO_FUNCTION } from '../../resources/cardReaderConstant';
 import { useSharedValue } from 'react-native-reanimated';
 import { getMenuEdit, getMenuState } from '../../store/menu';
@@ -354,7 +354,8 @@ const SettingPopup = () =>{
         .then((value)=>{
             setServiceIDText(value)
         })
-        
+        dispatch(getTableList());
+
     },[])
 
     const setStoreInfo = () =>{
@@ -394,7 +395,7 @@ const SettingPopup = () =>{
                             </SettingItemWrapper>
                             }
                             <SettingItemWrapper>
-                                <TouchableWithoutFeedback onPress={()=>{ setTableSettingShow(!isTableSettingShow) }} >
+                                <TouchableWithoutFeedback onPress={()=>{dispatch(getTableList()); setTableSettingShow(!isTableSettingShow) }} >
                                     <SettingButtonText isMargin={false} >테이블 세팅</SettingButtonText>
                                 </TouchableWithoutFeedback> 
                                 <Dropdown/>
@@ -439,7 +440,7 @@ const SettingPopup = () =>{
                                 <SettingButtonText isMargin={true} >메뉴 업데이트</SettingButtonText>
                             </TouchableWithoutFeedback>
                             <TouchableWithoutFeedback onPress={()=>{checkUpdate();}} >
-                                <SettingButtonText isMargin={true} >앱 업데이트 ver 1.0.1-14</SettingButtonText>
+                                <SettingButtonText isMargin={true} >앱 업데이트 ver 1.0.1-15</SettingButtonText>
                             </TouchableWithoutFeedback> 
                         </SettingButtonWrapper>
                     </SettingScrollView>
