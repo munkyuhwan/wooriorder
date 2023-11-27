@@ -131,7 +131,7 @@ const CartListItem = (props) => {
                     </CartItemAmtWrapper>
                 </CartItemTitlePriceWrapper>
                 <TouchableWithoutFeedback onPress={()=>{calculateAmt("cancel",0)}}>
-                    <CartItemCancelWrapper  style={{backgroundColor:'red'}}  >
+                    <CartItemCancelWrapper>
                         <CartItemCancelBtn source={require("assets/icons/close_grey.png")} />
                     </CartItemCancelWrapper>
                 </TouchableWithoutFeedback>
