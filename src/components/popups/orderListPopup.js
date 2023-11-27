@@ -47,7 +47,6 @@ const OrderListPopup = () =>{
         if(isEmpty(orderStatus)) {
             setOrderTotalAmt(0);
         }
-        console.log("item list: ",orderStatus[0].ITEM_LIST );
         if(orderStatus[0]?.ITEM_LIST){
             let tmpPrice = 0;
             orderStatus[0].ITEM_LIST.map(el=>{
