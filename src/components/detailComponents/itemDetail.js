@@ -102,7 +102,6 @@ const ItemDetail = (props) => {
     const addToCart = () => {
         //dispatch(addToOrderList({menuDetail, menuDetailID, selectedOptions,selectedRecommend}))
         const itemID = menuDetailID
-        console.log("menuOptionSelected: ",menuOptionSelected);
         dispatch(addToOrderList({itemID,menuOptionSelected}));
         closeDetail();
     }
@@ -317,7 +316,7 @@ const ItemDetail = (props) => {
                             </>
                             }
                         </DetailWhiteWrapper>
-                </DetailWrapper>
+                    </DetailWrapper>
             </Animated.View>
         </>
     )  

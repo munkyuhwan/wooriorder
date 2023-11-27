@@ -20,8 +20,7 @@ export const DetailWhiteWrapper = styled.View`
     paddingBottom:10px;
     paddingRight:10px;
     paddingLeft:10px;
-    borderColor:${colorBlack};
-    borderWidth:0.5px;
+    elevation: 100;
 `
 
 export const DetailInfoWrapper = styled.View`
