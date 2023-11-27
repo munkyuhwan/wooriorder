@@ -190,12 +190,12 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
     }
     const totalResult = grandTotalCalculate(newOrderList)
 
-    const orderPayData = {
+    let orderPayData = {
         "STORE_ID": STORE_ID,
         "SERVICE_ID": SERVICE_ID,
         "MCHT_ORDERNO": "130",
-        "MEMB_TEL": "01012349876",
-        "ORDER_MEMO": "태스트 ",
+        "MEMB_TEL": "0215664551",
+        "ORDER_MEMO": " ",
         "OEG_ORDER_PAY_AMT": `${totalResult.grandTotal}`,
         "ORDER_PAY_AMT": `${totalResult.grandTotal}`,
         "DISC_AMT": "0",
@@ -209,7 +209,8 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
         "ITEM_LIST":newOrderList,
     }
     openPopup(dispatch,{innerView:"AutoClose", isPopupVisible:true,param:{msg:"장바구니에 추가했습니다."}});
-
+    newOrderList.reverse();
+    //orderPayData.reverse();
     return {orderList:newOrderList,grandTotal:totalResult.grandTotal,totalItemCnt:totalResult.itemCnt, orderPayData:orderPayData };
 })
 // 새로 메뉴 등록
