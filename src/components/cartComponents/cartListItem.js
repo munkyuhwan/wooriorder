@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { 
     Animated,
+    Text,
     TouchableWithoutFeedback
 } from 'react-native'
-import { CartItemAmtController, CartItemAmtControllerImage, CartItemAmtControllerText, CartItemAmtText, CartItemAmtWrapper, CartItemCancelBtn, CartItemCancelWrapper, CartItemFastImage, CartItemImage, CartItemImageTogoWrapper, CartItemOpts, CartItemPrice, CartItemTitle, CartItemTitlePriceWrapper, CartItemTogoBtn, CartItemTogoIcon, CartItemTogoText, CartItemTogoWrapper, CartItemWrapper } from '../../styles/main/cartStyle';
+import { CartItemAmtController, CartItemAmtControllerImage, CartItemAmtControllerText, CartItemAmtText, CartItemAmtWrapper, CartItemCancelBtn, CartItemCancelWrapper, CartItemFastImage, CartItemImage, CartItemImageTogoWrapper, CartItemOpts, CartItemPrice, CartItemTitle, CartItemTitlePriceWrapper, CartItemTogoBtn, CartItemTogoIcon, CartItemTogoText, CartItemTogoWrapper, CartItemWrapper, OperandorText } from '../../styles/main/cartStyle';
 import { setPopupContent, setPopupVisibility } from '../../store/popup';
 import { useDispatch, useSelector } from 'react-redux';
 import { numberWithCommas, openPopup } from '../../utils/common';
@@ -116,19 +117,21 @@ const CartListItem = (props) => {
                     <CartItemAmtWrapper>
                         <TouchableWithoutFeedback  onPress={()=>{calculateAmt("minus",1)}} >
                             <CartItemAmtController>
-                                <CartItemAmtControllerImage source={require("assets/icons/minusIcon.png")}  />
+                               {/*  <CartItemAmtControllerImage source={require("assets/icons/minusIcon.png")}  /> */}
+                               <OperandorText>-</OperandorText>
                             </CartItemAmtController>
                         </TouchableWithoutFeedback>
                         <CartItemAmtText>{order?.ITEM_CNT}</CartItemAmtText>
                         <TouchableWithoutFeedback  onPress={()=>{calculateAmt("plus",1)}} >
                             <CartItemAmtController>
-                                <CartItemAmtControllerImage  source={require("assets/icons/plusIcon.png")} />
+                                <OperandorText>+</OperandorText>
+                                {/* <CartItemAmtControllerImage  source={require("assets/icons/plusIcon.png")} /> */}
                             </CartItemAmtController>
                         </TouchableWithoutFeedback>
                     </CartItemAmtWrapper>
                 </CartItemTitlePriceWrapper>
                 <TouchableWithoutFeedback onPress={()=>{calculateAmt("cancel",0)}}>
-                    <CartItemCancelWrapper>
+                    <CartItemCancelWrapper  style={{backgroundColor:'red'}}  >
                         <CartItemCancelBtn source={require("assets/icons/close_grey.png")} />
                     </CartItemCancelWrapper>
                 </TouchableWithoutFeedback>

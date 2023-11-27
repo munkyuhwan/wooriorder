@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled, {css} from 'styled-components/native';
 import { RADIUS, RADIUS_DOUBLE } from '../values';
 import { Animated, TouchableWithoutFeedback } from 'react-native';
-import { colorGrey, colorRed, colorWhite, mainTheme, textColorWhite } from '../../assets/colors/color';
+import { colorBlack, colorGrey, colorRed, colorWhite, mainTheme, textColorWhite } from '../../assets/colors/color';
 import FastImage from 'react-native-fast-image';
 
 export const CartViewWrapper = styled(Animated.View)`
@@ -65,6 +65,15 @@ export const CartItemFastImage = styled(FastImage)`
     height:62px;
     backgroundColor:brown;
     borderRadius:${RADIUS};
+`
+export const OperandorText = styled.Text`
+    fontSize:48px;
+    color:${colorBlack};
+    width:100%;
+    textAlign:center;
+    justifyContent:center;
+    lineHeight:58px;
+
 `
 export const CartItemTogoWrapper = styled.View`
     width:120px;
@@ -154,7 +163,7 @@ export const CartItemAmtText = styled.Text`
 // 취소 버튼
 export const CartItemCancelWrapper = styled.View`
     width:100%;
-    height:100%;
+    height:40px;
     flex:1;
 `
 export const CartItemCancelBtn = styled.Image`
