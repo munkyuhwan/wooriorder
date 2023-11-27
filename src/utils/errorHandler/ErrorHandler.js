@@ -8,7 +8,8 @@ export const posErrorHandler = (dispatch, data) =>{
     const errorCode = data.ERRCODE;
     if( !_.isEmpty(errorCode) ) {    
         dispatch(setErrorData({errorCode:data.ERRCODE,errorMsg:data.MSG+`\n${data.MSG2}`})); 
-        openPopup(dispatch,{innerView:"Error", isPopupVisible:true}); 
+        //openPopup(dispatch,{innerView:"Error", isPopupVisible:true}); 
+        openPopup(dispatch,{innerView:"AutoClose", isPopupVisible:true,param:{msg:data.MSG+`\n${data.MSG2}`}});
         //openTransperentPopup(dispatch,{innerView:"Error", isPopupVisible:true}); 
     }
     return _.isEmpty(errorCode)

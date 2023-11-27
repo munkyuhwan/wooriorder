@@ -185,14 +185,14 @@ const CartView = () =>{
              */
         }else {
                 const paymentResult = {}
-                if(isAdd) {
-                    console.log("후불 추가 주문");
-                    console.log("orderResult: ",orderResult);
-                    dispatch(postAddToPos({orderResult}));
-                }else {
+                //if(isAdd) {
+                //    console.log("후불 추가 주문");
+                //    console.log("orderResult: ",orderResult);
+                //    dispatch(postAddToPos({orderResult}));
+                //}else {
                     console.log("후불 신규 주문");
                     dispatch(postToPos({paymentResult,isPrepay}));
-                }
+                //}
             
         }
  
