@@ -68,7 +68,7 @@ export const CartItemFastImage = styled(FastImage)`
 `
 export const CartItemTogoWrapper = styled.View`
     width:120px;
-    height: 50px;
+    height: 58px;
     backgroundColor:${mainTheme};
     marginTop:12px;
     alignItem:center;
@@ -120,17 +120,17 @@ export const CartItemPrice = styled.Text`
 `
 // 수량 조절 
 export const CartItemAmtWrapper = styled.View`
-    width:150px;
-    height: 50px;
+    width:160px;
+    height: 60px;
     backgroundColor:${colorGrey};
     borderRadius:${RADIUS};
     flexDirection:row;
-    padding:5px;
-    marginTop:10px;
+    padding:3px;
+    marginTop:17px;
 `
 export const CartItemAmtController = styled.View`
-    width:34px;
-    height:34px;
+    width:52px;
+    height:52px;
     backgroundColor:${colorWhite};
     borderRadius:${RADIUS};
     marginTop:auto;
@@ -139,8 +139,8 @@ export const CartItemAmtController = styled.View`
     textAlign:center;
 `
 export const CartItemAmtControllerImage = styled.Image`
-    width:38px;
-    height:38px;
+    width:52px;
+    height:52px;
     flex:1;
     resizeMode:contain;
  `
@@ -149,7 +149,7 @@ export const CartItemAmtText = styled.Text`
     fontWeight:bold;
     flex:1;
     textAlign:center;
-    lineHeight:42px;
+    lineHeight:58px;
 `
 // 취소 버튼
 export const CartItemCancelWrapper = styled.View`
