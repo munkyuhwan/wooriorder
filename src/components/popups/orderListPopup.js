@@ -47,6 +47,7 @@ const OrderListPopup = () =>{
         if(isEmpty(orderStatus)) {
             setOrderTotalAmt(0);
         }
+        console.log("item list: ",orderStatus[0].ITEM_LIST );
         if(orderStatus[0]?.ITEM_LIST){
             let tmpPrice = 0;
             orderStatus[0].ITEM_LIST.map(el=>{
@@ -76,7 +77,7 @@ const OrderListPopup = () =>{
                         </OrderListTableColumnNameWrapper>
                        {orderStatus[0]?.ITEM_LIST &&
                             <OrderListTableList
-                                data={orderStatus[0].ITEM_LIST.filter(el=>!el.ITEM_ID.startsWith("9000"))}
+                                data={orderStatus[0].ITEM_LIST}
                                 renderItem={(item)=>{return <OrderListItem order={item} />}}
                             />
                         }
