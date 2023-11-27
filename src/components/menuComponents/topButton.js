@@ -3,12 +3,16 @@ import {
     Animated,
     Easing,
     Image,
-    TouchableWithoutFeedback
+    Text,
+    TouchableWithoutFeedback,
+    View
 } from 'react-native'
 import { TouchIcon } from '../../styles/main/topMenuStyle'
 import { useDispatch, useSelector } from 'react-redux'
 import { clickIcon } from '../../store/onClick'
 import { setCartView } from '../../store/cart'
+import styled, {css} from 'styled-components/native';
+import { colorBlack, colorWhite } from '../../assets/colors/color'
 
 const TopButton = (props) => {
 
@@ -63,18 +67,48 @@ const TopButton = (props) => {
 
     return(
         <>
+        <WrapperIcon>
+
             {!isOn &&
-                <TouchableWithoutFeedback onPress={()=>{ console.log("on press !isOn"); props.onPress(); if(isSlideMenu){onIconClicked();}  }}>
-                    <Image source={onImage} style={[{width:48,height:48},props.lrt=="left"?{marginLeft:10}:{marginRight:10}]}  />
-                </TouchableWithoutFeedback>
+                <>
+                    <TouchableWithoutFeedback onPress={()=>{ props.onPress(); if(isSlideMenu){onIconClicked();}  }}>
+                        <View>
+                            <Image source={onImage} resizeMode='contain' style={[{width:52,height:52},{marginLeft:12}]}  />    
+                            <TextOff>{isSlideMenu?"장바구니":"주문내역"}</TextOff>
+                        </View>
+                    </TouchableWithoutFeedback>
+                </>
             }
             {isOn &&
-                <TouchableWithoutFeedback onPress={()=>{console.log("on press isOn"); props.onPress(); if(isSlideMenu){onIconClicked();}  }}>
-                    <Image source={offImage} style={[{width:48,height:48},props.lrt=="left"?{marginLeft:10}:{marginRight:10}]}  />
-                </TouchableWithoutFeedback>
+                <>
+                    <TouchableWithoutFeedback  onPress={()=>{props.onPress(); if(isSlideMenu){onIconClicked();}  }}>
+                        <View>
+                            <Image source={offImage} resizeMode='contain'  style={[{width:52,height:52},{marginLeft:12} ]}  />
+                            <TextOn>{isSlideMenu?"장바구니":"주문내역"}</TextOn>
+                        </View>
+                    </TouchableWithoutFeedback>
+                </>
             }
+        </WrapperIcon>
+        
         </>
     )
 }
+const fontSize = 20;
+const WrapperIcon = styled.View`
+
+`
+const TextOn = styled.Text`
+    fontSize:${fontSize}px;
+    color:${colorBlack};
+    fontWeight:bold;
+    marginLeft:7px;
+`
+const TextOff = styled.Text`
+    fontSize:${fontSize}px;
+    color:${colorWhite};
+    fontWeight:bold;
+    marginLeft:7px;
+`
 
 export default TopButton;

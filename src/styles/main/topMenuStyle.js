@@ -97,13 +97,12 @@ export const IconWrapper = styled.View`
     justifyContent:flex-end;
     height:80px;
     marginBottom:14px;
-    paddingRight:20px;
     display:flex;
     alignItems:center;
     zIndex:99999;
     position:absolute;
-    right:0;
-    top:18px;
+    right:10;
+    top:3px;
 `
 export const TouchIcon = styled.Image`
     resizeMode:contain;
