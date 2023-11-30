@@ -105,7 +105,7 @@ export const CartItemTogoIcon = styled.Image`
 export const CartItemTitlePriceWrapper = styled.View`
     width:130px;
     paddingLeft:8px;
-    paddingRiight:2px;
+    paddingRight:2px;
     paddingTop:2px;
     flexDirection:column;
 `
