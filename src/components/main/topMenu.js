@@ -34,7 +34,8 @@ const TopMenu = () =>{
         if(goodsCategories?.length > 0){
             const selectedCategoryItem = goodsCategories.filter(el=>el.cate_code1==selectedMainCategory);
             if(selectedCategoryItem.length > 0) {
-                dispatch(setCategories({subCategories:selectedCategoryItem[0]?.level2}));
+                const filteredSubCat = selectedCategoryItem[0]?.level2?.filter(el=>el.is_del=="N"&&el.is_use=="Y")
+                dispatch(setCategories({subCategories:filteredSubCat}));
             }
         } 
     },[selectedMainCategory])

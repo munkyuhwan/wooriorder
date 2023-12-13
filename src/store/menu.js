@@ -127,14 +127,13 @@ export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, 
     let totalCategories = []
     if(getAdminCategoriesData.result) {
         adminCategories = getAdminCategoriesData?.goods_category;
-        
+        adminCategories = adminCategories?.filter(el=>(el.is_del=="N"&&el.is_use=="Y"));
         categories.map(catData => {
             const filteredCategory = adminCategories.filter(acEl => acEl.cate_code1 == catData.ITEM_GROUP_CODE);
             if(filteredCategory.length > 0) {
                 totalCategories.push(filteredCategory[0]);
             }
         })
-        
         dispatch(setMenuCategories(totalCategories));
     }
     

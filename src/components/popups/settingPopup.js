@@ -440,7 +440,7 @@ const SettingPopup = () =>{
                                 <SettingButtonText isMargin={true} >메뉴 업데이트</SettingButtonText>
                             </TouchableWithoutFeedback>
                             <TouchableWithoutFeedback onPress={()=>{checkUpdate();}} >
-                                <SettingButtonText isMargin={true} >앱 업데이트 ver 1.0.1-15</SettingButtonText>
+                                <SettingButtonText isMargin={true} >앱 업데이트 ver 1.0.1-19</SettingButtonText>
                             </TouchableWithoutFeedback> 
                         </SettingButtonWrapper>
                     </SettingScrollView>
