@@ -31,6 +31,7 @@ const CartView = () =>{
     const {isOn} = useSelector((state)=>state.cartView);
     const {orderList, grandTotal, totalItemCnt} = useSelector((state)=>state.order);
     const { tableInfo, tableStatus } = useSelector(state=>state.tableInfo);
+    const {images} = useSelector(state=>state.imageStorage);
     //console.log("orderList: ",orderList);
     const [slideAnimation, setSlideAnimation] = useState(new Animated.Value(0));
 
@@ -265,8 +266,10 @@ const CartView = () =>{
                     <CartFlatList
                         data={orderList}
                         renderItem={(item )=>{
+                            const recImg = images?.filter(imgEl=>imgEl.name == item?.item?.ITEM_ID);
+                            const imgUrl =recImg[0]?.imgData
                             return(
-                                <CartListItem {...item} />
+                                <CartListItem {...item} imgUrl={imgUrl} />
                             )
                         }}
                     >

@@ -10,6 +10,8 @@ import { setMenuCategories, setMenuExtra, setOptionExtra } from './menuExtra';
 import { CALL_SERVICE_GROUP_CODE } from '../resources/apiResources';
 import { setCallServerList } from './callServer';
 import { DEFAULT_CATEGORY_ALL_CODE } from '../resources/defaults';
+import { fileDownloader } from '../utils/common';
+import { initImageStorage } from './imageStorage';
 
 export const initMenu = createAsyncThunk("menu/initMenu", async(category) =>{
     return [];
@@ -111,6 +113,11 @@ export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, 
     let adminMenu = [];
     if(adminData) {
         adminMenu = adminData.order;
+        await dispatch(initImageStorage());
+        for(var i=0;i<adminMenu?.length;i++) {
+            //console.log("admin menu: ", `${adminMenu[i].pos_code}`,`https:${adminMenu[i].gimg_chg}`);
+            await fileDownloader(dispatch, `${adminMenu[i].pos_code}`,`https:${adminMenu[i].gimg_chg}`).catch("");
+        }
         dispatch(setMenuExtra(adminMenu));
     }
 

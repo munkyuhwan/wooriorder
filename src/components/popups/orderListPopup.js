@@ -19,6 +19,7 @@ const OrderListPopup = () =>{
     const {orderStatus} = useSelector(state=>state.order);    
     const [orderTotalAmt, setOrderTotalAmt] = useState(0);
     const { tableInfo } = useSelector(state=>state.tableInfo);
+    const {images} = useSelector(state=>state.imageStorage);
     useEffect(()=>{
         //const orderStatus = await checkTableOrder(dispatch,{tableInfo}).catch(err=>{return});
        /*  AsyncStorage.getItem("orderResult")
@@ -77,7 +78,11 @@ const OrderListPopup = () =>{
                        {orderStatus[0]?.ITEM_LIST &&
                             <OrderListTableList
                                 data={orderStatus[0].ITEM_LIST}
-                                renderItem={(item)=>{return <OrderListItem order={item} />}}
+                                renderItem={(item)=>{
+                                    const recImg = images?.filter(imgEl=>imgEl.name == item?.item?.ITEM_ID);
+                                    const imgUrl =recImg[0]?.imgData
+                                    return <OrderListItem order={item} imgUrl={imgUrl} />
+                                }}
                             />
                         }
                     </OrderListTableWrapper>

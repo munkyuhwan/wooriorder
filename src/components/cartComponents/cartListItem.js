@@ -22,6 +22,7 @@ const CartListItem = (props) => {
    
     const index = props?.index;
     const order = props?.item;
+    const imgUrl = props?.imgUrl;
 
     const additiveItemList = order.ADDITIVE_ITEM_LIST;
     // 이미지 찾기
@@ -82,17 +83,13 @@ const CartListItem = (props) => {
             dispatch(setOrderList(tmpOrdList)) 
         }else {
             openPopup(dispatch,{innerView:"TogoPopup", isPopupVisible:true,param:{index:index}}); 
-        }
- 
-
-        
+        }   
     }
-
     return(
         <>
             <CartItemWrapper>
                 <CartItemImageTogoWrapper>
-                    <CartItemImage source={{uri:"https:"+itemExtra[0]?.gimg_chg}} />
+                    <CartItemImage source={{uri:imgUrl}} />
                    {/*  <TouchableWithoutFeedback onPress={()=>{ onTogoTouch(); }} >
                         <CartItemTogoWrapper>
                             <CartItemTogoText>{additiveItemList?.filter(el=>el.menuOptionSelected.ADDITIVE_ID=="1002").length>0?LANGUAGE[language]?.cartView.togoCancel:LANGUAGE[language]?.cartView.togo}</CartItemTogoText>

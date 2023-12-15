@@ -16,6 +16,8 @@ const MenuItem = ({item,index,setDetailShow}) => {
     const dispatch = useDispatch();
     const {menuExtra} = useSelector(state=>state.menuExtra);
     const {language} =  useSelector(state=>state.languages);
+    const {images} = useSelector(state=>state.imageStorage);
+
     if(isEmpty(item)) {
         return <></>
     }
@@ -25,7 +27,9 @@ const MenuItem = ({item,index,setDetailShow}) => {
     // 이미지 찾기
     const itemExtra = menuExtra?.filter(el=>el.pos_code == item.ITEM_ID);
     const itemID = item.ITEM_ID;
-    const imgUrl = "https:"+itemExtra[0]?.gimg_chg;
+    const imageBase64 = images?.filter(el=>el.name == item.ITEM_ID);
+    const imgUrl =imageBase64[0]?.imgData
+    //const imgUrl = "https:"+itemExtra[0]?.gimg_chg;
     //const itemTitle=>{} item.ITEM_NAME;
     const itemTitle = () => {
         let selTitleLanguage = "";

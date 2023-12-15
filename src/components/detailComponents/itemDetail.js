@@ -29,6 +29,11 @@ const ItemDetail = (props) => {
     const {menuExtra} = useSelector(state=>state.menuExtra);
     const itemExtra = menuExtra?.filter(el=>el.pos_code == menuDetailID);
 
+    // 이미지 정보
+    const {images} = useSelector(state=>state.imageStorage);
+    const imageBase64 = images?.filter(el=>el.name == menuDetailID);
+    const imgUrl =imageBase64[0]?.imgData
+
     // 옵션스테이트
     const [additiveGroupList, setAdditiveGroupList] = useState([]);
     const [additiveItemList, setAdditiveItemList] = useState([]);
@@ -218,7 +223,7 @@ const ItemDetail = (props) => {
                                         
                                         {itemExtra&& 
                                         itemExtra[0]?.gimg_chg &&
-                                            <DetailItemInfoFastImage source={{uri:"https:"+itemExtra[0]?.gimg_chg}} /> 
+                                            <DetailItemInfoFastImage source={{uri:imgUrl}} /> 
                                         }
                                         {itemExtra&&
                                         !itemExtra[0]?.gimg_chg &&
@@ -254,9 +259,11 @@ const ItemDetail = (props) => {
                                         <OptList horizontal showsHorizontalScrollIndicator={false} >
                                             {additiveGroupList!=null &&
                                                 additiveGroupList.map((el,index)=>{
+                                                    const recImg = images?.filter(imgEl=>imgEl.name == el.ADDITIVE_GROUP_CODE);
+                                                    const imgUrl =recImg[0]?.imgData
                                                     if(el.ADDITIVE_GROUP_USE_FLAG == "N") {
                                                         return(
-                                                            <OptItem key={"optItem_"+index} isSelected={additiveGroupList.indexOf(index)>=0} optionData={el} menuData={menuDetail} onPress={()=>{onOptionSelect(el.ADDITIVE_GROUP_CODE);} } />    
+                                                            <OptItem key={"optItem_"+index} imgUrl={imgUrl} isSelected={additiveGroupList.indexOf(index)>=0} optionData={el} menuData={menuDetail} onPress={()=>{onOptionSelect(el.ADDITIVE_GROUP_CODE);} } />    
                                                         );
                                                     }else {
                                                         return(<></>);
@@ -282,13 +289,15 @@ const ItemDetail = (props) => {
                                             {itemExtra&&
                                             itemExtra[0]?.related &&
                                                 itemExtra[0]?.related.length > 0 &&
+                                                itemExtra[0]?.related[0] != "" &&
                                                 itemExtra[0]?.related.map((el,index)=>{
-                                                    
+                                                    const recImg = images?.filter(imgEl=>imgEl.name == el);
+                                                    const imgUrl =recImg[0]?.imgData
                                                     if(isEmpty(el)) {
                                                         return (<></>)
                                                     }else {
                                                         return(
-                                                            <RecommendItem key={"recoItem_"+index}   recommendData={el} menuData={menuDetail}  />    
+                                                            <RecommendItem key={"recoItem_"+index} imgUrl={imgUrl}  recommendData={el} menuData={menuDetail}  />    
                                                         );
                                                     }
                                                 })

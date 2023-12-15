@@ -9,6 +9,7 @@ import { addToOrderList } from '../../store/order';
 
 const RecommendItem = (props) => {
     const recommentItemID = props?.recommendData
+    const imgUrl = props?.imgUrl;
     const {allItems} = useSelector(state=>state.menu);
     const {menuExtra} = useSelector(state=>state.menuExtra);
     const {language} =  useSelector(state=>state.languages);
@@ -48,7 +49,8 @@ const RecommendItem = (props) => {
             <TouchableWithoutFeedback onPress={()=>{dispatch(addToOrderList({itemID:recommentItemID})); /* dispatch(setMenuDetail(recommentItemID)); */ }}>
                 <RecommendItemWrapper>
                     <RecommendItemImageWrapper>
-                        <RecommendItemImage  source={{uri:`${"https:"+itemExtra[0]?.gimg_chg}`}}/>
+                        {/* <RecommendItemImage  source={{uri:`${"https:"+itemExtra[0]?.gimg_chg}`}}/>*/}                       
+                        <RecommendItemImage  source={{uri:`${imgUrl}`}}/>
 
                         <RecommendItemDim isSelected={props?.isSelected}/>
                         {props?.isSelected &&

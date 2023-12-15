@@ -8,10 +8,10 @@ const OptItem = (props)=>{
     const {language} = useSelector(state=>state.languages);
 
     const optionData = props.optionData;
+    const imgUrl = props?.imgUrl;
     const {menuDetailID, menuOptionGroupCode, menuOptionSelected} = useSelector((state)=>state.menuDetail);
     const [isSelected, setSelected] = useState(false);
     const [addtivePrice, setAdditivePrice] = useState();
-
 
     // 메뉴 옵션 추가 정보
     const {optionCategoryExtra} = useSelector(state=>state.menuExtra);
@@ -50,12 +50,12 @@ const OptItem = (props)=>{
         }
 
     },[menuOptionGroupCode,menuOptionSelected])
-
+    console.log(imgUrl)
     return(
         <>
             <TouchableWithoutFeedback onPress={props.onPress} >
                 <OptItemWrapper>
-                    <OptItemFastImage  source={{uri:`https:${optionItemCategoryExtra[0]?.gimg_chg}`}}/>
+                    <OptItemFastImage  source={{uri:`${imgUrl}`}}/>
                     <OptItemDim isSelected={isSelected}/>
                     <OptItemInfoWrapper>
                         <OptItemInfoTitle>{ItemTitle()||optionData?.ADDITIVE_GROUP_NAME }</OptItemInfoTitle>

@@ -4,12 +4,13 @@ import { OrderListTableItemAmt, OrderListTableItemImage, OrderListTableItemImage
 
 const OrderListItem = (props) => {
     const item = props?.order.item;
+    const imgUrl = props?.imgUrl;
     const {language} = useSelector(state=>state.languages);
     const {menuExtra} = useSelector(state=>state.menuExtra);
   
     // 이미지 찾기
     const itemExtra = menuExtra.filter(el=>el.pos_code == item.ITEM_ID);
-    const imgUrl = "https:"+itemExtra[0]?.gimg_chg;
+    //const imgUrl = "https:"+itemExtra[0]?.gimg_chg;
     const ItemTitle = () => {
         let selTitleLanguage = "";
         const selExtra = itemExtra.filter(el=>el.pos_code==item.ITEM_ID);

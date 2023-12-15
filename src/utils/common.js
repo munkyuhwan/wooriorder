@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setFullPopupContent, setFullPopupVisibility, setPopupContent, setPopupVisibility, setTransPopupContent, setTransPopupVisibility } from '../store/popup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import RNFetchBlob from 'rn-fetch-blob';
+import { addImageStorage } from '../store/imageStorage';
 
 export function openPopup (dispatch, {innerView, isPopupVisible, param}) {
     if(isPopupVisible) {
@@ -86,5 +88,29 @@ export async function getStoreID() {
 
 }
 
-/* 
- */
+// 파일 다운로드
+export async function fileDownloader(dispatch, name,url) {
+    const ext = url.split(".");
+    const extensionType = ext[ext.length-1]
+    return await new Promise(function(resolve, reject){
+        RNFetchBlob.config({
+            fileCache: true
+        })
+        .fetch("GET", url)
+        // the image is now dowloaded to device's storage
+        .then( (resp) => {
+          // the image path you can use it directly with Image component
+            imagePath = resp.path();
+            return resp.readFile("base64");
+        })
+        .then( async (base64Data) => {
+            dispatch(addImageStorage({name:name,imgData:`data:image/${extensionType};base64,`+base64Data}));
+            resolve({name:name,data:base64Data});
+            return fs.unlink(imagePath);
+            
+        })
+        .catch(ee=>{
+            reject()
+        })
+    })
+}
