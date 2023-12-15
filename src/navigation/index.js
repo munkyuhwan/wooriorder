@@ -23,6 +23,7 @@ import {isEmpty} from 'lodash';
 import StatusScreen from '../screens/StatusScreen'
 import { initOrderList } from '../store/order'
 import { DEFAULT_TABLE_STATUS_UPDATE_TIME } from '../resources/defaults'
+import { getAD } from '../store/ad'
 
 const Stack = createStackNavigator()
 
@@ -95,6 +96,8 @@ export default function Navigation() {
     },[])
 
     useEffect(()=>{
+        // 광고 받기
+        dispatch(getAD()); 
         // 초기 세팅
         handleEventListener();
         dispatch(getMenuEdit());

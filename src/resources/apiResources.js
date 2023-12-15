@@ -1,6 +1,6 @@
 // POS API URL
-export const POS_BASE_URL_REAL = "https://tordif.smilebiz.co.kr";
-//export const POS_BASE_URL_REAL = "https://ordif.smilebiz.co.kr";
+//export const POS_BASE_URL_REAL = "https://tordif.smilebiz.co.kr";
+export const POS_BASE_URL_REAL = "https://ordif.smilebiz.co.kr";
 
 export const POS_ORDER_NEW = "/partner/v1/table/order/new"; //신규 주문정보 등록
 export const POS_ORDER_ADD = "/partner/v1/table/order/add"; // 추가 주문정보 등록

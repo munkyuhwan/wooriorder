@@ -47,10 +47,13 @@ const MainScreen = () =>{
             clearInterval(timeoutSet);
         },SCREEN_TIMEOUT)
     } 
+    useEffect(()=>{
+        screenTimeOut();
+    },[])
     return(
         <>
             <KeyboardAvoidingView behavior="padding" enabled style={{width:'100%', height:'100%'}} >
-                <WholeWrapper onTouchStart={()=>{  /* screenTimeOut(); */  }} >
+                <WholeWrapper onTouchStart={()=>{  screenTimeOut();  }} >
                     <SideMenu/>
                     <MainWrapper>
                         <TopMenu/>

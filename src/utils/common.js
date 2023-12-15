@@ -4,6 +4,7 @@ import { setFullPopupContent, setFullPopupVisibility, setPopupContent, setPopupV
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNFetchBlob from 'rn-fetch-blob';
 import { addImageStorage } from '../store/imageStorage';
+import { setAdImgs } from '../store/ad';
 
 export function openPopup (dispatch, {innerView, isPopupVisible, param}) {
     if(isPopupVisible) {
@@ -105,6 +106,35 @@ export async function fileDownloader(dispatch, name,url) {
         })
         .then( async (base64Data) => {
             dispatch(addImageStorage({name:name,imgData:`data:image/${extensionType};base64,`+base64Data}));
+            resolve({name:name,data:base64Data});
+            return fs.unlink(imagePath);
+            
+        })
+        .catch(ee=>{
+            reject()
+        })
+    })
+}
+
+// 파일 다운로드
+export async function adFileDownloader(dispatch, name,url) {
+    const ext = url.split(".");
+    const extensionType = ext[ext.length-1]
+    return await new Promise(function(resolve, reject){
+        RNFetchBlob.config({
+            fileCache: true
+        })
+        .fetch("GET", url)
+        // the image is now dowloaded to device's storage
+        .then( (resp) => {
+          // the image path you can use it directly with Image component
+            imagePath = resp.path();
+            return resp.readFile("base64");
+        })
+        .then( async (base64Data) => {
+            //dispatch(addImageStorage({name:name,imgData:`data:image/${extensionType};base64,`+base64Data}));
+            //dispatch(addImageStorage({name:name,imgData:`data:image/${extensionType};base64,`+base64Data}));
+            dispatch(setAdImgs({name:name,imgData:`data:image/${extensionType};base64,`+base64Data}))
             resolve({name:name,data:base64Data});
             return fs.unlink(imagePath);
             

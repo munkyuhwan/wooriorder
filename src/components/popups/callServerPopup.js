@@ -103,15 +103,15 @@ const CallServerPopup = () => {
 
     return(
         <TransparentPopupWrapper>
-            <TransparentPopupTopWrapper>
                 <TouchableWithoutFeedback onPress={()=>{ countDown(); onSettingPress();} } style={{position:'absolute',  top:0,left:0, zIndex:999999999}}>
-                    <View style={{width:100, height:40, backgroundColor:'transparent'}} >
-                        <Text style={{color:'transparent'}} >ddd</Text>    
-                    </View>
+                    <TransparentPopupTopWrapper>
+                            <View style={{width:100, height:40, backgroundColor:'transparent'}} >
+                                <Text style={{color:'transparent'}} >ddd</Text>    
+                            </View>
+                        <TransperentPopupTopTitle>{LANGUAGE[language]?.serverPopup.callServer}</TransperentPopupTopTitle>
+                        <TransperentPopupTopSubTitle>{LANGUAGE[language]?.serverPopup.text}</TransperentPopupTopSubTitle>
+                    </TransparentPopupTopWrapper>     
                 </TouchableWithoutFeedback>
-                <TransperentPopupTopTitle>{LANGUAGE[language]?.serverPopup.callServer}</TransperentPopupTopTitle>
-                <TransperentPopupTopSubTitle>{LANGUAGE[language]?.serverPopup.text}</TransperentPopupTopSubTitle>
-            </TransparentPopupTopWrapper>     
             <TransperentPopupMidWrapper>
                 
                 <SelectItemComponent 
