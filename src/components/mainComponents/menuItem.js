@@ -12,7 +12,6 @@ import {isEmpty} from 'lodash'
 /* 메인메뉴 메뉴 아이템 */
 const MenuItem = ({item,index,setDetailShow}) => {
     //<MenuItemImage />    
-    //console.log("item: ",item);
     // 포스 api ITEM_ID 는 관리자 api에서 pos_code임
     const dispatch = useDispatch();
     const {menuExtra} = useSelector(state=>state.menuExtra);
