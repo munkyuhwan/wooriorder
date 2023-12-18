@@ -17,6 +17,9 @@ var touchEndOffset = 0;
 var currentOffset = 0;
 var scrollDownReached = false;
 var scrollUpReached = false;
+var scrollDownCnt = 0;
+var scrollUpCnt = 0;
+
 var isScrolling = false;
 let direction = "";
 
@@ -135,12 +138,16 @@ const MenuListView = () => {
                         
                         scrollDownReached = false;
                         scrollUpReached = false;
+                        scrollDownCnt = 0;
+                        scrollUpCnt = 0;
                         
 
                         if (isCloseToBottom(event.nativeEvent)) {
+                            scrollDownCnt = scrollDownCnt+1;
                             if(direction == "down") scrollDownReached = true; scrollUpReached = false;
                         }
                         if (isCloseToTop(event.nativeEvent)) {
+                            scrollUpCnt = scrollUpCnt+1;
                             if(direction == 'up') scrollUpReached = true; scrollDownReached = false;
                         }
                     }}
@@ -167,10 +174,18 @@ const MenuListView = () => {
                         // 스크롤 되고 있는지 체크
                         //isScrolling=false;
                         if(scrollDownReached ) {
-                            toNextCaterogy();
+                            if(scrollDownCnt>=1) {
+                                toNextCaterogy();
+                            }else {
+                                scrollDownCnt = scrollDownCnt+1;
+                            }
                         }
                         if(scrollUpReached) {
-                            toPrevCaterogy();
+                            if(scrollUpCnt>=1) {
+                                toPrevCaterogy();
+                            }else {
+                                scrollUpCnt = scrollUpCnt+1;
+                            }
                         }
                         //scrollEnd.value = ev.nativeEvent.contentOffset.y;
                         //setScrollEnd(true);

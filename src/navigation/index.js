@@ -90,14 +90,14 @@ export default function Navigation() {
             // 주석 나중에 빼자
             statusInterval = setInterval(() => {
                 //console.log("status interval")
+                // 광고 받기
+                dispatch(getAD()); 
                 dispatch(getTableStatus());
             }, DEFAULT_TABLE_STATUS_UPDATE_TIME);
         //}
     },[])
 
     useEffect(()=>{
-        // 광고 받기
-        dispatch(getAD()); 
         // 초기 세팅
         handleEventListener();
         dispatch(getMenuEdit());
