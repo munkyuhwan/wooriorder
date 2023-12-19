@@ -416,7 +416,7 @@ const SettingPopup = () =>{
                                 <TouchableWithoutFeedback onPress={()=>{smartroServiceGetting();}} >
                                     <SettingButtonText isMargin={true} >단말기 서비스 설정 확인</SettingButtonText>
                                 </TouchableWithoutFeedback>
-                            <SettingItemWrapper>
+                            {/* <SettingItemWrapper>
                                 <TouchableWithoutFeedback onPress={()=>{}} >
                                     <SettingButtonText isMargin={false} >단말기 서비스 기능</SettingButtonText>
                                 </TouchableWithoutFeedback>
@@ -427,7 +427,7 @@ const SettingPopup = () =>{
                                     <SettingButtonText isMargin={false} >단말기 결제 기능</SettingButtonText>
                                 </TouchableWithoutFeedback>
                                 <PaymentDropdown/>
-                            </SettingItemWrapper>
+                            </SettingItemWrapper> */}
                             <TouchableWithoutFeedback onPress={()=>{initTable(); }} >
                                 <SettingButtonText isMargin={true} >테이블 주문 초기화</SettingButtonText>
                             </TouchableWithoutFeedback>
@@ -440,7 +440,7 @@ const SettingPopup = () =>{
                                 <SettingButtonText isMargin={true} >메뉴 업데이트</SettingButtonText>
                             </TouchableWithoutFeedback>
                             <TouchableWithoutFeedback onPress={()=>{checkUpdate();}} >
-                                <SettingButtonText isMargin={true} >앱 업데이트 ver 1.0.1-19</SettingButtonText>
+                                <SettingButtonText isMargin={true} >앱 업데이트 ver 1.0.1-23</SettingButtonText>
                             </TouchableWithoutFeedback> 
                         </SettingButtonWrapper>
                     </SettingScrollView>

@@ -41,19 +41,19 @@ const MainScreen = () =>{
      
     let timeoutSet = null
     function screenTimeOut(){
-        if(timeoutSet!=null){clearInterval(timeoutSet);}
+       /*  if(timeoutSet!=null){clearInterval(timeoutSet);}
             timeoutSet = setInterval(()=>{
             navigation.navigate('ad');
             clearInterval(timeoutSet);
-        },SCREEN_TIMEOUT)
+        },SCREEN_TIMEOUT) */
     } 
     useEffect(()=>{
-        screenTimeOut();
+        /* screenTimeOut(); */
     },[])
     return(
         <>
             <KeyboardAvoidingView behavior="padding" enabled style={{width:'100%', height:'100%'}} >
-                <WholeWrapper onTouchStart={()=>{  screenTimeOut();  }} >
+                <WholeWrapper onTouchStart={()=>{  /* screenTimeOut(); */  }} >
                     <SideMenu/>
                     <MainWrapper>
                         <TopMenu/>

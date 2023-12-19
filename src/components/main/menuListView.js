@@ -86,8 +86,8 @@ const MenuListView = () => {
     },[displayMenu, menu])
     const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
         const paddingToBottom = 2;
-        return layoutMeasurement.height + contentOffset.y >=
-          contentSize.height - paddingToBottom;
+        return layoutMeasurement.height + contentOffset.y == contentSize.height;
+        //return layoutMeasurement.height + contentOffset.y >= contentSize.height;
     };
 
     const isCloseToTop = ({contentOffset}) => {
@@ -174,14 +174,14 @@ const MenuListView = () => {
                         // 스크롤 되고 있는지 체크
                         //isScrolling=false;
                         if(scrollDownReached ) {
-                            if(scrollDownCnt>=1) {
+                            if(scrollDownCnt>1) {
                                 toNextCaterogy();
                             }else {
                                 scrollDownCnt = scrollDownCnt+1;
                             }
                         }
                         if(scrollUpReached) {
-                            if(scrollUpCnt>=1) {
+                            if(scrollUpCnt>1) {
                                 toPrevCaterogy();
                             }else {
                                 scrollUpCnt = scrollUpCnt+1;

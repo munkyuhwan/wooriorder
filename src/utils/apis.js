@@ -242,7 +242,6 @@ export const addOrderToPos = async(dispatch, data) =>{
             newItemList.push(newItem);
         })
         postData.ITEM_LIST = newItemList;
- 
         axios.post(
             `${POS_BASE_URL_REAL}${POS_ORDER_ADD}`,
             {
@@ -284,6 +283,7 @@ export const checkTableOrder = async(dispatch, data ) => {
             reject();
             return;
         }
+        console.log("post \n",{"STORE_ID":STORE_ID,"SERVICE_ID":SERVICE_ID,"FLR_CODE":data.tableInfo.FLR_CODE,"TBL_CODE":data.tableInfo.TBL_CODE,});
         axios.post(
             `${POS_BASE_URL_REAL}${POS_POST_ORDER}`,
             {
@@ -297,6 +297,7 @@ export const checkTableOrder = async(dispatch, data ) => {
         .then( response => {
             if(posErrorHandler(dispatch, response.data)){
                 const data = response.data;
+                console.log('data\n',data);
                 const obj = data.OBJ;
                 const orderList = obj.ORDER_LIST;
                 // SMRO000068-접수 / SMRO000069-완료 / SMRO000070-취소 / SMRO000071-반품 / SMRO000088-결제완료
@@ -339,8 +340,6 @@ export const cancelOrder = async(dispatch, data) => {
             reject();
             return;
         }
-        console.log("============================================================================");
-        console.log("tableINfo: ",data.tableInfo);
         axios.post(
             `${POS_BASE_URL_REAL}${POS_POST_ORDER_CANCEL}`,
             {
