@@ -146,6 +146,7 @@ export const getMenuEdit = createAsyncThunk("menu/menuEdit", async(_,{dispatch, 
     
     // 카테고리 스테이트 업데이트
     dispatch(setMainCategories(categories));
+    console.log("allItems: ",allItems[0].ADDITIVE_GROUP_LIST[1].ADDITIVE_ITEM_LIST)
     EventRegister.emit("showSpinner",{isSpinnerShow:false, msg:""})
     return {menu:resultData,allItems:allItems};
 })

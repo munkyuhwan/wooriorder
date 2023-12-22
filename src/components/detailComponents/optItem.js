@@ -50,7 +50,6 @@ const OptItem = (props)=>{
         }
 
     },[menuOptionGroupCode,menuOptionSelected])
-    console.log(imgUrl)
     return(
         <>
             <TouchableWithoutFeedback onPress={props.onPress} >

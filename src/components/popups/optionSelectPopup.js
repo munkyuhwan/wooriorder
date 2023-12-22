@@ -43,7 +43,9 @@ const OptionSelectPopup = () =>{
         let radioData = [];
         if(!_.isEmpty(menuOptionList)){
             menuOptionList.map((el)=>{
-                radioData.push({id:el.ADDITIVE_ID, label:el.ADDITIVE_NAME, value:el.ADDITIVE_ID})
+                if(el?.ADDITIVE_USE_FLAG == "N") {
+                    radioData.push({id:el.ADDITIVE_ID, label:el.ADDITIVE_NAME, value:el.ADDITIVE_ID})
+                }
             })
         }
         setOptionData(radioData);
@@ -69,6 +71,7 @@ const OptionSelectPopup = () =>{
             <View style={{ width:'100%', textAlign:'center', alignItems:"center", padding:20}} >
                 <View style={{width:'100%', height:100, padding:0, flexDirection:'row', alignItems:'center', textAlign:'center'  }} >
                     {optionData.map((el,index)=>{ 
+                        console.log("el: ",el);
                         const optionRight = optionExtra.filter(optionEl => optionEl.pos_code == el.id);
                         return(
                             <TouchableWithoutFeedback onPress={()=>{setSelectedId(el.id)}} >
