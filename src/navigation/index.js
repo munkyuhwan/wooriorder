@@ -151,7 +151,7 @@ export default function Navigation() {
             <TransparentPopUp/>
             <FullSizePopup/>
             {(spinnerText!="")&&
-                <PopupIndicator text={spinnerText} />
+                <PopupIndicator text={spinnerText} setSpinnerText={setSpinnerText} />
             }
         </>
     )

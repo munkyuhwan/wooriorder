@@ -137,6 +137,7 @@ const ItemDetail = (props) => {
             setDetailZIndex(999)
             onSelectHandleAnimation(1);
             var tmpAdditiveList = [];
+            console.log("menuDetail: ",menuDetail);
             if(menuDetail?.ADDITIVE_GROUP_LIST) {
                 tmpAdditiveList = menuDetail?.ADDITIVE_GROUP_LIST.filter(el=>el.ADDITIVE_GROUP_USE_FLAG=="N");
             }
