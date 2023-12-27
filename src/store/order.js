@@ -208,7 +208,7 @@ export const addToOrderList =  createAsyncThunk("order/addToOrderList", async(_,
         "ORD_PAY_LIST":[],
         "ITEM_LIST":newOrderList,
     }
-    openPopup(dispatch,{innerView:"AutoClose", isPopupVisible:true,param:{msg:"장바구니에 추가했습니다."}});
+    //openPopup(dispatch,{innerView:"AutoClose", isPopupVisible:true,param:{msg:"장바구니에 추가했습니다."}});
     newOrderList.reverse();
     //orderPayData.reverse();
     return {orderList:newOrderList,grandTotal:totalResult.grandTotal,totalItemCnt:totalResult.itemCnt, orderPayData:orderPayData };
